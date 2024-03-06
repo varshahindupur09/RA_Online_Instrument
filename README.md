@@ -4,3 +4,4 @@ This is an online instrument that allows the surveys to be hosted for determinin
 # To Clone this repository
 Use following commands:
 1. git clone https://github.com/varshahindupur09/RA_Online_Instrument.git
+2. cd RA_Online_Instrument
