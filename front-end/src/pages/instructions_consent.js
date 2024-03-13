@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import '../components/styles_css/InstructionsAndConsent.css'; 
  
 const InstructionsAndConsent = () => {
     const navigate = useNavigate();
@@ -10,7 +10,7 @@ const InstructionsAndConsent = () => {
     };
 
     return (
-        <div>
+        <div className="container">
             <h1> Title of research study: Data Visualization </h1>
             <h2> Investigator: Kelly Wellman </h2>
             <h3> KEY INFORMATION </h3>
@@ -88,7 +88,9 @@ const InstructionsAndConsent = () => {
             </label>
             <br></br>
             <br></br>
-            <button onClick={handleNext}>Next</button>
+            <br></br>
+            <br></br>
+            <button className="button" onClick={handleNext}> Next </button>
         </div>
     );
 };

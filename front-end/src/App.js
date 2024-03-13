@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from "./components/Navbar";
+import Title from "./components/Title";
 import {
     BrowserRouter as Router,
     Routes,
     Route,
 } from "react-router-dom";
 import Home from "./pages";
-import About from "./pages/about";
 import Blogs from "./pages/blogs";
 import SignUp from "./pages/signup";
 import Contact from "./pages/contact";
@@ -16,18 +16,21 @@ import { Nav, MainContent } from "./components/NavbarElements"; // Import Nav an
 function App() {
     return (
         <Router>
-            <Nav>
-                <Navbar />
-            </Nav>
-            <MainContent> {/* Render the MainContent component here */}
-                <Routes>
-                    <Route exact path="/" element={<Home />} />
-                    <Route path="/instructions-consent" element={<InstructionsAndConsent />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/blogs" element={<Blogs />} />
-                    <Route path="/sign-up" element={<SignUp />} />
-                </Routes>
-            </MainContent>
+            <div>
+                <Title /> {/* Render the Title component */}
+                <Nav>
+                    <Navbar />
+                </Nav>
+                <MainContent> {/* Render the MainContent component */}
+                    <Routes>
+                        <Route exact path="/" element={<Home />} />
+                        <Route path="/instructions-consent" element={<InstructionsAndConsent />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/blogs" element={<Blogs />} />
+                        <Route path="/sign-up" element={<SignUp />} />
+                    </Routes>
+                </MainContent>
+            </div>
         </Router>
     );
 }
