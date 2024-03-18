@@ -6,15 +6,13 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import Home from "./pages";
-import Blogs from "./pages/blogs";
-import SignUp from "./pages/signup";
-import Contact from "./pages/contact";
-import InstructionsAndConsent from "./pages/instructions_consent";
-import InstructionsAndConsent from "./pages/instructions_consent";
-import InstructionsAndConsent from "./pages/instructions_consent";
-import InstructionsAndConsent from "./pages/instructions_consent";
 import { Nav, MainContent } from "./components/NavbarElements"; // Import Nav and MainContent from NavbarElements
+import InstructionsAndConsent from "./pages/instructions-consent";
+import FinancialLiteracy from "./pages/financial-literacy";
+import NoConsentPage from "./pages/no-consent-page";
+import PaperFoldingSampleQuestion from "./pages/paper-folding-test-sample-question";
+import PaperFoldingPart1Questions from "./pages/paper-folding-test-part-1"
+import PaperFoldingPart2Questions from "./pages/paper-folding-test-part-2"
 
 function App() {
     return (
@@ -26,11 +24,12 @@ function App() {
                 </Nav>
                 <MainContent> {/* Render the MainContent component */}
                     <Routes>
-                        {/* <Route exact path="/" element={<Home />} /> */}
                         <Route path="/instructions-consent" element={<InstructionsAndConsent />} />
-                        {/* <Route path="/contact" element={<Contact />} />
-                        <Route path="/blogs" element={<Blogs />} />
-                        <Route path="/sign-up" element={<SignUp />} /> */}
+                        <Route path="/no-consent-page" element={<NoConsentPage />} />
+                        <Route exact path="/financial-literacy" element={<FinancialLiteracy />} />
+                        <Route path="/paper-folding-test-sample-question" element={<PaperFoldingSampleQuestion />} />
+                        <Route path="/paper-folding-test-part-1" element={<PaperFoldingPart1Questions />} /> 
+                        <Route path="/paper-folding-test-part-2" element={<PaperFoldingPart2Questions />} /> 
                     </Routes>
                 </MainContent>
             </div>

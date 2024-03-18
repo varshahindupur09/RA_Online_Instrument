@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/InstructionsAndConsent.css'; 
  
 const InstructionsAndConsent = () => {
     const navigate = useNavigate();
+    const [consent, setConsent] = useState(null);
+
+    const handleConsent = (value) => {
+        setConsent(value);
+    };
 
     const handleNext = () => {
-        navigate("/");
+        if (consent === "yes") {
+            navigate("/financial-literacy");
+        } else if (consent === "no") {
+            navigate("/no-consent-page");
+        } else {
+            // Handle error or display validation message
+            alert("Please select either 'yes' or 'no' to proceed.");
+        }
     };
+
 
     return (
         <div className="container">
@@ -81,16 +94,32 @@ const InstructionsAndConsent = () => {
             <h3><i>Consent</i></h3>
             <h3>Do you consent to participating in this study?</h3>
             <label htmlFor="consent-no">
-                <input type="radio" id="consent-no" name="consent" value="no" /> No
+                <input 
+                    type="radio" 
+                    id="consent-no" 
+                    name="consent" 
+                    value="no"
+                    onChange={() => handleConsent("no")}
+                    /> No
             </label>
             <label htmlFor="consent-yes">
-                <input type="radio" id="consent-yes" name="consent" value="yes" /> Yes
+                <input 
+                type="radio" 
+                id="consent-yes" 
+                name="consent" 
+                value="yes" 
+                onChange={() => handleConsent("yes")}
+                /> Yes
             </label>
             <br></br>
             <br></br>
             <br></br>
             <br></br>
-            <button className="button" onClick={handleNext}> Next </button>
+            <button 
+                className="button" 
+                onClick={handleNext}> 
+                Next 
+            </button>
         </div>
     );
 };

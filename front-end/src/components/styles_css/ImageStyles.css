@@ -1,0 +1,11 @@
+/* ImageStyles.css */
+
+.image-container {
+    max-width: 80%;
+  }
+  
+  .image-container img {
+    max-width: 80%;
+    height: auto;
+  }
+  
