@@ -11,6 +11,9 @@ import Blogs from "./pages/blogs";
 import SignUp from "./pages/signup";
 import Contact from "./pages/contact";
 import InstructionsAndConsent from "./pages/instructions_consent";
+import InstructionsAndConsent from "./pages/instructions_consent";
+import InstructionsAndConsent from "./pages/instructions_consent";
+import InstructionsAndConsent from "./pages/instructions_consent";
 import { Nav, MainContent } from "./components/NavbarElements"; // Import Nav and MainContent from NavbarElements
 
 function App() {
@@ -23,11 +26,11 @@ function App() {
                 </Nav>
                 <MainContent> {/* Render the MainContent component */}
                     <Routes>
-                        <Route exact path="/" element={<Home />} />
+                        {/* <Route exact path="/" element={<Home />} /> */}
                         <Route path="/instructions-consent" element={<InstructionsAndConsent />} />
-                        <Route path="/contact" element={<Contact />} />
+                        {/* <Route path="/contact" element={<Contact />} />
                         <Route path="/blogs" element={<Blogs />} />
-                        <Route path="/sign-up" element={<SignUp />} />
+                        <Route path="/sign-up" element={<SignUp />} /> */}
                     </Routes>
                 </MainContent>
             </div>
