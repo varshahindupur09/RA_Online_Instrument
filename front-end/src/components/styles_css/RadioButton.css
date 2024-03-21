@@ -23,7 +23,6 @@
     background-color: #2196F3; /* Change background color when checked */
   }
   
-  /* Optional: add a custom indicator for the checked state */
   .radio-container input[type="radio"]:checked + label:after {
     content: "";
     display: block;
@@ -34,3 +33,6 @@
     background: white;
   }
   
+  .radio-container input[type="radio"] {
+    display: none;
+  }

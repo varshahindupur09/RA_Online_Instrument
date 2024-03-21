@@ -1,0 +1,49 @@
+.radio-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Align items vertically in the center */
+  }
+  
+  .radio-container label {
+    display: flex; /* Display labels as flex items */
+    flex-direction: column; /* Arrange label content vertically */
+    align-items: flex-start; /* Align label content horizontally to the left */
+    cursor: pointer;
+    margin-right: 30px;
+  }
+  
+  .radio-container input[type="radio"] {
+    opacity: 0; /* Hide the default radio buttons */
+    width: 20px; 
+    position: absolute; 
+  }
+  
+  .radio-container input[type="radio"] + label:before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 5px; /* Adjust spacing between radio button and image */
+    border: 2px solid #aaa;
+    border-radius: 50%;
+  }
+  
+  .radio-container input[type="radio"]:checked + label:before {
+    background-color: #2196F3;
+  }
+  
+  .radio-container input[type="radio"]:checked + label:after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 4px;
+    border-radius: 50%;
+    background: white;
+  }
+  
+  .radio-container label img {
+    max-width: 100px; 
+    margin-top: 10px;
+  }
+  
