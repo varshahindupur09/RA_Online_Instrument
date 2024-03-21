@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/InstructionsAndConsent.css'; 
+import '../components/styles_css/RadioButton.css'; 
  
 const InstructionsAndConsent = () => {
     const navigate = useNavigate();
@@ -93,24 +94,26 @@ const InstructionsAndConsent = () => {
             <br></br>
             <h3><i>Consent</i></h3>
             <h3>Do you consent to participating in this study?</h3>
-            <label htmlFor="consent-no">
-                <input 
+            <div className="radio-container">
+                <label htmlFor="consent-no">
+                    <input 
+                        type="radio" 
+                        id="consent-no" 
+                        name="consent" 
+                        value="no"
+                        onChange={() => handleConsent("no")}
+                        /> No
+                </label>
+                <label htmlFor="consent-yes">
+                    <input 
                     type="radio" 
-                    id="consent-no" 
+                    id="consent-yes" 
                     name="consent" 
-                    value="no"
-                    onChange={() => handleConsent("no")}
-                    /> No
-            </label>
-            <label htmlFor="consent-yes">
-                <input 
-                type="radio" 
-                id="consent-yes" 
-                name="consent" 
-                value="yes" 
-                onChange={() => handleConsent("yes")}
-                /> Yes
-            </label>
+                    value="yes" 
+                    onChange={() => handleConsent("yes")}
+                    /> Yes
+                </label>
+            </div>
             <br></br>
             <br></br>
             <br></br>

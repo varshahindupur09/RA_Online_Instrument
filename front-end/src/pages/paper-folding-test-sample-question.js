@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/InstructionsAndConsent.css';
-import SampleQuestionImage from '../images/fl-paper-folding-test/sample question/sample-question-1.png';
-import SampleQuestionSolutionImage from '../images/fl-paper-folding-test/sample question/solution-sample-question-1.png';
+import SampleQuestion from '../images/fl-paper-folding-test/sample question/sample-question-1.png';
+import SampleQuestionSolution from '../images/fl-paper-folding-test/sample question/solution-sample-question-1.png';
 import '../components/styles_css/ImageStyles.css';
 
 const PaperFoldingSampleQuestion = () => {
@@ -51,14 +51,14 @@ const PaperFoldingSampleQuestion = () => {
             </h3>
             <br />
             <div className="image-container">
-                <img src={SampleQuestionImage} alt="Sample Question Image" />
+                <img src={SampleQuestion} alt="Sample Question" />
             </div>
             <br />
             <h3>
                 The correct answer to the sample problem above is C. The figures below show how the paper was folded and why C is the correct answer.
             </h3>
             <div className="image-container">
-                {showSolution && <img src={SampleQuestionSolutionImage} alt="Sample Question Solution Image" />} {/* Conditionally render solution image if showSolution is true */}
+                {showSolution && <img src={SampleQuestionSolution} alt="Sample Question Solution" />} {/* Conditionally render solution image if showSolution is true */}
                 {showButton && <button type="button" className="button" onClick={handleShowSolution}> Show Solution </button>} {/* Conditionally render the button if showButton is true */}
             </div>
             <br />
