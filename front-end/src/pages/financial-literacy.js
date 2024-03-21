@@ -10,9 +10,34 @@ const FinancialLiteracy = () => {
         if (!allQuestionsAnswered) {
             // If not all questions are answered, display an alert
             alert("Please answer all questions before proceeding.");
-        } else {
-            // If all questions are answered, navigate to the next page
+            return; // Exit the function early if not all questions are answered
+        }
+        // } else {
+        //     // If all questions are answered, navigate to the next page
+        //     navigate("/paper-folding-test-sample-question");
+        // }
+
+        // Get all radio button groups
+        const groups = [
+            document.getElementsByName("answer-fl-1"),
+            document.getElementsByName("answer-fl-2"),
+            document.getElementsByName("answer-fl-3")
+        ];
+
+        let correctCount = 0;
+
+        for (const group of groups) {
+            const selectedOption = Array.from(group).find(radio => radio.checked);
+            if (selectedOption && selectedOption.value === "more than $102" || selectedOption.value === "less than today" || selectedOption.value === "false") {
+                correctCount++;
+            }
+        }
+
+        // Check if the user answered 2 out of 3 questions correctly
+        if (correctCount >= 2) {
             navigate("/paper-folding-test-sample-question");
+        } else {
+            navigate("/end-fl-page");
         }
     };
 

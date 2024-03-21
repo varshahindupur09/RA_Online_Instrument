@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import '../components/styles_css/InstructionsAndConsent.css'; 
+import '../components/styles_css/NavbarElements.css'; 
 
 const NoConsentPage = () => {
     const history = useNavigate();

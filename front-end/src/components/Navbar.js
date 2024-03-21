@@ -7,14 +7,13 @@ const Navbar = () => {
         <>
             <Nav>
                 <NavMenu>
-                    <NavLink 
+                    {/* <NavLink 
                         as={Link} 
                         to="/instructions-consent" 
                         activeStyle={{ color: "#4d4dff" }}
                         >
                         Instructions & Consent
-                    </NavLink>
-                  
+                    </NavLink> */}
                 </NavMenu>
             </Nav>
         </>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../components/styles_css/InstructionsAndConsent.css';
+import '../components/styles_css/NavbarElements.css';
 import SampleQuestion from '../images/fl-paper-folding-test/sample question/sample-question-1.png';
 import SampleQuestionSolution from '../images/fl-paper-folding-test/sample question/solution-sample-question-1.png';
 import '../components/styles_css/ImageStyles.css';

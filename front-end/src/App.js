@@ -13,6 +13,7 @@ import NoConsentPage from "./pages/no-consent-page";
 import PaperFoldingSampleQuestion from "./pages/paper-folding-test-sample-question";
 import PaperFoldingPart1Questions from "./pages/paper-folding-test-part-1"
 import PaperFoldingPart2Questions from "./pages/paper-folding-test-part-2"
+import EndFLPage from "./pages/EndFLPage"
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                         <Route path="/paper-folding-test-sample-question" element={<PaperFoldingSampleQuestion />} />
                         <Route path="/paper-folding-test-part-1" element={<PaperFoldingPart1Questions />} /> 
                         <Route path="/paper-folding-test-part-2" element={<PaperFoldingPart2Questions />} /> 
+                        <Route path="/end-fl-page" element={<EndFLPage />} /> 
                     </Routes>
                 </MainContent>
             </div>

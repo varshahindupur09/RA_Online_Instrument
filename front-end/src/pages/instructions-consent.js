@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../components/styles_css/InstructionsAndConsent.css'; 
 import '../components/styles_css/RadioButton.css'; 
  
 const InstructionsAndConsent = () => {
@@ -16,9 +15,6 @@ const InstructionsAndConsent = () => {
             navigate("/financial-literacy");
         } else if (consent === "no") {
             navigate("/no-consent-page");
-        } else {
-            // Handle error or display validation message
-            alert("Please select either 'yes' or 'no' to proceed.");
         }
     };
 
@@ -94,24 +90,24 @@ const InstructionsAndConsent = () => {
             <br></br>
             <h3><i>Consent</i></h3>
             <h3>Do you consent to participating in this study?</h3>
-            <div className="radio-container">
-                <label htmlFor="consent-no">
-                    <input 
-                        type="radio" 
-                        id="consent-no" 
-                        name="consent" 
-                        value="no"
-                        onChange={() => handleConsent("no")}
-                        /> No
+            <div className="radio-container"> 
+                <input 
+                    type="radio" 
+                    id="consent-no" 
+                    name="consent" 
+                    onChange={() => handleConsent("no")}
+                    /> 
+                <label htmlFor="consent-no"> 
+                    No
                 </label>
-                <label htmlFor="consent-yes">
-                    <input 
+                <input 
                     type="radio" 
                     id="consent-yes" 
                     name="consent" 
-                    value="yes" 
                     onChange={() => handleConsent("yes")}
-                    /> Yes
+                    />
+                <label htmlFor="consent-yes"> 
+                    Yes
                 </label>
             </div>
             <br></br>
