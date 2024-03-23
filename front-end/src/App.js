@@ -20,12 +20,12 @@ function App() {
         <Router>
             <div>
                 <Title /> {/* Render the Title component */}
-                <Nav>
+                {/* <Nav>
                     <Navbar />
-                </Nav>
+                </Nav> */}
                 <MainContent> {/* Render the MainContent component */}
                     <Routes>
-                        <Route path="/instructions-consent" element={<InstructionsAndConsent />} />
+                        <Route path="/" element={<InstructionsAndConsent />} />
                         <Route path="/no-consent-page" element={<NoConsentPage />} />
                         <Route exact path="/financial-literacy" element={<FinancialLiteracy />} />
                         <Route path="/paper-folding-test-sample-question" element={<PaperFoldingSampleQuestion />} />
