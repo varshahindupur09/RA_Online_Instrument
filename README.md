@@ -3,7 +3,7 @@ This is an online instrument that allows the surveys to be hosted for determinin
 
 # To Clone this repository
 Use following commands:
-1. git clone https://github.com/varshahindupur09/RA_Online_Instrument.git
+1. git clone https://kwellman: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@github.com/varshahindupur09/RA_Online_Instrument.git
 2. cd RA_Online_Instrument
 3. python -m venv <environment_name>
 4. source venv_oi/bin/activate
@@ -31,4 +31,7 @@ Use following commands:
 8. npm install @vue/cli-service@latest
 9. npm audit fix --force
 10. npm install vueify --save-dev, vue add vuetifyy
+
+# Professor Kelly's Github Token: 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
+
 
