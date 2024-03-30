@@ -32,3 +32,4 @@ Use following commands:
 9. npm audit fix --force
 10. npm install vueify --save-dev, vue add vuetifyy
 
+# Professor Kelly's Github Token: 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
