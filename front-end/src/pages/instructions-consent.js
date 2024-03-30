@@ -23,7 +23,7 @@ const InstructionsAndConsent = () => {
         <div className="container">
             <h1> Title of research study: Data Visualization </h1>
             <h2> Investigator: Kelly Wellman </h2>
-            <h3> KEY INFORMATION </h3>
+            <h3><u>KEY INFORMATION:</u></h3>
             <h3> The following is a short summary of this study to help you decide whether or not to be a part of this study. More detailed information is provided on the next page.</h3>
             <br></br>
             <h3><i>Why am I being invited to take part in a research study?</i></h3>
@@ -44,7 +44,7 @@ const InstructionsAndConsent = () => {
             <h3><i>What happens if I do not want to be in this research?</i></h3>
             <h3> Participation in research is completely voluntary. You can decide to participate or not to participate. </h3>
             <br></br>
-            <h3> DETAILED INFORMATION</h3>
+            <h3><u>DETAILED INFORMATION:</u></h3>
             <br></br>
             <h3> The following is more detailed information about this study in addition to the information provided on the previous page.</h3>
             <br></br>
