@@ -68,12 +68,12 @@ const PaperFoldingPart1Questions = () => {
     const [timerVisible, setTimerVisible] = useState(true);
 
     const handleNext = () => {
-        navigate("/paper-folding-test-part-2");
+        navigate("/proceed-to-part2");
     };
 
     const handleTimerCompletion = () => {
         // setTimerVisible(false); 
-        navigate("/paper-folding-test-part-2"); //if a breather is needed in between we can add it 
+        navigate("/proceed-to-part2"); //if a breather is needed in between we can add it 
     };
 
     return (
