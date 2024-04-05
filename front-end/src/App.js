@@ -1,13 +1,13 @@
 import React from "react";
-import Navbar from "./components/Navbar";
 import Title from "./components/Title";
 import {
     BrowserRouter as Router,
     Routes,
     Route,
 } from "react-router-dom";
-import { Nav, MainContent } from "./components/NavbarElements"; // Import Nav and MainContent from NavbarElements
+import { MainContent } from "./components/NavbarElements"; // Import MainContent from NavbarElements
 // import InstructionsAndConsent from "./pages/instructions-consent";
+import Home from "./pages/home-page";
 import InstructionsAndConsent2 from "./pages/instructions-consent2";
 import FinancialLiteracy from "./pages/financial-literacy";
 import NoConsentPage from "./pages/no-consent-page";
@@ -29,7 +29,8 @@ function App() {
                 </Nav> */}
                 <MainContent> {/* Render the MainContent component */}
                     <Routes>
-                        <Route path="/" element={<InstructionsAndConsent2 />} />
+                        <Route path="/" element={<Home />} default />
+                        <Route path="/instructions-consent2" element={<InstructionsAndConsent2 />} />
                         <Route path="/no-consent-page" element={<NoConsentPage />} />
                         <Route exact path="/financial-literacy" element={<FinancialLiteracy />} />
                         <Route path="/paper-folding-test-sample-question" element={<PaperFoldingSampleQuestion />} />

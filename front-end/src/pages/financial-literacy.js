@@ -96,6 +96,10 @@ const FinancialLiteracy = () => {
             <br />
             <br />
             <button type="button" className="button" onClick={handleNext}> Next </button>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </div>
     );
 };

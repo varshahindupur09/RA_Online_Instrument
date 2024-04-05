@@ -1,5 +1,5 @@
 .container {
-    width: 1300px;
+    width: 1000px;
     height: 700px;
   }
   
@@ -32,4 +32,8 @@
   .instructionsred li {
     font-size: 20px;
     color:red;
+  }
+
+.form-container {
+    font-size: 20px;
   }

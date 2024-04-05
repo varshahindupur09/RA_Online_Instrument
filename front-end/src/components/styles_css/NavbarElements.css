@@ -2,10 +2,10 @@
 
 .nav-container {
     background: #fff;
-    width: 200px;
+    width: 100px;
     position: absolute; /* Changed from relative */
     top: 50px; /* Adjust the top position as needed */
-    left: 0;
+    left: -50px;
     display: flex;
     flex-direction: column;
     padding-top: 2rem;
@@ -52,7 +52,7 @@
   }
   
   .main-content {
-    margin-left: 200px;
+    margin-left: 100px;
     padding: 20px;
     z-index: 1;
   }

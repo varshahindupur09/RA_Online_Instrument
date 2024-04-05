@@ -444,6 +444,10 @@ const PaperFoldingPart2Questions = () => {
             {/* <button className="button" onClick={handleNext}> Next </button> */}
             {/* Next button */}
             <button className="button" onClick={handleNext}> Next </button>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </div>
     );
 };
