@@ -1,3 +1,5 @@
+/* RadioButton.css */
+
 .radio-container {
     display: flex;
     flex-direction: column;
@@ -6,6 +8,7 @@
   .radio-container label {
     margin-bottom: 10px;
     cursor: pointer;
+    margin-left: 120px; 
   }
   
   .radio-container input[type="radio"] + label:before {
@@ -35,4 +38,9 @@
   
   .radio-container input[type="radio"] {
     display: none;
+    font-size: 20px;
+  }
+
+  .radio-container label {
+    font-size: 20px;
   }

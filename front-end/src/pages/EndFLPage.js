@@ -1,4 +1,5 @@
 import React from 'react';
+import '../components/styles_css/PageStyle.css'; 
 
 const EndFLPage = () => {
     return (

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../components/styles_css/PageStyle.css'; 
 
 import Part1Question1 from '../images/fl-paper-folding-test/part-1-3-minutes/question-1/part-1-question-1.png'; // Import Part 1 Question 1 image
 import Part1Question1Answer1Option1 from '../images/fl-paper-folding-test/part-1-3-minutes/question-1/answers-1/answer-1-option-1.png'; 
@@ -79,13 +80,11 @@ const PaperFoldingPart1Questions = () => {
     return (
         <div className="container">
             <br />
-            <h2>Paper Folding Part 1: Question</h2>
-            <br />
-            <br />
-            <h3>This is a timed 3-minute test.</h3>
+            <h2>Part 1: 3 minutes</h2>
             <br />
             {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
-            
+            <br />
+            <br />
             {/* <img src={Part1Question1} alt="Part1 Question1" /> */}
             <img src={Part1Question1} alt="Part1 Question1" />
             <div className="radio-container">
@@ -114,6 +113,9 @@ const PaperFoldingPart1Questions = () => {
                     <img src={Part1Question1Answer1Option5} alt="Part1Question1Answer1Option5" />
                 </label>
             </div>
+            <br />
+            <br />
+            <br />
             <br />
             <br />
 
@@ -147,6 +149,9 @@ const PaperFoldingPart1Questions = () => {
             </div>
             <br />
             <br />
+            <br />
+            <br />
+            <br />
 
             {/* <img src={Part1Question3} alt="Part1 Question3" /> */}
             <img src={Part1Question3} alt="Part1 Question3" />
@@ -178,6 +183,10 @@ const PaperFoldingPart1Questions = () => {
             </div>
             <br />
             <br />
+            <br />
+            <br />
+            <br />
+
             {/* <img src={Part1Question4} alt="Part1 Question4" /> */}
             <img src={Part1Question4} alt="Part1 Question4" />
             <div className="radio-container">
@@ -208,6 +217,10 @@ const PaperFoldingPart1Questions = () => {
             </div>
             <br />
             <br />
+            <br />
+            <br />
+            <br />
+
             {/* <img src={Part1Question5} alt="Part1 Question5" /> */}
             <img src={Part1Question5} alt="Part1 Question5" />
             <div className="radio-container">
@@ -238,6 +251,10 @@ const PaperFoldingPart1Questions = () => {
             </div>
             <br />
             <br />
+            <br />
+            <br />
+            <br />
+
             {/* <img src={Part1Question6} alt="Part1 Question6" /> */}
             <img src={Part1Question6} alt="Part1 Question6" />
             <div className="radio-container">
@@ -268,6 +285,10 @@ const PaperFoldingPart1Questions = () => {
             </div>
             <br />
             <br />
+            <br />
+            <br />
+            <br />
+
             {/* <img src={Part1Question7} alt="Part1 Question7" /> */}
             <img src={Part1Question7} alt="Part1 Question7" />
             <div className="radio-container">
@@ -298,6 +319,10 @@ const PaperFoldingPart1Questions = () => {
             </div>
             <br />
             <br />
+            <br />
+            <br />
+            <br />
+
             {/* <img src={Part1Question8} alt="Part1 Question8" /> */}
             <img src={Part1Question8} alt="Part1 Question8" />
             <div className="radio-container">
@@ -328,7 +353,10 @@ const PaperFoldingPart1Questions = () => {
             </div>
             <br />
             <br />
-          
+            <br />
+            <br />
+            <br />
+            
             {/* Next button */}
             <button className="button" onClick={handleNext}> Next </button>
         </div>

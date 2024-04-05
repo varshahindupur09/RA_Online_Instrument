@@ -16,6 +16,9 @@ import PaperFoldingPart1Questions from "./pages/paper-folding-test-part-1"
 import PaperFoldingPart2Questions from "./pages/paper-folding-test-part-2"
 import EndFLPage from "./pages/EndFLPage"
 import ProceedToPart2 from "./pages/proceed-to-part2";
+import ConsentPage from "./pages/again-consent-page";
+import ExitSurveyPage from "./pages/exit-survey-page";
+
 function App() {
     return (
         <Router>
@@ -34,6 +37,8 @@ function App() {
                         <Route path="/paper-folding-test-part-2" element={<PaperFoldingPart2Questions />} /> 
                         <Route path="/end-fl-page" element={<EndFLPage />} /> 
                         <Route path="/proceed-to-part2" element={<ProceedToPart2 />} /> 
+                        <Route path="/again-consent-page" element={<ConsentPage />} /> 
+                        <Route path="/exit-survey-page" element={<ExitSurveyPage />} /> 
                     </Routes>
                 </MainContent>
             </div>

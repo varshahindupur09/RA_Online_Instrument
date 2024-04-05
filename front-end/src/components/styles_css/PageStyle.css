@@ -1,0 +1,35 @@
+.container {
+    width: 1300px;
+    height: 700px;
+  }
+  
+  .button {
+    font-size: 20px;
+    width: 150px;
+    background-color: white;
+    color: black;
+    padding: 15px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  div[name="instructions"] p {
+    font-size: 20px;
+  }
+
+  div[name="instructions"] li {
+    font-size: 20px;
+  }
+
+  .instructionsred p {
+    font-size: 20px;
+    color:red;
+  }
+
+  .instructionsred li {
+    font-size: 20px;
+    color:red;
+  }

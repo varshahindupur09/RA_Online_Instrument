@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
+import '../components/styles_css/PageStyle.css'; 
 
 const ProceedToPart2 = () => {
     const navigate = useNavigate(); 

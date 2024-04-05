@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import '../components/styles_css/NavbarElements.css'; 
+import '../components/styles_css/PageStyle.css'; 
 
 const NoConsentPage = () => {
     const history = useNavigate();
 
     const handleGoBack = () => {
-        history('/instructions-consent');
+        history('/');
       };
 
     return (

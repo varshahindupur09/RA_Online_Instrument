@@ -1,33 +1,76 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../components/styles_css/PageStyle.css'; 
 
-import Part2Question1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-1/part-2-question-1.png'; // Import Part 1 Question 1 image
+import Part2Question1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-1/part-2-question-1.png'; // Import Part 2 Question 1 image
 import Part2Question1Answer1Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-1/answer-1/answer-1-option-1.png'; 
 import Part2Question1Answer1Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-1/answer-1/answer-1-option-2.png'; 
 import Part2Question1Answer1Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-1/answer-1/answer-1-option-3.png'; 
 import Part2Question1Answer1Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-1/answer-1/answer-1-option-4.png'; 
 import Part2Question1Answer1Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-1/answer-1/answer-1-option-5.png'; 
 
-// import Part2Question2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/part-2-question-2.png'; // Import Part 1 Question 2 image
-// import Part2Question2Answer2Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-1.png'; 
-// import Part2Question2Answer2Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-2.png'; 
-// import Part2Question2Answer2Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-3.png'; 
-// import Part2Question2Answer2Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-4.png'; 
-// import Part2Question2Answer2Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-5.png'; 
+import Part2Question2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/part-2-question-2.png'; // Import Part 2 Question 2 image
+import Part2Question2Answer2Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-1.png'; 
+import Part2Question2Answer2Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-2.png'; 
+import Part2Question2Answer2Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-3.png'; 
+import Part2Question2Answer2Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-4.png'; 
+import Part2Question2Answer2Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-2/answer-2/answer-2-option-5.png'; 
 
-// import Part2Question3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/part-2-question-3.png'; // Import Part 1 Question 3 image
-// import Part2Question3Answer3Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-1.png'; 
-// import Part2Question3Answer3Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-2.png'; 
-// import Part2Question3Answer3Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-3.png'; 
-// import Part2Question3Answer3Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-4.png'; 
-// import Part2Question3Answer3Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-5.png'; 
+import Part2Question3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/part-2-question-3.png'; // Import Part 2 Question 3 image
+import Part2Question3Answer3Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-1.png'; 
+import Part2Question3Answer3Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-2.png'; 
+import Part2Question3Answer3Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-3.png'; 
+import Part2Question3Answer3Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-4.png'; 
+import Part2Question3Answer3Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-3/answer-3/answer-3-option-5.png'; 
 
-// import Part1Question4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/part-2-question-4.png'; // Import Part 1 Question 4 image
-// import Part1Question4Answer4Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-1.png'; 
-// import Part1Question4Answer4Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-2.png'; 
-// import Part1Question4Answer4Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-3.png'; 
-// import Part1Question4Answer4Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-4.png'; 
-// import Part1Question4Answer4Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-5.png'; 
+import Part2Question4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/part-2-question-4.png'; // Import Part 2 Question 4 image
+import Part2Question4Answer4Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-1.png'; 
+import Part2Question4Answer4Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-2.png'; 
+import Part2Question4Answer4Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-3.png'; 
+import Part2Question4Answer4Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-4.png'; 
+import Part2Question4Answer4Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-4/answer-4/answer-4-option-5.png'; 
+
+import Part2Question5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-5/part-2-question-5.png'; // Import Part 2 Question 5 image
+import Part2Question5Answer5Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-5/answer-5/answer-5-option-1.png'; 
+import Part2Question5Answer5Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-5/answer-5/answer-5-option-2.png'; 
+import Part2Question5Answer5Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-5/answer-5/answer-5-option-3.png'; 
+import Part2Question5Answer5Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-5/answer-5/answer-5-option-4.png'; 
+import Part2Question5Answer5Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-5/answer-5/answer-5-option-5.png'; 
+
+import Part2Question6 from '../images/fl-paper-folding-test/part-2-3-minutes/question-6/part-2-question-6.png'; // Import Part 2 Question 6 image
+import Part2Question6Answer6Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-6/answer-6/answer-6-option-1.png'; 
+import Part2Question6Answer6Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-6/answer-6/answer-6-option-2.png'; 
+import Part2Question6Answer6Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-6/answer-6/answer-6-option-3.png'; 
+import Part2Question6Answer6Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-6/answer-6/answer-6-option-4.png'; 
+import Part2Question6Answer6Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-6/answer-6/answer-6-option-5.png'; 
+
+import Part2Question7 from '../images/fl-paper-folding-test/part-2-3-minutes/question-7/part-2-question-7.png'; // Import Part 2 Question 7 image
+import Part2Question7Answer7Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-7/answer-7/answer-7-option-1.png'; 
+import Part2Question7Answer7Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-7/answer-7/answer-7-option-2.png'; 
+import Part2Question7Answer7Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-7/answer-7/answer-7-option-3.png'; 
+import Part2Question7Answer7Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-7/answer-7/answer-7-option-4.png'; 
+import Part2Question7Answer7Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-7/answer-7/answer-7-option-5.png'; 
+
+import Part2Question8 from '../images/fl-paper-folding-test/part-2-3-minutes/question-8/part-2-question-8.png'; // Import Part 2 Question 8 image
+import Part2Question8Answer8Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-8/answer-8/answer-8-option-1.png'; 
+import Part2Question8Answer8Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-8/answer-8/answer-8-option-2.png'; 
+import Part2Question8Answer8Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-8/answer-8/answer-8-option-3.png'; 
+import Part2Question8Answer8Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-8/answer-8/answer-8-option-4.png'; 
+import Part2Question8Answer8Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-8/answer-8/answer-8-option-5.png'; 
+
+import Part2Question9 from '../images/fl-paper-folding-test/part-2-3-minutes/question-9/part-2-question-9.png'; // Import Part 2 Question 9 image
+import Part2Question9Answer9Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-9/answer-9/answer-9-option-1.png'; 
+import Part2Question9Answer9Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-9/answer-9/answer-9-option-2.png'; 
+import Part2Question9Answer9Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-9/answer-9/answer-9-option-3.png'; 
+import Part2Question9Answer9Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-9/answer-9/answer-9-option-4.png'; 
+import Part2Question9Answer9Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-9/answer-9/answer-9-option-5.png'; 
+
+import Part2Question10 from '../images/fl-paper-folding-test/part-2-3-minutes/question-10/part-2-question-10.png'; // Import Part 2 Question 10 image
+import Part2Question10Answer10Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-10/answer-10/answer-10-option-1.png'; 
+import Part2Question10Answer10Option2 from '../images/fl-paper-folding-test/part-2-3-minutes/question-10/answer-10/answer-10-option-2.png'; 
+import Part2Question10Answer10Option3 from '../images/fl-paper-folding-test/part-2-3-minutes/question-10/answer-10/answer-10-option-3.png'; 
+import Part2Question10Answer10Option4 from '../images/fl-paper-folding-test/part-2-3-minutes/question-10/answer-10/answer-10-option-4.png'; 
+import Part2Question10Answer10Option5 from '../images/fl-paper-folding-test/part-2-3-minutes/question-10/answer-10/answer-10-option-5.png'; 
 
 import '../components/styles_css/ImageStyles.css';
 import '../components/styles_css/RadioButtonImage.css';
@@ -50,13 +93,13 @@ const PaperFoldingPart2Questions = () => {
     return (
         <div className="container">
             <br></br>
-            <h2>Paper Folding Part 2: Question</h2>
+            <h2>Part 2: 3 minutes</h2>
             <br></br>
             <br></br>
-            <h3>
-                This is a timed 3 minute test.
-            </h3>
+            <br/>
+            <br/>
             <br></br>
+
             {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
             {/* <img src={Part2Question1Image} alt="Part 2 Question 1" /> */}
             <img src={Part2Question1} alt="Part2 Question1" />
@@ -90,35 +133,314 @@ const PaperFoldingPart2Questions = () => {
             <br />
             <br></br>
             <br></br>
+            <br/>
+
             {/* <img src={Part2Question2Image} alt="Part 2 Question 2" /> */}
+            <img src={Part2Question2} alt="Part2 Question 2" />
+            <div className="radio-container">
+                <input type="radio" id="Part2Question2Answer2Option1" name="Part2Question2Answer2"/>
+                <label htmlFor="Part2Question2Answer2Option1">
+                    <img src={Part2Question2Answer2Option1} alt="Part2Question2Answer2Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question2Answer2Option2" name="Part2Question2Answer2"/>
+                <label htmlFor="Part2Question2Answer2Option2">
+                    <img src={Part2Question2Answer2Option2} alt="Part2Question2Answer2Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question2Answer2Option3" name="Part2Question2Answer2"/>
+                <label htmlFor="Part2Question2Answer2Option3">
+                    <img src={Part2Question2Answer2Option3} alt="Part2Question2Answer2Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question2Answer2Option4" name="Part2Question2Answer2"/>
+                <label htmlFor="Part2Question2Answer2Option4">
+                    <img src={Part2Question2Answer2Option4} alt="Part2Question2Answer2Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question2Answer2Option5" name="Part2Question2Answer2"/>
+                <label htmlFor="Part2Question2Answer2Option5">
+                    <img src={Part2Question2Answer2Option5} alt="Part2Question2Answer2Option5" />
+                </label>
+            </div>
             <br></br>
             <br></br>
+            <br/>
+            <br/>
+            <br/>
+
             {/* <img src={Part2Question3Image} alt="Part 2 Question 3" /> */}
+            <img src={Part2Question3} alt="Part2 Question 3" />
+            <div className="radio-container">
+                <input type="radio" id="Part2Question3Answer3Option1" name="Part2Question3Answer3"/>
+                <label htmlFor="Part2Question3Answer3Option1">
+                    <img src={Part2Question3Answer3Option1} alt="Part2Question3Answer3Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question3Answer3Option2" name="Part2Question3Answer3"/>
+                <label htmlFor="Part2Question3Answer3Option2">
+                    <img src={Part2Question3Answer3Option2} alt="Part2Question3Answer3Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question3Answer3Option3" name="Part2Question3Answer3"/>
+                <label htmlFor="Part2Question3Answer3Option3">
+                    <img src={Part2Question3Answer3Option3} alt="Part2Question3Answer3Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question3Answer3Option4" name="Part2Question3Answer3"/>
+                <label htmlFor="Part2Question3Answer3Option4">
+                    <img src={Part2Question3Answer3Option4} alt="Part2Question3Answer3Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question3Answer3Option5" name="Part2Question3Answer3"/>
+                <label htmlFor="Part2Question3Answer3Option5">
+                    <img src={Part2Question3Answer3Option5} alt="Part2Question3Answer3Option5" />
+                </label>
+            </div>
             <br></br>
             <br></br>
+            <br/>
+            <br/>
+            <br/>
+
             {/* <img src={Part2Question4Image} alt="Part 2 Question 4" /> */}
+            <img src={Part2Question4} alt="Part2 Question 4" />
+            <div className="radio-container">
+                <input type="radio" id="Part2Question4Answer4Option1" name="Part2Question4Answer4"/>
+                <label htmlFor="Part2Question4Answer4Option1">
+                    <img src={Part2Question4Answer4Option1} alt="Part2Question4Answer4Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question4Answer4Option2" name="Part2Question4Answer4"/>
+                <label htmlFor="Part2Question4Answer4Option2">
+                    <img src={Part2Question4Answer4Option2} alt="Part2Question4Answer4Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question4Answer4Option3" name="Part2Question4Answer4"/>
+                <label htmlFor="Part2Question4Answer4Option3">
+                    <img src={Part2Question4Answer4Option3} alt="Part2Question4Answer4Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question4Answer4Option4" name="Part2Question4Answer4"/>
+                <label htmlFor="Part2Question4Answer4Option4">
+                    <img src={Part2Question4Answer4Option4} alt="Part2Question4Answer4Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question4Answer4Option5" name="Part2Question4Answer4"/>
+                <label htmlFor="Part2Question4Answer4Option5">
+                    <img src={Part2Question4Answer4Option5} alt="Part2Question4Answer4Option5" />
+                </label>
+            </div>
             <br></br>
             <br></br>
+            <br></br>
+            <br></br>
+            <br/>
+
             {/* <img src={Part2Question5Image} alt="Part 2 Question 5" /> */}
+            <img src={Part2Question5} alt="Part2 Question 5" />
+            <div className="radio-container">
+                <input type="radio" id="Part2Question5Answer5Option1" name="Part2Question5Answer5"/>
+                <label htmlFor="Part2Question5Answer5Option1">
+                    <img src={Part2Question5Answer5Option1} alt="Part2Question5Answer5Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question5Answer5Option2" name="Part2Question5Answer5"/>
+                <label htmlFor="Part2Question5Answer5Option2">
+                    <img src={Part2Question5Answer5Option2} alt="Part2Question5Answer5Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question5Answer5Option3" name="Part2Question5Answer5"/>
+                <label htmlFor="Part2Question5Answer5Option3">
+                    <img src={Part2Question5Answer5Option3} alt="Part2Question5Answer5Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question5Answer5Option4" name="Part2Question5Answer5"/>
+                <label htmlFor="Part2Question5Answer5Option4">
+                    <img src={Part2Question5Answer5Option4} alt="Part2Question5Answer5Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question5Answer5Option5" name="Part2Question5Answer5"/>
+                <label htmlFor="Part2Question5Answer5Option5">
+                    <img src={Part2Question5Answer5Option5} alt="Part2Question5Answer5Option5" />
+                </label>
+            </div>
             <br></br>
             <br></br>
+            <br/>
+            <br/>
+            <br/>
+            
             {/* <img src={Part2Question6Image} alt="Part 2 Question 6" /> */}
-            <br></br>
-            <br></br>
+            <img src={Part2Question6} alt="Part2 Question 6" />
+            <div className="radio-container">
+                <input type="radio" id="Part2Question6Answer6Option1" name="Part2Question6Answer6"/>
+                <label htmlFor="Part2Question6Answer6Option1">
+                    <img src={Part2Question6Answer6Option1} alt="Part2Question6Answer6Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question6Answer6Option2" name="Part2Question6Answer6"/>
+                <label htmlFor="Part2Question6Answer6Option2">
+                    <img src={Part2Question6Answer6Option2} alt="Part2Question6Answer6Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question6Answer6Option3" name="Part2Question6Answer6"/>
+                <label htmlFor="Part2Question6Answer6Option3">
+                    <img src={Part2Question6Answer6Option3} alt="Part2Question6Answer6Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question6Answer6Option4" name="Part2Question6Answer6"/>
+                <label htmlFor="Part2Question6Answer6Option4">
+                    <img src={Part2Question6Answer6Option4} alt="Part2Question6Answer6Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question6Answer6Option5" name="Part2Question6Answer6"/>
+                <label htmlFor="Part2Question6Answer6Option5">
+                    <img src={Part2Question6Answer6Option5} alt="Part2Question6Answer6Option5" />
+                </label>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
             {/* <img src={Part2Question7Image} alt="Part 2 Question 7" /> */}
-            <br></br>
-            <br></br>
+            <img src={Part2Question7} alt="Part2 Question 7" />
+            <div className="radio-container">
+                <input type="radio" id="Part2Question7Answer7Option1" name="Part2Question7Answer7"/>
+                <label htmlFor="Part2Question7Answer7Option1">
+                    <img src={Part2Question7Answer7Option1} alt="Part2Question7Answer7Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question7Answer7Option2" name="Part2Question7Answer7"/>
+                <label htmlFor="Part2Question7Answer7Option2">
+                    <img src={Part2Question7Answer7Option2} alt="Part2Question7Answer7Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question7Answer7Option3" name="Part2Question7Answer7"/>
+                <label htmlFor="Part2Question7Answer7Option3">
+                    <img src={Part2Question7Answer7Option3} alt="Part2Question7Answer7Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question7Answer7Option4" name="Part2Question7Answer7"/>
+                <label htmlFor="Part2Question7Answer7Option4">
+                    <img src={Part2Question7Answer7Option4} alt="Part2Question7Answer7Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question7Answer7Option5" name="Part2Question7Answer7"/>
+                <label htmlFor="Part2Question7Answer7Option5">
+                    <img src={Part2Question7Answer7Option5} alt="Part2Question7Answer7Option5" />
+                </label>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
             {/* <img src={Part2Question8Image} alt="Part 2 Question 8" /> */}
-            <br></br>
-            <br></br>
+            <img src={Part2Question8} alt="Part2 Question 8" />
+            <div className="radio-container">
+                <input type="radio" id="Part2Question8Answer8Option1" name="Part2Question8Answer8"/>
+                <label htmlFor="Part2Question8Answer8Option1">
+                    <img src={Part2Question8Answer8Option1} alt="Part2Question8Answer8Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question8Answer8Option2" name="Part2Question8Answer8"/>
+                <label htmlFor="Part2Question8Answer8Option2">
+                    <img src={Part2Question8Answer8Option2} alt="Part2Question8Answer8Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question8Answer8Option3" name="Part2Question8Answer8"/>
+                <label htmlFor="Part2Question8Answer8Option3">
+                    <img src={Part2Question8Answer8Option3} alt="Part2Question8Answer8Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question8Answer8Option4" name="Part2Question8Answer8"/>
+                <label htmlFor="Part2Question8Answer8Option4">
+                    <img src={Part2Question8Answer8Option4} alt="Part2Question8Answer8Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question8Answer8Option5" name="Part2Question8Answer8"/>
+                <label htmlFor="Part2Question8Answer8Option5">
+                    <img src={Part2Question8Answer8Option5} alt="Part2Question8Answer8Option5" />
+                </label>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
             {/* <img src={Part2Question9Image} alt="Part 2 Question 9" /> */}
-            <br></br>
-            <br></br>
+            <img src={Part2Question9} alt="Part2 Question 9" />
+            <div className="radio-container">
+                <input type="radio" id="Part2Question9Answer9Option1" name="Part2Question9Answer9"/>
+                <label htmlFor="Part2Question9Answer9Option1">
+                    <img src={Part2Question9Answer9Option1} alt="Part2Question9Answer9Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question9Answer9Option2" name="Part2Question9Answer9"/>
+                <label htmlFor="Part2Question9Answer9Option2">
+                    <img src={Part2Question9Answer9Option2} alt="Part2Question9Answer9Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question9Answer9Option3" name="Part2Question9Answer9"/>
+                <label htmlFor="Part2Question9Answer9Option3">
+                    <img src={Part2Question9Answer9Option3} alt="Part2Question9Answer9Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question9Answer9Option4" name="Part2Question9Answer9"/>
+                <label htmlFor="Part2Question9Answer9Option4">
+                    <img src={Part2Question9Answer9Option4} alt="Part2Question9Answer9Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question9Answer9Option5" name="Part2Question9Answer9"/>
+                <label htmlFor="Part2Question9Answer9Option5">
+                    <img src={Part2Question9Answer9Option5} alt="Part2Question9Answer9Option5" />
+                </label>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
             {/* <img src={Part2Question10Image} alt="Part 2 Question 10" /> */}
+            <img src={Part2Question10} alt="Part2 Question 10" />
+            <div className="radio-container">
+                <input type="radio" id="Part2Question10Answer10Option1" name="Part2Question10Answer10"/>
+                <label htmlFor="Part2Question10Answer10Option1">
+                    <img src={Part2Question10Answer10Option1} alt="Part2Question10Answer10Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question10Answer10Option2" name="Part2Question10Answer10"/>
+                <label htmlFor="Part2Question10Answer10Option2">
+                    <img src={Part2Question10Answer10Option2} alt="Part2Question10Answer10Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question10Answer10Option3" name="Part2Question10Answer10"/>
+                <label htmlFor="Part2Question10Answer10Option3">
+                    <img src={Part2Question10Answer10Option3} alt="Part2Question10Answer10Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question10Answer10Option4" name="Part2Question10Answer10"/>
+                <label htmlFor="Part2Question10Answer10Option4">
+                    <img src={Part2Question10Answer10Option4} alt="Part2Question10Answer10Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part2Question10Answer10Option5" name="Part2Question10Answer10"/>
+                <label htmlFor="Part2Question10Answer10Option5">
+                    <img src={Part2Question10Answer10Option5} alt="Part2Question10Answer10Option5" />
+                </label>
+            </div>
             <br></br>
             <br></br>
             <br></br>
             <br></br>
+            <br/>
+            
             {/* <button className="button" onClick={handleNext}> Next </button> */}
             {/* Next button */}
             <button className="button" onClick={handleNext}> Next </button>

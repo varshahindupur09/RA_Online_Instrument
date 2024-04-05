@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/RadioButton.css'; 
- 
+import '../components/styles_css/PageStyle.css'; 
+
 const InstructionsAndConsent = () => {
     const navigate = useNavigate();
     const [consent, setConsent] = useState(null);
