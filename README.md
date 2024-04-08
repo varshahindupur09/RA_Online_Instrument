@@ -34,4 +34,6 @@ Use following commands:
 
 # Professor Kelly's Github Token: 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
 
-
+# Currently, Backend = Mangoose + MongoDB 
+cd backend
+npm install mongoose=8.3.0
