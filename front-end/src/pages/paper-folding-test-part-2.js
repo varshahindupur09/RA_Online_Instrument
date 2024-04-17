@@ -82,12 +82,12 @@ const PaperFoldingPart2Questions = () => {
     const [timerVisible, setTimerVisible] = useState(true);
 
     const handleNext = () => {
-        navigate("/");
+        navigate("/rotation-test");
     };
 
     const handleTimerCompletion = () => {
         // setTimerVisible(false); 
-        navigate("/"); //if a breather is needed in between we can add it 
+        navigate("/rotation-test"); //if a breather is needed in between we can add it 
     };
 
     return (

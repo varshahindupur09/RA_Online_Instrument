@@ -18,6 +18,7 @@ import EndFLPage from "./pages/EndFLPage"
 import ProceedToPart2 from "./pages/proceed-to-part2";
 import ConsentPage from "./pages/again-consent-page";
 import ExitSurveyPage from "./pages/exit-survey-page";
+import RotationTest from "./pages/rotation-test";
 
 function App() {
     return (
@@ -40,6 +41,7 @@ function App() {
                         <Route path="/proceed-to-part2" element={<ProceedToPart2 />} /> 
                         <Route path="/again-consent-page" element={<ConsentPage />} /> 
                         <Route path="/exit-survey-page" element={<ExitSurveyPage />} /> 
+                        <Route path="/rotation-test" element={<RotationTest />} /> 
                     </Routes>
                 </MainContent>
             </div>
