@@ -28,15 +28,6 @@ const Home = () => {
                 <br/>
                 <br/>
                 <br/>
-
-                <label htmlFor="phoneNumber">* Phone Number:  </label>
-                <input 
-                    type="tel" 
-                    id="phoneNumber" 
-                    value={phoneNumber} 
-                    onChange={(e) => setPhoneNumber(e.target.value)} 
-                    required 
-                />
             </form>
             <br/>
             <button 

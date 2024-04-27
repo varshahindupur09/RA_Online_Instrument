@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import '../components/styles_css/PageStyle.css'; 
+import '../components/styles_css/RotationTestStyle.css';
+import '../components/styles_css/RadioButtonImage.css';
+import '../components/styles_css/ImageStyles.css';
+import '../components/styles_css/PageStyle.css';
 
 import Image1 from '../images/rotation_test/rotation_test_1.png';
 import Image2 from '../images/rotation_test/rotation_test_2.png';
@@ -26,8 +29,6 @@ import question2answer6 from '../images/rotation_test/question-2/answer-2/questi
 import question2answer7 from '../images/rotation_test/question-2/answer-2/question-2-answer-7.png';
 import question2answer8 from '../images/rotation_test/question-2/answer-2/question-2-answer-8.png';
 
-import '../components/styles_css/ImageStyles.css';
-
 const RotationTestQuestion = () => {
     const navigate = useNavigate();
 
@@ -35,10 +36,70 @@ const RotationTestQuestion = () => {
         navigate("/proceed-to-part2");
     };
 
-    const questionsAndAnswers = {
-        question1: [question1answer1, question1answer2, question1answer3, question1answer4, question1answer5, question1answer6, question1answer7, question1answer8],
-        question2: [question2answer1, question2answer2, question2answer3, question2answer4, question2answer5, question2answer6, question2answer7, question2answer8]
-    };
+    const question1 = rotation_question_1; 
+    const question1Answers = [
+      question1answer1, question1answer2, question1answer3, question1answer4, 
+      question1answer5, question1answer6, question1answer7, question1answer8
+    ];
+
+    const question2 = rotation_question_2; 
+    const question2Answers = [
+        question2answer1, question2answer2, question2answer3, question2answer4,
+        question2answer5, question2answer6, question2answer7, question2answer8
+    ];
+
+    const [answers, setAnswers] = useState({
+        question1: Array(question1Answers.length).fill(null),
+        question2: Array(question2Answers.length).fill(null),
+    });
+
+    const handleAnswerChange = (questionNumber, index, value) => {
+        const newAnswers = { ...answers };
+        newAnswers[questionNumber][index] = value;
+        setAnswers(newAnswers);
+    };    
+
+    const allAnswered = Object.values(answers).every(question => question.every(answer => answer !== null));
+
+    const renderQuestion = (questionImage, answerImages, questionNumber) => (
+        <>
+            <div className="question-image-container">
+                <img src={questionImage} alt={`Question ${questionNumber}`} className="question-main-image" />
+            </div>
+            <table className="answers-table">
+                <thead>
+                    <tr>
+                        <th></th> {/* Empty header for the labels 'Same' and 'Different' */}
+                        {answerImages.map((imgSrc, index) => (
+                            <th key={`header-${index}`}>
+                                <img src={imgSrc} alt={`Answer ${index + 1}`} />
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Same</td>
+                        {answerImages.map((_, index) => (
+                            <td key={`same-${index}`}>
+                                    <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="same"
+                                        onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'same')} />
+                            </td>
+                        ))}
+                    </tr>
+                    <tr>
+                        <td>Different</td>
+                        {answerImages.map((_, index) => (
+                            <td key={`different-${index}`}>
+                                <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="different" 
+                                    onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'different')} />
+                            </td>
+                        ))}
+                    </tr>
+                </tbody>
+            </table>
+        </>
+    ); 
 
     return (
         <div className="container">
@@ -50,14 +111,18 @@ const RotationTestQuestion = () => {
             <div>
                 <p>Thank you for your participation thus far. Next you will answer some questions that will help me to understand a different aspect of your spatial ability. Prior research shows that there are different types of spatial ability, and these differences mean some people will find these questions easier while others will find them more difficult. Please read the instructions carefully. You may not leave the test until the 3 minutes are up, so it is in your interest to complete the test to the best of your ability. You will receive $6.00 for your participation. In addition, you will receive a bonus of $0.10 for each correct answer on the spatial ability tests.</p>
                 <p>This is a test of your ability to see differences in figures. Look at the 5 triangle-shaped cards drawn below.</p>
-                <img src={Image1} alt="rotation_test_1"></img>
+                <div className='other_images'>
+                    <img src={Image1} alt="rotation_test_related_images_1"></img>
+                </div>
             </div>
             
             <div>
                 <p>All of these drawings are of the same card, which has been slid around into different positions on the page.</p>
                 <p>You will have 3 minutes for each of the two parts of this test. Each part has 1 page. When you are ready to commence the test, please click the Next button.</p>
                 <p>Now look at the 2 cards below:</p>
-                <img src={Image2} alt="rotation_test_2"></img>
+                <div className='other_images2'>
+                    <img src={Image2} alt="rotation_test__related_images_2"></img>
+                </div>
             </div>
             <p>These two cards are not alike. The first cannot be made to look like the second by sliding it around on the page. It would have to be flipped over or made differently.</p>
             <br />
@@ -68,33 +133,19 @@ const RotationTestQuestion = () => {
             <p>Practice on the following rows. The first row has been correctly marked for you.</p>
             <br />
             <br />
-            <img src={sample_rotation_test} alt="sample_rotation_test"></img>
+            <div className="sample_test">
+                <img src={sample_rotation_test} alt="sample_rotation_test"></img>
+            </div>
             <br />
             <br />
-            {Object.keys(questionsAndAnswers).map((questionKey, questionIndex) => (
-                <div key={questionKey}>
-                    <img src={questionIndex === 0 ? rotation_question_1 : rotation_question_2} alt={`rotation_question_${questionIndex + 1}`} />
-                    <div>
-                        {questionsAndAnswers[questionKey].map((answerImage, answerIndex) => (
-                            <div key={`answer-${questionIndex}-${answerIndex}`} className="radio-container">
-                                <img src={answerImage} alt={`question_${questionIndex + 1}_answer_${answerIndex + 1}`}></img>
-                                <label>
-                                    <input type="radio" name={`question${questionIndex + 1}-answer${answerIndex + 1}`} value="same" /> Same
-                                </label>
-                                <label>
-                                    <input type="radio" name={`question${questionIndex + 1}-answer${answerIndex + 1}`} value="different" /> Different
-                                </label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            ))}
+                {renderQuestion(question1, question1Answers, 1)}
+                {renderQuestion(question2, question2Answers, 2)}
             <br />
             <br />
             <br />
             <br />
             {/* Next button */}
-            <button className="button" onClick={handleNext}> Next </button>
+            <button className="button" onClick={handleNext} disabled={!allAnswered}> Next </button>
         </div>
     );
 };

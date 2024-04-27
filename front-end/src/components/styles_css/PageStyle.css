@@ -3,7 +3,7 @@
     height: 700px;
   }
   
-  .button {
+  /* .button {
     font-size: 20px;
     width: 150px;
     background-color: white;
@@ -14,7 +14,30 @@
     display: block;
     margin: 20px auto;
     text-align: center;
-  }
+  } */
+
+  .button {
+    font-size: 20px;
+    width: 150px;
+    padding: 15px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for background and color */
+ }
+
+ .button.enabled {
+  background-color: green;
+  color: white;
+}
+
+.button:disabled {
+  background-color: grey;
+  color: black;
+  cursor: not-allowed; /* Changes the cursor to indicate the button is disabled */
+}
   
   div[name="instructions"] p {
     font-size: 20px;

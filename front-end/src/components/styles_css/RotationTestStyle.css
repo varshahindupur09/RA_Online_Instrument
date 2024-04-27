@@ -1,0 +1,54 @@
+.question-block {
+  margin-bottom: 20px;
+}
+
+.question-image-container {
+    text-align: center; /* Centers all inline content within the container */
+    margin-bottom: 20px; /* Adds space below the container */
+  }
+  
+  .question-image-container img {
+    display: inline-block; /* This makes the image respect text-align from its parent */
+    max-width: 70%; /* Ensures the image doesn’t exceed its container’s width */
+    height: auto; /* Maintains the aspect ratio of the image */
+  }
+
+.answers-table {
+  width: 100%;
+  border-collapse: collapse; /* Eliminates the space between the borders */
+  margin-left: 30px; 
+}
+
+.answers-table th, .answers-table td {
+  border: 1px solid black; /* Adds border to table headers and cells */
+  text-align: center;
+  padding: 10px;
+}
+
+.answers-table th {
+  background-color: #f2f2f2; /* Light grey background for headers */
+}
+
+.answer-image-header img {
+  width: 40px; 
+  height: auto;
+}
+
+.sample_test img {
+    width: 120%; 
+    height: 120%;
+    float: left;  
+    margin-right: 20px; 
+}
+
+.other_images img{
+    display: block;
+    width: 95%;
+    height: 95%;
+}
+
+.other_images2 img{
+    display: block;
+    width: 35%;
+    height: 35%;
+}
