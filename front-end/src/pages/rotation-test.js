@@ -33,7 +33,7 @@ const RotationTestQuestion = () => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-        navigate("/proceed-to-part2");
+        navigate("/proceed-to-part1-rotation-test");
     };
 
     const question1 = rotation_question_1; 

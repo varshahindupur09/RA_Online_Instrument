@@ -19,6 +19,8 @@ import ProceedToPart2 from "./pages/proceed-to-part2";
 import ConsentPage from "./pages/again-consent-page";
 import ExitSurveyPage from "./pages/exit-survey-page";
 import RotationTest from "./pages/rotation-test";
+import ProceedToPart1RotationTest from "./pages/proceed-to-part1-rotation-test";
+import RotationTestPart1 from "./pages/rotation-test-part-1";
 
 function App() {
     return (
@@ -42,6 +44,8 @@ function App() {
                         <Route path="/again-consent-page" element={<ConsentPage />} /> 
                         <Route path="/exit-survey-page" element={<ExitSurveyPage />} /> 
                         <Route path="/rotation-test" element={<RotationTest />} /> 
+                        <Route path="/proceed-to-part1-rotation-test" element={<ProceedToPart1RotationTest />} /> 
+                        <Route path="/rotation-test-part-1" element={<RotationTestPart1 />} /> 
                     </Routes>
                 </MainContent>
             </div>

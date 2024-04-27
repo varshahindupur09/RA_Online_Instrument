@@ -4,7 +4,7 @@ import '../components/styles_css/Title.css'
 function Title() {
   return (
     <div className="title-container">
-      <h1> Spatial Visualization Analysis : A Behavioural Analysis Experiment </h1>
+      <h1> Experiment : Math Ninja </h1>
     </div>
   );
 }

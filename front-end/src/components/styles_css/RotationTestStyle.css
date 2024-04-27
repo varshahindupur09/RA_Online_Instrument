@@ -9,12 +9,15 @@
   
   .question-image-container img {
     display: inline-block; /* This makes the image respect text-align from its parent */
-    max-width: 70%; /* Ensures the image doesn’t exceed its container’s width */
-    height: auto; /* Maintains the aspect ratio of the image */
+    /* max-width: 70%; Ensures the image doesn’t exceed its container’s width */
+    /* height: auto; Maintains the aspect ratio of the image */
+    object-fit: cover; /* Ensures the image covers the specified area, may crop as needed */
+    margin: 0 auto 20px; /* Center the image horizontally and add margin below */
+    width: 120px;
+    height: 120px;
   }
 
 .answers-table {
-  width: 100%;
   border-collapse: collapse; /* Eliminates the space between the borders */
   margin-left: 30px; 
 }
@@ -29,9 +32,12 @@
   background-color: #f2f2f2; /* Light grey background for headers */
 }
 
-.answer-image-header img {
-  width: 40px; 
-  height: auto;
+.answers-table th img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /* Ensures the image covers the specified area, may crop as needed */
+  display: inline-block; /* This makes the image respect text-align from its parent */
+  margin: auto; /* Center the image within the table header */
 }
 
 .sample_test img {
