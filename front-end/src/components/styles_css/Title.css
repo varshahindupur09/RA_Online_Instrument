@@ -1,8 +1,9 @@
 .title-container {
     position: relative;
     z-index: 1;
-    text-align: center; /* Align the text to the center */
+    /* text-align: left; Align the text to the center */
     padding: 20px; /* Add padding for spacing */
     border-bottom: 1px solid #ccc; /* Add a bottom border for layout lines */
+    margin-left: 220px;
   }
   

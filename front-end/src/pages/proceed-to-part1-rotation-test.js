@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import '../components/styles_css/PageStyle.css'; 
 
-const ProceedToPart2 = () => {
+const ProceedToPart1RotationTest = () => {
     const navigate = useNavigate(); 
 
     const handleNext = () => {
@@ -21,4 +21,4 @@ const ProceedToPart2 = () => {
     );
 };
 
-export default ProceedToPart2;
+export default ProceedToPart1RotationTest;

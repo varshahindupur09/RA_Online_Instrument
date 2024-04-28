@@ -5,7 +5,6 @@ import '../components/styles_css/PageStyle.css';
 const Home = () => {
     const navigate = useNavigate();
     const [prolificId, setProlificId] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
 
     const handleNext = () => {
         navigate("/instructions-consent2");
