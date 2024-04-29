@@ -1,0 +1,11 @@
+/* PaperFoldingStyle.css */
+
+.image-container {
+    max-width: 80%;
+    margin-left: 80px;
+  }
+  
+  .image-container img {
+    width: 250px;
+    height: 150px;
+  }

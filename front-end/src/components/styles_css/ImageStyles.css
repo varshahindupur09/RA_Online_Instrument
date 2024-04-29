@@ -6,6 +6,6 @@
 }
 
 .image-container img {
-  max-width: 60%;
-  height: auto;
+  width: 600px;
+  height: 400px;
 }

@@ -58,7 +58,21 @@ import Part1Question8Answer8Option3 from '../images/fl-paper-folding-test/part-1
 import Part1Question8Answer8Option4 from '../images/fl-paper-folding-test/part-1-3-minutes/question-8/answers-8/answer-8-option-4.png'; 
 import Part1Question8Answer8Option5 from '../images/fl-paper-folding-test/part-1-3-minutes/question-8/answers-8/answer-8-option-5.png'; 
 
-import '../components/styles_css/ImageStyles.css';
+import Part1Question9 from '../images/fl-paper-folding-test/part-1-3-minutes/question-9/part-1-question-9.png'; // Import Part 1 Question 8 image
+import Part1Question9Answer9Option1 from '../images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-1.png'; 
+import Part1Question9Answer9Option2 from '../images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-2.png'; 
+import Part1Question9Answer9Option3 from '../images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-3.png'; 
+import Part1Question9Answer9Option4 from '../images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-4.png'; 
+import Part1Question9Answer9Option5 from '../images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-5.png';
+
+import Part1Question10 from '../images/fl-paper-folding-test/part-1-3-minutes/question-10/part-1-question-10.png'; // Import Part 1 Question 8 image
+import Part1Question10Answer10Option1 from '../images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-1.png'; 
+import Part1Question10Answer10Option2 from '../images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-2.png'; 
+import Part1Question10Answer10Option3 from '../images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-3.png'; 
+import Part1Question10Answer10Option4 from '../images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-4.png'; 
+import Part1Question10Answer10Option5 from '../images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-5.png';
+
+import '../components/styles_css/PaperFoldingStyle.css';
 import '../components/styles_css/RadioButtonImage.css';
 import Timer from "../components/Timer"; 
 
@@ -357,6 +371,69 @@ const PaperFoldingPart1Questions = () => {
             <br />
             <br />
             
+            {/* <img src={Part1Question9} alt="Part1 Question9" /> */}
+            <img src={Part1Question9} alt="Part1 Question9" />
+            <div className="radio-container">
+                <input type="radio" id="Part1Question9Answer9Option1" name="Part1Question9Answer9"/>
+                <label htmlFor="Part1Question9Answer9Option1">
+                    <img src={Part1Question9Answer9Option1} alt="Part1Question9Answer9Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part1Question9Answer9Option2" name="Part1Question9Answer9"/>
+                <label htmlFor="Part1Question9Answer9Option2">
+                    <img src={Part1Question9Answer9Option2} alt="Part1Question9Answer9Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part1Question9Answer9Option3" name="Part1Question9Answer9"/>
+                <label htmlFor="Part1Question9Answer9Option3">
+                    <img src={Part1Question9Answer9Option3} alt="Part1Question9Answer9Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part1Question9Answer9Option4" name="Part1Question9Answer9"/>
+                <label htmlFor="Part1Question9Answer9Option4">
+                    <img src={Part1Question9Answer9Option4} alt="Part1Question9Answer9Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part1Question9Answer9Option5" name="Part1Question9Answer9"/>
+                <label htmlFor="Part1Question9Answer9Option5">
+                    <img src={Part1Question9Answer9Option5} alt="Part1Question9Answer9Option5" />
+                </label>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+            {/* <img src={Part1Question10} alt="Part1 Question10" /> */}
+            <img src={Part1Question10} alt="Part1 Question10" />
+            <div className="radio-container">
+                <input type="radio" id="Part1Question10Answer10Option1" name="Part1Question10Answer10"/>
+                <label htmlFor="Part1Question10Answer10Option1">
+                    <img src={Part1Question10Answer10Option1} alt="Part1Question10Answer10Option1" />
+                </label>
+                <br />
+                <input type="radio" id="Part1Question10Answer10Option2" name="Part1Question10Answer10"/>
+                <label htmlFor="Part1Question10Answer10Option2">
+                    <img src={Part1Question10Answer10Option2} alt="Part1Question10Answer10Option2" />
+                </label>
+                <br />
+                <input type="radio" id="Part1Question10Answer10Option3" name="Part1Question10Answer10"/>
+                <label htmlFor="Part1Question10Answer10Option3">
+                    <img src={Part1Question10Answer10Option3} alt="Part1Question10Answer10Option3" />
+                </label>
+                <br />
+                <input type="radio" id="Part1Question10Answer10Option4" name="Part1Question10Answer10"/>
+                <label htmlFor="Part1Question10Answer10Option4">
+                    <img src={Part1Question10Answer10Option4} alt="Part1Question10Answer10Option4" />
+                </label>
+                <br />
+                <input type="radio" id="Part1Question10Answer10Option5" name="Part1Question10Answer10"/>
+                <label htmlFor="Part1Question10Answer10Option5">
+                    <img src={Part1Question10Answer10Option5} alt="Part1Question10Answer10Option5" />
+                </label>
+            </div>
+
             {/* Next button */}
             <button className="button" onClick={handleNext}> Next </button>
         </div>

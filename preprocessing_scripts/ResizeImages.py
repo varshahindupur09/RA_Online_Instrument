@@ -36,40 +36,119 @@ def resize_images(image_paths, new_width, new_height):
 #     '../front-end/src/images/rotation_test/rotation-test-part-1/question-8/part-1-question-8.png',
 #     ]
         
+# image_paths = [
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-1.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-2.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-3.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-4.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-5.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-6.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-7.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-8.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/part-1-question-9.png',
+
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-1.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-2.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-3.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-4.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-5.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-6.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-7.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-8.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/part-1-question-10.png',
+
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-1.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-2.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-3.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-4.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-5.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-6.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-7.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-8.png',
+#     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/part-1-question-11.png',
+#     ]
+
+# image_paths = [
+
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-1/part-1-question-1.png',
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-2/part-1-question-2.png',
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-3/part-1-question-3.png',
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-4/part-1-question-4.png',
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-5/part-1-question-5.png',
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-6/part-1-question-6.png',
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-7/part-1-question-7.png',
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-8/part-1-question-8.png',
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-9/part-1-question-9.png',
+#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-10/part-1-question-10.png',
+#     ]
+
+
 image_paths = [
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-1.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-2.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-3.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-4.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-5.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-6.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-7.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/answer-8.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-9/part-1-question-9.png',
 
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-1.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-2.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-3.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-4.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-5.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-6.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-7.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/answer-8.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-10/part-1-question-10.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-1/answers-1/answer-1-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-1/answers-1/answer-1-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-1/answers-1/answer-1-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-1/answers-1/answer-1-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-1/answers-1/answer-1-option-5.png',
 
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-1.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-2.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-3.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-4.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-5.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-6.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-7.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/answer-8.png',
-    '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/part-1-question-11.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-2/answers-2/answer-2-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-2/answers-2/answer-2-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-2/answers-2/answer-2-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-2/answers-2/answer-2-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-2/answers-2/answer-2-option-5.png',
+
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-3/answers-3/answer-3-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-3/answers-3/answer-3-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-3/answers-3/answer-3-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-3/answers-3/answer-3-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-3/answers-3/answer-3-option-5.png',
+
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-4/answers-4/answer-4-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-4/answers-4/answer-4-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-4/answers-4/answer-4-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-4/answers-4/answer-4-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-4/answers-4/answer-4-option-5.png',
+
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-5/answers-5/answer-5-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-5/answers-5/answer-5-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-5/answers-5/answer-5-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-5/answers-5/answer-5-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-5/answers-5/answer-5-option-5.png',
+
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-6/answers-6/answer-6-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-6/answers-6/answer-6-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-6/answers-6/answer-6-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-6/answers-6/answer-6-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-6/answers-6/answer-6-option-5.png',
+
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-7/answers-7/answer-7-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-7/answers-7/answer-7-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-7/answers-7/answer-7-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-7/answers-7/answer-7-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-7/answers-7/answer-7-option-5.png',
+
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-8/answers-8/answer-8-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-8/answers-8/answer-8-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-8/answers-8/answer-8-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-8/answers-8/answer-8-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-8/answers-8/answer-8-option-5.png',
+
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-9/answers-9/answer-9-option-5.png',
+
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-1.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-2.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-3.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-4.png',
+    '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-5.png',
+
     ]
 
 # output_folder = './'
-new_width = 120
-new_height = 120
+new_width = 400
+new_height = 400
 
 resize_images(image_paths, new_width, new_height)
