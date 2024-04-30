@@ -5,29 +5,29 @@ import '../components/styles_css/RadioButtonImage.css';
 import '../components/styles_css/ImageStyles.css';
 import '../components/styles_css/PageStyle.css';
 
-import Image1 from '../images/rotation_test/rotation_test_1.png';
-import Image2 from '../images/rotation_test/rotation_test_2.png';
-import sample_rotation_test from '../images/rotation_test/sample_rotation_test.png';
+import Image1 from '../images/rotation-test/rotation_test_1.png';
+import Image2 from '../images/rotation-test/rotation_test_2.png';
+import sample_rotation_test from '../images/rotation-test/sample_rotation_test.png';
 
-import rotation_question_1 from '../images/rotation_test/question-1/rotation_question_1.png';
-import question1answer1 from '../images/rotation_test/question-1/answer-1/question-1-answer-1.png';
-import question1answer2 from '../images/rotation_test/question-1/answer-1/question-1-answer-2.png';
-import question1answer3 from '../images/rotation_test/question-1/answer-1/question-1-answer-3.png';
-import question1answer4 from '../images/rotation_test/question-1/answer-1/question-1-answer-4.png';
-import question1answer5 from '../images/rotation_test/question-1/answer-1/question-1-answer-5.png';
-import question1answer6 from '../images/rotation_test/question-1/answer-1/question-1-answer-6.png';
-import question1answer7 from '../images/rotation_test/question-1/answer-1/question-1-answer-7.png';
-import question1answer8 from '../images/rotation_test/question-1/answer-1/question-1-answer-8.png';
+import rotation_question_1 from '../images/rotation-test/question-1/rotation_question_1.png';
+import question1answer1 from '../images/rotation-test/question-1/answer-1/question-1-answer-1.png';
+import question1answer2 from '../images/rotation-test/question-1/answer-1/question-1-answer-2.png';
+import question1answer3 from '../images/rotation-test/question-1/answer-1/question-1-answer-3.png';
+import question1answer4 from '../images/rotation-test/question-1/answer-1/question-1-answer-4.png';
+import question1answer5 from '../images/rotation-test/question-1/answer-1/question-1-answer-5.png';
+import question1answer6 from '../images/rotation-test/question-1/answer-1/question-1-answer-6.png';
+import question1answer7 from '../images/rotation-test/question-1/answer-1/question-1-answer-7.png';
+import question1answer8 from '../images/rotation-test/question-1/answer-1/question-1-answer-8.png';
 
-import rotation_question_2 from '../images/rotation_test/question-2/rotation_question_2.png';
-import question2answer1 from '../images/rotation_test/question-2/answer-2/question-2-answer-1.png';
-import question2answer2 from '../images/rotation_test/question-2/answer-2/question-2-answer-2.png';
-import question2answer3 from '../images/rotation_test/question-2/answer-2/question-2-answer-3.png';
-import question2answer4 from '../images/rotation_test/question-2/answer-2/question-2-answer-4.png';
-import question2answer5 from '../images/rotation_test/question-2/answer-2/question-2-answer-5.png';
-import question2answer6 from '../images/rotation_test/question-2/answer-2/question-2-answer-6.png';
-import question2answer7 from '../images/rotation_test/question-2/answer-2/question-2-answer-7.png';
-import question2answer8 from '../images/rotation_test/question-2/answer-2/question-2-answer-8.png';
+import rotation_question_2 from '../images/rotation-test/question-2/rotation_question_2.png';
+import question2answer1 from '../images/rotation-test/question-2/answer-2/question-2-answer-1.png';
+import question2answer2 from '../images/rotation-test/question-2/answer-2/question-2-answer-2.png';
+import question2answer3 from '../images/rotation-test/question-2/answer-2/question-2-answer-3.png';
+import question2answer4 from '../images/rotation-test/question-2/answer-2/question-2-answer-4.png';
+import question2answer5 from '../images/rotation-test/question-2/answer-2/question-2-answer-5.png';
+import question2answer6 from '../images/rotation-test/question-2/answer-2/question-2-answer-6.png';
+import question2answer7 from '../images/rotation-test/question-2/answer-2/question-2-answer-7.png';
+import question2answer8 from '../images/rotation-test/question-2/answer-2/question-2-answer-8.png';
 
 const RotationTestQuestion = () => {
     const navigate = useNavigate();

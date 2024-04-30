@@ -3,122 +3,113 @@ import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
 import '../components/styles_css/RotationTestStyle.css';
 
-import Part1Question1 from '../images/rotation_test/rotation-test-part-1/question-1/part-1-question-1.png';
-import Part1Question1Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-1/answer-1.png'; 
-import Part1Question1Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-1/answer-2.png'; 
-import Part1Question1Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-1/answer-3.png'; 
-import Part1Question1Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-1/answer-4.png'; 
-import Part1Question1Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-1/answer-5.png'; 
-import Part1Question1Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-1/answer-6.png'; 
-import Part1Question1Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-1/answer-7.png'; 
-import Part1Question1Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-1/answer-8.png'; 
+import Part2Question1 from '../images/rotation-test/rotation-test-part-2/question-1/part-2-question-1.png';
+import Part2Question1Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-1/answer-1.png'; 
+import Part2Question1Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-1/answer-2.png'; 
+import Part2Question1Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-1/answer-3.png'; 
+import Part2Question1Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-1/answer-4.png'; 
+import Part2Question1Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-1/answer-5.png'; 
+import Part2Question1Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-1/answer-6.png'; 
+import Part2Question1Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-1/answer-7.png'; 
+import Part2Question1Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-1/answer-8.png'; 
 
-import Part1Question2 from '../images/rotation_test/rotation-test-part-1/question-2/part-1-question-2.png';
-import Part1Question2Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-2/answer-1.png'; 
-import Part1Question2Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-2/answer-2.png'; 
-import Part1Question2Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-2/answer-3.png'; 
-import Part1Question2Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-2/answer-4.png'; 
-import Part1Question2Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-2/answer-5.png'; 
-import Part1Question2Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-2/answer-6.png'; 
-import Part1Question2Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-2/answer-7.png'; 
-import Part1Question2Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-2/answer-8.png'; 
+import Part2Question2 from '../images/rotation-test/rotation-test-part-2/question-2/part-2-question-2.png';
+import Part2Question2Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-2/answer-1.png'; 
+import Part2Question2Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-2/answer-2.png'; 
+import Part2Question2Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-2/answer-3.png'; 
+import Part2Question2Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-2/answer-4.png'; 
+import Part2Question2Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-2/answer-5.png'; 
+import Part2Question2Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-2/answer-6.png'; 
+import Part2Question2Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-2/answer-7.png'; 
+import Part2Question2Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-2/answer-8.png'; 
 
-import Part1Question3 from '../images/rotation_test/rotation-test-part-1/question-3/part-1-question-3.png';
-import Part1Question3Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-3/answer-1.png'; 
-import Part1Question3Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-3/answer-2.png'; 
-import Part1Question3Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-3/answer-3.png'; 
-import Part1Question3Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-3/answer-4.png'; 
-import Part1Question3Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-3/answer-5.png'; 
-import Part1Question3Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-3/answer-6.png'; 
-import Part1Question3Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-3/answer-7.png'; 
-import Part1Question3Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-3/answer-8.png';
+import Part2Question3 from '../images/rotation-test/rotation-test-part-2/question-3/part-2-question-3.png';
+import Part2Question3Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-3/answer-1.png'; 
+import Part2Question3Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-3/answer-2.png'; 
+import Part2Question3Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-3/answer-3.png'; 
+import Part2Question3Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-3/answer-4.png'; 
+import Part2Question3Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-3/answer-5.png'; 
+import Part2Question3Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-3/answer-6.png'; 
+import Part2Question3Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-3/answer-7.png'; 
+import Part2Question3Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-3/answer-8.png';
 
 
-import Part1Question4 from '../images/rotation_test/rotation-test-part-1/question-4/part-1-question-4.png';
-import Part1Question4Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-4/answer-1.png'; 
-import Part1Question4Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-4/answer-2.png'; 
-import Part1Question4Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-4/answer-3.png'; 
-import Part1Question4Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-4/answer-4.png'; 
-import Part1Question4Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-4/answer-5.png'; 
-import Part1Question4Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-4/answer-6.png'; 
-import Part1Question4Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-4/answer-7.png'; 
-import Part1Question4Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-4/answer-8.png'; 
+import Part2Question4 from '../images/rotation-test/rotation-test-part-2/question-4/part-2-question-4.png';
+import Part2Question4Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-4/answer-1.png'; 
+import Part2Question4Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-4/answer-2.png'; 
+import Part2Question4Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-4/answer-3.png'; 
+import Part2Question4Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-4/answer-4.png'; 
+import Part2Question4Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-4/answer-5.png'; 
+import Part2Question4Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-4/answer-6.png'; 
+import Part2Question4Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-4/answer-7.png'; 
+import Part2Question4Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-4/answer-8.png'; 
 
-import Part1Question5 from '../images/rotation_test/rotation-test-part-1/question-5/part-1-question-5.png';
-import Part1Question5Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-5/answer-1.png'; 
-import Part1Question5Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-5/answer-2.png'; 
-import Part1Question5Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-5/answer-3.png'; 
-import Part1Question5Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-5/answer-4.png'; 
-import Part1Question5Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-5/answer-5.png'; 
-import Part1Question5Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-5/answer-6.png'; 
-import Part1Question5Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-5/answer-7.png'; 
-import Part1Question5Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-5/answer-8.png';
+import Part2Question5 from '../images/rotation-test/rotation-test-part-2/question-5/part-2-question-5.png';
+import Part2Question5Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-5/answer-1.png'; 
+import Part2Question5Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-5/answer-2.png'; 
+import Part2Question5Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-5/answer-3.png'; 
+import Part2Question5Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-5/answer-4.png'; 
+import Part2Question5Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-5/answer-5.png'; 
+import Part2Question5Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-5/answer-6.png'; 
+import Part2Question5Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-5/answer-7.png'; 
+import Part2Question5Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-5/answer-8.png';
 
-import Part1Question6 from '../images/rotation_test/rotation-test-part-1/question-6/part-1-question-6.png';
-import Part1Question6Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-6/answer-1.png'; 
-import Part1Question6Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-6/answer-2.png'; 
-import Part1Question6Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-6/answer-3.png'; 
-import Part1Question6Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-6/answer-4.png'; 
-import Part1Question6Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-6/answer-5.png'; 
-import Part1Question6Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-6/answer-6.png'; 
-import Part1Question6Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-6/answer-7.png'; 
-import Part1Question6Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-6/answer-8.png';
+import Part2Question6 from '../images/rotation-test/rotation-test-part-2/question-6/part-2-question-6.png';
+import Part2Question6Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-6/answer-1.png'; 
+import Part2Question6Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-6/answer-2.png'; 
+import Part2Question6Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-6/answer-3.png'; 
+import Part2Question6Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-6/answer-4.png'; 
+import Part2Question6Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-6/answer-5.png'; 
+import Part2Question6Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-6/answer-6.png'; 
+import Part2Question6Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-6/answer-7.png'; 
+import Part2Question6Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-6/answer-8.png';
 
-import Part1Question7 from '../images/rotation_test/rotation-test-part-1/question-7/part-1-question-7.png';
-import Part1Question7Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-7/answer-1.png'; 
-import Part1Question7Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-7/answer-2.png'; 
-import Part1Question7Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-7/answer-3.png'; 
-import Part1Question7Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-7/answer-4.png'; 
-import Part1Question7Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-7/answer-5.png'; 
-import Part1Question7Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-7/answer-6.png'; 
-import Part1Question7Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-7/answer-7.png'; 
-import Part1Question7Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-7/answer-8.png';
+import Part2Question7 from '../images/rotation-test/rotation-test-part-2/question-7/part-2-question-7.png';
+import Part2Question7Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-7/answer-1.png'; 
+import Part2Question7Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-7/answer-2.png'; 
+import Part2Question7Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-7/answer-3.png'; 
+import Part2Question7Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-7/answer-4.png'; 
+import Part2Question7Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-7/answer-5.png'; 
+import Part2Question7Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-7/answer-6.png'; 
+import Part2Question7Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-7/answer-7.png'; 
+import Part2Question7Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-7/answer-8.png';
 
-import Part1Question8 from '../images/rotation_test/rotation-test-part-1/question-8/part-1-question-8.png';
-import Part1Question8Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-8/answer-1.png'; 
-import Part1Question8Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-8/answer-2.png'; 
-import Part1Question8Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-8/answer-3.png'; 
-import Part1Question8Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-8/answer-4.png'; 
-import Part1Question8Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-8/answer-5.png'; 
-import Part1Question8Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-8/answer-6.png'; 
-import Part1Question8Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-8/answer-7.png'; 
-import Part1Question8Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-8/answer-8.png';
+import Part2Question8 from '../images/rotation-test/rotation-test-part-2/question-8/part-2-question-8.png';
+import Part2Question8Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-8/answer-1.png'; 
+import Part2Question8Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-8/answer-2.png'; 
+import Part2Question8Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-8/answer-3.png'; 
+import Part2Question8Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-8/answer-4.png'; 
+import Part2Question8Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-8/answer-5.png'; 
+import Part2Question8Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-8/answer-6.png'; 
+import Part2Question8Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-8/answer-7.png'; 
+import Part2Question8Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-8/answer-8.png';
 
-import Part1Question9 from '../images/rotation_test/rotation-test-part-1/question-9/part-1-question-9.png';
-import Part1Question9Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-9/answer-1.png'; 
-import Part1Question9Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-9/answer-2.png'; 
-import Part1Question9Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-9/answer-3.png'; 
-import Part1Question9Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-9/answer-4.png'; 
-import Part1Question9Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-9/answer-5.png'; 
-import Part1Question9Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-9/answer-6.png'; 
-import Part1Question9Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-9/answer-7.png'; 
-import Part1Question9Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-9/answer-8.png';
+import Part2Question9 from '../images/rotation-test/rotation-test-part-2/question-9/part-2-question-9.png';
+import Part2Question9Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-9/answer-1.png'; 
+import Part2Question9Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-9/answer-2.png'; 
+import Part2Question9Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-9/answer-3.png'; 
+import Part2Question9Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-9/answer-4.png'; 
+import Part2Question9Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-9/answer-5.png'; 
+import Part2Question9Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-9/answer-6.png'; 
+import Part2Question9Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-9/answer-7.png'; 
+import Part2Question9Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-9/answer-8.png';
 
-import Part1Question10 from '../images/rotation_test/rotation-test-part-1/question-10/part-1-question-10.png';
-import Part1Question10Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-10/answer-1.png'; 
-import Part1Question10Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-10/answer-2.png'; 
-import Part1Question10Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-10/answer-3.png'; 
-import Part1Question10Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-10/answer-4.png'; 
-import Part1Question10Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-10/answer-5.png'; 
-import Part1Question10Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-10/answer-6.png'; 
-import Part1Question10Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-10/answer-7.png'; 
-import Part1Question10Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-10/answer-8.png';
+import Part2Question10 from '../images/rotation-test/rotation-test-part-2/question-10/part-2-question-10.png';
+import Part2Question10Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-10/answer-1.png'; 
+import Part2Question10Answer1Option2 from '../images/rotation-test/rotation-test-part-2/question-10/answer-2.png'; 
+import Part2Question10Answer1Option3 from '../images/rotation-test/rotation-test-part-2/question-10/answer-3.png'; 
+import Part2Question10Answer1Option4 from '../images/rotation-test/rotation-test-part-2/question-10/answer-4.png'; 
+import Part2Question10Answer1Option5 from '../images/rotation-test/rotation-test-part-2/question-10/answer-5.png'; 
+import Part2Question10Answer1Option6 from '../images/rotation-test/rotation-test-part-2/question-10/answer-6.png'; 
+import Part2Question10Answer1Option7 from '../images/rotation-test/rotation-test-part-2/question-10/answer-7.png'; 
+import Part2Question10Answer1Option8 from '../images/rotation-test/rotation-test-part-2/question-10/answer-8.png';
 
-import Part1Question11 from '../images/rotation_test/rotation-test-part-1/question-11/part-1-question-11.png';
-import Part1Question11Answer1Option1 from '../images/rotation_test/rotation-test-part-1/question-11/answer-1.png'; 
-import Part1Question11Answer1Option2 from '../images/rotation_test/rotation-test-part-1/question-11/answer-2.png'; 
-import Part1Question11Answer1Option3 from '../images/rotation_test/rotation-test-part-1/question-11/answer-3.png'; 
-import Part1Question11Answer1Option4 from '../images/rotation_test/rotation-test-part-1/question-11/answer-4.png'; 
-import Part1Question11Answer1Option5 from '../images/rotation_test/rotation-test-part-1/question-11/answer-5.png'; 
-import Part1Question11Answer1Option6 from '../images/rotation_test/rotation-test-part-1/question-11/answer-6.png'; 
-import Part1Question11Answer1Option7 from '../images/rotation_test/rotation-test-part-1/question-11/answer-7.png'; 
-import Part1Question11Answer1Option8 from '../images/rotation_test/rotation-test-part-1/question-11/answer-8.png';
 
 
 import Timer from "../components/Timer"; 
 import '../components/styles_css/PageStyle.css'; 
 
-const RotationTestPart1 = () => {
+const RotationTestPart2 = () => {
     const navigate = useNavigate();
 
     // State to manage timer visibility
@@ -133,70 +124,64 @@ const RotationTestPart1 = () => {
         navigate("/proceed-to-part2"); //if a breather is needed in between we can add it 
     };
 
-    const question1 = Part1Question1; 
+    const question1 = Part2Question1; 
     const question1Answers = [
-        Part1Question1Answer1Option1, Part1Question1Answer1Option2, Part1Question1Answer1Option3, Part1Question1Answer1Option4, 
-        Part1Question1Answer1Option5, Part1Question1Answer1Option6, Part1Question1Answer1Option7, Part1Question1Answer1Option8
+        Part2Question1Answer1Option1, Part2Question1Answer1Option2, Part2Question1Answer1Option3, Part2Question1Answer1Option4, 
+        Part2Question1Answer1Option5, Part2Question1Answer1Option6, Part2Question1Answer1Option7, Part2Question1Answer1Option8
     ];
 
-    const question2 = Part1Question2; 
+    const question2 = Part2Question2; 
     const question2Answers = [
-        Part1Question2Answer1Option1, Part1Question2Answer1Option2, Part1Question2Answer1Option3, Part1Question2Answer1Option4,
-        Part1Question2Answer1Option5, Part1Question2Answer1Option6, Part1Question2Answer1Option7, Part1Question2Answer1Option8
+        Part2Question2Answer1Option1, Part2Question2Answer1Option2, Part2Question2Answer1Option3, Part2Question2Answer1Option4,
+        Part2Question2Answer1Option5, Part2Question2Answer1Option6, Part2Question2Answer1Option7, Part2Question2Answer1Option8
     ];
 
-    const question3 = Part1Question3; 
+    const question3 = Part2Question3; 
     const question3Answers = [
-        Part1Question3Answer1Option1, Part1Question3Answer1Option2, Part1Question3Answer1Option3, Part1Question3Answer1Option4,
-        Part1Question3Answer1Option5, Part1Question3Answer1Option6, Part1Question3Answer1Option7, Part1Question3Answer1Option8
+        Part2Question3Answer1Option1, Part2Question3Answer1Option2, Part2Question3Answer1Option3, Part2Question3Answer1Option4,
+        Part2Question3Answer1Option5, Part2Question3Answer1Option6, Part2Question3Answer1Option7, Part2Question3Answer1Option8
     ];
 
-    const question4 = Part1Question4; 
+    const question4 = Part2Question4; 
     const question4Answers = [
-        Part1Question4Answer1Option1, Part1Question4Answer1Option2, Part1Question4Answer1Option3, Part1Question4Answer1Option4,
-        Part1Question4Answer1Option5, Part1Question4Answer1Option6, Part1Question4Answer1Option7, Part1Question4Answer1Option8
+        Part2Question4Answer1Option1, Part2Question4Answer1Option2, Part2Question4Answer1Option3, Part2Question4Answer1Option4,
+        Part2Question4Answer1Option5, Part2Question4Answer1Option6, Part2Question4Answer1Option7, Part2Question4Answer1Option8
     ];
 
-    const question5 = Part1Question5; 
+    const question5 = Part2Question5; 
     const question5Answers = [
-        Part1Question5Answer1Option1, Part1Question5Answer1Option2, Part1Question5Answer1Option3, Part1Question5Answer1Option4,
-        Part1Question5Answer1Option5, Part1Question5Answer1Option6, Part1Question5Answer1Option7, Part1Question5Answer1Option8
+        Part2Question5Answer1Option1, Part2Question5Answer1Option2, Part2Question5Answer1Option3, Part2Question5Answer1Option4,
+        Part2Question5Answer1Option5, Part2Question5Answer1Option6, Part2Question5Answer1Option7, Part2Question5Answer1Option8
     ];
 
-    const question6 = Part1Question6; 
+    const question6 = Part2Question6; 
 const question6Answers = [
-    Part1Question6Answer1Option1, Part1Question6Answer1Option2, Part1Question6Answer1Option3, Part1Question6Answer1Option4, 
-    Part1Question6Answer1Option5, Part1Question6Answer1Option6, Part1Question6Answer1Option7, Part1Question6Answer1Option8
+    Part2Question6Answer1Option1, Part2Question6Answer1Option2, Part2Question6Answer1Option3, Part2Question6Answer1Option4, 
+    Part2Question6Answer1Option5, Part2Question6Answer1Option6, Part2Question6Answer1Option7, Part2Question6Answer1Option8
 ];
 
-const question7 = Part1Question7; 
+const question7 = Part2Question7; 
 const question7Answers = [
-    Part1Question7Answer1Option1, Part1Question7Answer1Option2, Part1Question7Answer1Option3, Part1Question7Answer1Option4,
-    Part1Question7Answer1Option5, Part1Question7Answer1Option6, Part1Question7Answer1Option7, Part1Question7Answer1Option8
+    Part2Question7Answer1Option1, Part2Question7Answer1Option2, Part2Question7Answer1Option3, Part2Question7Answer1Option4,
+    Part2Question7Answer1Option5, Part2Question7Answer1Option6, Part2Question7Answer1Option7, Part2Question7Answer1Option8
 ];
 
-const question8 = Part1Question8; 
+const question8 = Part2Question8; 
 const question8Answers = [
-    Part1Question8Answer1Option1, Part1Question8Answer1Option2, Part1Question8Answer1Option3, Part1Question8Answer1Option4,
-    Part1Question8Answer1Option5, Part1Question8Answer1Option6, Part1Question8Answer1Option7, Part1Question8Answer1Option8
+    Part2Question8Answer1Option1, Part2Question8Answer1Option2, Part2Question8Answer1Option3, Part2Question8Answer1Option4,
+    Part2Question8Answer1Option5, Part2Question8Answer1Option6, Part2Question8Answer1Option7, Part2Question8Answer1Option8
 ];
 
-const question9 = Part1Question9; 
+const question9 = Part2Question9; 
 const question9Answers = [
-    Part1Question9Answer1Option1, Part1Question9Answer1Option2, Part1Question9Answer1Option3, Part1Question9Answer1Option4,
-    Part1Question9Answer1Option5, Part1Question9Answer1Option6, Part1Question9Answer1Option7, Part1Question9Answer1Option8
+    Part2Question9Answer1Option1, Part2Question9Answer1Option2, Part2Question9Answer1Option3, Part2Question9Answer1Option4,
+    Part2Question9Answer1Option5, Part2Question9Answer1Option6, Part2Question9Answer1Option7, Part2Question9Answer1Option8
 ];
 
-const question10 = Part1Question10; 
+const question10 = Part2Question10; 
 const question10Answers = [
-    Part1Question10Answer1Option1, Part1Question10Answer1Option2, Part1Question10Answer1Option3, Part1Question10Answer1Option4,
-    Part1Question10Answer1Option5, Part1Question10Answer1Option6, Part1Question10Answer1Option7, Part1Question10Answer1Option8
-];
-
-const question11 = Part1Question11; 
-const question11Answers = [
-    Part1Question11Answer1Option1, Part1Question11Answer1Option2, Part1Question11Answer1Option3, Part1Question11Answer1Option4,
-    Part1Question11Answer1Option5, Part1Question11Answer1Option6, Part1Question11Answer1Option7, Part1Question11Answer1Option8
+    Part2Question10Answer1Option1, Part2Question10Answer1Option2, Part2Question10Answer1Option3, Part2Question10Answer1Option4,
+    Part2Question10Answer1Option5, Part2Question10Answer1Option6, Part2Question10Answer1Option7, Part2Question10Answer1Option8
 ];
 
     const [answers, setAnswers] = useState({
@@ -210,7 +195,6 @@ const question11Answers = [
         question8: Array(question8Answers.length).fill(null),
         question9: Array(question9Answers.length).fill(null),
         question10: Array(question10Answers.length).fill(null),
-        question11: Array(question11Answers.length).fill(null),
     });
 
     const handleAnswerChange = (questionNumber, index, value) => {
@@ -299,9 +283,6 @@ const question11Answers = [
             {renderQuestion(question10, question10Answers, 10)}
             <br />
             <br />
-            {renderQuestion(question11, question11Answers, 11)}
-            <br />
-            <br />
             <br />
             <br />
             {/* Next button */}
@@ -311,4 +292,4 @@ const question11Answers = [
             );
     };
 
-export default RotationTestPart1;
+export default RotationTestPart2;
