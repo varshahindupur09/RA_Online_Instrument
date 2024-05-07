@@ -6,28 +6,6 @@ const EndFLPage = () => {
         <div className="container">
             <h3>ADDITIONAL QUESTIONS</h3>
             <p>
-                * What is your gender?
-            </p>
-            <div className="radio-container">
-                <input type="radio" id="additional-questions-1" name="additional-questions" value="Male" />
-                <label htmlFor="additional-questions-1">Male</label>
-                <br />
-                <input type="radio" id="additional-questions-2" name="additional-questions" value="Female" />
-                <label htmlFor="additional-questions-2">Female</label>
-                <br />
-                <input type="radio" id="additional-questions-3" name="additional-questions" value="Non Binary" />
-                <label htmlFor="additional-questions-3">Non Binary</label>
-                <br />
-                <input type="radio" id="additional-questions-4" name="additional-questions" value="Transgender" />
-                <label htmlFor="additional-questions-4">Transgender</label>
-                <br />
-                <input type="radio" id="additional-questions-5" name="additional-questions" value="Prefer not to say" />
-                <label htmlFor="additional-questions-5">Prefer not to sa</label>
-            </div>
-            <br/>
-            <br/>
-            <br/>
-            <p>
                 * Please indicate the highest level of education you have completed.
             </p>
             <div className="radio-container">

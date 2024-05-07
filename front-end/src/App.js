@@ -23,7 +23,7 @@ import ProceedToPart1RotationTest from "./pages/proceed-to-part1-rotation-test";
 import RotationTestPart1 from "./pages/rotation-test-part-1";
 import ProceedToPart2RotationTest from "./pages/proceed-to-part2-rotation-test";
 import RotationTestPart2 from "./pages/rotation-test-part-2";
-import AdditionalQuestions from "./pages/additional-questions";
+import AdditionalQuestions from "./pages/demographic-questions";
 import EndSurvey from "./pages/endSurvey";
 import ProceedToDemographicQuestions from "./pages/proceed-to-demographic-questions";
 
@@ -53,7 +53,7 @@ function App() {
                         <Route path="/rotation-test-part-1" element={<RotationTestPart1 />} /> 
                         <Route path="/proceed-to-part2-rotation-test" element={<ProceedToPart2RotationTest />} /> 
                         <Route path="/rotation-test-part-2" element={<RotationTestPart2 />} /> 
-                        <Route path="/additional-questions" element={<AdditionalQuestions />} /> 
+                        <Route path="/demographic-questions" element={<AdditionalQuestions />} /> 
                         <Route path="/end-survey" element={<EndSurvey  />} /> 
                         <Route path="/proceed-to-demographic-questions" element={<ProceedToDemographicQuestions  />} /> 
                     </Routes>
@@ -64,3 +64,14 @@ function App() {
 }
 
 export default App;
+
+
+// testing
+// http://localhost:3000/rotation-test
+// http://localhost:3000/proceed-to-part1-rotation-test
+// http://localhost:3000/rotation-test-part-1
+// http://localhost:3000/proceed-to-part2-rotation-test
+// http://localhost:3000/rotation-test-part-2
+// http://localhost:3000/additional-questions
+// http://localhost:3000/end-survey
+// http://localhost:3000/proceed-to-demographic-questions
