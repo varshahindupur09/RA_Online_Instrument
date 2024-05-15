@@ -113,7 +113,7 @@ const RotationTestPart2 = () => {
     const navigate = useNavigate();
 
     // State to manage timer visibility
-    const [timerVisible, setTimerVisible] = useState(true);
+    const [timerVisible] = useState(true);
 
     const handleNext = () => {
         navigate("/proceed-to-part2");

@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  frontend:
+    build: ./frontend
+    container_name: frontend_c
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend:/app
+      - ./app/node_modules
+    tty: true
+
+
+# version: '3'
+# services:
+#   web:
+#     image: my-react-app
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       - NODE_ENV=production

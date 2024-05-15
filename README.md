@@ -37,3 +37,17 @@ Use following commands:
 # Currently, Backend = Mangoose + MongoDB 
 cd backend
 npm install mongoose=8.3.0
+
+# Config changes in docker daemon for setting up DNS configuration 
+{
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB",
+      "enabled": true
+    }
+  },
+  "experimental": false,
+  "dns": ["8.8.8.8", "8.8.4.4"]
+}
+
+# docker build -t my-react-app --progress=plain .

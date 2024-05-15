@@ -79,7 +79,7 @@ import Timer from "../components/Timer";
 const PaperFoldingPart2Questions = () => {
     const navigate = useNavigate();
     // State to manage timer visibility
-    const [timerVisible, setTimerVisible] = useState(true);
+    const [timerVisible] = useState(true);
 
     const handleNext = () => {
         navigate("/rotation-test");
