@@ -37,7 +37,7 @@ const FinancialLiteracy = () => {
 
         // Check if the user answered 2 out of 3 questions correctly
         if (correctCount >= 2) {
-            navigate("/paper-folding-test-sample-question");
+            navigate("/demographic-questions");
         } else {
             navigate("/end-fl-page");
         }

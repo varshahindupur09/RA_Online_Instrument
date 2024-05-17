@@ -1,7 +1,16 @@
+// demographic-questions
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
 
 const EndFLPage = () => {
+    const navigate = useNavigate();
+
+    const handleNext = () => {
+        navigate("/paper-folding-test-sample-question");
+    };
+
+
     return (
         <div className="container">
             <h3>ADDITIONAL QUESTIONS</h3>
@@ -93,6 +102,11 @@ const EndFLPage = () => {
                 <input type="radio" id="budget-management-experience-5" name="budget-management-experience" value="More than 10" />
                 <label htmlFor="budget-management-experience-5">More than 10</label>
             </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <button className="button" onClick={handleNext}> Next </button>
         </div>
     );
 };

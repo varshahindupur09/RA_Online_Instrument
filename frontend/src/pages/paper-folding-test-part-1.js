@@ -1,3 +1,4 @@
+// paper-folding-test-part-1
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
@@ -80,14 +81,13 @@ const PaperFoldingPart1Questions = () => {
     const navigate = useNavigate();
 
     // State to manage timer visibility
-    const [timerVisible, setTimerVisible] = useState(true);
+    const [timerVisible] = useState(true);
 
     const handleNext = () => {
         navigate("/proceed-to-part2");
     };
 
     const handleTimerCompletion = () => {
-        // setTimerVisible(false); 
         navigate("/proceed-to-part2"); //if a breather is needed in between we can add it 
     };
 

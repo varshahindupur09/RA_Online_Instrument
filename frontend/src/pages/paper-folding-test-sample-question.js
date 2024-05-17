@@ -1,14 +1,15 @@
+// paper-folding-test-sample-question
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SampleQuestion from '../images/fl-paper-folding-test/sample question/sample-question-1.png';
 import SampleQuestionSolution from '../images/fl-paper-folding-test/sample question/solution-sample-question-1.png';
-import '../components/styles_css/ImageStyles.css';
+import '../components/styles_css/SampleRotationTestImageStyle.css';
 import '../components/styles_css/PageStyle.css'; 
 
 const PaperFoldingSampleQuestion = () => {
     const navigate = useNavigate();
     const [showSolution, setShowSolution] = useState(false);
-    const [showButton, setShowButton] = useState(true);
+    const [setShowButton] = useState(true);
 
     const handleShowSolution = () => {
         setShowSolution(true); // Set showSolution to true when button is clicked
