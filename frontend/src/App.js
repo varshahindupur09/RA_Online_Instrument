@@ -26,6 +26,7 @@ import RotationTestPart2 from "./pages/rotation-test-part-2";
 import AdditionalQuestions from "./pages/demographic-questions";
 import EndSurvey from "./pages/endSurvey";
 import ProceedToDemographicQuestions from "./pages/proceed-to-demographic-questions";
+import Dashboard from "./pages/dashboard";
 
 function App() {
     return (
@@ -56,6 +57,7 @@ function App() {
                         <Route path="/demographic-questions" element={<AdditionalQuestions />} /> 
                         <Route path="/end-survey" element={<EndSurvey  />} /> 
                         <Route path="/proceed-to-demographic-questions" element={<ProceedToDemographicQuestions  />} /> 
+                        <Route path="/dashboard" element={<Dashboard  />} /> 
                     </Routes>
                 </MainContent>
             </div>
