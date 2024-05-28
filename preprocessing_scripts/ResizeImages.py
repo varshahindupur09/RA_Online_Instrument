@@ -68,20 +68,23 @@ def resize_images(image_paths, new_width, new_height):
 #     '../front-end/src/images/rotation_test/rotation-test-part-1/question-11/part-1-question-11.png',
 #     ]
 
-# image_paths = [
+image_paths = [
 
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-1/part-1-question-1.png',
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-2/part-1-question-2.png',
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-3/part-1-question-3.png',
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-4/part-1-question-4.png',
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-5/part-1-question-5.png',
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-6/part-1-question-6.png',
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-7/part-1-question-7.png',
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-8/part-1-question-8.png',
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-9/part-1-question-9.png',
-#     '../front-end/src/images/fl-paper-folding-test/part-1-3-minutes/question-10/part-1-question-10.png',
-#     ]
+    # '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-1/part-1-question-1.png', ]
+    # '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-2/part-1-question-2.png', ]
+    # '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-3/part-1-question-3.png', ]
+    '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-4/part-1-question-4.png', ]
+    # '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-5/part-1-question-5.png',
+    # '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-6/part-1-question-6.png',
+    # '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-7/part-1-question-7.png',
+    # '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-8/part-1-question-8.png',
+    # '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-9/part-1-question-9.png',
+    # '../frontend/src/images/fl-paper-folding-test/part-1-3-minutes/question-10/part-1-question-10.png',
+    # ]
 
+# output_folder = './'
+new_width = 370 # 255
+new_height = 133 
 
 # image_paths = [
 
@@ -148,7 +151,7 @@ def resize_images(image_paths, new_width, new_height):
 # # output_folder = './'
 # new_width = 400
 # new_height = 400
-        
+
 # image_paths = [
 #     'front-end/src/images/rotation_test/rotation-test-part-2/question-1',
 #     '../front-end/src/images/rotation-test/rotation-test-part-2/question-1/part-2-question-1.png',
@@ -266,14 +269,29 @@ def resize_images(image_paths, new_width, new_height):
 # new_width = 500
 # new_height = 330
         
-image_paths = [
-    '../frontend/src/images/dashboard/timeseries-bar/enlarged/1-left.png',
-    '../frontend/src/images/dashboard/timeseries-bar/enlarged/1-right.png',
-    '../frontend/src/images/dashboard/timeseries-bar/enlarged/2-left.png',
-    '../frontend/src/images/dashboard/timeseries-bar/enlarged/2-right.png',
-]
+# image_paths = [
+#     '../frontend/src/images/dashboard/timeseries-bar/enlarged/1-left.png',
+#     '../frontend/src/images/dashboard/timeseries-bar/enlarged/1-right.png',
+#     '../frontend/src/images/dashboard/timeseries-bar/enlarged/2-left.png',
+#     '../frontend/src/images/dashboard/timeseries-bar/enlarged/2-right.png',
+# ]
 
-new_width = 990
-new_height = 545
+# new_width = 990
+# new_height = 545
+        
+
+# image_paths = [
+#     '../frontend/src/images/UCF_Logo.png',
+# ]
+
+# new_width = 100
+# new_height = 50
+        
+# image_paths = [
+#     '../frontend/src/images/fl-paper-folding-test/sample-question/sample-question-1.png',
+#     ]
+
+# new_width = 255
+# new_height = 133
 
 resize_images(image_paths, new_width, new_height)

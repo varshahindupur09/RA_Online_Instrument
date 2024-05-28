@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../components/styles_css/PageStyle.css'; 
+import logoImage from '../images/UCF_Logo.png';
 
 const Home = () => {
     const navigate = useNavigate();
     const [prolificId, setProlificId] = useState("");
 
     const handleNext = () => {
-        navigate("/instructions-consent2");
+        navigate("/first-instr-consent");
     };
 
     return (
         <div className="container">
+            <div className="LogoStyleImage">
+                <p>
+                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
+                    <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p> 
+                </p>
+            </div>
             <h2>Please add your Prolific ID and your phone number in the fields below.</h2>
             <form className="form-container">
                 <label htmlFor="prolificId">* Prolific ID:  </label>

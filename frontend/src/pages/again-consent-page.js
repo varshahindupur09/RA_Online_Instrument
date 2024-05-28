@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../components/styles_css/PageStyle.css'; 
+import '../components/styles_css/RadioButton.css';
+import logoImage from '../images/UCF_Logo.png'; 
 
 const ConsentPage = () => {
     const navigate = useNavigate();
@@ -12,7 +14,7 @@ const ConsentPage = () => {
 
     const handleNext = () => {
         if (consent === "yes") {
-            navigate("/financial-literacy");
+            navigate("/paper-folding-test-sample-question");
         } else if (consent === "no") {
             navigate("/exit-survey-page");
         }
@@ -20,10 +22,18 @@ const ConsentPage = () => {
 
     return (
         <div className="container">
-            <h3>Sorry, you did not give consent to participate in this study.</h3>
-            <h3>If you want to participate you need to click on Yes. If you do not wish to participate in this survey, please click on No. </h3>
+            <div className="LogoStyleImage">
+                <p>
+                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
+                </p>
+            </div>
             <br></br>
-            <h3><i>Consent</i></h3>
+            <br></br>
+            <br></br>
+            <div name="instructions">
+                <p><strong>If you do not consent, you cannot continue to participate in this study. Please choose to express your consent or leave the survey now.</strong></p>
+                <br></br>
+            </div>
             <div className="radio-container"> 
                 <input 
                     type="radio" 
@@ -31,18 +41,14 @@ const ConsentPage = () => {
                     name="consent" 
                     onChange={() => handleConsent("no")}
                     /> 
-                <label htmlFor="consent-no"> 
-                    No
-                </label>
+                <label htmlFor="consent-no">I want to leave the survey now</label>
                 <input 
                     type="radio" 
                     id="consent-yes" 
                     name="consent" 
                     onChange={() => handleConsent("yes")}
                     />
-                <label htmlFor="consent-yes"> 
-                    Yes
-                </label>
+                <label htmlFor="consent-yes">I consent to participating in the study</label>
             </div>
             <br></br>
             <button 

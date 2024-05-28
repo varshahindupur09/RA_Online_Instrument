@@ -1,46 +1,54 @@
-/* RadioButton.css */
-
 .radio-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .radio-container label {
-    margin-bottom: 10px;
-    cursor: pointer;
-    margin-left: 100px; 
-  }
-  
-  .radio-container input[type="radio"] + label:before {
-    content: "";
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 5px; /* Adjust spacing between radio button and text */
-    border: 2px solid #aaa;
-    border-radius: 50%;
-    vertical-align: middle;
-  }
-  
-  .radio-container input[type="radio"]:checked + label:before {
-    background-color: #2196F3; /* Change background color when checked */
-  }
-  
-  .radio-container input[type="radio"]:checked + label:after {
-    content: "";
-    display: block;
-    width: 10px;
-    height: 10px;
-    margin: 4px;
-    border-radius: 50%;
-    background: white;
-  }
-  
-  .radio-container input[type="radio"] {
-    display: none;
-    font-size: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  padding: 10px;
+  width: fit-content;
+  caret-color: transparent;
+}
 
-  .radio-container label {
-    font-size: 15px;
-  }
+.radio-container label {
+  position: relative;
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding-left: 35px; /* Space for pseudo-element */
+  margin-left: 100px;
+  font-size: 15px;
+  line-height: 20px;
+  display: flex;
+  align-items: center; /* Vertically align text and pseudo-elements */
+  white-space: nowrap;
+}
+
+.radio-container input[type="radio"] + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  background: white;
+  z-index: 0;
+  transition: none;
+  background: white;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.radio-container input[type="radio"]:checked + label:before {
+  background-color: #2196F3;
+  border-color: #2196F3;
+}
+
+.radio-container input[type="radio"] {
+  display: none;
+}
+
+.radio-container input[type="radio"]:checked + label::after {
+  content: ""; 
+  position: absolute;
+  visibility: hidden;
+}
+

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
 import '../components/styles_css/RotationTestStyle.css';
+import logoImage from '../images/UCF_Logo.png';
 
 import Part2Question1 from '../images/rotation-test/rotation-test-part-2/question-1/part-2-question-1.png';
 import Part2Question1Answer1Option1 from '../images/rotation-test/rotation-test-part-2/question-1/answer-1.png'; 
@@ -116,12 +117,12 @@ const RotationTestPart2 = () => {
     const [timerVisible] = useState(true);
 
     const handleNext = () => {
-        navigate("/proceed-to-part2");
+        navigate("/proceed-to-dashboard");
     };
 
     const handleTimerCompletion = () => {
         // setTimerVisible(false); 
-        navigate("/proceed-to-part2"); //if a breather is needed in between we can add it 
+        navigate("/proceed-to-dashboard"); //if a breather is needed in between we can add it 
     };
 
     const question1 = Part2Question1; 
@@ -247,46 +248,65 @@ const question10Answers = [
 
     return (
         <div className="container">
+            <div className="LogoStyleImage">
+                <p>
+                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
+                </p>
+                <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+            </div>
             <br />
-            <h2>Rotation Test Part 1: 3 minutes</h2>
+            <h2>Rotation Test Part 2: 3 minutes</h2>
             <br />
             {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
             <br />
             <br />
-            {renderQuestion(question1, question1Answers, 1)}
-            <br />
-            <br />
-            {renderQuestion(question2, question2Answers, 2)}
-            <br />
-            <br />
-            {renderQuestion(question3, question3Answers, 3)}
-            <br />
-            <br />
-            {renderQuestion(question4, question4Answers, 4)}
-            <br />
-            <br />
-            {renderQuestion(question5, question5Answers, 5)}
-            <br />
-            <br />            
-            {renderQuestion(question6, question6Answers, 6)}
-            <br />
-            <br />
-            {renderQuestion(question7, question7Answers, 7)}
-            <br />
-            <br />
-            {renderQuestion(question8, question8Answers, 8)}
-            <br />
-            <br />
-            {renderQuestion(question9, question9Answers, 9)}
-            <br />
-            <br />
-            {renderQuestion(question10, question10Answers, 10)}
-            <br />
+            <div name="instructions">
+                <p><strong>[Q1]</strong></p>
+                {renderQuestion(question1, question1Answers, 1)}
+                <br />
+                <br />
+                <p><strong>[Q2]</strong></p>
+                {renderQuestion(question2, question2Answers, 2)}
+                <br />
+                <br />
+                <p><strong>[Q3]</strong></p>
+                {renderQuestion(question3, question3Answers, 3)}
+                <br />
+                <br />
+                <p><strong>[Q4]</strong></p>
+                {renderQuestion(question4, question4Answers, 4)}
+                <br />
+                <br />
+                <p><strong>[Q5]</strong></p>
+                {renderQuestion(question5, question5Answers, 5)}
+                <br />
+                <br />  
+                <p><strong>[Q6]</strong></p>           
+                {renderQuestion(question6, question6Answers, 6)}
+                <br />
+                <br />
+                <p><strong>[Q7]</strong></p>
+                {renderQuestion(question7, question7Answers, 7)}
+                <br />
+                <br />
+                <p><strong>[Q8]</strong></p>
+                {renderQuestion(question8, question8Answers, 8)}
+                <br />
+                <br />
+                <p><strong>[Q9]</strong></p>
+                {renderQuestion(question9, question9Answers, 9)}
+                <br />
+                <br />
+                <p><strong>[Q10]</strong></p>
+                {renderQuestion(question10, question10Answers, 10)}
+                <br />
+            </div>
             <br />
             <br />
             <br />
             {/* Next button */}
-            <button className="button" onClick={handleNext} disabled={!allAnswered}> Next </button>
+            <button className="button" onClick={handleNext}> Next </button>
+            {/* disabled={!allAnswered} */}
         </div>
 
             );

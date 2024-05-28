@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/RadioButton.css'; 
 import '../components/styles_css/PageStyle.css'; 
+import logoImage from '../images/UCF_Logo.png';
  
-const InstructionsAndConsent2 = () => {
+const FirstInstrConsent = () => {
     const navigate = useNavigate();
     const [consent, setConsent] = useState(null);
 
@@ -13,17 +14,24 @@ const InstructionsAndConsent2 = () => {
 
     const handleNext = () => {
         if (consent === "yes") {
-            navigate("/financial-literacy");
+            navigate("/paper-folding-test-sample-question");
         } else if (consent === "no") {
             navigate("/again-consent-page");
         }
     };
 
-
     return (
         <div className="container">
-            <h1> Title of research study: Data Visualization and Financial Decision Making </h1>
+            <div className="LogoStyleImage">
+                <p>
+                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
+                </p>
+                <p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+            </div>
             <h2> Investigator: Kelly Wellman (PhD Student), Principal Investigator</h2>
+            <br></br>
+            <br></br>
+            <br></br>
             <h3><u>KEY INFORMATION:</u></h3>
             <div name="instructions">
                 <p> The following is a short summary of this study to help you decide whether or not to be a part of this study. More detailed information is listed later on in this form.</p>
@@ -144,5 +152,5 @@ const InstructionsAndConsent2 = () => {
     );
 };
  
-export default InstructionsAndConsent2;
+export default FirstInstrConsent;
 

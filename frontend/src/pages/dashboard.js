@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css';  
 import '../components/styles_css/dashboardStyles.css'; 
+import logoImage from '../images/UCF_Logo.png';
 
 import TimeSeriesBarImage1 from "../images/dashboard/timeseries-bar/1-left.png";
 import TimeSeriesBarImage2 from "../images/dashboard/timeseries-bar/1-right.png";
@@ -101,6 +102,12 @@ const Dashboard = () => {
 
     return (
         <div className="container">
+            <div className="LogoStyleImage">
+                <p>
+                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
+                    <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p> 
+                </p>
+            </div>
             <div className="image-grid">
                 {TimeSeriesBarImages.map((imgSrc, index) => (
                     <div className="image-item" key={index}>
@@ -148,22 +155,29 @@ const Dashboard = () => {
                 </div>
                 <br />
                 <br />
-                <button onClick={closeModal}>Close</button>
+                <button className="button" onClick={closeModal}>Close</button>
             </Modal>
-            
-            <div className="question">
-                <p>{questions[questionIndex].question}</p>
-                {questions[questionIndex].options.map((option, index) => (
-                    <label key={index}>
-                        <input
-                            type="radio"
-                            value={option}
-                            checked={selectedOption === option}
-                            onChange={handleOptionChange}
-                        />
-                        {option}
-                    </label>
-                ))}
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <div name="instructions">
+                <div className="question">
+                    <p>{questions[questionIndex].question}</p>
+                        {questions[questionIndex].options.map((option, index) => (
+                            <label key={index}>
+                                <input
+                                    type="radio"
+                                    id={`option-${index}`} // Unique ID for each input
+                                    name="questionOptions" // Same name for all radio buttons in this group
+                                    value={option}
+                                    checked={selectedOption === option}
+                                    onChange={handleOptionChange}
+                                />
+                                {option} {/* This will display the option text next to the custom radio button */}
+                            </label>
+                        ))}
+                </div>
             </div>
             <br />
             <br />

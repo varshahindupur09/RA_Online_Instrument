@@ -1,25 +1,23 @@
 .container {
     text-align: center;
-    padding: 20px;
+    padding: 10px;
 }
 
 .image-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
     justify-items: center;
     align-items: center;
 }
 
 .image-item {
-    width: 100%;
-    max-width: 100%; 
+    width: 80%;
+    max-width: 80%; 
 }
 
 .grid-image {
     width: 100%;
     height: auto;
-    object-fit: cover;
     cursor: pointer;
     transition: transform 0.3s ease;
 }

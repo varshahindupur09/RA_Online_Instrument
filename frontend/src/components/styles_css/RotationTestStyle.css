@@ -41,20 +41,20 @@
 }
 
 .sample_test img {
-    width: 120%; 
-    height: 120%;
+    width: 1400px; 
+    height: 450px;
     float: left;  
     margin-right: 20px; 
 }
 
 .other_images img{
     display: block;
-    width: 95%;
-    height: 95%;
+    width: 1000px;
+    height: 200px;
 }
 
 .other_images2 img{
     display: block;
-    width: 35%;
-    height: 35%;
+    width: 400px;
+    height: 200px;
 }
