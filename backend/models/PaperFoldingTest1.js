@@ -1,12 +1,9 @@
-// models/PaperFoldingTest1.js
+const mongoose = require('mongoose');  // Corrected from 'mangoose'
 
-const mangoose = require('mangoose');
-
-const PaperFoldingTest1Schema = new mangoose.Schema({
+const PaperFoldingTest1Schema = new mongoose.Schema({
     question_number: { type: Number, required: true },
     answer_inserted: { type: String, required: true },
-})
+});
 
-const PaperFoldingTest1 = mangoose.model('PaperFoldingTest1', PaperFoldingTest1Schema);
-
+const PaperFoldingTest1 = mongoose.model('PaperFoldingTest1', PaperFoldingTest1Schema);
 module.exports = PaperFoldingTest1;

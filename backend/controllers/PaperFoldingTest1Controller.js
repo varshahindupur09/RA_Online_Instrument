@@ -5,10 +5,15 @@ const PaperFoldingTest1 = require('../models/PaperFoldingTest1');
 // Controller function to create a new PaperFoldingTest1
 exports.createPaperFoldingTest1 = async (req, res) => {
     try {
-        const newPaperFoldingTest1 = await PaperFoldingTest1.create(req.body);
-        res.status(201).json(newPaperFoldingTest1);
-    }catch(error){
-        res.status(400).json({message: error.message});
+        const { question_number, answer_inserted } = req.body;
+        const newTest = new PaperFoldingTest1({
+            question_number,
+            answer_inserted
+        });
+        const savedTest = await newTest.save();
+        res.status(201).json(savedTest);
+    } catch (error) {
+        res.status(400).json({ message: 'Error creating test entry', error: error.message });
     }
 };
 
