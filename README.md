@@ -51,3 +51,46 @@ npm install mongoose=8.3.0
 }
 
 # docker build -t my-react-app --progress=plain .
+
+
+# Using swagger to test APIs
+cd backend
+npm install swagger-ui-express swagger-jsdoc
+brew services start mongodb-community
+brew services restart mongodb-community
+npm install cors
+npm install express mongoose cors dotenv
+brew tap mongodb/brew
+brew install mongodb-community-shell
+
+http://localhost:3000/api-docs
+
+npm install axios
+
+
+# release a port with this command
+lsof -i :8080
+
+
+# backend commands
+conda deactivate
+cd backend/
+lsof -i :8080
+docker build -t my-node-backend:latest . 
+docker run -p 8080:8080 my-node-backend:latest
+
+# creating ebextensions for backend
+1. mkdir backend/.ebextensions
+2. Create a configuration file (backend/.ebextensions/01_config.config):
+  option_settings:
+    aws:elasticbeanstalk:environment:proxy:
+      ProxyServer: nginx
+    aws:elasticbeanstalk:application:environment:
+      NODE_ENV: production
+      MONGO_URI: YOUR_MONGO_URI_HERE
+3. cd backend
+zip -r ../backend-deployment.zip . -x "node_modules/*" -x ".git/*"
+
+# adding cors
+cd backend
+npm install cors

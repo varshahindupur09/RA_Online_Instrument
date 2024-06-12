@@ -5,12 +5,20 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const routes = require('./routes');
 const db = require('./config/db');
+const cors = require('cors');
+require('dotenv').config(); 
 
 // Create an Express application
 const app = express();
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+// Use CORS middleware
+app.use(cors({
+  origin: 'http://adg429.com',
+  optionsSuccessStatus: 200
+}));
 
 // Swagger set up
 const swaggerOptions = {
@@ -22,8 +30,8 @@ const swaggerOptions = {
       description: 'A simple API for managing tests',
     },
     servers: [{
-      url: 'http://localhost:3000/api', // Adjust if your API base URL is different
-      description: 'Local Development Server'
+      url: process.env.API_BASE_URL, // Adjust if your API base URL is different : http://localhost:3000/api
+      description: 'AWS Development Server'
     }]
   },
   apis: ['./routes.js'],

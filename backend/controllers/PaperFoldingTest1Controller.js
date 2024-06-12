@@ -1,5 +1,4 @@
 // controllers/PaperFoldingTest1Controller.js
-
 const PaperFoldingTest1 = require('../models/PaperFoldingTest1');
 
 // Controller function to create a new PaperFoldingTest1

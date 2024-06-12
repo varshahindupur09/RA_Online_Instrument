@@ -1,0 +1,67 @@
+RA_Online_Instrument
+├── .DS_Store
+├── .gitignore
+├── README.md
+├── architecture
+│   ├── flow.txt
+│   └── project_architecture_diagram.png
+├── backend
+│   ├── .DS_Store
+│   ├── .env
+│   ├── Dockerfile
+│   ├── backend-deployment.zip
+│   ├── config
+│   │   ├── db.js
+│   │   ├── global-bundle.pem
+│   │   └── rds-combined-ca-bundle.pem
+│   ├── controllers
+│   │   ├── PaperFoldingTest1Controller.js
+│   │   └── PaperFoldingTest2Controller.js
+│   ├── models
+│   │   ├── PaperFoldingTest1.js
+│   │   └── PaperFoldingTest2.js
+│   ├── node_modules
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── routes.js
+│   └── server.js
+├── docker-compose.yml
+├── frontend
+│   ├── .DS_Store
+│   ├── .dockerignore
+│   ├── .gitignore
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── index.css
+│   ├── index.js
+│   ├── pages
+│       │   ├── EndFLPage.js
+│       │   ├── again-consent-page.js
+│       │   ├── dashboard.js
+│       │   ├── demographic-questions.js
+│       │   ├── endSurvey.js
+│       │   ├── exit-survey-page.js
+│       │   ├── financial-literacy.js
+│       │   ├── first-instr-consent.js
+│       │   ├── home-page.js
+│       │   ├── instructions-consent.js
+│       │   ├── no-consent-page.js
+│       │   ├── paper-folding-test-part-1.js
+│       │   ├── paper-folding-test-part-2.js
+│       │   ├── paper-folding-test-sample-question.js
+│       │   ├── proceed-to-dashboard.js
+│       │   ├── proceed-to-demographic-questions.js
+│       │   ├── proceed-to-part1-rotation-test.js
+│       │   ├── proceed-to-part2-paper-folding-test.js
+│       │   ├── proceed-to-part2-rotation-test.js
+│       │   ├── rotation-test-part-1.js
+│       │   ├── rotation-test-part-2.js
+│       │   └── sample-rotation-test.js
+├── preprocessing_scripts
+│   ├── .DS_Store
+│   ├── GetImageHeightAndWidth.py
+│   ├── RenameFolders.py
+│   └── ResizeImages.py
+├── requirements.txt
+└── venv_oi
+  
