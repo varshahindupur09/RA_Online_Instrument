@@ -1,5 +1,5 @@
-// paper-folding-test-part-1
-import React, { useState, useEffect }  from "react";
+// pages/paper-folding-test-part-1
+import React, { useState }  from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
 import logoImage from '../images/UCF_Logo.png';
@@ -77,7 +77,6 @@ import Part1Question10Answer10Option5 from '../images/fl-paper-folding-test/part
 import '../components/styles_css/PaperFoldingStyle.css';
 import '../components/styles_css/RadioButtonImage.css';
 import Timer from "../components/Timer";
-import { useConsent } from './ConsentContext'; 
 
 const PaperFoldingPart1Questions = () => {
     const navigate = useNavigate();
@@ -95,15 +94,12 @@ const PaperFoldingPart1Questions = () => {
 
     const API_BASE_URL = 'http://localhost:8080' //process.env.REACT_APP_API_BASE_URL;
 
-    const { consent} = useConsent(); // Access consent from context
-
     //api integration
     // State to store responses
     const [responses, setResponses] = useState({
         prolific_id: '123', // Default value
         test_name: 'Paper-Folding-Test-1', // Default value
         page_number: 2, // Update as needed
-        consent: 'yes', // Consent from context
         responses: { // Dynamic responses based on user input
         },
         time_spent: 0 // Default or calculated value
@@ -111,15 +107,6 @@ const PaperFoldingPart1Questions = () => {
     
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
-    // useEffect(() => {
-    //     if (consent) {
-    //         setResponses(prevResponses => ({
-    //             ...prevResponses,
-    //             consent: consent // Update consent in responses state
-    //         }));
-    //     }
-    // }, [consent]);
 
     const handleChange = (questionNumber, value) => {
         setResponses(prevResponses => ({
@@ -129,18 +116,11 @@ const PaperFoldingPart1Questions = () => {
                 [`question_${questionNumber}`]: value
             }
         }));
-    };    
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
-
-        if (!responses.consent) {
-            console.error('Consent is required');
-            setError('Consent is required');
-            setLoading(false);
-            return;
-        }
 
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {

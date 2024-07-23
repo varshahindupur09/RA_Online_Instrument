@@ -18,7 +18,6 @@ const FirstInstrConsent = () => {
         prolific_id: '123', // Set the default prolific_id
         test_name: 'First-Consent', // Set the default test name
         page_number: 1, // Page number
-        consent: '', // Yes, no or empty string
         responses: {}, // Initialize as an empty object to dynamically add responses
         time_spent: 0 // Add time_spent field
     });
@@ -42,10 +41,6 @@ const FirstInstrConsent = () => {
 
     const handleConsent = (value) => {
         setConsent(value);
-        setResponses(prevResponses => ({
-            ...prevResponses,
-            consent: value
-        }));
     };
 
     const handleNext = async (event) => {

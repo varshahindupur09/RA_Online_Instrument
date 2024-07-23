@@ -69,3 +69,12 @@ exports.dbHealthCheckResponse = async (req, res) => {
     }
     res.status(200).json({ message: 'Database connection successful' });
 };
+
+exports.deleteAllSurveyResponses = async (req, res) => {
+    try {
+        await SurveyResponse.deleteMany({});
+        res.status(200).json({ message: 'All documents deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error deleting documents: ' + err.message });
+    }
+};

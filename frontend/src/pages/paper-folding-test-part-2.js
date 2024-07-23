@@ -1,3 +1,4 @@
+// pages/paper-folding-test-part-2
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
@@ -95,19 +96,14 @@ const PaperFoldingPart2Questions = () => {
     };
 
     //api integration
+    // State to store responses
     const [responses, setResponses] = useState({
-        prolific_id: '123', // Set the default prolific_id
-        test_name: 'Paper-Folding-Test-2', // Set the default test name
-        question_1: '',
-        question_2: '',
-        question_3: '',
-        question_4: '',
-        question_5: '',
-        question_6: '',
-        question_7: '',
-        question_8: '',
-        question_9: '',
-        question_10: ''
+        prolific_id: '123', // Default value
+        test_name: 'Paper-Folding-Test-2', // Default value
+        page_number: 3, // Update as needed
+        responses: { // Dynamic responses based on user input
+        },
+        time_spent: 0 // Default or calculated value
     });
     
     const [loading, setLoading] = useState(false);
@@ -116,16 +112,19 @@ const PaperFoldingPart2Questions = () => {
     const handleChange = (questionNumber, value) => {
         setResponses(prevResponses => ({
             ...prevResponses,
-            [`question_${questionNumber}`]: value
+            responses: {
+                ...prevResponses.responses,
+                [`question_${questionNumber}`]: value
+            }
         }));
-    };    
+    }; 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/insert-data`, {
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -529,6 +528,7 @@ const PaperFoldingPart2Questions = () => {
                 {/* <button className="button" onClick={handleNext}> Next </button> */}
                 {/* Next button */}
                 <button className="button" onClick={handleNext}> Next </button>
+                {error && <p>Error: {error.message}</p>}
                 <br/>
                 <br/>
                 <br/>

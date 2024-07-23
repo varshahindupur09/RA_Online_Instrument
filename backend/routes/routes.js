@@ -1,42 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const SurveyResponse = require('../controllers/SurveyResponse');
-
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     SurveyResponse:
- *       type: object
- *       required:
- *         - prolific_id
- *         - test_name
- *         - page_number
- *         - responses
- *       properties:
- *         prolific_id:
- *           type: string
- *           description: The prolific ID of the participant.
- *         test_name:
- *           type: string
- *           description: The name of the survey.
- *         page_number:
- *           type: number
- *           description: The page number of the survey.
- *         responses:
- *           type: object
- *           additionalProperties:
- *             type: string
- *           description: The responses to the survey questions.
- */
-
-/**
- * @swagger
- * tags:
- *   - name: SurveyResponse
- *     description: Manage survey responses
- */
+const surveyController = require('../controllers/SurveyResponse.js');
 
 /**
  * @swagger
@@ -49,12 +13,29 @@ const SurveyResponse = require('../controllers/SurveyResponse');
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/SurveyResponse'
+ *             type: object
+ *             properties:
+ *               prolific_id:
+ *                 type: string
+ *                 example: "123"
+ *               test_name:
+ *                 type: string
+ *                 example: "Paper-Folding-Test-1"
+ *               page_number:
+ *                 type: number
+ *                 example: 1
+ *               responses:
+ *                 type: object
+ *                 additionalProperties:
+ *                   type: string
+ *               time_spent:
+ *                 type: number
+ *                 example: 10
  *     responses:
  *       201:
  *         description: Survey response created successfully
- *       400:
- *         description: Invalid input
+ *       500:
+ *         description: Error inserting document
  */
 
 /**
@@ -65,13 +46,9 @@ const SurveyResponse = require('../controllers/SurveyResponse');
  *     tags: [SurveyResponse]
  *     responses:
  *       200:
- *         description: List of survey responses
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/SurveyResponse'
+ *         description: A list of survey responses
+ *       500:
+ *         description: Error fetching documents
  */
 
 /**
@@ -83,45 +60,62 @@ const SurveyResponse = require('../controllers/SurveyResponse');
  *     parameters:
  *       - in: path
  *         name: id
- *         schema:
- *           type: string
  *         required: true
  *         description: The survey response ID
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Survey response by id
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/SurveyResponse'
+ *         description: A survey response
  *       404:
- *         description: Entry not found
+ *         description: Document not found
+ *       500:
+ *         description: Error fetching document
  */
 
 /**
  * @swagger
  * /api/surveyResponse/{id}:
  *   put:
- *     summary: Update a survey response by ID
+ *     summary: Update a survey response
  *     tags: [SurveyResponse]
  *     parameters:
  *       - in: path
  *         name: id
- *         schema:
- *           type: string
  *         required: true
  *         description: The survey response ID
+ *         schema:
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/SurveyResponse'
+ *             type: object
+ *             properties:
+ *               prolific_id:
+ *                 type: string
+ *                 example: "123"
+ *               test_name:
+ *                 type: string
+ *                 example: "Paper-Folding-Test-1"
+ *               page_number:
+ *                 type: number
+ *                 example: 1
+ *               responses:
+ *                 type: object
+ *                 additionalProperties:
+ *                   type: string
+ *               time_spent:
+ *                 type: number
+ *                 example: 10
  *     responses:
  *       200:
- *         description: Survey response updated
+ *         description: Survey response updated successfully
  *       404:
- *         description: Entry not found
+ *         description: Document not found
+ *       500:
+ *         description: Error updating document
  */
 
 /**
@@ -133,23 +127,38 @@ const SurveyResponse = require('../controllers/SurveyResponse');
  *     parameters:
  *       - in: path
  *         name: id
- *         schema:
- *           type: string
  *         required: true
  *         description: The survey response ID
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Survey response deleted
+ *         description: Survey response deleted successfully
  *       404:
- *         description: Entry not found
+ *         description: Document not found
+ *       500:
+ *         description: Error deleting document
  */
 
+/**
+ * @swagger
+ * /api/surveyResponses:
+ *   delete:
+ *     summary: Delete all survey responses
+ *     tags: [SurveyResponse]
+ *     responses:
+ *       200:
+ *         description: All survey responses deleted successfully
+ *       500:
+ *         description: Error deleting documents
+ */
 
-router.get('/', SurveyResponse.dbHealthCheckResponse);
-router.post('/surveyResponse', SurveyResponse.createSurveyResponse);
-router.get('/surveyResponse', SurveyResponse.getAllSurveyResponses);
-router.get('/surveyResponse/:id', SurveyResponse.getSurveyResponseById);
-router.put('/surveyResponse/:id', SurveyResponse.updateSurveyResponse);
-router.delete('/surveyResponse/:id', SurveyResponse.deleteSurveyResponse);
+router.post('/surveyResponse', surveyController.createSurveyResponse);
+router.get('/surveyResponse', surveyController.getAllSurveyResponses);
+router.get('/surveyResponse/:id', surveyController.getSurveyResponseById);
+router.put('/surveyResponse/:id', surveyController.updateSurveyResponse);
+router.delete('/surveyResponse/:id', surveyController.deleteSurveyResponse);
+router.get('/dbHealthCheck', surveyController.dbHealthCheckResponse);
+router.delete('/surveyResponses', surveyController.deleteAllSurveyResponses);
 
 module.exports = router;
