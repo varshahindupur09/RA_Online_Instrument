@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Elastic Beanstalk Environment with Node.js Sample Application
+
+Resources:
+  SampleApplication:
+    Type: "AWS::ElasticBeanstalk::Application"
+    Properties: 
+      ApplicationName: "SampleApp"
+      Description: "Sample Node.js Application"
+
+  SampleApplicationVersion:
+    Type: "AWS::ElasticBeanstalk::ApplicationVersion"
+    Properties:
+      ApplicationName: { Ref: "SampleApplication" }
+      Description: "Version 1.0"
+      SourceBundle:
+        S3Bucket: "your-s3-bucket-name"
+        S3Key: "sample-app.zip"
+
+  SampleEnvironment:
+    Type: "AWS::ElasticBeanstalk::Environment"
+    Properties:
+      ApplicationName: { Ref: "SampleApplication" }
+      EnvironmentName: "SampleEnv"
+      SolutionStackName: "64bit Amazon Linux 2 v5.4.6 running Node.js 14"
+      VersionLabel: { Ref: "SampleApplicationVersion" }
+      OptionSettings:
+        - Namespace: "aws:autoscaling:launchconfiguration"
+          OptionName: "InstanceType"
+          Value: "t2.micro"
+        - Namespace: "aws:elasticbeanstalk:environment"
+          OptionName: "EnvironmentType"
+          Value: "SingleInstance"
+        - Namespace: "aws:elasticbeanstalk:container:nodejs"
+          OptionName: "NodeCommand"
+          Value: "npm start"
+        - Namespace: "aws:autoscaling:launchconfiguration"
+          OptionName: "IamInstanceProfile"
+          Value: "aws-elasticbeanstalk-ec2-role-2"

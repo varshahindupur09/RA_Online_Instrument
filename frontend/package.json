@@ -21,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sync": "aws s3 sync ./build s3://adg429.com/ --delete",
+    "deploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [

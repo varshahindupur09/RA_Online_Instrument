@@ -13,12 +13,12 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Copy the DocumentDB CA certificate and .env file
-COPY /config/global-bundle.pem /app/global-bundle.pem
-COPY .env /app/.env
+# # Copy the DocumentDB CA certificate and .env file
+# COPY /config/global-bundle.pem /app/global-bundle.pem
+COPY .env .env
 
-# Set environment variables
-ENV MONGO_URI=$MONGO_URI
+# # Set environment variables
+# ENV MONGO_URI=$MONGO_URI
 
 # Expose the application port
 EXPOSE 8080

@@ -70,14 +70,20 @@ npm install axios
 
 # release a port with this command
 lsof -i :8080
-
+kill -9 <PID>
 
 # backend commands
 conda deactivate
 cd backend/
 lsof -i :8080
+
 docker build -t my-node-backend:latest . 
+~/eb-docker-flask$ docker build -t eb-docker-flask
+
 docker run -p 8080:8080 my-node-backend:latest
+docker run -dp 127.0.0.1:5000:5000 eb-docker-flask .
+
+docker kill ad573933fed84fbd57172d36f9bc9349bbef3dd9b76cf5c36d80b49cbf41c520
 
 # creating ebextensions for backend
 1. mkdir backend/.ebextensions
@@ -90,7 +96,22 @@ docker run -p 8080:8080 my-node-backend:latest
       MONGO_URI: YOUR_MONGO_URI_HERE
 3. cd backend
 zip -r ../backend-deployment.zip . -x "node_modules/*" -x ".git/*"
+zip -r ../nodejs.zip . -x "node_modules/*" -x ".git/*"
 
 # adding cors
 cd backend
 npm install cors
+
+# 2 gitignores and envs
+frontend:
+REACT_APP_API_BASE_URL=http://experiment-study.us-east-1.elasticbeanstalk.com/
+backend:
+MONGO_URI=mongodb+srv://hindupurv:pokemongo123@@online-instrument-origi.qg8wzeg.mongodb.net/?retryWrites=true&w=majority&appName=online-instrument-original
+
+
+# 3 beanstalk app
+aws cloudformation create-stack --stack-name my-beanstalk-stack --template-body file://cloudformation-template.yaml --capabilities CAPABILITY_NAMED_IAM
+o/p:
+{
+    "StackId": "arn:aws:cloudformation:us-east-1:381491906666:stack/my-beanstalk-stack/a36b7a00-3bf9-11ef-8c38-0eabe201a2a3"
+}

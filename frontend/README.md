@@ -72,3 +72,102 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 # dashboard functionality
 npm install react-modal
+
+# SSL cert password:
+https://freedium.cfd/medium.com./@rajanmaharjan/secure-your-mongodb-connections-ssl-tls-92e2addb3c89
+1. openssl genrsa -out rootCA.key 2048
+2. openssl genrsa -des3 -out rootCA.key 2048
+    pokemon@varkel
+4. openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
+5. Details in the file:
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:Massachusetts
+Locality Name (eg, city) []:Boston
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Phd Dissertation
+Organizational Unit Name (eg, section) []:University Of Central Florida
+Common Name (e.g. server FQDN or YOUR name) []:Varsha Hindupur
+Email Address []:hindupur.v@northeastern.edu
+6. openssl genrsa -out mongodb.key 2048
+7. openssl req -new -key mongodb.key -out mongodb.csr
+8. Details of the file:
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:Massachusetts
+Locality Name (eg, city) []:Boston
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:University of Central Florida
+Organizational Unit Name (eg, section) []:Northeastern University
+Common Name (e.g. server FQDN or YOUR name) []:VarshaElasticBeanstalkAndMongoDB
+Email Address []:hindupur.v@northeastern.edu
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:NinjaKellyVarsha46138080
+String too long, must be at most 20 bytes long
+A challenge password []:NinjaKellyV4613        
+An optional company name []:UCF
+9. openssl x509 -req -in mongodb.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out mongodb.crt -days 500 -sha256
+Certificate request self-signature ok
+subject=C=US, ST=Massachusetts, L=Boston, O=University of Central Florida, OU=Northeastern University, CN=VarshaElasticBeanstalkAndMongoDB, emailAddress=hindupur.v@northeastern.edu
+
+
+# Steps and Outcomes:
+Generate Root CA Key (rootCA.key):
+openssl genrsa -out rootCA.key 2048
+Outcome: Generated the private key for your root Certificate Authority (CA).
+Generate Root CA Key with Password (rootCA.key)
+
+openssl genrsa -des3 -out rootCA.key 2048
+Outcome: Generated the private key with passphrase protection for your root CA.
+Generate Root CA Certificate (rootCA.pem)
+
+openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
+Outcome: Created the self-signed root CA certificate (rootCA.pem) valid for 1024 days.
+Details provided:
+Country: US
+State: Massachusetts
+City: Boston
+Organization: Phd Dissertation
+Organizational Unit: University Of Central Florida
+Common Name: Varsha Hindupur
+Email: hindupur.v@northeastern.edu
+Generate MongoDB Key (mongodb.key):
+
+bash
+Copy code
+openssl genrsa -out mongodb.key 2048
+Outcome: Generated the private key (mongodb.key) for MongoDB.
+Generate Certificate Signing Request (CSR) for MongoDB (mongodb.csr):
+
+bash
+Copy code
+openssl req -new -key mongodb.key -out mongodb.csr
+Outcome: Created the CSR (mongodb.csr) to be signed by the CA.
+Details provided:
+
+Country: US
+State: Massachusetts
+City: Boston
+Organization: University of Central Florida
+Organizational Unit: Northeastern University
+Common Name: VarshaElasticBeanstalkAndMongoDB
+Email: hindupur.v@northeastern.edu
+Sign MongoDB Certificate (mongodb.crt) with Root CA:
+
+bash
+Copy code
+openssl x509 -req -in mongodb.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out mongodb.crt -days 500 -sha256
+Outcome: Signed the MongoDB certificate (mongodb.crt) using the root CA certificate (rootCA.pem) and key (rootCA.key), valid for 500 days.
+Subject details verified:
+
+Country: US
+State: Massachusetts
+City: Boston
+Organization: University of Central Florida
+Organizational Unit: Northeastern University
+Common Name: VarshaElasticBeanstalkAndMongoDB
+Email: hindupur.v@northeastern.edu
+Next Steps:
+Now that you have your rootCA.pem, mongodb.key, and mongodb.crt files generated, you need to use these files in your Node.js application to connect to MongoDB with SSL/TLS.
+
+# MongoDB Atlas 
+Admin: hindupurv
+pass: NinjaKellyV4613

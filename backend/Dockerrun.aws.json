@@ -1,0 +1,25 @@
+{
+    "AWSEBDockerrunVersion": 1,
+    "containerDefinitions": [
+      {
+        "name": "web",
+        "image": "node:21-alpine",
+        "essential": true,
+        "memory": 128,
+        "portMappings": [
+          {
+            "hostPort": 8080,
+            "containerPort": 8080
+          }
+        ],
+        "environment": [
+          {
+            "name": "MONGO_URI",
+            "value": "mongodb+srv://hindupurv:pokemongo123@online-instrument-origi.qg8wzeg.mongodb.net/?retryWrites=true&w=majority&appName=online-instrument-original"
+          }
+        ],
+        "command": ["node", "server.js"]
+      }
+    ]
+  }
+  
