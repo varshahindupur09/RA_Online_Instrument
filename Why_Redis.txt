@@ -1,0 +1,40 @@
+Issue: Survey to be completed by people in one go and they cannot they have to start over.
+
+Solution:
+In that case, implementing a Redis cache can be beneficial for the following reasons:
+
+Why Use Redis Cache for Your Survey
+Session Management:
+
+In-Memory Storage: Redis can store user progress, including consent and other survey responses, in memory during the survey session. This ensures that users can complete the survey in one go without losing their progress.
+Session Timeout:
+
+Expiration Policies: You can configure Redis to automatically expire session data after a set period of inactivity. This helps in managing user sessions and ensures that data is not kept indefinitely.
+Reduced Load on MongoDB:
+
+Efficient Data Handling: By using Redis for active sessions and MongoDB for long-term storage, you can reduce the load on MongoDB and handle frequent read and write operations more efficiently.
+Implementation Strategy
+Frontend Interaction:
+
+Store Session Data: Use Redis to store session-specific data such as consent and responses during the survey session. This data should be saved on every interaction or form submission.
+Data Synchronization:
+
+Final Submission: At the end of the survey, the session data in Redis should be synchronized with MongoDB to ensure that all responses are stored permanently. This can be achieved through an API call that transfers data from Redis to MongoDB.
+Session Expiry Handling:
+
+Automatic Expiry: Set up Redis to automatically expire session data after a certain period. This helps in clearing up unused data and managing server resources effectively.
+Error Handling and Recovery:
+
+Fallback Mechanism: Implement error handling to manage cases where Redis might not be available. Ensure that users are prompted to restart the survey if necessary and that any progress is not lost.
+Example Flow
+Survey Start:
+
+User starts the survey, and session data is created in Redis.
+User’s responses are stored in Redis as they proceed through the survey.
+Survey Completion:
+
+Upon completion, the data stored in Redis is sent to MongoDB for long-term storage.
+Redis session data is cleared, and the user is navigated to a completion screen or thank-you page.
+Session Expiry:
+
+If a user is inactive for too long, Redis automatically expires the session data. The user will need to restart the survey from the beginning.

@@ -7,7 +7,7 @@ const ProceedToPart2 = () => {
     const navigate = useNavigate(); 
 
     const handleNext = () => {
-        navigate("/paper-folding-test-part-2-paper-folding-test");
+        navigate("/paper-folding-test-part-2");
     };
 
     return (

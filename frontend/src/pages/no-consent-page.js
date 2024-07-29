@@ -15,7 +15,8 @@ const NoConsentPage = () => {
         <div className="container">
             <div className="LogoStyleImage">
                 <p>
-                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
+                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> 
+                    {/* <h2> Title of research study: Data Visualization and Financial Decision Making </h2> */}
                 </p>
             </div>
             <h3>Sorry, you did not give consent to participate in this study.</h3>

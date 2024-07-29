@@ -1,82 +1,101 @@
 .container {
-    width: 1350px;
-    height: 6000px;
-    border: 2px solid black;
-    padding: 10px;
-    caret-color: transparent;
-    align-content: left;
+    width: 90%;
+    max-width: 1350px;
+    min-height: 100vh;
+    border: 2px solid #333;
+    padding: 20px;
+    margin: 30px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
     text-align: left;
-    margin-left: 30px;
-  }
-  
+    font-family: Arial, sans-serif;
+}
 
-  .button {
-    font-size: 20px;
+.button {
+    font-size: 18px;
     width: 150px;
-    padding: 15px 30px;
+    padding: 12px 24px;
     border-radius: 8px;
     cursor: pointer;
     display: block;
     margin: 20px auto;
     text-align: center;
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition for background and color */
- }
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+}
 
- .button.enabled {
-  background-color: green;
-  color: white;
+.button.enabled {
+    background-color: #4CAF50;
+    color: white;
 }
 
 .button:disabled {
-  background-color: grey;
-  color: black;
-  cursor: not-allowed; /* Changes the cursor to indicate the button is disabled */
+    background-color: #9E9E9E;
+    color: #BDBDBD;
+    cursor: not-allowed;
 }
-  
-  div[name="instructions"] p {
-    font-size: 17px;
-    align-content: left;
-    text-align: left;
-  }
 
-  div[name="instructions"] li {
-    font-size: 17px;
-    align-content: left;
+div[name="instructions"] p {
+    font-size: 16px;
+    margin: 0 0 15px;
     text-align: left;
-  }
+}
 
-  div[name="instructions"] img {
+div[name="instructions"] li {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+div[name="instructions"] img {
     display: block;
-    margin-left: 0;
-    margin-right: auto; 
-  }
-
-  .instructionsred p {
-    font-size: 17px;
-    color:red;
-    align-content: left;
-    text-align: left;
-  }
-
-  .instructionsred li {
-    font-size: 17px;
-    color:red;
-    align-content: left;
-    text-align: left;
-  }
-
-  .instr
+    margin: 0 auto;
+}
 
 .form-container {
-    font-size: 20px;
-  }
+    font-size: 18px;
+}
 
 .LogoStyleImage {
     caret-color: transparent;
 }
 
 .images-container {
-  align-content: left;
-  text-align: left;
-  caret-color: transparent;
-  }
+    text-align: left;
+    caret-color: transparent;
+}
+
+.instructionsred {
+    padding: 15px;
+    border-left: 4px solid #d32f2f;
+    background-color: #f9f9f9;
+}
+
+.instructionsred p {
+    margin: 10px 0;
+}
+
+.instructionsred .contact-heading {
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+.instructionsred .contact-info {
+    margin-left: 20px;
+}
+
+.instructionsred .email,
+.instructionsred .phone {
+    font-style: italic;
+    color: #d32f2f;
+}
+
+.instructionsFL {
+    text-align: left;
+    padding: 50px;
+}
+
+.bricksimage {
+    text-align: left;
+    height: 300px;
+    width: 550px;
+}

@@ -38,9 +38,10 @@ exports.getSurveyResponseById = async (req, res) => {
 
 exports.updateSurveyResponse = async (req, res) => {
     try {
-        // Update only allowed fields; exclude page_number if needed
-        const { page_number, ...updateData } = req.body;
+        // Extract all fields from the request body, including page_number
+        const updateData = req.body;
 
+        // Find and update the document by ID
         const updatedResponse = await SurveyResponse.findByIdAndUpdate(req.params.id, updateData, { new: true });
         if (!updatedResponse) {
             return res.status(404).json({ message: 'Document not found' });
