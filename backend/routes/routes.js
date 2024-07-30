@@ -24,6 +24,9 @@ const surveyController = require('../controllers/SurveyResponse.js');
  *               page_number:
  *                 type: number
  *                 example: 1
+ *               consent:
+ *                  type: boolean
+ *                  example: false
  *               responses:
  *                 type: object
  *                 additionalProperties:

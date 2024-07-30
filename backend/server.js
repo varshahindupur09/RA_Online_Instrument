@@ -17,15 +17,15 @@ app.get('/', (req, res) => {
 });
 
 // Use CORS middleware
-// app.use(cors({
-//   origin: 'https://adg429.com',
-//   optionsSuccessStatus: 200
-// }));
-
 app.use(cors({
-  origin: 'http://localhost:3000', 
+  origin: 'https://adg429.com',
   optionsSuccessStatus: 200
 }));
+
+// app.use(cors({
+//   origin: 'http://localhost:3000', 
+//   optionsSuccessStatus: 200
+// }));
 
 // // Swagger set up
 // const swaggerOptions = {
@@ -37,14 +37,14 @@ app.use(cors({
 //       description: 'A simple API for managing tests',
 //     },
 //     servers: [{
-//       url: 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com', //'http://localhost:8080',
+//       url: 'http://localhost:8080',
 //       description: 'Elastic Beanstalk Server'
 //     }]
 //   },
-//   apis: ['./routes/*.js'],
+//    apis: ['./routes/*.js'],
 // };
 
-// Swagger set up
+// // Swagger set up
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
@@ -54,12 +54,14 @@ const swaggerOptions = {
       description: 'A simple API for managing tests',
     },
     servers: [{
-      url: 'http://localhost:8080',
+      url: 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com', //'http://localhost:8080',
       description: 'Elastic Beanstalk Server'
     }]
   },
-   apis: ['./routes/*.js'],
+  apis: ['./routes/*.js'],
 };
+
+
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
