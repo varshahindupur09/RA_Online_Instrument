@@ -1,3 +1,4 @@
+// backend/server.js
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -16,16 +17,25 @@ app.get('/', (req, res) => {
   res.send('Welcome to the API');
 });
 
-// Use CORS middleware
-app.use(cors({
-  origin: 'https://adg429.com',
-  optionsSuccessStatus: 200
-}));
+// Define allowed origins
+const allowedOrigins = [
+  'http://www.adg429.com',
+  'https://www.adg429.com',
+  'http://survey-web-app-env.eba-xxzbj9m.us-east-1.elasticbeanstalk.com'
+];
 
-// app.use(cors({
-//   origin: 'http://localhost:3000', 
-//   optionsSuccessStatus: 200
-// }));
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // // Swagger set up
 // const swaggerOptions = {

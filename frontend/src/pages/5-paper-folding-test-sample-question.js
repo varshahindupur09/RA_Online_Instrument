@@ -25,7 +25,8 @@ const PaperFoldingSampleQuestion = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const API_BASE_URL = 'http://localhost:8080'; // Base API URL
+    // const API_BASE_URL = 'http://localhost:8080'; // Base API URL
+    const API_BASE_URL = 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com';
 
     const [responses, setResponses] = useState({
         prolific_id: '123', // Set the default prolific_id

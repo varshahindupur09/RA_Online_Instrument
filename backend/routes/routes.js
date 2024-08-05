@@ -156,12 +156,12 @@ const surveyController = require('../controllers/SurveyResponse.js');
  *         description: Error deleting documents
  */
 
-router.post('/surveyResponse', surveyController.createSurveyResponse);
-router.get('/surveyResponse', surveyController.getAllSurveyResponses);
-router.get('/surveyResponse/:id', surveyController.getSurveyResponseById);
-router.put('/surveyResponse/:id', surveyController.updateSurveyResponse);
-router.delete('/surveyResponse/:id', surveyController.deleteSurveyResponse);
-router.get('/dbHealthCheck', surveyController.dbHealthCheckResponse);
-router.delete('/surveyResponses', surveyController.deleteAllSurveyResponses);
+router.post('/api/surveyResponse', surveyController.createSurveyResponse);
+router.get('/api/surveyResponse', surveyController.getAllSurveyResponses);
+router.get('/api/surveyResponse/:id', surveyController.getSurveyResponseById);
+router.put('/api/surveyResponse/:id', surveyController.updateSurveyResponse);
+router.delete('/api/surveyResponse/:id', surveyController.deleteSurveyResponse);
+router.get('/api/dbHealthCheck', surveyController.dbHealthCheckResponse);
+router.delete('/api/surveyResponses', surveyController.deleteAllSurveyResponses);
 
 module.exports = router;
