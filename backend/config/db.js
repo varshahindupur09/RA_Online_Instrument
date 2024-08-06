@@ -12,7 +12,7 @@ const dbStatus = {
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => {
     dbStatus.flag = true;
-    console.log('Connected to MongoDB database: ', dbStatus.flag);
+    console.log('Connected to MongoDB database:', dbStatus.flag);
 }).catch(err => {
     console.error('Could not connect to MongoDB', err);
 });

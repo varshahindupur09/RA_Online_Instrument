@@ -1,4 +1,4 @@
-// backend/server.js
+// // backend/server.js
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -17,11 +17,25 @@ app.get('/', (req, res) => {
   res.send('Welcome to the API');
 });
 
+app.get('/test', (req, res) => {
+  res.send('Test endpoint working');
+});
+
+// // Use CORS middleware
+// app.use(cors({
+//   origin: '*', // Allow all origins for testing
+//   optionsSuccessStatus: 200,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// }));
+
 // Define allowed origins
 const allowedOrigins = [
-  'http://www.adg429.com',
+  'https://adg429.com',
   'https://www.adg429.com',
-  'http://survey-web-app-env.eba-xxzbj9m.us-east-1.elasticbeanstalk.com'
+  'http://survey-web-app-env.eba-xxzbj9m.us-east-1.elasticbeanstalk.com',
+  'http://localhost:8080',
+  'http://localhost:3000'
 ];
 
 app.use(cors({
@@ -37,6 +51,23 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+// Swagger set up
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Study API',
+      version: '1.0.0',
+      description: 'A simple API for managing tests',
+    },
+    servers: [{
+      url: 'http://localhost:8080',
+      description: 'Elastic Beanstalk Server'
+    }]
+  },
+   apis: ['./routes/*.js'],
+};
+
 // // Swagger set up
 // const swaggerOptions = {
 //   definition: {
@@ -47,31 +78,12 @@ app.use(cors({
 //       description: 'A simple API for managing tests',
 //     },
 //     servers: [{
-//       url: 'http://localhost:8080',
+//       url: 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com', //'http://localhost:8080',
 //       description: 'Elastic Beanstalk Server'
 //     }]
 //   },
-//    apis: ['./routes/*.js'],
+//   apis: ['./routes/*.js'],
 // };
-
-// // Swagger set up
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Study API',
-      version: '1.0.0',
-      description: 'A simple API for managing tests',
-    },
-    servers: [{
-      url: 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com', //'http://localhost:8080',
-      description: 'Elastic Beanstalk Server'
-    }]
-  },
-  apis: ['./routes/*.js'],
-};
-
-
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
