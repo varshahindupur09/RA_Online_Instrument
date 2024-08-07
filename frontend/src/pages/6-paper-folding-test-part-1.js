@@ -84,8 +84,7 @@ const PaperFoldingPart1Questions = () => {
     // State to manage timer visibility
     const [timerVisible] = useState(true);
 
-    // const API_BASE_URL = 'http://localhost:8080' 
-    const API_BASE_URL = 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com';
+    const API_BASE_URL = 'https://backend.adg429.com';
     
     //api integration
     // State to store responses
@@ -163,7 +162,7 @@ const PaperFoldingPart1Questions = () => {
             <div className="LogoStyleImage">
                     <p>
                         <img src={logoImage} alt="ucflogo" className="ucflogo" /> 
-                        <h2> EXPLANATION OF RESEARCH </h2> 
+                        {/* <h2> EXPLANATION OF RESEARCH </h2>  */}
                     </p>
                     <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>

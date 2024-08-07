@@ -33,10 +33,12 @@ app.get('/test', (req, res) => {
 const allowedOrigins = [
   'https://adg429.com',
   'https://www.adg429.com',
-  'http://survey-web-app-env.eba-xxzbj9m.us-east-1.elasticbeanstalk.com',
-  'http://localhost:8080',
-  'http://localhost:3000'
+  'https://survey-web-app-env.eba-xxzbj9m.us-east-1.elasticbeanstalk.com',
+  'https://backend.adg429.com'
 ];
+
+// 'http://localhost:8080',
+// 'http://localhost:3000'
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -61,29 +63,14 @@ const swaggerOptions = {
       description: 'A simple API for managing tests',
     },
     servers: [{
-      url: 'http://localhost:8080',
+      url: 'https://backend.adg429.com',
       description: 'Elastic Beanstalk Server'
     }]
   },
-   apis: ['./routes/*.js'],
+  apis: ['./routes/*.js'],
 };
 
-// // Swagger set up
-// const swaggerOptions = {
-//   definition: {
-//     openapi: '3.0.0',
-//     info: {
-//       title: 'Study API',
-//       version: '1.0.0',
-//       description: 'A simple API for managing tests',
-//     },
-//     servers: [{
-//       url: 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com', //'http://localhost:8080',
-//       description: 'Elastic Beanstalk Server'
-//     }]
-//   },
-//   apis: ['./routes/*.js'],
-// };
+// 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com', //'http://localhost:8080',
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));

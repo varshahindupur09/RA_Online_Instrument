@@ -173,5 +173,6 @@ Admin: hindupurv
 pass: NinjaKellyV4613
 
 # s3 bucket commands AWS CLI
+npm run build
 aws s3 rm s3://adg429.com --recursive
 aws s3 cp "/Users/varshahindupur/Downloads/RA_Online_Instrument/frontend/build" s3://adg429.com/ --recursive --exclude "*/" --include "*"

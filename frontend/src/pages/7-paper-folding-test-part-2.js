@@ -84,8 +84,7 @@ const PaperFoldingPart2Questions = () => {
     // State to manage timer visibility
     const [timerVisible] = useState(true);
 
-    // const API_BASE_URL = 'http://localhost:8080';
-    const API_BASE_URL = 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com';
+    const API_BASE_URL = 'https://backend.adg429.com';
 
     // State to store responses
     const [responses, setResponses] = useState({
