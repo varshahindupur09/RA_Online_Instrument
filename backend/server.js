@@ -5,6 +5,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const routes = require('./routes/routes');
 const cors = require('cors');
 require('dotenv').config(); 
+const redisRoutes = require('./routes/redisRoutes');
 
 // Create an Express application
 const app = express();
@@ -20,14 +21,6 @@ app.get('/', (req, res) => {
 app.get('/test', (req, res) => {
   res.send('Test endpoint working');
 });
-
-// // Use CORS middleware
-// app.use(cors({
-//   origin: '*', // Allow all origins for testing
-//   optionsSuccessStatus: 200,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   allowedHeaders: ['Content-Type', 'Authorization']
-// }));
 
 // Define allowed origins
 const allowedOrigins = [
@@ -77,6 +70,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Use the routes defined in routes.js
 app.use('/api', routes);
+
+// Use Redis routes
+app.use('/redis', redisRoutes);
 
 // Define the port number
 const PORT = process.env.PORT || 8080;

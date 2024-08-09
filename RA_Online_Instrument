@@ -15,14 +15,13 @@ RA_Online_Instrument
 │   │   ├── global-bundle.pem
 │   │   └── rds-combined-ca-bundle.pem
 │   ├── controllers
-│   │   ├── PaperFoldingTest1Controller.js
-│   │   └── PaperFoldingTest2Controller.js
+│   │   └── SurveyResponse.js
 │   ├── models
-│   │   ├── PaperFoldingTest1.js
-│   │   └── PaperFoldingTest2.js
+│   │   ├── SurveyResponseModel.js
 │   ├── routes
-│   │   ├── insertDataRoute.js
 │   │   └── routes.js
+|   ├── utils
+│   │   ├── redis.js
 │   ├── node_modules
 │   ├── package-lock.json
 │   ├── package.json

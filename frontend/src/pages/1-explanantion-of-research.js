@@ -1,17 +1,33 @@
 // pages/1_explanantion_of_research.js
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useConsent } from './ConsentContext'; // Import the custom hook
 import '../components/styles_css/RadioButton.css'; 
 import '../components/styles_css/PageStyle.css'; 
 import logoImage from '../images/UCF_Logo.png';
 import Navbar from "../components/NavbarPage";
+import TimerComponent from '../components/BigTimerComponent';
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
 
 const FirstInstrConsent = () => {
     const navigate = useNavigate();
     const { consent, setConsent } = useConsent(); // Access consent from context
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const query = useQuery();
+    const [prolificId, setProlificId] = useState('');
+
+    useEffect(() => {
+        const id = query.get('prolificId');
+        if (id) {
+          setProlificId(id);
+          // Optionally, start a session here by calling the backend with the prolificId
+        }
+      }, [query]);
 
     const API_BASE_URL = 'https://backend.adg429.com';
     
@@ -101,6 +117,9 @@ const FirstInstrConsent = () => {
                 <br />
                 <br />
                 <div name="instructions">
+                    <div>
+                        {prolificId && <p>Your Prolific ID: {prolificId}</p>}
+                    </div>
                     <p>You are being invited to take part in a research study. Whether you take part is up to you.</p>  
                     <br />
                     <p>The purpose of this research is to examine how managers’ judgments and decisions might change when accounting information is presented visually.</p>  
