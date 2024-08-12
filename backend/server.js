@@ -5,7 +5,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const routes = require('./routes/routes');
 const cors = require('cors');
 require('dotenv').config(); 
-const redisRoutes = require('./routes/redisRoutes');
+// const redisRoutes = require('./routes/redisRoute');
 
 // Create an Express application
 const app = express();
@@ -27,11 +27,10 @@ const allowedOrigins = [
   'https://adg429.com',
   'https://www.adg429.com',
   'https://survey-web-app-env.eba-xxzbj9m.us-east-1.elasticbeanstalk.com',
-  'https://backend.adg429.com'
+  'https://backend.adg429.com',
+  'http://localhost:8080',
+  'http://localhost:3000'
 ];
-
-// 'http://localhost:8080',
-// 'http://localhost:3000'
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -56,14 +55,13 @@ const swaggerOptions = {
       description: 'A simple API for managing tests',
     },
     servers: [{
-      url: 'https://backend.adg429.com',
+      // url: 'https://backend.adg429.com',
+      url: 'http://localhost:8080',
       description: 'Elastic Beanstalk Server'
     }]
   },
   apis: ['./routes/*.js'],
 };
-
-// 'http://survey-web-app-env.eba-xxzjbj9m.us-east-1.elasticbeanstalk.com', //'http://localhost:8080',
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
@@ -71,8 +69,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Use the routes defined in routes.js
 app.use('/api', routes);
 
-// Use Redis routes
-app.use('/redis', redisRoutes);
+// // Use Redis routes
+// app.use('/redis', redisRoutes);
 
 // Define the port number
 const PORT = process.env.PORT || 8080;

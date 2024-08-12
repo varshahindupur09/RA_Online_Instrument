@@ -1,47 +1,75 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
 import Navbar from "../components/NavbarPage";
-import logoImage from '../images/UCF_Logo.png';
-
+import logoImageDoc from '../images/UCF_logo_doc.png';
+import { useConsent } from './ConsentContext';
 
 const FinancialLiteracy = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    const startTimeRef = useRef(Date.now());
 
-    const handleNext = () => {
-        const allQuestionsAnswered =
-        document.querySelectorAll('input[type="radio"]:checked').length === 3;
-        if (!allQuestionsAnswered) {
-            // If not all questions are answered, display an alert
-            alert("Please answer all questions before proceeding.");
-            return; // Exit the function early if not all questions are answered
-        }
-        // } else {
-        //     // If all questions are answered, navigate to the next page
-        //     navigate("/paper-folding-test-sample-question");
-        // }
+    // const API_BASE_URL = 'https://backend.adg429.com';
+    const API_BASE_URL = 'http://localhost:8080';
 
-        // Get all radio button groups
-        const groups = [
-            document.getElementsByName("answer-fl-1"),
-            document.getElementsByName("answer-fl-2"),
-            document.getElementsByName("answer-fl-3")
-        ];
+    // State to store responses
+    const [responses, setResponses] = useState({
+        prolific_id: prolificId, 
+        test_name: 'Financial-Literacy', 
+        consent: consent === "yes" ? true : false, 
+        page_number: 4, 
+        responses: {}, // Dynamic responses based on user input
+        time_spent: 0 
+    });
 
-        let correctCount = 0;
-
-        for (const group of groups) {
-            const selectedOption = Array.from(group).find(radio => radio.checked);
-            if (selectedOption && selectedOption.value === "more than $102" || selectedOption.value === "less than today" || selectedOption.value === "false") {
-                correctCount++;
+    // Handle dynamic question responses
+    const handleChange = (questionNumber, value) => {
+        setResponses(prevResponses => ({
+            ...prevResponses,
+            responses: {
+                ...prevResponses.responses,
+                [`question_${questionNumber}`]: value
             }
-        }
+        }));
+    };
 
-        // Check if the user answered 2 out of 3 questions correctly
-        if (correctCount >= 2) {
+    const handleNext = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+        const endTime = Date.now();
+        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+
+        // Update responses with the calculated time spent
+        const updatedResponses = {
+            ...responses,
+            time_spent: timeSpent
+        };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedResponses),
+            });
+
+            const responseText = await response.text();
+            if (!response.ok) {
+                throw new Error(responseText || 'Network response was not ok');
+            }
+            console.log('Response text:', responseText);
             navigate("/paper-folding-test-sample-question");
-        } else {
-            navigate("/end-fl-page");
+
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -51,33 +79,34 @@ const FinancialLiteracy = () => {
             <div className="container">
                 <div className="LogoStyleImage">
                         <p>
-                        <img src={logoImage} alt="ucflogo" className="ucflogo" /> 
-                        <h2> PART A </h2> 
+                        <img src={logoImageDoc} alt="ucflogo" className="ucflogo" /> 
+                        <h2><strong><u>PART A</u></strong></h2> 
                     </p>
                     <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
                 <div name="instructions">
                     <br />
                     <div className="instructionsFL">
-                        <p>Thank you for agreeing to participate in this study. In this study, you will be first asked some questions that indicate your degree of financial literacy. This will be followed by two measures of your spatial ability and finally, several demographic questions.</p>
+                        <p>Thank you for agreeing to participate in this study. First, please choose the most correct response to the following questions to the best of your ability without using outside sources.</p>
                     </div>
                     <br />
+                    {/* Question 1 */}
                     <div className="instructionsFL">
                         <h4>
                             Suppose you had $100 in a savings account and the interest rate was 2% per year. After 5 years, how much do you think you would have in the account if you left the money to grow?
                         </h4>
                     </div>
                     <div className="radio-container">
-                        <input type="radio" id="answer-fl-1-1" name="answer-fl-1" value="more than $102" />
+                        <input type="radio" id="answer-fl-1-1" name="answer-fl-1" value="more-than-$102" onChange={() => handleChange(1, "option1")} />
                         <label htmlFor="answer-fl-1-1">More than $102</label>
                         <br />
-                        <input type="radio" id="answer-fl-1-2" name="answer-fl-1" value="exactly $102" />
+                        <input type="radio" id="answer-fl-1-2" name="answer-fl-1" value="exactly-$102" onChange={() => handleChange(1, "option2")} />
                         <label htmlFor="answer-fl-1-2">Exactly $102</label>
                         <br />
-                        <input type="radio" id="answer-fl-1-3" name="answer-fl-1" value="less than $102" />
+                        <input type="radio" id="answer-fl-1-3" name="answer-fl-1" value="less-than-$102" onChange={() => handleChange(1, "option3")} />
                         <label htmlFor="answer-fl-1-3">Less than $102</label>
                         <br />
-                        <input type="radio" id="answer-fl-1-4" name="answer-fl-1" value="do not know" />
+                        <input type="radio" id="answer-fl-1-4" name="answer-fl-1" value="do-not-know" onChange={() => handleChange(1, "option4")} />
                         <label htmlFor="answer-fl-1-4">Do not know</label>
                     </div>
                     <br />
@@ -89,16 +118,16 @@ const FinancialLiteracy = () => {
                         </h4>
                     </div>
                     <div className="radio-container">
-                        <input type="radio" id="answer-fl-2-1" name="answer-fl-2" value="more than today" />
+                        <input type="radio" id="answer-fl-2-1" name="answer-fl-2" value="more-than-today" onChange={() => handleChange(2, "option1")} />
                         <label htmlFor="answer-fl-2-1">More than today</label>
                         <br />
-                        <input type="radio" id="answer-fl-2-2" name="answer-fl-2" value="exactly today" />
+                        <input type="radio" id="answer-fl-2-2" name="answer-fl-2" value="exactly-today" onChange={() => handleChange(2, "option2")} />
                         <label htmlFor="answer-fl-2-2">Exactly today</label>
                         <br />
-                        <input type="radio" id="answer-fl-2-3" name="answer-fl-2" value="less than today" />
+                        <input type="radio" id="answer-fl-2-3" name="answer-fl-2" value="less-than-today" onChange={() => handleChange(2, "option3")} />
                         <label htmlFor="answer-fl-2-3">Less than today</label>
                         <br />
-                        <input type="radio" id="answer-fl-2-4" name="answer-fl-2" value="do not know" />
+                        <input type="radio" id="answer-fl-2-4" name="answer-fl-2" value="do-not-know" onChange={() => handleChange(2, "option4")} />
                         <label htmlFor="answer-fl-2-4">Do not know</label>
                     </div>
                     <br />
@@ -110,19 +139,20 @@ const FinancialLiteracy = () => {
                         </h4>
                     </div>
                     <div className="radio-container">
-                        <input type="radio" id="answer-fl-3-1" name="answer-fl-3" value="true" />
+                        <input type="radio" id="answer-fl-3-1" name="answer-fl-3" value="true" onChange={() => handleChange(3, "option1")} />
                         <label htmlFor="answer-fl-3-1">True</label>
                         <br />
-                        <input type="radio" id="answer-fl-3-2" name="answer-fl-3" value="false" />
+                        <input type="radio" id="answer-fl-3-2" name="answer-fl-3" value="false" onChange={() => handleChange(3, "option2")} />
                         <label htmlFor="answer-fl-3-2">False</label>
                         <br />
-                        <input type="radio" id="answer-fl-3-3" name="answer-fl-3" value="do not know" />
+                        <input type="radio" id="answer-fl-3-3" name="answer-fl-3" value="do-not-know"onChange={() => handleChange(3, "option3")} />
                         <label htmlFor="answer-fl-3-3">Do not know</label>
                     </div>
                 </div>
                 <br />
                 <br />
-                <button type="button" className="button" onClick={handleNext}> Next </button>
+                <button type="button" className="button" onClick={handleNext}>Next</button>
+                {error && <p className="error-message">{error.message}</p>}
                 <br/>
                 <br/>
                 <br/>

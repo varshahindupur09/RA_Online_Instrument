@@ -6,10 +6,18 @@ const ConsentContext = createContext();
 
 // Create a Provider Component
 export const ConsentProvider = ({ children }) => {
-    const [consent, setConsent] = useState(null);
+    const [consent, setConsent] = useState();
+    const [prolificId, setProlificId] = useState('');
+
+    const value = {
+        consent,
+        setConsent,
+        prolificId,
+        setProlificId,
+    };
 
     return (
-        <ConsentContext.Provider value={{ consent, setConsent }}>
+        <ConsentContext.Provider value={value}>
             {children}
         </ConsentContext.Provider>
     );

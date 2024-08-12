@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/RotationTestStyle.css';
 import '../components/styles_css/RadioButtonImage.css';
@@ -29,20 +29,32 @@ import question2answer6 from '../images/rotation-test/sample/question-2/answer-2
 import question2answer7 from '../images/rotation-test/sample/question-2/answer-2/question-2-answer-7.png';
 import question2answer8 from '../images/rotation-test/sample/question-2/answer-2/question-2-answer-8.png';
 
-import logoImage from '../images/UCF_Logo.png';
-// import Timer from "../components/Timer"; 
+import logoImageDoc from '../images/UCF_logo_doc.png';
+import { useConsent } from './ConsentContext';
 
 const RotationTestQuestion = () => {
     const navigate = useNavigate();
+    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    const startTimeRef = useRef(null);
+    const [loading, setLoading] = useState(false);  
+    const [error, setError] = useState(null); 
 
-    const handleNext = () => {
-        navigate("/proceed-to-part1-rotation-test");
-    };
+    // const API_BASE_URL = 'https://backend.adg429.com';
+    const API_BASE_URL = 'http://localhost:8080';
 
-    const handleTimerCompletion = () => {
-        navigate("/proceed-to-part1-rotation-test"); //if a breather is needed in between we can add it 
-    };
+     // State to store responses
+     const [responses, setResponses] = useState({
+        prolific_id: prolificId,
+        test_name: 'Sample-Rotation-Test',
+        consent: consent === "yes" ? true : false,
+        page_number: 8,
+        responses: {},
+        time_spent: 0
+    });
 
+    useEffect(() => {
+        startTimeRef.current = Date.now();
+    }, []);
 
     const question1 = rotation_question_1; 
     const question1Answers = [
@@ -56,19 +68,65 @@ const RotationTestQuestion = () => {
         question2answer5, question2answer6, question2answer7, question2answer8
     ];
 
-    const [answers, setAnswers] = useState({
-        question1: Array(question1Answers.length).fill(null),
-        question2: Array(question2Answers.length).fill(null),
-    });
+    // const [answers, setAnswers] = useState({
+    //     question1: Array(question1Answers.length).fill(null),
+    //     question2: Array(question2Answers.length).fill(null),
+    // });
 
+    // Function to handle change in response for a question
     const handleAnswerChange = (questionNumber, index, value) => {
-        const newAnswers = { ...answers };
-        newAnswers[questionNumber][index] = value;
-        setAnswers(newAnswers);
-    };    
+        setResponses(prevResponses => ({
+            ...prevResponses,
+            responses: {
+                ...prevResponses.responses,
+                [`question_${questionNumber}`]: (
+                    prevResponses.responses[`question_${questionNumber}`] 
+                        ? prevResponses.responses[`question_${questionNumber}`] + "," + value
+                        : value
+                )
+            }
+        }));
+    };
 
-    const allAnswered = Object.values(answers).every(question => question.every(answer => answer !== null));
+    // Function to handle form submission
+    const handleNext = async (event) => {
+        event.preventDefault();  // Prevent default form submission
+        setLoading(true);  // Set loading state to true
 
+        const endTime = Date.now();  // Capture end time
+        const timeSpent = (endTime - startTimeRef.current) / 1000;  // Calculate time spent in seconds
+
+        // Update responses with the calculated time spent
+        const updatedResponses = {
+            ...responses,
+            time_spent: timeSpent
+        };
+
+        try {
+            // Make a POST request to your API
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedResponses),  // Convert responses to JSON string
+            });
+
+            const responseText = await response.text();
+            if (!response.ok) {  // Check if the request was not successful
+                throw new Error(responseText || 'Network response was not ok');
+            }
+            console.log('Response text:', responseText);  // Log response text for debugging
+            navigate("/proceed-to-part1-rotation-test");  // Navigate to the next page after successful submission
+            } catch (error) {
+                console.error('Error:', error);  // Log any errors
+                setError(error);  // Set error state
+            } finally {
+                setLoading(false);  // Reset loading state
+            }
+        };
+
+    // Function to render each question
     const renderQuestion = (questionImage, answerImages, questionNumber) => (
         <>
             <div className="question-image-container">
@@ -95,8 +153,8 @@ const RotationTestQuestion = () => {
                         <td>Same</td>
                         {answerImages.map((_, index) => (
                             <td key={`same-${index}`}>
-                                    <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="same"
-                                        onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'same')} />
+                                <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="same"
+                                    onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'same')} />
                             </td>
                         ))}
                     </tr>
@@ -112,18 +170,18 @@ const RotationTestQuestion = () => {
                 </tbody>
             </table>
         </>
-    ); 
+    );
 
     return (
         <div className="container">
             <div className="instructionsFL">
-            <div className="LogoStyleImage">
-                <p>
-                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img>
-                    <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
-                </p>
-                <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
-            </div>
+                <div className="LogoStyleImage">
+                    <p>
+                        <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
+                        <h2><strong><u>SAMPLE ROTATION TEST</u></strong></h2>
+                    </p>
+                    <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                </div>
             <br />
             <h2>Rotation Test:</h2>
             <br />
@@ -174,6 +232,7 @@ const RotationTestQuestion = () => {
             {/* Next button */}
             <button className="button" onClick={handleNext} > Next </button> 
             {/* disabled={!allAnswered} */}
+            {error && <p>Error: {error.message}</p>}
         </div>
         </div>
     );

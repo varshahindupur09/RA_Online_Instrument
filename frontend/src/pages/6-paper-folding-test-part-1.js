@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef }  from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
-import logoImage from '../images/UCF_Logo.png';
 
 import Part1Question1 from '../images/fl-paper-folding-test/part-1-3-minutes/question-1/part-1-question-1.png'; // Import Part 1 Question 1 image
 import Part1Question1Answer1Option1 from '../images/fl-paper-folding-test/part-1-3-minutes/question-1/answers-1/answer-1-option-1.png'; 
@@ -77,30 +76,31 @@ import Part1Question10Answer10Option5 from '../images/fl-paper-folding-test/part
 import '../components/styles_css/PaperFoldingStyle.css';
 import '../components/styles_css/RadioButtonImage.css';
 import Timer from "../components/Timer";
+import logoImageDoc from '../images/UCF_logo_doc.png';
+import { useConsent } from './ConsentContext';
 
 const PaperFoldingPart1Questions = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
 
     // State to manage timer visibility
     const [timerVisible] = useState(true);
 
-    const API_BASE_URL = 'https://backend.adg429.com';
+    // const API_BASE_URL = 'https://backend.adg429.com';
+    const API_BASE_URL = 'http://localhost:8080';
     
     //api integration
-    // State to store responses
     const [responses, setResponses] = useState({
-        prolific_id: '123', // Default value
-        test_name: 'Paper-Folding-Test-1', // Default value
-        consent: false,
-        page_number: 6, // Update as needed
-        responses: { // Dynamic responses based on user input
-        },
-        time_spent: 0 // Default or calculated value
+        prolific_id: prolificId, 
+        test_name: 'Paper-Folding-Test-1', 
+        consent: consent === "yes" ? true : false, 
+        page_number: 6, 
+        responses: { },
+        time_spent: 0 
     });
     
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
     const handleChange = (questionNumber, value) => {
         setResponses(prevResponses => ({
             ...prevResponses,
@@ -161,8 +161,8 @@ const PaperFoldingPart1Questions = () => {
         <div className="container">
             <div className="LogoStyleImage">
                     <p>
-                        <img src={logoImage} alt="ucflogo" className="ucflogo" /> 
-                        {/* <h2> EXPLANATION OF RESEARCH </h2>  */}
+                        <img src={logoImageDoc} alt="ucflogo" className="ucflogo" /> 
+                        <h2><strong><u>PAPER FOLDING TEST - PART 1</u></strong></h2>
                     </p>
                     <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>

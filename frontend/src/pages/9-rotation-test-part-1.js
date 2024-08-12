@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
 import '../components/styles_css/RotationTestStyle.css';
@@ -117,7 +117,9 @@ import Part1Question11Answer1Option8 from '../images/rotation-test/rotation-test
 
 import Timer from "../components/Timer"; 
 import '../components/styles_css/PageStyle.css'; 
-import logoImage from '../images/UCF_Logo.png';
+
+import logoImageDoc from '../images/UCF_logo_doc.png';
+import { useConsent } from './ConsentContext';
 
 const RotationTestPart1 = () => {
     const navigate = useNavigate();
@@ -125,13 +127,30 @@ const RotationTestPart1 = () => {
     // State to manage timer visibility
     const [timerVisible] = useState(true);
 
-    const handleNext = () => {
-        navigate("/proceed-to-part2-rotation-test");
-    };
+    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    const startTimeRef = useRef(null);
+    const [loading, setLoading] = useState(false);  
+    const [error, setError] = useState(null); 
+
+    // const API_BASE_URL = 'https://backend.adg429.com';
+    const API_BASE_URL = 'http://localhost:8080';
+
+     // State to store responses
+     const [responses, setResponses] = useState({
+        prolific_id: prolificId,
+        test_name: 'Rotation-Test-1',
+        consent: consent === "yes" ? true : false,
+        page_number: 9,
+        responses: {},
+        time_spent: 0
+    });
+
+    useEffect(() => {
+        startTimeRef.current = Date.now();
+    }, []);
 
     const handleTimerCompletion = () => {
-        // setTimerVisible(false); 
-        navigate("/proceed-to-part2-rotation-test"); //if a breather is needed in between we can add it 
+        navigate("/proceed-to-part2-rotation-test");
     };
 
     const question1 = Part1Question1; 
@@ -165,69 +184,121 @@ const RotationTestPart1 = () => {
     ];
 
     const question6 = Part1Question6; 
-const question6Answers = [
-    Part1Question6Answer1Option1, Part1Question6Answer1Option2, Part1Question6Answer1Option3, Part1Question6Answer1Option4, 
-    Part1Question6Answer1Option5, Part1Question6Answer1Option6, Part1Question6Answer1Option7, Part1Question6Answer1Option8
-];
+    const question6Answers = [
+        Part1Question6Answer1Option1, Part1Question6Answer1Option2, Part1Question6Answer1Option3, Part1Question6Answer1Option4, 
+        Part1Question6Answer1Option5, Part1Question6Answer1Option6, Part1Question6Answer1Option7, Part1Question6Answer1Option8
+    ];
 
-const question7 = Part1Question7; 
-const question7Answers = [
-    Part1Question7Answer1Option1, Part1Question7Answer1Option2, Part1Question7Answer1Option3, Part1Question7Answer1Option4,
-    Part1Question7Answer1Option5, Part1Question7Answer1Option6, Part1Question7Answer1Option7, Part1Question7Answer1Option8
-];
+    const question7 = Part1Question7; 
+    const question7Answers = [
+        Part1Question7Answer1Option1, Part1Question7Answer1Option2, Part1Question7Answer1Option3, Part1Question7Answer1Option4,
+        Part1Question7Answer1Option5, Part1Question7Answer1Option6, Part1Question7Answer1Option7, Part1Question7Answer1Option8
+    ];
 
-const question8 = Part1Question8; 
-const question8Answers = [
-    Part1Question8Answer1Option1, Part1Question8Answer1Option2, Part1Question8Answer1Option3, Part1Question8Answer1Option4,
-    Part1Question8Answer1Option5, Part1Question8Answer1Option6, Part1Question8Answer1Option7, Part1Question8Answer1Option8
-];
+    const question8 = Part1Question8; 
+    const question8Answers = [
+        Part1Question8Answer1Option1, Part1Question8Answer1Option2, Part1Question8Answer1Option3, Part1Question8Answer1Option4,
+        Part1Question8Answer1Option5, Part1Question8Answer1Option6, Part1Question8Answer1Option7, Part1Question8Answer1Option8
+    ];
 
-const question9 = Part1Question9; 
-const question9Answers = [
-    Part1Question9Answer1Option1, Part1Question9Answer1Option2, Part1Question9Answer1Option3, Part1Question9Answer1Option4,
-    Part1Question9Answer1Option5, Part1Question9Answer1Option6, Part1Question9Answer1Option7, Part1Question9Answer1Option8
-];
+    const question9 = Part1Question9; 
+    const question9Answers = [
+        Part1Question9Answer1Option1, Part1Question9Answer1Option2, Part1Question9Answer1Option3, Part1Question9Answer1Option4,
+        Part1Question9Answer1Option5, Part1Question9Answer1Option6, Part1Question9Answer1Option7, Part1Question9Answer1Option8
+    ];
 
-const question10 = Part1Question10; 
-const question10Answers = [
-    Part1Question10Answer1Option1, Part1Question10Answer1Option2, Part1Question10Answer1Option3, Part1Question10Answer1Option4,
-    Part1Question10Answer1Option5, Part1Question10Answer1Option6, Part1Question10Answer1Option7, Part1Question10Answer1Option8
-];
+    const question10 = Part1Question10; 
+    const question10Answers = [
+        Part1Question10Answer1Option1, Part1Question10Answer1Option2, Part1Question10Answer1Option3, Part1Question10Answer1Option4,
+        Part1Question10Answer1Option5, Part1Question10Answer1Option6, Part1Question10Answer1Option7, Part1Question10Answer1Option8
+    ];
 
-const question11 = Part1Question11; 
-const question11Answers = [
-    Part1Question11Answer1Option1, Part1Question11Answer1Option2, Part1Question11Answer1Option3, Part1Question11Answer1Option4,
-    Part1Question11Answer1Option5, Part1Question11Answer1Option6, Part1Question11Answer1Option7, Part1Question11Answer1Option8
-];
+    const question11 = Part1Question11; 
+    const question11Answers = [
+        Part1Question11Answer1Option1, Part1Question11Answer1Option2, Part1Question11Answer1Option3, Part1Question11Answer1Option4,
+        Part1Question11Answer1Option5, Part1Question11Answer1Option6, Part1Question11Answer1Option7, Part1Question11Answer1Option8
+    ];
 
-    const [answers, setAnswers] = useState({
-        question1: Array(question1Answers.length).fill(null),
-        question2: Array(question2Answers.length).fill(null),
-        question3: Array(question3Answers.length).fill(null),
-        question4: Array(question4Answers.length).fill(null),
-        question5: Array(question5Answers.length).fill(null),
-        question6: Array(question6Answers.length).fill(null),
-        question7: Array(question7Answers.length).fill(null),
-        question8: Array(question8Answers.length).fill(null),
-        question9: Array(question9Answers.length).fill(null),
-        question10: Array(question10Answers.length).fill(null),
-        question11: Array(question11Answers.length).fill(null),
-    });
+    // const [answers, setAnswers] = useState({
+    //     question1: Array(question1Answers.length).fill(null),
+    //     question2: Array(question2Answers.length).fill(null),
+    //     question3: Array(question3Answers.length).fill(null),
+    //     question4: Array(question4Answers.length).fill(null),
+    //     question5: Array(question5Answers.length).fill(null),
+    //     question6: Array(question6Answers.length).fill(null),
+    //     question7: Array(question7Answers.length).fill(null),
+    //     question8: Array(question8Answers.length).fill(null),
+    //     question9: Array(question9Answers.length).fill(null),
+    //     question10: Array(question10Answers.length).fill(null),
+    //     question11: Array(question11Answers.length).fill(null),
+    // });
+   
 
+    // Function to handle change in response for a question
     const handleAnswerChange = (questionNumber, index, value) => {
-        const newAnswers = { ...answers };
-        newAnswers[questionNumber][index] = value;
-        setAnswers(newAnswers);
-    };    
+        setResponses(prevResponses => ({
+            ...prevResponses,
+            responses: {
+                ...prevResponses.responses,
+                [`question_${questionNumber}`]: (
+                    prevResponses.responses[`question_${questionNumber}`] 
+                        ? prevResponses.responses[`question_${questionNumber}`] + "," + value
+                        : value
+                )
+            }
+        }));
+    };
 
-    const allAnswered = Object.values(answers).every(question => question.every(answer => answer !== null));
+    // Function to handle form submission
+    const handleNext = async (event) => {
+        event.preventDefault();  // Prevent default form submission
+        setLoading(true);  // Set loading state to true
 
+        const endTime = Date.now();  // Capture end time
+        const timeSpent = (endTime - startTimeRef.current) / 1000;  // Calculate time spent in seconds
+
+        // Update responses with the calculated time spent
+        const updatedResponses = {
+            ...responses,
+            time_spent: timeSpent
+        };
+
+        try {
+            // Make a POST request to your API
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedResponses),  // Convert responses to JSON string
+            });
+
+            const responseText = await response.text();
+            if (!response.ok) {  // Check if the request was not successful
+                throw new Error(responseText || 'Network response was not ok');
+            }
+            console.log('Response text:', responseText);  // Log response text for debugging
+            navigate("/proceed-to-part2-rotation-test");  // Navigate to the next page after successful submission
+            } catch (error) {
+                console.error('Error:', error);  // Log any errors
+                setError(error);  // Set error state
+            } finally {
+                setLoading(false);  // Reset loading state
+            }
+        };
+
+    // Function to render each question
     const renderQuestion = (questionImage, answerImages, questionNumber) => (
         <>
             <div className="question-image-container">
-                <img src={questionImage} alt={`Question ${questionNumber}`} className="question-main-image" />
+                <br></br>
+                <div className='question-image'>
+                    <img src={questionImage} alt={`Question ${questionNumber}`} className="question-main-image" />
+                </div>
+                <br></br>
             </div>
             <table className="answers-table">
+                <br></br>
                 <thead>
                     <tr>
                         <th></th> {/* Empty header for the labels 'Same' and 'Different' */}
@@ -243,8 +314,8 @@ const question11Answers = [
                         <td>Same</td>
                         {answerImages.map((_, index) => (
                             <td key={`same-${index}`}>
-                                    <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="same"
-                                        onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'same')} />
+                                <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="same"
+                                    onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'same')} />
                             </td>
                         ))}
                     </tr>
@@ -260,18 +331,17 @@ const question11Answers = [
                 </tbody>
             </table>
         </>
-    ); 
+    );
 
     return (
         <div className="container">
             <div className="LogoStyleImage">
                 <p>
-                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
+                    <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
+                    <h2><strong><u>ROTATION TEST - PART 1</u></strong></h2>
                 </p>
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
-            <br />
-            <h2>Rotation Test Part 1: 3 minutes</h2>
             <br />
             {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
             <br />
@@ -327,6 +397,7 @@ const question11Answers = [
             {/* Next button */}
             <button className="button" onClick={handleNext}> Next </button>
             {/* disabled={!allAnswered} */}
+            {error && <p>Error: {error.message}</p>}
         </div>
 
             );

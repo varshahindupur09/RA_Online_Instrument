@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
-import logoImage from '../images/UCF_Logo.png';
 
 import Part2Question1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-1/part-2-question-1.png'; // Import Part 2 Question 1 image
 import Part2Question1Answer1Option1 from '../images/fl-paper-folding-test/part-2-3-minutes/question-1/answer-1/answer-1-option-1.png'; 
@@ -77,20 +76,24 @@ import Part2Question10Answer10Option5 from '../images/fl-paper-folding-test/part
 import '../components/styles_css/ImageStyles.css';
 import '../components/styles_css/RadioButtonImage.css';
 import Timer from "../components/Timer"; 
+import logoImageDoc from '../images/UCF_logo_doc.png';
+import { useConsent } from './ConsentContext';
 
 const PaperFoldingPart2Questions = () => {
     const navigate = useNavigate();
+    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
 
     // State to manage timer visibility
     const [timerVisible] = useState(true);
 
-    const API_BASE_URL = 'https://backend.adg429.com';
+    // const API_BASE_URL = 'https://backend.adg429.com';
+    const API_BASE_URL = 'http://localhost:8080';
 
     // State to store responses
     const [responses, setResponses] = useState({
-        prolific_id: '123',
+        prolific_id: prolificId,
         test_name: 'Paper-Folding-Test-2',
-        consent: false,
+        consent: consent === "yes" ? true : false,
         page_number: 7,
         responses: {},
         time_spent: 0
@@ -159,7 +162,8 @@ const PaperFoldingPart2Questions = () => {
         <div className="container">
             <div className="LogoStyleImage">
                 <p>
-                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
+                    <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
+                    <h2><strong><u>PAPER FOLDING TEST - PART 2</u></strong></h2>
                 </p>
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
@@ -527,8 +531,6 @@ const PaperFoldingPart2Questions = () => {
                 <br></br>
                 <br></br>
                 <br/>
-                
-                {/* <button className="button" onClick={handleNext}> Next </button> */}
                 {/* Next button */}
                 <button className="button" onClick={handleNext}> Next </button>
                 {error && <p>Error: {error.message}</p>}

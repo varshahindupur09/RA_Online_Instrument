@@ -4,7 +4,8 @@ const Redis = require('ioredis');
 // Connect to Redis
 const redis = new Redis({
   host: 'rediscacheinstrument-yjxgjt.serverless.use1.cache.amazonaws.com', 
-  port: 6379
+  port: 6379,
+  connectTimeout: 10000
 });
 
 redis.on('connect', () => {

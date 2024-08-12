@@ -4,9 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useConsent } from './ConsentContext'; // Import the custom hook
 import '../components/styles_css/RadioButton.css'; 
 import '../components/styles_css/PageStyle.css'; 
-import logoImage from '../images/UCF_Logo.png';
-import Navbar from "../components/NavbarPage";
-import TimerComponent from '../components/BigTimerComponent';
+import logoImageDoc from '../images/UCF_logo_doc.png';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -14,31 +12,36 @@ function useQuery() {
 
 const FirstInstrConsent = () => {
     const navigate = useNavigate();
-    const { consent, setConsent } = useConsent(); // Access consent from context
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
     const query = useQuery();
-    const [prolificId, setProlificId] = useState('');
 
+    const { consent, setConsent, prolificId, setProlificId } = useConsent();
+
+    // const API_BASE_URL = 'https://backend.adg429.com';
+    const API_BASE_URL = 'http://localhost:8080';
+
+
+    // Retrieve the Prolific ID from the query parameters
     useEffect(() => {
         const id = query.get('prolificId');
         if (id) {
-          setProlificId(id);
-          // Optionally, start a session here by calling the backend with the prolificId
+            setProlificId(id);
         }
-      }, [query]);
-
-    const API_BASE_URL = 'https://backend.adg429.com';
+    }, [query, setProlificId]);
     
     const [responses, setResponses] = useState({
-        prolific_id: '123', // Set the default prolific_id
-        test_name: 'First-Consent', // Set the default test name
+        prolific_id: '', // Set the default prolific_id
+        test_name: 'First-Consent', // Set test name
         consent: false, // Initialize consent as boolean
-        page_number: 1, // Page number
+        page_number: 1, // Page number of where we are navigating, helps with debugging
         responses: {}, // Initialize as an empty object to dynamically add responses
         time_spent: 0 // Add time_spent field
     });
+
+    // const handleInputChange = (e) => {
+    //     setProlificId(e.target.value);
+    // };
 
     const startTimeRef = useRef(null);
 
@@ -51,7 +54,7 @@ const FirstInstrConsent = () => {
         setConsent(value); // Update context
         setResponses(prevResponses => ({
             ...prevResponses,
-            consent: consentValue // Update local state
+            consent: consentValue // Update local state with the consent value from the form
         }));
     };
 
@@ -65,8 +68,8 @@ const FirstInstrConsent = () => {
         // Ensure the updated responses use the actual state of consent directly
         const updatedResponses = {
             ...responses,
+            prolific_id: prolificId,
             time_spent: timeSpent,
-            consent: consent === "yes" // Directly use the consent state
         };
     
         try {
@@ -104,12 +107,13 @@ const FirstInstrConsent = () => {
 
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
             <div className="container">
                 <div className="LogoStyleImage">
                     <p>
-                        <img src={logoImage} alt="ucflogo" className="ucflogo" /> 
-                        <h2> EXPLANATION OF RESEARCH </h2> 
+                        {/* <img src={logoImage} alt="ucflogo" className="ucflogo" />  */}
+                        <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
+                        <h2><strong><u>EXPLANATION OF RESEARCH</u></strong></h2> 
                     </p>
                     <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
@@ -117,8 +121,26 @@ const FirstInstrConsent = () => {
                 <br />
                 <br />
                 <div name="instructions">
+                    <label>
+                        Enter your Prolific ID:
+                        <input 
+                            type="text" 
+                            value={prolificId} 
+                            // onChange={handleInputChange} 
+                            onChange={(e) => setProlificId(e.target.value)}
+                            required
+                            maxLength={24}  // Restrict the input length to 24 characters
+                            pattern=".{24,24}" // Enforce exactly 24 characters
+                            title="Prolific ID must be exactly 24 characters long" // Message displayed on invalid input
+                        />
+                    </label>
                     <div>
                         {prolificId && <p>Your Prolific ID: {prolificId}</p>}
+                    </div>
+                    <div name="instructionsh3">
+                        <h3><u>Title of Study:</u> Data Visualization in Managerial Judgments</h3>	    
+                        <h3><u>Principal Investigator:</u> Kelly Wellman</h3>
+                        <h3><u>Faculty Supervisor:</u> Dr. Theresa Libby</h3>
                     </div>
                     <p>You are being invited to take part in a research study. Whether you take part is up to you.</p>  
                     <br />
@@ -191,7 +213,7 @@ const FirstInstrConsent = () => {
                     <button 
                         className="button" 
                         onClick={handleNext} 
-                        disabled={loading || consent === null}
+                        disabled={loading || consent === null} // Disable button until consent is selected
                     > 
                         Next 
                     </button>

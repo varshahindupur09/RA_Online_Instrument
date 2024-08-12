@@ -41,6 +41,12 @@ div[name="instructions"] p {
     text-align: left;
 }
 
+div[name="instructionsh3"] h3 {
+    font-size: 16px;
+    margin: 0 0 15px;
+    text-align: left;
+}
+
 div[name="instructions"] li {
     font-size: 16px;
     margin-bottom: 10px;
