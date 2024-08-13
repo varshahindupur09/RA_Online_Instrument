@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; 
 import '../components/styles_css/PageStyle.css'; 
-import logoImage from '../images/UCF_Logo.png';
+import logoImageDoc from '../images/UCF_logo_doc.png';
 
 const ProceedToPart2 = () => {
     const navigate = useNavigate(); 
@@ -13,10 +13,9 @@ const ProceedToPart2 = () => {
     return (
         <div className="container">
             <div className="LogoStyleImage">
-                <p>
-                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
-                </p>
-                <p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
+                <br></br>
+                <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br></br>
             <br></br>

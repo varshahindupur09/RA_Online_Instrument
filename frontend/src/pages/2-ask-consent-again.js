@@ -17,7 +17,8 @@ const ConsentPage = () => {
     const startTimeRef = useRef(null);
 
     // const API_BASE_URL = 'https://backend.adg429.com';
-    const API_BASE_URL = 'http://localhost:8080';
+    // const API_BASE_URL = 'http://localhost:8080';
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     // Store the start time when the component mounts
     useEffect(() => {

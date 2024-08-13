@@ -12,8 +12,9 @@ const ExitSurveyPage = () => {
     const startTimeRef = useRef(Date.now());
     const hasCalledAPI = useRef(false); // Ref to track if the API has been called
 
-    const API_BASE_URL = 'http://localhost:8080';
+    // const API_BASE_URL = 'http://localhost:8080';
     // const API_BASE_URL = 'https://backend.adg429.com';
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     // Function to store the response when the page loads
     useEffect(() => {

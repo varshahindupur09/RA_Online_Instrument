@@ -133,7 +133,8 @@ const RotationTestPart1 = () => {
     const [error, setError] = useState(null); 
 
     // const API_BASE_URL = 'https://backend.adg429.com';
-    const API_BASE_URL = 'http://localhost:8080';
+    // const API_BASE_URL = 'http://localhost:8080';
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
      // State to store responses
      const [responses, setResponses] = useState({

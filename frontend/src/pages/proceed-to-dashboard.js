@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom"; 
 import '../components/styles_css/PageStyle.css'; 
 import '../components/styles_css/otherpagestyles.css'; 
-import logoImage from '../images/UCF_Logo.png'; 
+import logoImageDoc from '../images/UCF_logo_doc.png';
 
 const ProceedToDashboard = () => {
     const navigate = useNavigate(); 
@@ -14,12 +14,11 @@ const ProceedToDashboard = () => {
     return (
         <div className="container">
             <div className="LogoStyleImage">
-                <div>
-                    <img src={logoImage} alt="ucflogo" className="ucflogo"></img>
-                    <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
-                    <p>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-                </div>
+                <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
+                <br></br>
+                <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
+            <br></br>
             <div name="instructionsLeftAlign">
                 <div>
                     <p>In the next part of this study, you are playing the role of an accounts manager at TechTron, a global company that produces electrical components. The CFO has some questions about sales trends over the past five years and you have been asked to respond using the company’s digital dashboard.</p> 
