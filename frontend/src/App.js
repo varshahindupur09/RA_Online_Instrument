@@ -26,8 +26,7 @@ import ProceedToPart2RotationTest from "./pages/proceed-to-part2-rotation-test";
 import RotationTestPart2 from "./pages/10-rotation-test-part-2";
 import AdditionalQuestions from "./pages/demographic-questions";
 import EndSurvey from "./pages/endSurvey";
-import ProceedToDemographicQuestions from "./pages/proceed-to-demographic-questions";
-import Dashboard from "./pages/dashboard";
+// import ProceedToDemographicQuestions from "./pages/proceed-to-demographic-questions";
 import ProceedToDashboard from "./pages/proceed-to-dashboard";
 // reuse later
 import EndFLPage from "./pages/EndFLPage";
@@ -36,6 +35,12 @@ import EndFLPage from "./pages/EndFLPage";
 
 // Import ConsentProvider
 import { ConsentProvider } from './pages/ConsentContext';
+
+// dashboard
+import StructuralBarDashboard from "./pages/StructuralBarDashboard";
+import TimeSeriesBarDashboard from "./pages/TimeSeriesBarDashboard";
+import StructuralColDashboard from "./pages/StructuralColDashboard";
+import TimeSeriesColDashboard from "./pages/TimeSeriesColDashboard";
 
 function App() {
     return (
@@ -60,14 +65,18 @@ function App() {
                         <Route path="/rotation-test-part-2" element={<RotationTestPart2 />} />
                         <Route path="/creative-bricks-game" element={<CreativeBricksGame />} />
                         <Route path="/proceed-to-dashboard" element={<ProceedToDashboard />} />
-                        <Route path="/dashboard" element={<Dashboard />} />
+                        {/* <Route path="/dashboard" element={<DashboardAllCharts />} /> */}
+                        <Route path="/time-series-bar-dashboard" element={<TimeSeriesBarDashboard />} />
+                        <Route path="/structure-bar-dashboard" element={<StructuralBarDashboard />} />
+                        <Route path="/time-series-col-dashboard" element={<TimeSeriesColDashboard />} />
+                        <Route path="/structure-col-dashboard" element={<StructuralColDashboard />} />
                         {/* setting */}
                         <Route path="/no-consent-page" element={<ConsentPage />} />
                         <Route path="/end-survey" element={<EndSurvey />} />
                         {/* reuse later */}
                         <Route path="/demographic-questions" element={<AdditionalQuestions />} />
                         <Route path="/end-fl-page" element={<EndFLPage />} />
-                        <Route path="/proceed-to-demographic-questions" element={<ProceedToDemographicQuestions />} />
+                        {/* <Route path="/proceed-to-demographic-questions" element={<ProceedToDemographicQuestions />} /> */}
                     </Routes>
                 </div>
             </Router>
