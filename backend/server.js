@@ -3,6 +3,7 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const routes = require('./routes/routes');
+const chartNumberRoutes = require('./routes/chartNumberRoutes');
 const cors = require('cors');
 require('dotenv').config(); 
 // const redisRoutes = require('./routes/redisRoute');
@@ -69,6 +70,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Use the routes defined in routes.js
 app.use('/api', routes);
+app.use('/api', chartNumberRoutes);
 
 // // Use Redis routes
 // app.use('/redis', redisRoutes);
