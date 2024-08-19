@@ -32,6 +32,7 @@ const ExitSurveyPage = () => {
                 test_name: 'Exit-Survey', 
                 consent: consent === "yes" ? true : false, // Store as true or false based on user's choice
                 page_number: 3, 
+                chart_number: 0,
                 time_spent: timeSpent
             };
 

@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
-import Navbar from "../components/NavbarPage";
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
 
@@ -22,6 +21,7 @@ const FinancialLiteracy = () => {
         test_name: 'Financial-Literacy', 
         consent: consent === "yes" ? true : false, 
         page_number: 4, 
+        chart_number: 0,
         responses: {}, // Dynamic responses based on user input
         time_spent: 0 
     });
@@ -76,7 +76,6 @@ const FinancialLiteracy = () => {
 
     return (
         <div>
-            <Navbar />
             <div className="container">
                 <div className="LogoStyleImage">
                         <p>

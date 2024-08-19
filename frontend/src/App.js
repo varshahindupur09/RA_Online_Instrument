@@ -24,7 +24,7 @@ import ProceedToPart1RotationTest from "./pages/proceed-to-part1-rotation-test";
 import RotationTestPart1 from "./pages/9-rotation-test-part-1";
 import ProceedToPart2RotationTest from "./pages/proceed-to-part2-rotation-test";
 import RotationTestPart2 from "./pages/10-rotation-test-part-2";
-import AdditionalQuestions from "./pages/demographic-questions";
+import Demographics from "./pages/demographic-questions";
 import EndSurvey from "./pages/endSurvey";
 // import ProceedToDemographicQuestions from "./pages/proceed-to-demographic-questions";
 import ProceedToDashboard from "./pages/proceed-to-dashboard";
@@ -37,10 +37,14 @@ import EndFLPage from "./pages/EndFLPage";
 import { ConsentProvider } from './pages/ConsentContext';
 
 // dashboard
+import DashboardRouter from "./pages/dashboard-router";
 import StructuralBarDashboard from "./pages/StructuralBarDashboard";
 import TimeSeriesBarDashboard from "./pages/TimeSeriesBarDashboard";
 import StructuralColDashboard from "./pages/StructuralColDashboard";
 import TimeSeriesColDashboard from "./pages/TimeSeriesColDashboard";
+
+//feedback
+import FeedbackQuestions from "./pages/feedback-questions";
 
 function App() {
     return (
@@ -70,11 +74,17 @@ function App() {
                         <Route path="/structure-bar-dashboard" element={<StructuralBarDashboard />} />
                         <Route path="/time-series-col-dashboard" element={<TimeSeriesColDashboard />} />
                         <Route path="/structure-col-dashboard" element={<StructuralColDashboard />} />
+                        <Route path="/dashboard-router" element={<DashboardRouter />} />
+                        {/* feedback */}
+                        <Route path="/feedback-questions" element={<FeedbackQuestions />} />
+                        {/* demographics */}
+                        <Route path="/demographic-questions" element={<Demographics />} />
+                        {/* end survey */}
+                        <Route path="/end-survey" element={<EndSurvey />} />
                         {/* setting */}
                         <Route path="/no-consent-page" element={<ConsentPage />} />
-                        <Route path="/end-survey" element={<EndSurvey />} />
                         {/* reuse later */}
-                        <Route path="/demographic-questions" element={<AdditionalQuestions />} />
+                       
                         <Route path="/end-fl-page" element={<EndFLPage />} />
                         {/* <Route path="/proceed-to-demographic-questions" element={<ProceedToDemographicQuestions />} /> */}
                     </Routes>

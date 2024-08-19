@@ -142,6 +142,7 @@ const RotationTestPart1 = () => {
         test_name: 'Rotation-Test-1',
         consent: consent === "yes" ? true : false,
         page_number: 9,
+        chart_number: 0,
         responses: {},
         time_spent: 0
     });

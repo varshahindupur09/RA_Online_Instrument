@@ -8,7 +8,7 @@ const ProceedToDashboard = () => {
     const navigate = useNavigate(); 
 
     const handleNext = () => {
-        navigate("/dashboard");
+        navigate("/dashboard-router");
     };
 
     return (

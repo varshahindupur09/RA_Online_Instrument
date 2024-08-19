@@ -40,6 +40,7 @@ const ConsentPage = () => {
             test_name: 'Second-Consent', 
             consent: consent === "yes" ? true : false,
             page_number: 2,
+            chart_number: 0,
             time_spent: timeSpent
         };
 

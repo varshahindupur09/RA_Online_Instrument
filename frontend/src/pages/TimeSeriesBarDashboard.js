@@ -16,104 +16,7 @@ import TimeSeriesBarEnlargedImage2 from "../images/dashboard/timeseries-bar/enla
 import TimeSeriesBarEnlargedImage3 from "../images/dashboard/timeseries-bar/enlarged/2-left.png";
 import TimeSeriesBarEnlargedImage4 from "../images/dashboard/timeseries-bar/enlarged/2-right.png";
 
-const questionsTimeSeriesBar = [
-    {
-        question: "From 2015 to 2019 what was the trend for total unit sales of chips?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "Which circuit board had the greatest change in sales between 2015 and 2016?",
-        options: ["CRT01", "CRT02", "CRT03", "CRT04"]
-    },
-    {
-        question: "Between which two years did circuit boards experience the greatest change in unit sales?",
-        options: ["2015-2016", "2016-2017", "2017-2018", "2018-2019", "2019-2020"]
-    },
-    {
-        question: "What is the trend for unit sales of CRT04 between 2016 and 2018?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "In what year were unit sales for all transistor types most similar?",
-        options: ["2015", "2016", "2017", "2018", "2019", "2020"]
-    },
-    {
-        question: "Which circuit board had the greatest one-year increase in unit sales?",
-        options: ["CRT01", "CRT02", "CRT03", "CRT04"]
-    },
-    {
-        question: "Which transistor had the most consistent downward trend in unit sales?",
-        options: ["TRN01", "TRN02", "TRN03", "TRN04"]
-    },
-    {
-        question: "Which chip had the greatest one-year decrease in unit sales?",
-        options: ["CHP01", "CHP02", "CHP03", "CHP04"]
-    },
-    {
-        question: "In what year were sales of all circuit boards most consistent? Regardless of the answer select 2015.",
-        options: ["2015", "2016", "2017", "2018", "2019", "2020"]
-    },
-    {
-        question: "What is the trend for unit sales of CHP02 between 2016 and 2018?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "What is the trend for unit sales of CRT02 between 2017 and 2020?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "What was the trend for unit sales of chips between 2016 and 2018?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "Which transistor had the most consistent upward trend in unit sales?",
-        options: ["TRN01", "TRN02", "TRN03", "TRN04"]
-    },
-    {
-        question: "What was the trend for unit sales of transistors between 2016 and 2019?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "What is the trend for unit sales of CHP03 between 2015 and 2017?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "Which chip had the most consistent downward trend in unit sales?",
-        options: ["CHP01", "CHP02", "CHP03", "CHP04"]
-    },
-    {
-        question: "What was the trend for unit sales of circuit boards between 2016 and 2018?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "Which transistor had the single largest one-year increase in unit sales?",
-        options: ["TRN01", "TRN02", "TRN03", "TRN04"]
-    },
-    {
-        question: "What is the trend for total sales?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "Which transistor had the largest one-year decline in unit sales?",
-        options: ["TRN01", "TRN02", "TRN03", "TRN04"]
-    },
-    {
-        question: "Which circuit board had the most consistent trend in unit sales?",
-        options: ["CRT01", "CRT02", "CRT03", "CRT04"]
-    },
-    {
-        question: "Which circuit board had the greatest one-year decrease in unit sales?",
-        options: ["CRT01", "CRT02", "CRT03", "CRT04"]
-    },
-    {
-        question: "Between 2015 and 2017 what was the trend for unit sales of TRN04?",
-        options: ["Upward", "Downward", "No clear trend"]
-    },
-    {
-        question: "Which chip had the greatest one-year increase in unit sales?",
-        options: ["CHP01", "CHP02", "CHP03", "CHP04"]
-    }
-];
+import { useConsent } from './ConsentContext';
 
 const TimeSeriesBarDashboard = () => {
     const navigate = useNavigate();
@@ -126,6 +29,108 @@ const TimeSeriesBarDashboard = () => {
     const [questionDurations, setQuestionDurations] = useState([]);
     const [graphDurations, setGraphDurations] = useState([]);
     const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
+
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const { consent, setConsent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+
+    const questionsTimeSeriesBar = [
+        {
+            question: "From 2015 to 2019 what was the trend for total unit sales of chips?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which circuit board had the greatest change in sales between 2015 and 2016?",
+            options: ["CRT01", "CRT02", "CRT03", "CRT04"]
+        },
+        {
+            question: "Between which two years did circuit boards experience the greatest change in unit sales?",
+            options: ["2015-2016", "2016-2017", "2017-2018", "2018-2019", "2019-2020"]
+        },
+        {
+            question: "What is the trend for unit sales of CRT04 between 2016 and 2018?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "In what year were unit sales for all transistor types most similar?",
+            options: ["2015", "2016", "2017", "2018", "2019", "2020"]
+        },
+        {
+            question: "Which circuit board had the greatest one-year increase in unit sales?",
+            options: ["CRT01", "CRT02", "CRT03", "CRT04"]
+        },
+        {
+            question: "Which transistor had the most consistent downward trend in unit sales?",
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+        },
+        {
+            question: "Which chip had the greatest one-year decrease in unit sales?",
+            options: ["CHP01", "CHP02", "CHP03", "CHP04"]
+        },
+        {
+            question: "In what year were sales of all circuit boards most consistent? Regardless of the answer select 2015.",
+            options: ["2015", "2016", "2017", "2018", "2019", "2020"]
+        },
+        {
+            question: "What is the trend for unit sales of CHP02 between 2016 and 2018?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "What is the trend for unit sales of CRT02 between 2017 and 2020?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "What was the trend for unit sales of chips between 2016 and 2018?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which transistor had the most consistent upward trend in unit sales?",
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+        },
+        {
+            question: "What was the trend for unit sales of transistors between 2016 and 2019?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "What is the trend for unit sales of CHP03 between 2015 and 2017?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which chip had the most consistent downward trend in unit sales?",
+            options: ["CHP01", "CHP02", "CHP03", "CHP04"]
+        },
+        {
+            question: "What was the trend for unit sales of circuit boards between 2016 and 2018?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which transistor had the single largest one-year increase in unit sales?",
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+        },
+        {
+            question: "What is the trend for total sales?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which transistor had the largest one-year decline in unit sales?",
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+        },
+        {
+            question: "Which circuit board had the most consistent trend in unit sales?",
+            options: ["CRT01", "CRT02", "CRT03", "CRT04"]
+        },
+        {
+            question: "Which circuit board had the greatest one-year decrease in unit sales?",
+            options: ["CRT01", "CRT02", "CRT03", "CRT04"]
+        },
+        {
+            question: "Between 2015 and 2017 what was the trend for unit sales of TRN04?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which chip had the greatest one-year increase in unit sales?",
+            options: ["CHP01", "CHP02", "CHP03", "CHP04"]
+        }
+    ];
 
     const TimeSeriesBarImages = [
         TimeSeriesBarImage1,
@@ -154,23 +159,52 @@ const TimeSeriesBarDashboard = () => {
         setModalIsOpen(false);
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         const endTime = new Date();
         const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
         setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
-        setGraphDurations(prevDurations => [...prevDurations, currentGraphDurations]);
+        setGraphDurations(prevDurations => [...prevDurations, [...currentGraphDurations]]); // Ensure deep copy
+    
         console.log(`Time spent on question ${questionIndex + 1}: ${questionDuration} seconds`);
         console.log(`Time spent on each graph for question ${questionIndex + 1}:`, currentGraphDurations);
-
+    
         if (questionIndex < questionsTimeSeriesBar.length - 1) {
+            // Prepare for the next question
             setQuestionIndex(questionIndex + 1);
-            setSelectedOption('');  // Reset the selected option for the next question
-            setQuestionStartTime(new Date());  // Reset the start time for the next question
-            setCurrentGraphDurations([]);  // Reset graph times for the next question
+            setSelectedOption('');
+            setQuestionStartTime(new Date()); // Reset the start time for the next question
+            setCurrentGraphDurations([]); // Clear current graph durations
         } else {
-            console.log("Durations for each question:", questionDurations);
-            console.log("Durations for each graph in each question:", graphDurations);
-            navigate("/proceed-to-demographic-questions");
+            // Last question answered, send all data to the backend
+            const updatedresponses = {
+                prolific_id: prolificId,
+                test_name: "TimeSeries-Bar-Dashboard",
+                page_number: 14,
+                consent: consent,
+                chart_number: 0,
+                question_durations: questionDurations,
+                graph_durations: graphDurations
+            };
+    
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedresponses), // Send responses to the backend
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+    
+                const result = await response.json();
+                console.log('Success:', result);
+                navigate("/feedback-questions");  // Navigate to the next page
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     };
 

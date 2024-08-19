@@ -17,6 +17,25 @@ import StructuralBarEnlargedImage2 from "../images/dashboard/structural-bar/enla
 import StructuralBarEnlargedImage3 from "../images/dashboard/structural-bar/enlarged/2-left.png";
 import StructuralBarEnlargedImage4 from "../images/dashboard/structural-bar/enlarged/2-right.png";
 
+import { useConsent } from './ConsentContext';
+
+
+const StructuralBarDashboard = () => {
+    const navigate = useNavigate();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState('');
+    const [questionIndex, setQuestionIndex] = useState(0);
+    const [selectedOption, setSelectedOption] = useState('');
+    const [questionStartTime, setQuestionStartTime] = useState(new Date());
+    const [graphStartTime, setGraphStartTime] = useState(null);
+    const [questionDurations, setQuestionDurations] = useState([]);
+    const [graphDurations, setGraphDurations] = useState([]);
+    const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
+
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const { consent, setConsent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+
+
 const questionsStructuralBar = [
     {
         question: "In which country were total unit sales of transistors lowest?",
@@ -116,17 +135,6 @@ const questionsStructuralBar = [
     }
 ];
 
-const StructuralBarDashboard = () => {
-    const navigate = useNavigate();
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState('');
-    const [questionIndex, setQuestionIndex] = useState(0);
-    const [selectedOption, setSelectedOption] = useState('');
-    const [questionStartTime, setQuestionStartTime] = useState(new Date());
-    const [graphStartTime, setGraphStartTime] = useState(null);
-    const [questionDurations, setQuestionDurations] = useState([]);
-    const [graphDurations, setGraphDurations] = useState([]);
-    const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
 
     const StructuralBarImages = [
         StructuralBarImage1,
@@ -155,23 +163,52 @@ const StructuralBarDashboard = () => {
         setModalIsOpen(false);
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         const endTime = new Date();
         const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
         setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
-        setGraphDurations(prevDurations => [...prevDurations, currentGraphDurations]);
+        setGraphDurations(prevDurations => [...prevDurations, [...currentGraphDurations]]); // Ensure deep copy
+    
         console.log(`Time spent on question ${questionIndex + 1}: ${questionDuration} seconds`);
         console.log(`Time spent on each graph for question ${questionIndex + 1}:`, currentGraphDurations);
-
+    
         if (questionIndex < questionsStructuralBar.length - 1) {
+            // Prepare for the next question
             setQuestionIndex(questionIndex + 1);
-            setSelectedOption('');  // Reset the selected option for the next question
-            setQuestionStartTime(new Date());  // Reset the start time for the next question
-            setCurrentGraphDurations([]);  // Reset graph times for the next question
+            setSelectedOption('');
+            setQuestionStartTime(new Date()); // Reset the start time for the next question
+            setCurrentGraphDurations([]); // Clear current graph durations
         } else {
-            console.log("Durations for each question:", questionDurations);
-            console.log("Durations for each graph in each question:", graphDurations);
-            navigate("/proceed-to-demographic-questions");
+            // Last question answered, send all data to the backend
+            const updatedresponses = {
+                prolific_id: prolificId,
+                test_name: "Structural-Bar-Dashboard",
+                page_number: 13,
+                consent: consent,
+                chart_number: 0,
+                question_durations: questionDurations,
+                graph_durations: graphDurations
+            };
+    
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedresponses), // Send responses to the backend
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+    
+                const result = await response.json();
+                console.log('Success:', result);
+                navigate("/feedback-questions");  // Navigate to the next page
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     };
 

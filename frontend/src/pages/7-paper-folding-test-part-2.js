@@ -96,6 +96,7 @@ const PaperFoldingPart2Questions = () => {
         test_name: 'Paper-Folding-Test-2',
         consent: consent === "yes" ? true : false,
         page_number: 7,
+        chart_number: 0,
         responses: {},
         time_spent: 0
     });

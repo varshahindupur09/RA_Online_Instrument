@@ -49,6 +49,7 @@ const RotationTestQuestion = () => {
         test_name: 'Sample-Rotation-Test',
         consent: consent === "yes" ? true : false,
         page_number: 8,
+        chart_number: 0,
         responses: {},
         time_spent: 0
     });

@@ -25,6 +25,7 @@ const CreativeBricksGame = () => {
         test_name: 'Creative-Bricks-Game',
         consent: consent === "yes" ? true : false,
         page_number: 11,
+        chart_number: 0,
         responses: {},
         time_spent: 0
     });

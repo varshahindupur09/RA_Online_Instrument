@@ -36,6 +36,7 @@ const FirstInstrConsent = () => {
         test_name: 'First-Consent', // Set test name
         consent: false, // Initialize consent as boolean
         page_number: 1, // Page number of where we are navigating, helps with debugging
+        chart_number: 0,
         responses: {}, // Initialize as an empty object to dynamically add responses
         time_spent: 0 // Add time_spent field
     });
