@@ -2,11 +2,11 @@
 const mongoose = require('mongoose');
 
 const SurveyResponseSchema = new mongoose.Schema({
-    prolific_id: { type: String, required: true}, //unique: true
-    test_name: { type: String, required: true },
-    page_number: { type: Number, required: true},
-    consent: {type: Boolean, required: true},
-    chart_number: { type: Number, required: true},
+    prolific_id: { type: String}, //, required: true}, //unique: true
+    test_name: { type: String},
+    page_number: { type: Number},
+    consent: {type: Boolean},
+    chart_number: { type: Number},
     responses: { type: Map, of: String},
     graph_question_durations: [{ type: Number }],
     per_graph_durations: [{ type: [Number] }],

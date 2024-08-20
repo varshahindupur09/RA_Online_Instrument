@@ -1,7 +1,6 @@
 // pages/paper-folding-test-part-1
 import React, { useState, useEffect, useRef }  from "react";
 import { useNavigate } from "react-router-dom";
-import '../components/styles_css/PageStyle.css'; 
 
 import Part1Question1 from '../images/fl-paper-folding-test/part-1-3-minutes/question-1/part-1-question-1.png'; // Import Part 1 Question 1 image
 import Part1Question1Answer1Option1 from '../images/fl-paper-folding-test/part-1-3-minutes/question-1/answers-1/answer-1-option-1.png'; 
@@ -73,6 +72,7 @@ import Part1Question10Answer10Option3 from '../images/fl-paper-folding-test/part
 import Part1Question10Answer10Option4 from '../images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-4.png'; 
 import Part1Question10Answer10Option5 from '../images/fl-paper-folding-test/part-1-3-minutes/question-10/answers-10/answer-10-option-5.png';
 
+import '../components/styles_css/PageStyle.css'; 
 import '../components/styles_css/PaperFoldingStyle.css';
 import '../components/styles_css/RadioButtonImage.css';
 import Timer from "../components/Timer";
@@ -179,10 +179,10 @@ const PaperFoldingPart1Questions = () => {
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo" /> 
                         <h2><strong><u>PAPER FOLDING TEST - PART 1</u></strong></h2>
                     </p>
-                    <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                    <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
             <br />
-            <h2>Paper Folding Test: Part 1: 3 minutes</h2>
+            {/* <h2>Paper Folding Test: Part 1: 3 minutes</h2> */}
             <br />
             <br />
             {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}

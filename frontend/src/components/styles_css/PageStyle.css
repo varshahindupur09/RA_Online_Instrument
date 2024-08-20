@@ -2,10 +2,10 @@
     width: 90%;
     max-width: 1350px;
     min-height: 100vh;
-    border: 2px solid #333;
+    /* border: 2px solid #333; */
     padding: 20px;
     margin: 30px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px #0000001a;
     box-sizing: border-box;
     text-align: left;
     font-family: Arial, sans-serif;
@@ -64,6 +64,7 @@ div[name="instructions"] img {
 
 .LogoStyleImage {
     caret-color: transparent;
+    text-align: center;
 }
 
 .images-container {
