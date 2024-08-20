@@ -34,7 +34,8 @@ import { useConsent } from './ConsentContext';
 
 const RotationTestQuestion = () => {
     const navigate = useNavigate();
-    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    const { consent } = useConsent();
     const startTimeRef = useRef(null);
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
@@ -45,7 +46,8 @@ const RotationTestQuestion = () => {
 
      // State to store responses
      const [responses, setResponses] = useState({
-        prolific_id: prolificId,
+        // prolific_id: prolificId,
+        prolific_id: '',
         test_name: 'Sample-Rotation-Test',
         consent: consent === "yes" ? true : false,
         page_number: 8,

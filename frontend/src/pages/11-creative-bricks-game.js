@@ -10,7 +10,8 @@ const CreativeBricksGame = () => {
     const navigate = useNavigate();
     const [count, setCount] = React.useState(0);
     const [timerVisible] = useState(true);
-    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    const { consent } = useConsent(); 
     const startTimeRef = useRef(null);
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
@@ -21,7 +22,8 @@ const CreativeBricksGame = () => {
 
     // State to store responses
     const [responses, setResponses] = useState({
-        prolific_id: prolificId,
+        // prolific_id: prolificId,
+        prolific_id: '',
         test_name: 'Creative-Bricks-Game',
         consent: consent === "yes" ? true : false,
         page_number: 11,

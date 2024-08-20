@@ -6,7 +6,8 @@ import { useConsent } from './ConsentContext';
 
 const ExitSurveyPage = () => {
 
-    const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    // const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    const { consent } = useConsent();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const startTimeRef = useRef(Date.now());
@@ -28,7 +29,8 @@ const ExitSurveyPage = () => {
             const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
 
             const responses = {
-                prolific_id: prolificId,
+                // prolific_id: prolificId,
+                prolific_id: '',
                 test_name: 'Exit-Survey', 
                 consent: consent === "yes" ? true : false, // Store as true or false based on user's choice
                 page_number: 3, 

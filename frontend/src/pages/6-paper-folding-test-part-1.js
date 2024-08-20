@@ -83,7 +83,8 @@ const PaperFoldingPart1Questions = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    const { consent } = useConsent(); 
 
     // State to manage timer visibility
     const [timerVisible] = useState(true);
@@ -94,12 +95,24 @@ const PaperFoldingPart1Questions = () => {
     
     //api integration
     const [responses, setResponses] = useState({
-        prolific_id: prolificId, 
+        // prolific_id: prolificId, 
+        prolific_id: '',
         test_name: 'Paper-Folding-Test-1', 
         consent: consent === "yes" ? true : false, 
         page_number: 6, 
         chart_number: 0,
-        responses: { },
+        responses: { 
+            question_1: "",
+            question_2: "",
+            question_3: "",
+            question_4: "",
+            question_5: "",
+            question_6: "",
+            question_7: "",
+            question_8: "",
+            question_9: "",
+            question_10: ""
+        },
         time_spent: 0 
     });
     

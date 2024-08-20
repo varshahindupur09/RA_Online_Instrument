@@ -11,7 +11,8 @@ import { useConsent } from './ConsentContext';
 
 const ConsentPage = () => {
     const navigate = useNavigate();
-    const { consent, setConsent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    // const { consent, setConsent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    const { consent, setConsent } = useConsent();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const startTimeRef = useRef(null);
@@ -36,7 +37,8 @@ const ConsentPage = () => {
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
 
         const responses = {
-            prolific_id: prolificId,
+            // prolific_id: prolificId,
+            prolific_id: '',
             test_name: 'Second-Consent', 
             consent: consent === "yes" ? true : false,
             page_number: 2,

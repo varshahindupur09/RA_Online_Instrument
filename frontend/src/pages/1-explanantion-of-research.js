@@ -16,7 +16,8 @@ const FirstInstrConsent = () => {
     const [error, setError] = useState(null);
     const query = useQuery();
 
-    const { consent, setConsent, prolificId, setProlificId } = useConsent();
+    // const { consent, setConsent, prolificId, setProlificId } = useConsent();
+    const { consent, setConsent} = useConsent();
 
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
@@ -24,12 +25,12 @@ const FirstInstrConsent = () => {
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     // Retrieve the Prolific ID from the query parameters
-    useEffect(() => {
-        const id = query.get('prolificId');
-        if (id) {
-            setProlificId(id);
-        }
-    }, [query, setProlificId]);
+    // useEffect(() => {
+    //     const id = query.get('prolificId');
+    //     if (id) {
+    //         setProlificId(id);
+    //     }
+    // }, [query, setProlificId]);
     
     const [responses, setResponses] = useState({
         prolific_id: '', // Set the default prolific_id
@@ -70,7 +71,7 @@ const FirstInstrConsent = () => {
         // Ensure the updated responses use the actual state of consent directly
         const updatedResponses = {
             ...responses,
-            prolific_id: prolificId,
+            // prolific_id: prolificId,
             time_spent: timeSpent,
         };
     
@@ -123,7 +124,7 @@ const FirstInstrConsent = () => {
                 <br />
                 <br />
                 <div name="instructions">
-                    <label>
+                    {/* <label>
                         Enter your Prolific ID:
                         <input 
                             type="text" 
@@ -138,7 +139,7 @@ const FirstInstrConsent = () => {
                     </label>
                     <div>
                         {prolificId && <p>Your Prolific ID: {prolificId}</p>}
-                    </div>
+                    </div> */}
                     <div name="instructionsh3">
                         <h3><u>Title of Study:</u> Data Visualization in Managerial Judgments</h3>	    
                         <h3><u>Principal Investigator:</u> Kelly Wellman</h3>

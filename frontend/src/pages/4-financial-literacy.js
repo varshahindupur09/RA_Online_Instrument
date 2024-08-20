@@ -8,7 +8,8 @@ const FinancialLiteracy = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    const { consent } = useConsent(); 
     const startTimeRef = useRef(Date.now());
 
     // const API_BASE_URL = 'https://backend.adg429.com';
@@ -17,12 +18,17 @@ const FinancialLiteracy = () => {
 
     // State to store responses
     const [responses, setResponses] = useState({
-        prolific_id: prolificId, 
+        // prolific_id: prolificId, 
+        prolific_id: '',
         test_name: 'Financial-Literacy', 
         consent: consent === "yes" ? true : false, 
         page_number: 4, 
         chart_number: 0,
-        responses: {}, // Dynamic responses based on user input
+        responses: {
+            question_1: "",
+            question_2: "",
+            question_3: ""
+        }, // Dynamic responses based on user input
         time_spent: 0 
     });
 
