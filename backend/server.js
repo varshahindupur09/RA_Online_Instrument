@@ -6,6 +6,7 @@ const routes = require('./routes/routes');
 const chartNumberRoutes = require('./routes/chartNumberRoutes');
 const cors = require('cors');
 require('dotenv').config(); 
+
 // const redisRoutes = require('./routes/redisRoute');
 
 // Create an Express application
@@ -57,8 +58,8 @@ const swaggerOptions = {
     },
     servers: [{
       // url: 'https://backend.adg429.com',
-      // url: 'http://localhost:8080',
-      url: process.env.BACKEND_API_URL,
+      url: 'http://localhost:8080',
+      // url: process.env.BACKEND_API_URL,
       description: 'Elastic Beanstalk Server'
     }]
   },

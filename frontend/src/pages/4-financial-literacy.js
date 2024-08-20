@@ -97,16 +97,16 @@ const FinancialLiteracy = () => {
                         </h4>
                     </div>
                     <div className="radio-container">
-                        <input type="radio" id="answer-fl-1-1" name="answer-fl-1" value="more-than-$102" onChange={() => handleChange(1, "option1")} />
+                        <input type="radio" id="answer-fl-1-1" name="answer-fl-1" value="more-than-$102" onChange={() => handleChange(1, "more-than-$102")} />
                         <label htmlFor="answer-fl-1-1">More than $102</label>
                         <br />
-                        <input type="radio" id="answer-fl-1-2" name="answer-fl-1" value="exactly-$102" onChange={() => handleChange(1, "option2")} />
+                        <input type="radio" id="answer-fl-1-2" name="answer-fl-1" value="exactly-$102" onChange={() => handleChange(1, "exactly-$102")} />
                         <label htmlFor="answer-fl-1-2">Exactly $102</label>
                         <br />
-                        <input type="radio" id="answer-fl-1-3" name="answer-fl-1" value="less-than-$102" onChange={() => handleChange(1, "option3")} />
+                        <input type="radio" id="answer-fl-1-3" name="answer-fl-1" value="less-than-$102" onChange={() => handleChange(1, "less-than-$102")} />
                         <label htmlFor="answer-fl-1-3">Less than $102</label>
                         <br />
-                        <input type="radio" id="answer-fl-1-4" name="answer-fl-1" value="do-not-know" onChange={() => handleChange(1, "option4")} />
+                        <input type="radio" id="answer-fl-1-4" name="answer-fl-1" value="do-not-know" onChange={() => handleChange(1, "do-not-know")} />
                         <label htmlFor="answer-fl-1-4">Do not know</label>
                     </div>
                     <br />
@@ -118,16 +118,16 @@ const FinancialLiteracy = () => {
                         </h4>
                     </div>
                     <div className="radio-container">
-                        <input type="radio" id="answer-fl-2-1" name="answer-fl-2" value="more-than-today" onChange={() => handleChange(2, "option1")} />
+                        <input type="radio" id="answer-fl-2-1" name="answer-fl-2" value="more-than-today" onChange={() => handleChange(2, "more-than-today")} />
                         <label htmlFor="answer-fl-2-1">More than today</label>
                         <br />
-                        <input type="radio" id="answer-fl-2-2" name="answer-fl-2" value="exactly-today" onChange={() => handleChange(2, "option2")} />
+                        <input type="radio" id="answer-fl-2-2" name="answer-fl-2" value="exactly-today" onChange={() => handleChange(2, "exactly-today")} />
                         <label htmlFor="answer-fl-2-2">Exactly today</label>
                         <br />
-                        <input type="radio" id="answer-fl-2-3" name="answer-fl-2" value="less-than-today" onChange={() => handleChange(2, "option3")} />
+                        <input type="radio" id="answer-fl-2-3" name="answer-fl-2" value="less-than-today" onChange={() => handleChange(2, "less-than-today")} />
                         <label htmlFor="answer-fl-2-3">Less than today</label>
                         <br />
-                        <input type="radio" id="answer-fl-2-4" name="answer-fl-2" value="do-not-know" onChange={() => handleChange(2, "option4")} />
+                        <input type="radio" id="answer-fl-2-4" name="answer-fl-2" value="do-not-know" onChange={() => handleChange(2, "do-not-know")} />
                         <label htmlFor="answer-fl-2-4">Do not know</label>
                     </div>
                     <br />
@@ -139,13 +139,13 @@ const FinancialLiteracy = () => {
                         </h4>
                     </div>
                     <div className="radio-container">
-                        <input type="radio" id="answer-fl-3-1" name="answer-fl-3" value="true" onChange={() => handleChange(3, "option1")} />
+                        <input type="radio" id="answer-fl-3-1" name="answer-fl-3" value="true" onChange={() => handleChange(3, "true")} />
                         <label htmlFor="answer-fl-3-1">True</label>
                         <br />
-                        <input type="radio" id="answer-fl-3-2" name="answer-fl-3" value="false" onChange={() => handleChange(3, "option2")} />
+                        <input type="radio" id="answer-fl-3-2" name="answer-fl-3" value="false" onChange={() => handleChange(3, "false")} />
                         <label htmlFor="answer-fl-3-2">False</label>
                         <br />
-                        <input type="radio" id="answer-fl-3-3" name="answer-fl-3" value="do-not-know"onChange={() => handleChange(3, "option3")} />
+                        <input type="radio" id="answer-fl-3-3" name="answer-fl-3" value="do-not-know"onChange={() => handleChange(3, "do-not-know")} />
                         <label htmlFor="answer-fl-3-3">Do not know</label>
                     </div>
                 </div>

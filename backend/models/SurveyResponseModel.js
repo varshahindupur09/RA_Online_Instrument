@@ -18,5 +18,7 @@ const SurveyResponseSchema = new mongoose.Schema({
 SurveyResponseSchema.index({ prolific_id: 1, page_number: 1 }, { unique: true });
 
 const SurveyResponse = mongoose.model('SurveyResponse', SurveyResponseSchema, 'surveyresponses');
+
 console.log('Survey Responses Collection Name:', SurveyResponse.collection.collectionName);
+
 module.exports = SurveyResponse;

@@ -1,7 +1,8 @@
-// routes/chartNumRoutes.js
+// routes/chartNumberRoutes.js
 const express = require('express');
 const router = express.Router();
-const chartNumberController = require('../controllers/ChartNumberController.js');
+// const ChartNumberController = require('../controllers/ChartNumberController');
+const { createChartNumber, getChartNumber, updateChartNumber, deleteChartNumber } = require('../controllers/ChartNumberController');
 
 /**
  * @swagger
@@ -98,9 +99,17 @@ const chartNumberController = require('../controllers/ChartNumberController.js')
  *                   example: "Chart number deleted successfully"
  */
 
-router.post('/chart-number', chartNumberController.createChartNumber);
-router.get('/chart-number', chartNumberController.getChartNumber);
-router.put('/chart-number/:id', chartNumberController.updateChartNumber);
-router.delete('/chart-number/:id', chartNumberController.deleteChartNumber);
+
+console.log('createChartNumber in chartNumberRoutes.js', createChartNumber);
+router.post('/chart-number', createChartNumber);
+
+console.log('getChartNumber', getChartNumber);
+router.get('/chart-number', getChartNumber);
+
+console.log('updateChartNumber', updateChartNumber);
+router.put('/chart-number', updateChartNumber);
+
+console.log('deleteChartNumber', deleteChartNumber);
+router.delete('/chart-number', deleteChartNumber);
 
 module.exports = router;

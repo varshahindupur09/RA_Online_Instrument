@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const surveyController = require('../controllers/SurveyResponse.js');
+const surveyController = require('../controllers/SurveyResponse');
 
 /**
  * @swagger
