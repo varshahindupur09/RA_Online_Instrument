@@ -135,7 +135,18 @@ const RotationTestPart2 = () => {
         consent: consent === "yes" ? true : false,
         page_number: 10,
         chart_number: 0,
-        responses: {},
+        responses: {
+            question1: Array(8).fill(''), 
+            question2: Array(8).fill(''), // Creates an array of 8 empty strings
+            question3: Array(8).fill(''),
+            question4: Array(8).fill(''),
+            question5: Array(8).fill(''),
+            question6: Array(8).fill(''),
+            question7: Array(8).fill(''),
+            question8: Array(8).fill(''),
+            question9: Array(8).fill(''),
+            question10: Array(8).fill('')
+        },
         time_spent: 0
     });
 
