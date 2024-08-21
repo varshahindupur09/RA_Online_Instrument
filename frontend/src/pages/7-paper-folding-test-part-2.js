@@ -202,7 +202,9 @@ const PaperFoldingPart2Questions = () => {
                     <div className="radio-container">
                         <input type="radio" id="Part2Question1Answer1Option1" name="Part2Question1Answer1" onChange={() => handleChange(1, "A")} />
                         <label htmlFor="Part2Question1Answer1Option1">
-                            <img src={Part2Question1Answer1Option1} alt="Part2Question1Answer1Option1" />
+                            {/* <div className="Part2PaperFoldingTestImage"> */}
+                                <img src={Part2Question1Answer1Option1} alt="Part2Question1Answer1Option1" />
+                            {/* </div> */}
                         </label>
                         <br />
                         <input type="radio" id="Part2Question1Answer1Option2" name="Part2Question1Answer1" onChange={() => handleChange(1, "B")} />

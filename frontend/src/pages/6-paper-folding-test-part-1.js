@@ -159,7 +159,8 @@ const PaperFoldingPart1Questions = () => {
                 throw new Error(responseText || 'Network response was not ok');
             }
             console.log('Response text:', responseText);
-            navigate("/proceed-to-part2-paper-folding-test");
+            // navigate("/proceed-to-part2-paper-folding-test");
+            navigate("/paper-folding-test-part-2"); 
         } catch (error) {
             console.error('Error:', error);
             setError(error);
@@ -169,7 +170,8 @@ const PaperFoldingPart1Questions = () => {
     };
     
     const handleTimerCompletion = () => {
-        navigate("/proceed-to-part2-paper-folding-test"); //if a breather is needed in between we can add it 
+        // navigate("/proceed-to-part2-paper-folding-test"); //if a breather is needed in between we can add it 
+        navigate("/paper-folding-test-part-2"); 
     };
 
     return (
