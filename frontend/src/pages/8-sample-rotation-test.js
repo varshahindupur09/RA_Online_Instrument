@@ -48,11 +48,14 @@ const RotationTestQuestion = () => {
      const [responses, setResponses] = useState({
         // prolific_id: prolificId,
         prolific_id: '',
-        test_name: 'Sample-Rotation-Test',
+        test_name: 'Rotation-Test-1',
         consent: consent === "yes" ? true : false,
-        page_number: 8,
+        page_number: 9,
         chart_number: 0,
-        responses: {},
+        responses: {
+            question1: Array(8).fill(''),
+            question2: Array(8).fill(''), // Creates an array of 8 empty string
+        },
         time_spent: 0
     });
 
@@ -72,63 +75,63 @@ const RotationTestQuestion = () => {
         question2answer5, question2answer6, question2answer7, question2answer8
     ];
 
-    // const [answers, setAnswers] = useState({
-    //     question1: Array(question1Answers.length).fill(null),
-    //     question2: Array(question2Answers.length).fill(null),
-    // });
-
-    // Function to handle change in response for a question
     const handleAnswerChange = (questionNumber, index, value) => {
-        setResponses(prevResponses => ({
-            ...prevResponses,
-            responses: {
-                ...prevResponses.responses,
-                [`question_${questionNumber}`]: (
-                    prevResponses.responses[`question_${questionNumber}`] 
-                        ? prevResponses.responses[`question_${questionNumber}`] + "," + value
-                        : value
-                )
-            }
-        }));
+        setResponses(prevResponses => {
+            // Ensure the array exists, or create a new one with empty strings
+            const existingAnswers = prevResponses.responses[`question${questionNumber}`] || Array(8).fill('');
+    
+            // Create a copy of the existing array and update the specific index
+            const updatedAnswers = [...existingAnswers];
+            updatedAnswers[index] = value;
+    
+            return {
+                ...prevResponses,
+                responses: {
+                    ...prevResponses.responses,
+                    [`question${questionNumber}`]: updatedAnswers
+                }
+            };
+        });
     };
 
-    // Function to handle form submission
+    // Function to handle form submission with validation
     const handleNext = async (event) => {
-        event.preventDefault();  // Prevent default form submission
-        setLoading(true);  // Set loading state to true
+        event.preventDefault();
+        setLoading(true);
 
-        const endTime = Date.now();  // Capture end time
-        const timeSpent = (endTime - startTimeRef.current) / 1000;  // Calculate time spent in seconds
+        const endTime = Date.now();
+        const timeSpent = (endTime - startTimeRef.current) / 1000;
 
-        // Update responses with the calculated time spent
+        // Convert each responses array to a comma-separated string
+        const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
+            acc[key] = responses.responses[key].join(',');
+            return acc;
+        }, {});
+
         const updatedResponses = {
             ...responses,
+            responses: formattedResponses,
             time_spent: timeSpent
         };
 
         try {
-            // Make a POST request to your API
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedResponses),  // Convert responses to JSON string
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedResponses),
             });
 
-            const responseText = await response.text();
-            if (!response.ok) {  // Check if the request was not successful
-                throw new Error(responseText || 'Network response was not ok');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-            console.log('Response text:', responseText);  // Log response text for debugging
-            navigate("/proceed-to-part1-rotation-test");  // Navigate to the next page after successful submission
-            } catch (error) {
-                console.error('Error:', error);  // Log any errors
-                setError(error);  // Set error state
-            } finally {
-                setLoading(false);  // Reset loading state
-            }
-        };
+            navigate("/rotation-test-part-1");
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     // Function to render each question
     const renderQuestion = (questionImage, answerImages, questionNumber) => (

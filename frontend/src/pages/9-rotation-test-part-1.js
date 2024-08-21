@@ -137,8 +137,8 @@ const RotationTestPart1 = () => {
     // const API_BASE_URL = 'http://localhost:8080';
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-     // State to store responses
-     const [responses, setResponses] = useState({
+    // State to store responses
+    const [responses, setResponses] = useState({
         // prolific_id: prolificId,
         prolific_id: '',
         test_name: 'Rotation-Test-1',
@@ -146,7 +146,7 @@ const RotationTestPart1 = () => {
         page_number: 9,
         chart_number: 0,
         responses: {
-            question1: Array(8).fill(''), 
+            question1: Array(8).fill(''),
             question2: Array(8).fill(''), // Creates an array of 8 empty strings
             question3: Array(8).fill(''),
             question4: Array(8).fill(''),
@@ -164,10 +164,6 @@ const RotationTestPart1 = () => {
     useEffect(() => {
         startTimeRef.current = Date.now();
     }, []);
-
-    const handleTimerCompletion = () => {
-        navigate("/proceed-to-part2-rotation-test");
-    };
 
     const question1 = Part1Question1; 
     const question1Answers = [
@@ -237,7 +233,10 @@ const RotationTestPart1 = () => {
 
     const handleAnswerChange = (questionNumber, index, value) => {
         setResponses(prevResponses => {
-            const existingAnswers = prevResponses.responses[questionNumber] || Array(8).fill('');
+            // Ensure the array exists, or create a new one with empty strings
+            const existingAnswers = prevResponses.responses[`question${questionNumber}`] || Array(8).fill('');
+    
+            // Create a copy of the existing array and update the specific index
             const updatedAnswers = [...existingAnswers];
             updatedAnswers[index] = value;
     
@@ -245,13 +244,17 @@ const RotationTestPart1 = () => {
                 ...prevResponses,
                 responses: {
                     ...prevResponses.responses,
-                    [questionNumber]: updatedAnswers
+                    [`question${questionNumber}`]: updatedAnswers
                 }
             };
         });
     };
 
-    // Function to handle form submission
+    const handleTimerCompletion = () => {
+        navigate("/rotation-test-part-2");
+    };
+
+
     // Function to handle form submission with validation
     const handleNext = async (event) => {
         event.preventDefault();
@@ -268,6 +271,7 @@ const RotationTestPart1 = () => {
 
         const updatedResponses = {
             ...responses,
+            responses: formattedResponses,
             time_spent: timeSpent
         };
 
@@ -281,7 +285,7 @@ const RotationTestPart1 = () => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            navigate("/proceed-to-part2-rotation-test");
+            navigate("/rotation-test-part-2");
         } catch (error) {
             console.error('Error:', error);
             setError(error);
