@@ -1,20 +1,15 @@
 // pages/1_explanantion_of_research.js
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useConsent } from './ConsentContext'; // Import the custom hook
 import '../components/styles_css/RadioButton.css'; 
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
-
 const FirstInstrConsent = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const query = useQuery();
 
     // const { consent, setConsent, prolificId, setProlificId } = useConsent();
     const { consent, setConsent} = useConsent();

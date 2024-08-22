@@ -7,7 +7,7 @@ const SurveyResponseSchema = new mongoose.Schema({
     page_number: { type: Number},
     consent: {type: Boolean},
     chart_number: { type: Number},
-    responses: { type: Map, of: String},
+    responses: { type: Map, of: [String]},
     graph_question_durations: [{ type: Number }],
     per_graph_durations: [{ type: [Number] }],
     time_spent: { type: Number},

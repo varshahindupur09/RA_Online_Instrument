@@ -100,16 +100,9 @@ const { createChartNumber, getChartNumber, updateChartNumber, deleteChartNumber 
  */
 
 
-console.log('createChartNumber in chartNumberRoutes.js', createChartNumber);
 router.post('/chart-number', createChartNumber);
-
-console.log('getChartNumber', getChartNumber);
 router.get('/chart-number', getChartNumber);
-
-console.log('updateChartNumber', updateChartNumber);
 router.put('/chart-number', updateChartNumber);
-
-console.log('deleteChartNumber', deleteChartNumber);
 router.delete('/chart-number', deleteChartNumber);
 
 module.exports = router;

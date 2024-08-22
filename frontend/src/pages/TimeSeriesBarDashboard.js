@@ -31,7 +31,7 @@ const TimeSeriesBarDashboard = () => {
     const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-    const { consent, setConsent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
 
     const questionsTimeSeriesBar = [
         {

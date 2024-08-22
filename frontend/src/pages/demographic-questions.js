@@ -1,165 +1,71 @@
-// // demographic-questions
-// import React from 'react';
-// import { useNavigate } from "react-router-dom";
-// import '../components/styles_css/PageStyle.css'; 
-
-// const EndFLPage = () => {
-//     const navigate = useNavigate();
-
-//     const handleNext = () => {
-//         navigate("/end-survey");
-//     };
-
-
-//     return (
-//         <div className="container">
-//             <div className="LogoStyleImage">
-//                 <p>
-//                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo" /> 
-//                 <h2><strong><u>DEMOGRAPHICS</u></strong></h2> 
-//                 </p>
-//                 <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
-//             </div>
-//             <div>
-//                 <p>Almost finished! Please respond to the demographic questions below in order to complete the survey.</p>
-//             </div>
-//             <div name="instructions">
-//                 <label>
-//                     What's your age?
-//                     <input 
-//                         type="number" 
-//                         value='age'
-//                         required
-//                     />
-//                 </label>
-        
-//                 {/* question 1 */}
-//                 <p>
-//                     Please indicate the highest level of education you have completed.
-//                 </p>
-//                 <div className="radio-container">
-//                     <input type="radio" id="education-level-1" name="education-level" value="Some high school" />
-//                     <label htmlFor="education-level-1">Some high school</label>
-//                     <br />
-//                     <input type="radio" id="education-level-2" name="education-level" value="High school diploma" />
-//                     <label htmlFor="education-level-2">High school diploma</label>
-//                     <br />
-//                     <input type="radio" id="education-level-3" name="education-level" value="Some college" />
-//                     <label htmlFor="education-level-3">Some college</label>
-//                     <br />
-//                     <input type="radio" id="education-level-4" name="education-level" value="College diploma" />
-//                     <label htmlFor="education-level-4">College diploma</label>
-//                     <br />
-//                     <input type="radio" id="education-level-5" name="education-level" value="Undergraduate degree" />
-//                     <label htmlFor="education-level-5">Undergraduate degree</label>
-//                     <br />
-//                     <input type="radio" id="education-level-6" name="education-level" value="Graduate degree" />
-//                     <label htmlFor="education-level-6">Graduate degree</label>
-//                 </div>
-//                 <br/>
-//                 <br/>
-//                 <br/>
-//                 <p>
-//                     How many years of work experience do you have?
-//                 </p>
-//                 <div className="radio-container">
-//                     <input type="radio" id="work-experience-1" name="work-experience" value="Less than one" />
-//                     <label htmlFor="work-experience-1">Less than one</label>
-//                     <br />
-//                     <input type="radio" id="work-experience-2" name="work-experience" value="1-3" />
-//                     <label htmlFor="work-experience-2">1-3</label>
-//                     <br />
-//                     <input type="radio" id="work-experience-3" name="work-experience" value="3-5" />
-//                     <label htmlFor="work-experience-3">3-5</label>
-//                     <br />
-//                     <input type="radio" id="work-experience-4" name="work-experience" value="5-10" />
-//                     <label htmlFor="work-experience-4">5-10</label>
-//                     <br />
-//                     <input type="radio" id="work-experience-5" name="work-experience" value="More than 10" />
-//                     <label htmlFor="work-experience-5">More than 10</label>
-//                 </div>
-//                 <br/>
-//                 <br/>
-//                 <br/>
-//                 <p>
-//                     How many years of management experience do you have?                
-//                 </p>
-//                 <div className="radio-container">
-//                     <input type="radio" id="supervision-experience-1" name="supervision-experience" value="Less than one" />
-//                     <label htmlFor="supervision-experience-1">Less than one</label>
-//                     <br />
-//                     <input type="radio" id="supervision-experience-2" name="supervision-experience" value="1-3" />
-//                     <label htmlFor="supervision-experience-2">1-3</label>
-//                     <br />
-//                     <input type="radio" id="supervision-experience-3" name="supervision-experience" value="3-5" />
-//                     <label htmlFor="supervision-experience-3">3-5</label>
-//                     <br />
-//                     <input type="radio" id="supervision-experience-4" name="supervision-experience" value="5-10" />
-//                     <label htmlFor="supervision-experience-4">5-10</label>
-//                     <br />
-//                     <input type="radio" id="supervision-experience-5" name="supervision-experience" value="More than 10" />
-//                     <label htmlFor="supervision-experience-5">More than 10</label>
-//                 </div>
-//                 <br/>
-//                 <br/>
-//                 <br/>
-//                 <p>
-//                     Which best describes your employment sector?
-//                 </p>
-//                 {/* need this to be a dropdown with different selection. */}
-//             </div>
-//             <br />
-//             <br />
-//             <br />
-//             <br />
-//             <button className="button" onClick={handleNext}> Next </button>
-//         </div>
-//     );
-// };
-
-// export default EndFLPage;
-
-
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
+import '../components/styles_css/DemographicRadioButton.css'; 
+import { useConsent } from './ConsentContext';
 
 const Demographics = () => {
-    const navigate = useNavigate();
-    const [age, setAge] = useState('');
-    const [educationLevel, setEducationLevel] = useState('');
-    const [workExperience, setWorkExperience] = useState('');
-    const [managementExperience, setManagementExperience] = useState('');
-    const [employmentSector, setEmploymentSector] = useState('');
+    const { consent } = useConsent(); 
+    const [prolificId, setProlificId] = useState('');
+    const startTimeRef = useRef(Date.now());
+    const [error, setError] = useState(null);
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-    const handleSubmit = async () => {
-        const demographicData = {
-            age,
-            educationLevel,
-            workExperience,
-            managementExperience,
-            employmentSector
-        };
+    const [demographicData, setDemographicData] = useState({
+        prolific_id: prolificId,
+        test_name: 'Demographics-Questions',
+        consent: consent === "yes" ? true : false, 
+        page_number: 17,
+        chart_number: 0,
+        responses: {
+            "age": '',
+            "education-level": '',
+            "work-experience": '',
+            "management-experience": '',
+            "employment-sector": ''
+        },
+        time_spent: 0 
+    });
 
+    // Update demographic data
+    const handleChange = (field, value) => {
+        setDemographicData(prev => ({
+            ...prev,
+            responses: {
+                ...prev.responses,
+                [field]: value
+            }
+        }));
+    };
+
+    // Handle form submission
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const endTime = Date.now();
+        const timeSpent = (endTime - startTimeRef.current) / 1000; 
+
+        const updatedData = {
+            ...demographicData,
+            prolific_id: prolificId,
+            time_spent: timeSpent
+        };
         try {
-            const response = await fetch(`${API_BASE_URL}/api/demographicData`, {
+            const response = await fetch(`${API_BASE_URL}/api/surveyresponse`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(demographicData),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({updatedData})
             });
 
             if (!response.ok) {
                 throw new Error('Failed to submit demographic data');
             }
 
-            navigate("/paper-folding-test-sample-question");
         } catch (error) {
             console.error('Error:', error);
+            setError(error);
         }
     };
 
@@ -168,75 +74,119 @@ const Demographics = () => {
             <div className="LogoStyleImage">
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
                 <h2><strong><u>DEMOGRAPHICS</u></strong></h2>
-                <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <p>Almost finished! Please respond to the demographic questions below in order to complete the survey.</p>
-            <div name="instructions">
-                <label>
-                    What's your age?
-                    <input 
-                        type="number" 
-                        value={age}
-                        onChange={e => setAge(e.target.value)}
-                        required
-                    />
-                </label>
+            <br></br>
+            <form onSubmit={handleSubmit}>
+                <div name="instructions">
+                    <label>What's your age?</label>
+                    <br></br>
+                    <br></br>
+                        <input 
+                            type="number" 
+                            value={demographicData.responses.age}
+                            onChange={e => handleChange("age", e.target.value)}
+                            required
+                            className="text-input"
+                        />
+                    <br></br>
+                    <br></br>
 
-                <p>Please indicate the highest level of education you have completed.</p>
-                <div className="radio-container">
-                    {["Some high school", "High school diploma", "Some college", "College diploma", "Undergraduate degree", "Graduate degree"].map(level => (
-                        <label key={level}>
-                            <input type="radio" name="education-level" value={level} checked={educationLevel === level} onChange={() => setEducationLevel(level)} />
-                            {level}
-                        </label>
-                    ))}
+                    <p>Please indicate the highest level of education you have completed.</p>
+                    <div className="radio-option">
+                        {["Some high school", "High school diploma", "Some college", "College diploma", "Undergraduate degree", "Graduate degree"].map(level => (
+                            <div key={level}>
+                            <input 
+                                type="radio" 
+                                id={`education-${level.replace(/\s+/g, '-')}`} // Create a unique ID by replacing spaces with dashes
+                                name="education-level" 
+                                value={level}
+                                checked={demographicData.responses["education-level"] === level} 
+                                onChange={e => handleChange("education-level", e.target.value)}
+                            />
+                            </div>
+                        ))}
+                    </div>
+                    <br></br>
+                    <br></br>
+
+        
+                    <p>How many years of work experience do you have?</p>
+                    <div className="radio-option">
+                        {["Less than one", "1-3", "3-5", "5-10", "More than 10"].map(years => (
+                            <div key={years}>
+                                <input 
+                                    type="radio" 
+                                    id={years.replace(/\s+/g, '')}
+                                    name="work-experience" 
+                                    value={years} 
+                                    checked={demographicData.responses["work-experience"] === years} 
+                                    onChange={e => handleChange("work-experience", e.target.value)}
+                                />
+                        </div>
+                        ))}
+                    </div>
+
+                    <br></br>
+                    <br></br>
+
+                    <p>How many years of management experience do you have?</p>
+                    <div className="radio-option">
+                        {["Less than one", "1-3", "3-5", "5-10", "More than 10"].map(years => (
+                            <div key={years}>
+                            <input 
+                                type="radio" 
+                                id={`management-${years.replace(/\s+/g, '-')}`}
+                                name="supervision-experience" 
+                                value={years} 
+                                checked={demographicData.responses["management-experience"] === years} 
+                                onChange={e => handleChange("management-experience", e.target.value)}
+                            />
+                        </div>
+                        ))}
+                    </div>
+                    <br></br>
+                    <br></br>
+
+                    <p>Which best describes your employment sector?</p>
+                    <select 
+                        value={demographicData.responses["employment-sector"]} 
+                        onChange={e => handleChange("employment-sector", e.target.value)} 
+                        className="dropdown"
+                    >
+                        {["Agriculture, Food and Natural Resources", "Architecture and Construction", "Arts", "Business Management and Administration", "Education and Training", "Finance", "Government and Public Administration", "Medicine", "Hospitality and Tourism", "Information Technology", "Legal", "Policing", "Military", "Manufacturing", "Marketing and Sales", "Science, Technology, Engineering and Mathematics", "Social Sciences", "Transportation, Distribution and Logistics", "Other"].map(sector => (
+                            <option key={sector} value={sector}>{sector}</option>
+                        ))}
+                    </select>
+                    <br></br>
+                    <br></br>
+
+                    <p>Thank you for your participation.</p>
+                    <br></br>
+
+                    <label>Please enter your Prolific ID here: </label>
+                    <br></br>
+                    <br></br>
+                        <input 
+                            type="number" 
+                            value={demographicData.prolific_id}
+                            onChange={e => setDemographicData(prev => ({
+                                ...prev,
+                                prolific_id: e.target.value
+                            }))}
+                            required
+                            className="text-input-larger"
+                        />
+                    <br></br>
+                    <br></br>
+                    
+                    <p>Your completion code is ******** .</p>
+
+                    <button className="button" type="submit">Submit</button>
+                    {error && <p className="error-message">{error.message}</p>}
                 </div>
-
-                <p>How many years of work experience do you have?</p>
-                <div className="radio-container">
-                    {["Less than one", "1-3", "3-5", "5-10", "More than 10"].map(years => (
-                        <label key={years}>
-                            <input type="radio" name="work-experience" value={years} checked={workExperience === years} onChange={() => setWorkExperience(years)} />
-                            {years}
-                        </label>
-                    ))}
-                </div>
-
-                <p>How many years of management experience do you have?</p>
-                <div className="radio-container">
-                    {["Less than one", "1-3", "3-5", "5-10", "More than 10"].map(years => (
-                        <label key={years}>
-                            <input type="radio" name="supervision-experience" value={years} checked={managementExperience === years} onChange={() => setManagementExperience(years)} />
-                            {years}
-                        </label>
-                    ))}
-                </div>
-
-                <p>Which best describes your employment sector?</p>
-                <select value={employmentSector} onChange={e => setEmploymentSector(e.target.value)}>
-                    <option value="Agriculture, Food and Natural Resources">Agriculture, Food and Natural Resources</option>
-                    <option value="Architecture and Construction">Architecture and Construction</option>
-                    <option value="Arts">Arts</option>
-                    <option value="Business Management and Administration">Business Management and Administration</option>
-                    <option value="Education and Training">Education and Training</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Government and Public Administration">Government and Public Administration</option>
-                    <option value="Medicine">Medicine</option>
-                    <option value="Hospitality and Tourism">Hospitality and Tourism</option>
-                    <option value="Information Technology">Information Technology</option>
-                    <option value="Legal">Legal</option>
-                    <option value="Policing">Policing</option>
-                    <option value="Military">Military</option>
-                    <option value="Manufacturing">Manufacturing</option>
-                    <option value="Marketing and Sales">Marketing and Sales</option>
-                    <option value="Science, Technology, Engineering and Mathematics">Science, Technology, Engineering and Mathematics</option>
-                    <option value="Social Sciences">Social Sciences</option>
-                    <option value="Transportation, Distribution and Logistics">Transportation, Distribution and Logistics</option>
-                    <option value="Other">Other</option>
-                </select>
-
-                <button className="button" onClick={handleSubmit}>Next</button>
-            </div>
+            </form>
         </div>
     );
 };
