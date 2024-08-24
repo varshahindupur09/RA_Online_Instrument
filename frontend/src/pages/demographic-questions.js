@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import '../components/styles_css/DemographicRadioButton.css'; 
@@ -7,14 +6,14 @@ import { useConsent } from './ConsentContext';
 
 const Demographics = () => {
     const { consent } = useConsent(); 
-    const [prolificId, setProlificId] = useState('');
+    const [prolificId] = useState('');
     const startTimeRef = useRef(Date.now());
     const [error, setError] = useState(null);
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     const [demographicData, setDemographicData] = useState({
-        prolific_id: prolificId,
+        prolific_id: '',
         test_name: 'Demographics-Questions',
         consent: consent === "yes" ? true : false, 
         page_number: 17,
@@ -35,8 +34,16 @@ const Demographics = () => {
             ...prev,
             responses: {
                 ...prev.responses,
+                // [field]: Array.isArray(value) ? value : [value] 
                 [field]: value
             }
+        }));
+    };
+
+    const handleProlificIdChange = (value) => {
+        setDemographicData(prev => ({
+            ...prev,
+            prolific_id: value
         }));
     };
 
@@ -49,17 +56,22 @@ const Demographics = () => {
 
         const updatedData = {
             ...demographicData,
-            prolific_id: prolificId,
+            // responses: formattedResponses,
             time_spent: timeSpent
         };
+
+        console.log("updated responses" , updatedData)
+
         try {
-            const response = await fetch(`${API_BASE_URL}/api/surveyresponse`, {
+            const postResponse = await fetch(`${API_BASE_URL}/api/surveyresponse`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({updatedData})
+                body: JSON.stringify(updatedData)
             });
 
-            if (!response.ok) {
+            console.log("response from POST" , postResponse)
+
+            if (!postResponse.ok) {
                 throw new Error('Failed to submit demographic data');
             }
 
@@ -74,7 +86,7 @@ const Demographics = () => {
             <div className="LogoStyleImage">
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
                 <h2><strong><u>DEMOGRAPHICS</u></strong></h2>
-                <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <p>Almost finished! Please respond to the demographic questions below in order to complete the survey.</p>
             <br></br>
@@ -85,7 +97,7 @@ const Demographics = () => {
                     <br></br>
                         <input 
                             type="number" 
-                            value={demographicData.responses.age}
+                            value={demographicData.responses["age"]}
                             onChange={e => handleChange("age", e.target.value)}
                             required
                             className="text-input"
@@ -105,25 +117,27 @@ const Demographics = () => {
                                 checked={demographicData.responses["education-level"] === level} 
                                 onChange={e => handleChange("education-level", e.target.value)}
                             />
+                            <label htmlFor={`education-${level.replace(/\s+/g, '-')}`}>{level}</label> {/* Correct label */}
                             </div>
                         ))}
                     </div>
                     <br></br>
                     <br></br>
 
-        
-                    <p>How many years of work experience do you have?</p>
+
                     <div className="radio-option">
+                        <p>How many years of work experience do you have?</p>
                         {["Less than one", "1-3", "3-5", "5-10", "More than 10"].map(years => (
                             <div key={years}>
                                 <input 
                                     type="radio" 
-                                    id={years.replace(/\s+/g, '')}
+                                    id={`work-experience-${years.replace(/\s+/g, '-')}`} 
                                     name="work-experience" 
                                     value={years} 
                                     checked={demographicData.responses["work-experience"] === years} 
                                     onChange={e => handleChange("work-experience", e.target.value)}
                                 />
+                                <label htmlFor={`work-experience-${years.replace(/\s+/g, '-')}`}>{years}</label>
                         </div>
                         ))}
                     </div>
@@ -137,12 +151,13 @@ const Demographics = () => {
                             <div key={years}>
                             <input 
                                 type="radio" 
-                                id={`management-${years.replace(/\s+/g, '-')}`}
+                                id={`management-experience-${years.replace(/\s+/g, '-')}`} 
                                 name="supervision-experience" 
                                 value={years} 
                                 checked={demographicData.responses["management-experience"] === years} 
                                 onChange={e => handleChange("management-experience", e.target.value)}
                             />
+                             <label htmlFor={`management-experience-${years.replace(/\s+/g, '-')}`}>{years}</label>
                         </div>
                         ))}
                     </div>
@@ -169,13 +184,13 @@ const Demographics = () => {
                     <br></br>
                     <br></br>
                         <input 
-                            type="number" 
+                            type="text" 
+                            id="prolific-id-input"
                             value={demographicData.prolific_id}
-                            onChange={e => setDemographicData(prev => ({
-                                ...prev,
-                                prolific_id: e.target.value
-                            }))}
+                            onChange={e => handleProlificIdChange(e.target.value)}
                             required
+                            pattern="[A-Za-z0-9]+" // Alphanumeric patter
+                            title="Prolific ID must be alphanumeric." // Tooltip for guidance
                             className="text-input-larger"
                         />
                     <br></br>

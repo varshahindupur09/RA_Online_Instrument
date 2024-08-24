@@ -48,13 +48,13 @@ const RotationTestQuestion = () => {
      const [responses, setResponses] = useState({
         // prolific_id: prolificId,
         prolific_id: '',
-        test_name: 'Rotation-Test-1',
+        test_name: 'Sample-Rotation-Test',
         consent: consent === "yes" ? true : false,
         page_number: 9,
         chart_number: 0,
         responses: {
-            question1: Array(8).fill(''),
-            question2: Array(8).fill(''), // Creates an array of 8 empty string
+            question1: '',
+            question2: '', // Creates an array of 8 empty string
         },
         time_spent: 0
     });
@@ -78,17 +78,27 @@ const RotationTestQuestion = () => {
     const handleAnswerChange = (questionNumber, index, value) => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
-            const existingAnswers = prevResponses.responses[`question${questionNumber}`] || Array(8).fill('');
+            const questionKey = `question${questionNumber}`;
+            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,,";  
     
-            // Create a copy of the existing array and update the specific index
-            const updatedAnswers = [...existingAnswers];
-            updatedAnswers[index] = value;
+            // // Create a copy of the existing array and update the specific index
+            // const updatedAnswers = [...existingAnswers];
+            // updatedAnswers[index] = value;
+            // Split the current response string into an array
+            let responseArray = currentResponses.split(',');
+
+            // Update the specific index with the new value
+            responseArray[index] = value;
+
+            // Join the array back into a comma-separated string
+            const updatedResponse = responseArray.join(',');
     
             return {
                 ...prevResponses,
                 responses: {
                     ...prevResponses.responses,
-                    [`question${questionNumber}`]: updatedAnswers
+                    // [`${questionNumber}`]: updatedAnswers
+                    [questionKey]: updatedResponse
                 }
             };
         });
@@ -102,11 +112,30 @@ const RotationTestQuestion = () => {
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000;
 
+        // // Convert each responses array to a comma-separated string
+        // responses: { type: Map, of: [String]},
+        // const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
+        //     acc[key] = responses.responses[key].join(',');
+        //     return acc;
+        // }, {});
+
         // Convert each responses array to a comma-separated string
+        // responses: { type: Map, of: String},
+        // const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
+        //     acc[key] = responses.responses[key].join(',');
+        //     return acc;
+        // }, {});
+
+        // Ensure each response is converted to a string format, regardless of its initial type
         const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
-            acc[key] = responses.responses[key].join(',');
+            if (Array.isArray(responses.responses[key])) {
+                acc[key] = responses.responses[key].join(','); // Convert array to a comma-separated string
+            } else {
+                acc[key] = String(responses.responses[key]); // Convert non-array to string
+            }
             return acc;
         }, {});
+
 
         const updatedResponses = {
             ...responses,
@@ -139,7 +168,7 @@ const RotationTestQuestion = () => {
             <div className="question-image-container">
                 <br></br>
                 <div className='question-image'>
-                    <img src={questionImage} alt={`Question ${questionNumber}`} className="question-main-image" />
+                    <img src={questionImage} alt={`Question ${questionNumber}`} className="question-main-image" /> 
                 </div>
                 <br></br>
             </div>
@@ -187,7 +216,7 @@ const RotationTestQuestion = () => {
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                         <h2><strong><u>SAMPLE ROTATION TEST</u></strong></h2>
                     </p>
-                    <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                    <p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
             <br />
             <h2>Rotation Test:</h2>
