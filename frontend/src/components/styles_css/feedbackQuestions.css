@@ -1,0 +1,46 @@
+/* feedbackQuestions.css */
+.question { 
+    padding: 20px; 
+    border-radius: 8px; 
+    color: black; 
+    font-size: 1.2em;
+    font-family: Helvetica;
+    position: relative;
+}
+
+.slider-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.question label {
+    margin-bottom: 10px; 
+    display: block; 
+}
+
+.question input[type="range"] {
+    width: 80%; 
+    margin: 10px 0; 
+    color: #2196F3;
+}
+
+.question span {
+    display: inline-block; 
+    font-size: 1em; 
+    font-family: Helvetica;
+}
+
+.style-feedback-left, .style-feedback-right {
+    flex: 1; /* Equal space for both labels */
+    text-align: center; 
+}
+
+.style-feedback-left {
+    text-align: left; 
+}
+
+.style-feedback-right label{
+    text-align: right;
+}

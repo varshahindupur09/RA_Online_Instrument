@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css';  
+import '../components/styles_css/feedbackQuestions.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 
 import { useConsent } from './ConsentContext';
@@ -104,38 +105,57 @@ const FeedbackQuestions = () => {
 
                     <div className="question">
                         <label htmlFor="mentalDemand">How mentally demanding was the task?</label>
+                        <br></br>
                         <input type="range" name="mentalDemand" min="0" max="100" value={feedback.mentalDemand} onChange={handleChange} />
-                        <span>Very Low</span><span>Very High</span>
+                        <div className="slider-container">
+                            <span className="style-feedback-left">Very Low</span>
+                            <span className="style-feedback-right">Very High</span>
+                        </div>
                     </div>
-
+                    <br></br>
                     <div className="question">
                         <label htmlFor="physicalDemand">How physically demanding was the task?</label>
                         <input type="range" name="physicalDemand" min="0" max="100" value={feedback.physicalDemand} onChange={handleChange} />
-                        <span>Very Low</span><span>Very High</span>
+                        <div className="slider-container">
+                            <span className="style-feedback-left">Very Low</span>
+                            <span className="style-feedback-right">Very High</span>
+                        </div>
                     </div>
 
                     <div className="question">
                         <label htmlFor="temporalDemand">How hurried or rushed was the pace of the task?</label>
                         <input type="range" name="temporalDemand" min="0" max="100" value={feedback.temporalDemand} onChange={handleChange} />
-                        <span>Very Low</span><span>Very High</span>
+                        <div className="slider-container">
+                            <span className="style-feedback-left">Very Low</span>
+                            <span className="style-feedback-right">Very High</span>
+                        </div>
                     </div>
 
                     <div className="question">
                         <label htmlFor="performance">How successful were you in accomplishing what you were asked to do?</label>
                         <input type="range" name="performance" min="0" max="100" value={feedback.performance} onChange={handleChange} />
-                        <span>Perfect</span><span>Failure</span>
+                        <div className="slider-container">
+                            <span className="style-feedback-left">Perfect</span>
+                            <span className="style-feedback-right">Failure</span>
+                        </div>
                     </div>
 
                     <div className="question">
                         <label htmlFor="effort">How hard did you have to work to accomplish your level of performance?</label>
                         <input type="range" name="effort" min="0" max="100" value={feedback.effort} onChange={handleChange} />
-                        <span>Very Low</span><span>Very High</span>
+                        <div className="slider-container">
+                            <span className="style-feedback-left">Very Low</span>
+                            <span className="style-feedback-right">Very High</span>
+                        </div>
                     </div>
 
                     <div className="question">
                         <label htmlFor="frustration">How insecure, discouraged, irritated, stressed, and annoyed were you?</label>
                         <input type="range" name="frustration" min="0" max="100" value={feedback.frustration} onChange={handleChange} />
-                        <span>Very Low</span><span>Very High</span>
+                        <div className="slider-container">
+                            <span className="style-feedback-left">Very Low</span>
+                            <span className="style-feedback-right">Very High</span>
+                        </div>
                     </div>
 
                     <br />
