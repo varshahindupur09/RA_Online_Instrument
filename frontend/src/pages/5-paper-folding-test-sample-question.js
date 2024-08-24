@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import SampleQuestion from '../images/fl-paper-folding-test/sample-question/sample-question-1.png';
 import SampleQuestion from '../images/fl-paper-folding-test/sample-question/entire_test.png';
@@ -10,12 +10,38 @@ import Navbar from "../components/NavbarPage";
 
 const PaperFoldingSampleQuestion = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
     // const [showSolution, setShowSolution] = useState(false);
 
     // Toggles the visibility of the solution.
     // const handleShowSolution = () => {
     //     setShowSolution(!showSolution); // This now toggles the state of showSolution
     // };
+
+    // Prevent back button navigation
+    useEffect(() => {
+        const preventBackNavigation = () => {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        preventBackNavigation();
+
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        // Listen for clicks and key presses to ensure back button remains disabled
+        window.addEventListener('click', preventBackNavigation);
+        window.addEventListener('keydown', preventBackNavigation);
+
+        // Clean up the event listeners on component unmount
+        return () => {
+            window.removeEventListener('click', preventBackNavigation);
+            window.removeEventListener('keydown', preventBackNavigation);
+        };
+    }, []);
 
     const handleNext = () => {
         navigate("/paper-folding-test-part-1");
@@ -36,16 +62,9 @@ const PaperFoldingSampleQuestion = () => {
                 <br />
                 <h2>Paper Folding Test: Sample Question</h2>
                 <br />
+                {loading && <p>Loading...</p>}
+                {error && <p>Error: {error.message}</p>}
                 <div name="instructions">
-                    <p>
-                        Next, you will answer some questions that will help me understand your spatial ability. Prior research shows that different people have different levels of spatial ability. Some people will find these questions easier while others will find them more difficult.
-                    </p>
-                    <p className="instructionsred">
-                        <strong>
-                            Please read the instructions carefully. In addition to the fixed payment of $4, you will receive a bonus of $0.05 for each correct answer that you provide. 
-                        </strong>
-                    </p>
-                  
                     <p>
                         In this test, you are to imagine the folding and unfolding of pieces of paper. In each problem in the test there are some figures drawn on top and there are others drawn below. The figures on top represent a square piece of paper being folded, and the last of these figures has one or two small circles drawn on it to show where the paper has been punched. 
                     </p>
@@ -95,6 +114,7 @@ const PaperFoldingSampleQuestion = () => {
                 </div>
                 <br />
                 <button className="button" onClick={handleNext}> Next </button>
+                {error && <p className="error-message">{error.message}</p>}
                 </div>
         </div>
     );

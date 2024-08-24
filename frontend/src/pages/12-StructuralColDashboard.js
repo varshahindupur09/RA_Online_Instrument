@@ -18,9 +18,34 @@ import StructuralColEnlargedImage3 from "../images/dashboard/structural-col/enla
 import StructuralColEnlargedImage4 from "../images/dashboard/structural-col/enlarged/2-right.png";
 
 import { useConsent } from './ConsentContext';
+import Timer from "../components/Timer";
 
 const StructuralColDashboard = () => {
     const navigate = useNavigate();
+
+    // Prevent back button navigation
+    useEffect(() => {
+        const preventBackNavigation = () => {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        preventBackNavigation();
+
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        // Listen for clicks and key presses to ensure back button remains disabled
+        window.addEventListener('click', preventBackNavigation);
+        window.addEventListener('keydown', preventBackNavigation);
+
+        // Clean up the event listeners on component unmount
+        return () => {
+            window.removeEventListener('click', preventBackNavigation);
+            window.removeEventListener('keydown', preventBackNavigation);
+        };
+    }, []);
+
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState('');
     const [questionIndex, setQuestionIndex] = useState(0);
@@ -33,6 +58,9 @@ const StructuralColDashboard = () => {
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+
+    // State to manage timer visibility
+    const [timerVisible] = useState(true);
 
     const questionsStructuralCol = [
         {
@@ -202,7 +230,9 @@ const StructuralColDashboard = () => {
     
                 const result = await response.json();
                 console.log('Success:', result);
+
                 navigate("/feedback-questions");  // Navigate to the next page
+
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -220,6 +250,11 @@ const StructuralColDashboard = () => {
         }
     }, [questionIndex, questionDurations, graphDurations]);
 
+    const handleTimerCompletion = () => {
+        navigate("/feedback-questions");  // Navigate to the next page
+    };
+
+
     return (
         <div className="container">
             <div className="containerDashboard">
@@ -230,6 +265,14 @@ const StructuralColDashboard = () => {
                     </p>
                     <p>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>    
                 </div>
+                <br />
+                <br />
+                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />}
+                <br />
+                <br />
+                <br />
+                {/* {loading && <p>Loading...</p>}
+                {error && <p>Error: {error.message}</p>} */}
                 <div className="image-grid">
                     {StructuralColImages.map((imgSrc, index) => (
                         <div className="image-item" key={index}>

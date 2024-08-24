@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css';  
 import '../components/styles_css/feedbackQuestions.css'; 
@@ -8,6 +8,30 @@ import { useConsent } from './ConsentContext';
 
 const FeedbackQuestions = () => {
     const navigate = useNavigate();
+
+     // Prevent back button navigation
+     useEffect(() => {
+        const preventBackNavigation = () => {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        preventBackNavigation();
+
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        // Listen for clicks and key presses to ensure back button remains disabled
+        window.addEventListener('click', preventBackNavigation);
+        window.addEventListener('keydown', preventBackNavigation);
+
+        // Clean up the event listeners on component unmount
+        return () => {
+            window.removeEventListener('click', preventBackNavigation);
+            window.removeEventListener('keydown', preventBackNavigation);
+        };
+    }, []);
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const startTimeRef = useRef(Date.now());

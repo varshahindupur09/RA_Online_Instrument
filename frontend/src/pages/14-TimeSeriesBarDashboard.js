@@ -6,22 +6,45 @@ import '../components/styles_css/dashboardStyles.css';
 import '../components/styles_css/dashboardRadioButton.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 
-//Structural - Bar Graph
-import StructuralBarImage1 from "../images/dashboard/structural-bar/small/1-left.png";
-import StructuralBarImage2 from "../images/dashboard/structural-bar/small/1-right.png";
-import StructuralBarImage3 from "../images/dashboard/structural-bar/small/2-left.png";
-import StructuralBarImage4 from "../images/dashboard/structural-bar/small/2-right.png";
+import TimeSeriesBarImage1 from "../images/dashboard/timeseries-bar/small/1-left.png";
+import TimeSeriesBarImage2 from "../images/dashboard/timeseries-bar/small/1-right.png";
+import TimeSeriesBarImage3 from "../images/dashboard/timeseries-bar/small/2-left.png";
+import TimeSeriesBarImage4 from "../images/dashboard/timeseries-bar/small/2-right.png";
 
-import StructuralBarEnlargedImage1 from "../images/dashboard/structural-bar/enlarged/1-left.png";
-import StructuralBarEnlargedImage2 from "../images/dashboard/structural-bar/enlarged/1-right.png";
-import StructuralBarEnlargedImage3 from "../images/dashboard/structural-bar/enlarged/2-left.png";
-import StructuralBarEnlargedImage4 from "../images/dashboard/structural-bar/enlarged/2-right.png";
+import TimeSeriesBarEnlargedImage1 from "../images/dashboard/timeseries-bar/enlarged/1-left.png";
+import TimeSeriesBarEnlargedImage2 from "../images/dashboard/timeseries-bar/enlarged/1-right.png";
+import TimeSeriesBarEnlargedImage3 from "../images/dashboard/timeseries-bar/enlarged/2-left.png";
+import TimeSeriesBarEnlargedImage4 from "../images/dashboard/timeseries-bar/enlarged/2-right.png";
 
+import Timer from "../components/Timer";
 import { useConsent } from './ConsentContext';
 
-
-const StructuralBarDashboard = () => {
+const TimeSeriesBarDashboard = () => {
     const navigate = useNavigate();
+
+    // Prevent back button navigation
+    useEffect(() => {
+        const preventBackNavigation = () => {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        preventBackNavigation();
+
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        // Listen for clicks and key presses to ensure back button remains disabled
+        window.addEventListener('click', preventBackNavigation);
+        window.addEventListener('keydown', preventBackNavigation);
+
+        // Clean up the event listeners on component unmount
+        return () => {
+            window.removeEventListener('click', preventBackNavigation);
+            window.removeEventListener('keydown', preventBackNavigation);
+        };
+    }, []);
+    
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState('');
     const [questionIndex, setQuestionIndex] = useState(0);
@@ -35,123 +58,124 @@ const StructuralBarDashboard = () => {
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
 
+    // State to manage timer visibility
+    const [timerVisible] = useState(true);
 
-const questionsStructuralBar = [
-    {
-        question: "In which country were total unit sales of transistors lowest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which countries were unit sales of CRT03 equal?",
-        options: ["US and Mexico", "Brazil and UK", "Mexico and UK", "Canada and Mexico", "US and UK"]
-    },
-    {
-        question: "In which country were total unit sales of circuit boards highest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were unit sales of CRT03 second lowest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were sales of TRN02 and TRN04 equal?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In what country were unit sales of CRT02 and CRT03 equal?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were the second-highest unit sales of TRN01?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were unit sales of CHP04 second lowest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were unit sales of CRT03 lowest? Regardless of the answer select Mexico.",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were unit sales of CHP03 and CHP04 closest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were unit sales of CRT02 second highest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were total unit sales of chips lowest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were the unit sales of TRN03 the lowest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were total unit sales of chips?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which countries were unit sales of CHP01 and CHP02 closest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were unit sales of CHP03 highest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were the total unit sales of all products lowest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were total unit sales lowest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In which country were total unit sales highest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "What was the second highest-selling transistor product in the US?",
-        options: ["TRN01", "TRN02", "TRN03", "TRN04"]
-    },
-    {
-        question: "In what country were unit sales of CRT02 highest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "In what country were unit sales of CRT04 lowest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    },
-    {
-        question: "Which transistor line had the lowest total unit sales across all six countries?",
-        options: ["TRN01", "TRN02", "TRN03", "TRN04"]
-    },
-    {
-        question: "In which country were unit sales of CHP03 second lowest?",
-        options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-    }
-];
-
-
-    const StructuralBarImages = [
-        StructuralBarImage1,
-        StructuralBarImage2,
-        StructuralBarImage3,
-        StructuralBarImage4
+    const questionsTimeSeriesBar = [
+        {
+            question: "From 2015 to 2019 what was the trend for total unit sales of chips?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which circuit board had the greatest change in sales between 2015 and 2016?",
+            options: ["CRT01", "CRT02", "CRT03", "CRT04"]
+        },
+        {
+            question: "Between which two years did circuit boards experience the greatest change in unit sales?",
+            options: ["2015-2016", "2016-2017", "2017-2018", "2018-2019", "2019-2020"]
+        },
+        {
+            question: "What is the trend for unit sales of CRT04 between 2016 and 2018?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "In what year were unit sales for all transistor types most similar?",
+            options: ["2015", "2016", "2017", "2018", "2019", "2020"]
+        },
+        {
+            question: "Which circuit board had the greatest one-year increase in unit sales?",
+            options: ["CRT01", "CRT02", "CRT03", "CRT04"]
+        },
+        {
+            question: "Which transistor had the most consistent downward trend in unit sales?",
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+        },
+        {
+            question: "Which chip had the greatest one-year decrease in unit sales?",
+            options: ["CHP01", "CHP02", "CHP03", "CHP04"]
+        },
+        {
+            question: "In what year were sales of all circuit boards most consistent? Regardless of the answer select 2015.",
+            options: ["2015", "2016", "2017", "2018", "2019", "2020"]
+        },
+        {
+            question: "What is the trend for unit sales of CHP02 between 2016 and 2018?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "What is the trend for unit sales of CRT02 between 2017 and 2020?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "What was the trend for unit sales of chips between 2016 and 2018?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which transistor had the most consistent upward trend in unit sales?",
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+        },
+        {
+            question: "What was the trend for unit sales of transistors between 2016 and 2019?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "What is the trend for unit sales of CHP03 between 2015 and 2017?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which chip had the most consistent downward trend in unit sales?",
+            options: ["CHP01", "CHP02", "CHP03", "CHP04"]
+        },
+        {
+            question: "What was the trend for unit sales of circuit boards between 2016 and 2018?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which transistor had the single largest one-year increase in unit sales?",
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+        },
+        {
+            question: "What is the trend for total sales?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which transistor had the largest one-year decline in unit sales?",
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+        },
+        {
+            question: "Which circuit board had the most consistent trend in unit sales?",
+            options: ["CRT01", "CRT02", "CRT03", "CRT04"]
+        },
+        {
+            question: "Which circuit board had the greatest one-year decrease in unit sales?",
+            options: ["CRT01", "CRT02", "CRT03", "CRT04"]
+        },
+        {
+            question: "Between 2015 and 2017 what was the trend for unit sales of TRN04?",
+            options: ["Upward", "Downward", "No clear trend"]
+        },
+        {
+            question: "Which chip had the greatest one-year increase in unit sales?",
+            options: ["CHP01", "CHP02", "CHP03", "CHP04"]
+        }
     ];
 
-    const StructuralBarEnlargedImages = [
-        StructuralBarEnlargedImage1,
-        StructuralBarEnlargedImage2,
-        StructuralBarEnlargedImage3,
-        StructuralBarEnlargedImage4
+    const TimeSeriesBarImages = [
+        TimeSeriesBarImage1,
+        TimeSeriesBarImage2,
+        TimeSeriesBarImage3,
+        TimeSeriesBarImage4
+    ];
+
+    const TimeSeriesBarEnlargedImages = [
+        TimeSeriesBarEnlargedImage1,
+        TimeSeriesBarEnlargedImage2,
+        TimeSeriesBarEnlargedImage3,
+        TimeSeriesBarEnlargedImage4
     ];
 
     const openModal = (imgIndex) => {
-        setSelectedImage(StructuralBarEnlargedImages[imgIndex]);
+        setSelectedImage(TimeSeriesBarEnlargedImages[imgIndex]);
         setModalIsOpen(true);
         setGraphStartTime(new Date());
     };
@@ -163,6 +187,10 @@ const questionsStructuralBar = [
         setModalIsOpen(false);
     };
 
+    const handleTimerCompletion = () => {
+        navigate("/feedback-questions");  // Navigate to the next page
+    };
+
     const handleNext = async () => {
         const endTime = new Date();
         const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
@@ -172,7 +200,7 @@ const questionsStructuralBar = [
         console.log(`Time spent on question ${questionIndex + 1}: ${questionDuration} seconds`);
         console.log(`Time spent on each graph for question ${questionIndex + 1}:`, currentGraphDurations);
     
-        if (questionIndex < questionsStructuralBar.length - 1) {
+        if (questionIndex < questionsTimeSeriesBar.length - 1) {
             // Prepare for the next question
             setQuestionIndex(questionIndex + 1);
             setSelectedOption('');
@@ -182,8 +210,8 @@ const questionsStructuralBar = [
             // Last question answered, send all data to the backend
             const updatedresponses = {
                 prolific_id: prolificId,
-                test_name: "Structural-Bar-Dashboard",
-                page_number: 13,
+                test_name: "TimeSeries-Bar-Dashboard",
+                page_number: 14,
                 consent: consent,
                 chart_number: 0,
                 question_durations: questionDurations,
@@ -217,7 +245,7 @@ const questionsStructuralBar = [
     };
 
     useEffect(() => {
-        if (questionIndex >= questionsStructuralBar.length) {
+        if (questionIndex >= questionsTimeSeriesBar.length) {
             console.log("Durations for each question:", questionDurations);
             console.log("Durations for each graph in each question:", graphDurations);
         }
@@ -233,8 +261,14 @@ const questionsStructuralBar = [
                     </p>
                     <p>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>    
                 </div>
+                <br />
+                <br />
+                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />}
+                <br />
+                <br />
+                <br />
                 <div className="image-grid">
-                    {StructuralBarImages.map((imgSrc, index) => (
+                    {TimeSeriesBarImages.map((imgSrc, index) => (
                         <div className="image-item" key={index}>
                             <img 
                                 src={imgSrc}
@@ -268,8 +302,8 @@ const questionsStructuralBar = [
                     </button>
                     <img src={selectedImage} alt="Enlarged Dashboard Chart" style={{ width: '100%', height: '70%' }} />
                     <div className="modal-question">
-                        <p>{questionsStructuralBar[questionIndex].question}</p>
-                        {questionsStructuralBar[questionIndex].options.map((option, index) => (
+                        <p>{questionsTimeSeriesBar[questionIndex].question}</p>
+                        {questionsTimeSeriesBar[questionIndex].options.map((option, index) => (
                             <label className="radio-container" key={index}>
                                 <input 
                                     type="radio"
@@ -292,8 +326,8 @@ const questionsStructuralBar = [
                 <br></br>
                 <div name="instructions">
                     <div className="question">
-                        <p>{questionsStructuralBar[questionIndex].question}</p>
-                            {questionsStructuralBar[questionIndex].options.map((option, index) => ( 
+                        <p>{questionsTimeSeriesBar[questionIndex].question}</p>
+                            {questionsTimeSeriesBar[questionIndex].options.map((option, index) => ( 
                                 <label className="radio-container" key={index} >
                                     <input
                                         type="radio"
@@ -317,4 +351,4 @@ const questionsStructuralBar = [
     );
 }
 
-export default StructuralBarDashboard;
+export default TimeSeriesBarDashboard;

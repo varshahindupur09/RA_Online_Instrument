@@ -11,40 +11,33 @@ import FirstInstrConsent from "./pages/1-explanantion-of-research";
 import AskAgainConsentPage from "./pages/2-ask-consent-again";
 import ExitSurveyPage from "./pages/3-exit-survey-page";
 import FinancialLiteracy from "./pages/4-financial-literacy";
+import ProceedToPart1PaperFoldingTest from "./pages/proceed-to-part1-paper-folding-test"; // buffer
 import PaperFoldingSampleQuestion from "./pages/5-paper-folding-test-sample-question";
 import PaperFoldingPart1Questions from "./pages/6-paper-folding-test-part-1";
-import ProceedToPart2PaperFoldingTest from "./pages/proceed-to-part2-paper-folding-test";
 import PaperFoldingPart2Questions from "./pages/7-paper-folding-test-part-2";
-import CreativeBricksGame from "./pages/11-creative-bricks-game";
-
-//not ordered
-import ConsentPage from "./pages/no-consent-page";
 import RotationTest from "./pages/8-sample-rotation-test";
-import ProceedToPart1RotationTest from "./pages/proceed-to-part1-rotation-test";
 import RotationTestPart1 from "./pages/9-rotation-test-part-1";
-import ProceedToPart2RotationTest from "./pages/proceed-to-part2-rotation-test";
 import RotationTestPart2 from "./pages/10-rotation-test-part-2";
-import Demographics from "./pages/demographic-questions";
-import EndSurvey from "./pages/endSurvey";
-// import ProceedToDemographicQuestions from "./pages/proceed-to-demographic-questions";
+import CreativeBricksGame from "./pages/11-creative-bricks-game";
+// dashboard
 import ProceedToDashboard from "./pages/proceed-to-dashboard";
-// reuse later
-import EndFLPage from "./pages/EndFLPage";
-
-// import Home from "./pages/home-page";
-
+import DashboardRouter from "./pages/dashboard-router";
+import StructuralColDashboard from "./pages/12-StructuralColDashboard";
+import StructuralBarDashboard from "./pages/13-StructuralBarDashboard";
+import TimeSeriesBarDashboard from "./pages/14-TimeSeriesBarDashboard";
+import TimeSeriesColDashboard from "./pages/15-TimeSeriesColDashboard";
+//feedback
+import FeedbackQuestions from "./pages/16-feedback-questions";
+//demographic
+import Demographics from "./pages/17-demographic-questions";
 // Import ConsentProvider
 import { ConsentProvider } from './pages/ConsentContext';
 
-// dashboard
-import DashboardRouter from "./pages/dashboard-router";
-import StructuralBarDashboard from "./pages/StructuralBarDashboard";
-import TimeSeriesBarDashboard from "./pages/TimeSeriesBarDashboard";
-import StructuralColDashboard from "./pages/StructuralColDashboard";
-import TimeSeriesColDashboard from "./pages/TimeSeriesColDashboard";
-
-//feedback
-import FeedbackQuestions from "./pages/feedback-questions";
+//not ordered
+// import ProceedToPart1RotationTest from "./not-required/proceed-to-part1-rotation-test";
+// import ProceedToPart2RotationTest from "./pages/proceed-to-part2-rotation-test";
+// import ProceedToDemographicQuestions from "./pages/proceed-to-demographic-questions";
+// import ProceedToPart2PaperFoldingTest from "./pages/proceed-to-part2-paper-folding-test";
 
 function App() {
     return (
@@ -57,35 +50,30 @@ function App() {
                         <Route path="/ask-consent-again" element={<AskAgainConsentPage />} />
                         <Route path="/exit-survey-page" element={<ExitSurveyPage />} />
                         <Route exact path="/financial-literacy" element={<FinancialLiteracy />} />
+                         <Route path="/proceed-to-part1-paper-folding-test" element={<ProceedToPart1PaperFoldingTest />} />
                         <Route path="/paper-folding-test-sample-question" element={<PaperFoldingSampleQuestion />} />
                         <Route path="/paper-folding-test-part-1" element={<PaperFoldingPart1Questions />} />
-                        <Route path="/proceed-to-part2-paper-folding-test" element={<ProceedToPart2PaperFoldingTest />} />
+                        {/* <Route path="/proceed-to-part2-paper-folding-test" element={<ProceedToPart2PaperFoldingTest />} /> */}
                         <Route path="/paper-folding-test-part-2" element={<PaperFoldingPart2Questions />} />
                         {/* if a breather is needed in between we can add it  */}
                         <Route path="/sample-rotation-test" element={<RotationTest />} />
-                        <Route path="/proceed-to-part1-rotation-test" element={<ProceedToPart1RotationTest />} />
+                        {/* <Route path="/proceed-to-part1-rotation-test" element={<ProceedToPart1RotationTest />} /> */}
                         <Route path="/rotation-test-part-1" element={<RotationTestPart1 />} />
-                        <Route path="/proceed-to-part2-rotation-test" element={<ProceedToPart2RotationTest />} />
+                        {/* <Route path="/proceed-to-part2-rotation-test" element={<ProceedToPart2RotationTest />} /> */}
                         <Route path="/rotation-test-part-2" element={<RotationTestPart2 />} />
                         <Route path="/creative-bricks-game" element={<CreativeBricksGame />} />
                         <Route path="/proceed-to-dashboard" element={<ProceedToDashboard />} />
                         {/* <Route path="/dashboard" element={<DashboardAllCharts />} /> */}
+                        <Route path="/dashboard-router" element={<DashboardRouter />} />
                         <Route path="/time-series-bar-dashboard" element={<TimeSeriesBarDashboard />} />
                         <Route path="/structure-bar-dashboard" element={<StructuralBarDashboard />} />
                         <Route path="/time-series-col-dashboard" element={<TimeSeriesColDashboard />} />
                         <Route path="/structure-col-dashboard" element={<StructuralColDashboard />} />
-                        <Route path="/dashboard-router" element={<DashboardRouter />} />
                         {/* feedback */}
                         <Route path="/feedback-questions" element={<FeedbackQuestions />} />
                         {/* demographics */}
                         <Route path="/demographic-questions" element={<Demographics />} />
-                        {/* end survey */}
-                        <Route path="/end-survey" element={<EndSurvey />} />
-                        {/* setting */}
-                        <Route path="/no-consent-page" element={<ConsentPage />} />
                         {/* reuse later */}
-                       
-                        <Route path="/end-fl-page" element={<EndFLPage />} />
                         {/* <Route path="/proceed-to-demographic-questions" element={<ProceedToDemographicQuestions />} /> */}
                     </Routes>
                 </div>

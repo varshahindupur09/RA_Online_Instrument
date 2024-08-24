@@ -6,6 +6,8 @@ import logoImageDoc from '../images/UCF_logo_doc.png';
 const ProceedToDemographicQuestions = () => {
     const navigate = useNavigate(); 
 
+    
+
     const handleNext = () => {
         navigate("/proceed-to-demographic-questions");
     };

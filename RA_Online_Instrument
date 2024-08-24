@@ -37,29 +37,29 @@ RA_Online_Instrument
 │   ├── README.md
 │   ├── index.css
 │   ├── index.js
-│   ├── pages
-│       │   ├── EndFLPage.js
-│       │   ├── again-consent-page.js
-│       │   ├── dashboard.js
+│   ├── pages # 30 minutes overall - 21 minutes - remains - 9 minutes
+│       │   ├── 1_explanantion_of_research.js   #no timer #2min
+│       │   ├── 2-ask-consent-page.js #no timer #1min
+│       │   ├── 3-exit-survey-page.js #no timer #1min
+│       │   ├── 4-financial-literacy.js #no timer #2min 
+│       │   ├── 5-paper-folding-test-sample-question.js #no timer #2min
+│       │   ├── 6-paper-folding-test-part-1.js #3 minutes timer **
+│       │   ├── 7-paper-folding-test-part-2.js #3 minutes timer **
+│       │   └── 8-sample-rotation-test.js #no timer #3min 
+│       │   ├── 9-rotation-test-part-1.js #3 minutes timer **
+│       │   ├── 10-rotation-test-part-2.js #3 minutes timer **
+│       │   ├── 11-creative-bricks-game.js #2 minutes timer **
+│       │   ├── proceed-to-dashboard.js #no timer #1min 
+│       │   ├── dashboard-router.js
+│       │   ├── StructuralBarDashboard.js #7 minutes timer **
+│       │   ├── StructuralColDashboard.js
+│       │   ├── TimeSeriesBarDashboard.js
+│       │   ├── TimeSeriesColDashboard.js
+│       │   ├── feedback-questions.js 
 │       │   ├── demographic-questions.js
-│       │   ├── endSurvey.js
-│       │   ├── exit-survey-page.js
-│       │   ├── financial-literacy.js
-│       │   ├── first-instr-consent.js
-│       │   ├── home-page.js
-│       │   ├── instructions-consent.js
-│       │   ├── no-consent-page.js
-│       │   ├── paper-folding-test-part-1.js
-│       │   ├── paper-folding-test-part-2.js
-│       │   ├── paper-folding-test-sample-question.js
-│       │   ├── proceed-to-dashboard.js
-│       │   ├── proceed-to-demographic-questions.js
 │       │   ├── proceed-to-part1-rotation-test.js
 │       │   ├── proceed-to-part2-paper-folding-test.js
 │       │   ├── proceed-to-part2-rotation-test.js
-│       │   ├── rotation-test-part-1.js
-│       │   ├── rotation-test-part-2.js
-│       │   └── sample-rotation-test.js
 ├── preprocessing_scripts
 │   ├── .DS_Store
 │   ├── GetImageHeightAndWidth.py

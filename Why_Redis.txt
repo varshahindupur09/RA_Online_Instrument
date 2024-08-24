@@ -8,8 +8,8 @@ In-Memory Storage: Redis can store user progress, including consent and other su
 
 Session Timeout:
 Expiration Policies: You can configure Redis to automatically expire session data after a set period of inactivity. This helps in managing user sessions and ensures that data is not kept indefinitely.
-Reduced Load on MongoDB:
 
+Reduced Load on MongoDB:
 Efficient Data Handling: 
 By using Redis for active sessions and MongoDB for long-term storage, you can reduce the load on MongoDB and handle frequent read and write operations more efficiently.
 

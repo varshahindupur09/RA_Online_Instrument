@@ -19,8 +19,34 @@ import TimeSeriesColEnlargedImage2 from "../images/dashboard/timeseries-col/enla
 import TimeSeriesColEnlargedImage3 from "../images/dashboard/timeseries-col/enlarged/2-left.png";
 import TimeSeriesColEnlargedImage4 from "../images/dashboard/timeseries-col/enlarged/2-right.png";
 
+import Timer from "../components/Timer";
+
 const TimeSeriesColDashboard = () => {
     const navigate = useNavigate();
+
+    // Prevent back button navigation
+    useEffect(() => {
+        const preventBackNavigation = () => {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        preventBackNavigation();
+
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        // Listen for clicks and key presses to ensure back button remains disabled
+        window.addEventListener('click', preventBackNavigation);
+        window.addEventListener('keydown', preventBackNavigation);
+
+        // Clean up the event listeners on component unmount
+        return () => {
+            window.removeEventListener('click', preventBackNavigation);
+            window.removeEventListener('keydown', preventBackNavigation);
+        };
+    }, []);
+    
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState('');
     const [questionIndex, setQuestionIndex] = useState(0);
@@ -33,6 +59,9 @@ const TimeSeriesColDashboard = () => {
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+
+    // State to manage timer visibility
+    const [timerVisible] = useState(true);
 
     const questionsTimeSeriesCol = [
         {
@@ -161,6 +190,10 @@ const TimeSeriesColDashboard = () => {
         setModalIsOpen(false);
     };
 
+    const handleTimerCompletion = () => {
+        navigate("/feedback-questions");  // Navigate to the next page
+    };
+
     const handleNext = async () => {
         const endTime = new Date();
         const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
@@ -232,6 +265,12 @@ const TimeSeriesColDashboard = () => {
                     </p>
                     <p>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>    
                 </div>
+                <br />
+                <br />
+                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />}
+                <br />
+                <br />
+                <br />
                 <div className="image-grid">
                     {TimeSeriesColImages.map((imgSrc, index) => (
                         <div className="image-item" key={index}>

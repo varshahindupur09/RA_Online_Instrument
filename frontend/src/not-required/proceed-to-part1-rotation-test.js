@@ -4,7 +4,7 @@ import '../components/styles_css/PageStyle.css';
 import logoImageDoc from '../images/UCF_logo_doc.png';
 
 const ProceedToPart1RotationTest = () => {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const handleNext = () => {
         navigate("/rotation-test-part-1");

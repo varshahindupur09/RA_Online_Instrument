@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
@@ -11,6 +11,30 @@ const FinancialLiteracy = () => {
     // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
     const { consent } = useConsent(); 
     const startTimeRef = useRef(Date.now());
+
+    // Prevent back button navigation
+    useEffect(() => {
+        const preventBackNavigation = () => {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        preventBackNavigation();
+
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        // Listen for clicks and key presses to ensure back button remains disabled
+        window.addEventListener('click', preventBackNavigation);
+        window.addEventListener('keydown', preventBackNavigation);
+
+        // Clean up the event listeners on component unmount
+        return () => {
+            window.removeEventListener('click', preventBackNavigation);
+            window.removeEventListener('keydown', preventBackNavigation);
+        };
+    }, []);
+
 
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
@@ -70,7 +94,8 @@ const FinancialLiteracy = () => {
                 throw new Error(responseText || 'Network response was not ok');
             }
             console.log('Response text:', responseText);
-            navigate("/paper-folding-test-sample-question");
+            // navigate("/paper-folding-test-sample-question");
+            navigate("proceed-to-part1-paper-folding-test")
 
         } catch (error) {
             console.error('Error:', error);
@@ -90,6 +115,8 @@ const FinancialLiteracy = () => {
                     </p>
                     <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
+                {loading && <p>Loading...</p>}
+                {error && <p>Error: {error.message}</p>}
                 <div name="instructions">
                     <br />
                     <div className="instructionsFL">

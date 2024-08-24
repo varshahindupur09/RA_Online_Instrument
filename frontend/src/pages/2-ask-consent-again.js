@@ -17,6 +17,29 @@ const ConsentPage = () => {
     const [error, setError] = useState(null);
     const startTimeRef = useRef(null);
 
+    // Prevent back button navigation
+    useEffect(() => {
+        const preventBackNavigation = () => {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        preventBackNavigation();
+
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        // Listen for clicks and key presses to ensure back button remains disabled
+        window.addEventListener('click', preventBackNavigation);
+        window.addEventListener('keydown', preventBackNavigation);
+
+        // Clean up the event listeners on component unmount
+        return () => {
+            window.removeEventListener('click', preventBackNavigation);
+            window.removeEventListener('keydown', preventBackNavigation);
+        };
+    }, []);
+
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -92,6 +115,8 @@ const ConsentPage = () => {
                 <br></br>
                 <br></br>
                 <br></br>
+                {loading && <p>Loading...</p>}
+                {error && <p>Error: {error.message}</p>}
                 <div name="instructions">
                     <p><strong>If you do not consent, you cannot continue to participate in this study. Please choose to express your consent or leave the survey now.</strong></p>
                     <br></br>

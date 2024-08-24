@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import '../components/styles_css/DemographicRadioButton.css'; 
@@ -6,6 +6,30 @@ import { useConsent } from './ConsentContext';
 
 const Demographics = () => {
     const { consent } = useConsent(); 
+
+     // Prevent back button navigation
+     useEffect(() => {
+        const preventBackNavigation = () => {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        preventBackNavigation();
+
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        // Listen for clicks and key presses to ensure back button remains disabled
+        window.addEventListener('click', preventBackNavigation);
+        window.addEventListener('keydown', preventBackNavigation);
+
+        // Clean up the event listeners on component unmount
+        return () => {
+            window.removeEventListener('click', preventBackNavigation);
+            window.removeEventListener('keydown', preventBackNavigation);
+        };
+    }, []);
+
     const [prolificId] = useState('');
     const startTimeRef = useRef(Date.now());
     const [error, setError] = useState(null);

@@ -8,6 +8,30 @@ import { useConsent } from './ConsentContext';
 
 const CreativeBricksGame = () => {
     const navigate = useNavigate();
+
+     // Prevent back button navigation
+     useEffect(() => {
+        const preventBackNavigation = () => {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        preventBackNavigation();
+
+        window.onpopstate = function() {
+            window.history.go(1);
+        };
+
+        // Listen for clicks and key presses to ensure back button remains disabled
+        window.addEventListener('click', preventBackNavigation);
+        window.addEventListener('keydown', preventBackNavigation);
+
+        // Clean up the event listeners on component unmount
+        return () => {
+            window.removeEventListener('click', preventBackNavigation);
+            window.removeEventListener('keydown', preventBackNavigation);
+        };
+    }, []);
+    
     const [count, setCount] = React.useState(0);
     const [timerVisible] = useState(true);
     // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
