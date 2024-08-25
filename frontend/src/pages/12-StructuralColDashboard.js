@@ -58,6 +58,11 @@ const StructuralColDashboard = () => {
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    const currentTime = Date.now();
+    const currentTestUrl = "";
+    const previousTestUrl = "/dashboard-router";
+    const test_name_given = 'Structural-Col-Dashboard';
+
 
     // State to manage timer visibility
     const [timerVisible] = useState(true);

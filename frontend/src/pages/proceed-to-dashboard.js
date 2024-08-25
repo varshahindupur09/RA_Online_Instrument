@@ -1,11 +1,16 @@
-import React, { useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom"; 
 import '../components/styles_css/PageStyle.css'; 
 import '../components/styles_css/otherpagestyles.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
+import { useConsent } from './ConsentContext';
 
 const ProceedToDashboard = () => {
     const navigate = useNavigate(); 
+    const { consent } = useConsent(); 
+    const startTimeRef = useRef(null);
+    const [loading, setLoading] = useState(false);  
+    const [error, setError] = useState(null); 
 
      // Prevent back button navigation
      useEffect(() => {
@@ -30,8 +35,79 @@ const ProceedToDashboard = () => {
         };
     }, []);
 
-    const handleNext = () => {
-        navigate("/dashboard-router");
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const currentTime = Date.now();
+    const currentTestUrl = "/proceed-to-dashboard";
+    const previousTestUrl = "/creative-bricks-game";
+    const test_name_given = 'Proceed-To-Dashboard';
+
+    // State to store responses
+    const [responses, setResponses] = useState({
+        // prolific_id: prolificId,
+        prolific_id: '',
+        test_name: test_name_given,
+        consent: consent === "yes" ? true : false,
+        page_number: 12,
+        chart_number: 0,
+        responses: {},
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0,
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
+    });
+
+    useEffect(() => {
+        startTimeRef.current = Date.now();
+    }, []);
+
+    const handleNext = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+        const endTime = Date.now();
+        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        const nextTestUrl = "/dashboard-router"; 
+
+        // Update responses with the calculated time spent
+        const updatedResponses = {
+            ...responses,
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
+        };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedResponses),
+            });
+
+            // Simulate API call to save survey responses
+            console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
+            const responseText = await response.text();
+            if (!response.ok) {
+                throw new Error(responseText || 'Network response was not ok');
+            }
+            console.log('Response text:', responseText);
+
+            navigate(nextTestUrl)
+
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -42,6 +118,8 @@ const ProceedToDashboard = () => {
                 <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br></br>
+            {loading && <p>Loading...</p>}
+            {error && <p>Error: {error.message}</p>}
             <div name="instructionsLeftAlign">
                 <div>
                     <p>In the next part of this study, you are playing the role of an accounts manager at TechTron, a global company that produces electrical components. The CFO has some questions about sales trends over the past five years and you have been asked to respond using the company’s digital dashboard.</p> 
@@ -56,6 +134,7 @@ const ProceedToDashboard = () => {
                 onClick={handleNext}> 
                 Next 
             </button>
+            {error && <p className="error-message">{error.message}</p>}
         </div>
     );
 };

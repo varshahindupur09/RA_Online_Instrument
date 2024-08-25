@@ -116,12 +116,16 @@ const PaperFoldingPart2Questions = () => {
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const currentTime = Date.now();
+    const currentTestUrl = "/paper-folding-test-part-2";
+    const previousTestUrl = "/paper-folding-test-part-1";
+    const test_name_given = 'Paper-Folding-Test-2';
 
     // State to store responses
     const [responses, setResponses] = useState({
         // prolific_id: prolificId,
         prolific_id: '',
-        test_name: 'Paper-Folding-Test-2',
+        test_name: test_name_given,
         consent: consent === "yes" ? true : false,
         page_number: 7,
         chart_number: 0,
@@ -137,8 +141,23 @@ const PaperFoldingPart2Questions = () => {
             question_9: "",
             question_10: ""
         },
-        time_spent: 0
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0,
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
     });
+
+    // Restrict navigation to ensure users can't jump to different pages
+    useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
 
     const handleChange = (questionNumber, value) => {
         setResponses(prevResponses => ({
@@ -162,11 +181,13 @@ const PaperFoldingPart2Questions = () => {
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        const nextTestUrl = "/sample-rotation-test"; 
 
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            time_spent: timeSpent
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
         };
 
         try {
@@ -178,12 +199,19 @@ const PaperFoldingPart2Questions = () => {
                 body: JSON.stringify(updatedResponses),
             });
 
+            // Simulate API call to save survey responses
+            console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
             const responseText = await response.text();
             if (!response.ok) {
                 throw new Error(responseText || 'Network response was not ok');
             }
             console.log('Response text:', responseText);
-            navigate("/sample-rotation-test");
+
+            navigate(nextTestUrl)
+
         } catch (error) {
             console.error('Error:', error);
             setError(error);
@@ -193,7 +221,8 @@ const PaperFoldingPart2Questions = () => {
     };
     
     const handleTimerCompletion = () => {
-        navigate("/sample-rotation-test");
+        const nextTestUrl = "/sample-rotation-test"; 
+        navigate(nextTestUrl);
     };
 
     return (

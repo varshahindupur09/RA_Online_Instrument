@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 // import SampleQuestion from '../images/fl-paper-folding-test/sample-question/sample-question-1.png';
 import SampleQuestion from '../images/fl-paper-folding-test/sample-question/entire_test.png';
@@ -7,6 +7,7 @@ import SampleQuestion from '../images/fl-paper-folding-test/sample-question/enti
 import '../components/styles_css/PageStyle.css'; 
 import logoImage from '../images/UCF_Logo.png';
 import Navbar from "../components/NavbarPage";
+import { useConsent } from './ConsentContext';
 
 const PaperFoldingSampleQuestion = () => {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ const PaperFoldingSampleQuestion = () => {
     const currentTime = Date.now();
     const currentTestUrl = "/paper-folding-test-sample-question";
     const previousTestUrl = "/financial-literacy";
-    const test_name_given = '/Paper-Folding-Test-Sample-Question';
+    const test_name_given = 'Paper-Folding-Test-Sample-Question';
 
     // State to store responses
     const [responses, setResponses] = useState({

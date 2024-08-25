@@ -66,25 +66,44 @@ const RotationTestQuestion = () => {
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const currentTime = Date.now();
+    const currentTestUrl = "/sample-rotation-test";
+    const previousTestUrl = "/paper-folding-test-part-2";
+    const test_name_given = 'Sample-Rotation-Test';
 
      // State to store responses
      const [responses, setResponses] = useState({
         // prolific_id: prolificId,
         prolific_id: '',
-        test_name: 'Sample-Rotation-Test',
+        test_name: test_name_given,
         consent: consent === "yes" ? true : false,
-        page_number: 9,
+        page_number: 8,
         chart_number: 0,
         responses: {
             question1: '',
             question2: '', // Creates an array of 8 empty string
         },
-        time_spent: 0
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0,
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
     });
 
     useEffect(() => {
         startTimeRef.current = Date.now();
     }, []);
+
+    // Restrict navigation to ensure users can't jump to different pages
+    useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
 
     const question1 = rotation_question_1; 
     const question1Answers = [
@@ -127,56 +146,43 @@ const RotationTestQuestion = () => {
         });
     };
 
-    // Function to handle form submission with validation
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
 
         const endTime = Date.now();
-        const timeSpent = (endTime - startTimeRef.current) / 1000;
+        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        const nextTestUrl = "/rotation-test-part-1"; 
 
-        // // Convert each responses array to a comma-separated string
-        // responses: { type: Map, of: [String]},
-        // const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
-        //     acc[key] = responses.responses[key].join(',');
-        //     return acc;
-        // }, {});
-
-        // Convert each responses array to a comma-separated string
-        // responses: { type: Map, of: String},
-        // const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
-        //     acc[key] = responses.responses[key].join(',');
-        //     return acc;
-        // }, {});
-
-        // Ensure each response is converted to a string format, regardless of its initial type
-        const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
-            if (Array.isArray(responses.responses[key])) {
-                acc[key] = responses.responses[key].join(','); // Convert array to a comma-separated string
-            } else {
-                acc[key] = String(responses.responses[key]); // Convert non-array to string
-            }
-            return acc;
-        }, {});
-
-
+        // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            responses: formattedResponses,
-            time_spent: timeSpent
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
         };
 
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify(updatedResponses),
             });
 
+            // Simulate API call to save survey responses
+            console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
+            const responseText = await response.text();
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(responseText || 'Network response was not ok');
             }
-            navigate("/rotation-test-part-1");
+            console.log('Response text:', responseText);
+
+            navigate(nextTestUrl)
+
         } catch (error) {
             console.error('Error:', error);
             setError(error);
@@ -184,6 +190,64 @@ const RotationTestQuestion = () => {
             setLoading(false);
         }
     };
+
+    // // Function to handle form submission with validation
+    // const handleNext = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+
+    //     const endTime = Date.now();
+    //     const timeSpent = (endTime - startTimeRef.current) / 1000;
+
+    //     // // Convert each responses array to a comma-separated string
+    //     // responses: { type: Map, of: [String]},
+    //     // const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
+    //     //     acc[key] = responses.responses[key].join(',');
+    //     //     return acc;
+    //     // }, {});
+
+    //     // Convert each responses array to a comma-separated string
+    //     // responses: { type: Map, of: String},
+    //     // const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
+    //     //     acc[key] = responses.responses[key].join(',');
+    //     //     return acc;
+    //     // }, {});
+
+    //     // Ensure each response is converted to a string format, regardless of its initial type
+    //     const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
+    //         if (Array.isArray(responses.responses[key])) {
+    //             acc[key] = responses.responses[key].join(','); // Convert array to a comma-separated string
+    //         } else {
+    //             acc[key] = String(responses.responses[key]); // Convert non-array to string
+    //         }
+    //         return acc;
+    //     }, {});
+
+
+    //     const updatedResponses = {
+    //         ...responses,
+    //         responses: formattedResponses,
+    //         time_spent: timeSpent
+    //     };
+
+    //     try {
+    //         const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify(updatedResponses),
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         navigate("/rotation-test-part-1");
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         setError(error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     // Function to render each question
     const renderQuestion = (questionImage, answerImages, questionNumber) => (

@@ -8,6 +8,13 @@ import { useConsent } from './ConsentContext';
 
 const CreativeBricksGame = () => {
     const navigate = useNavigate();
+    const [count, setCount] = React.useState(0);
+    const [timerVisible] = useState(true);
+    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    const { consent } = useConsent(); 
+    const startTimeRef = useRef(null);
+    const [loading, setLoading] = useState(false);  
+    const [error, setError] = useState(null); 
 
      // Prevent back button navigation
      useEffect(() => {
@@ -31,29 +38,34 @@ const CreativeBricksGame = () => {
             window.removeEventListener('keydown', preventBackNavigation);
         };
     }, []);
-    
-    const [count, setCount] = React.useState(0);
-    const [timerVisible] = useState(true);
-    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
-    const { consent } = useConsent(); 
-    const startTimeRef = useRef(null);
-    const [loading, setLoading] = useState(false);  
-    const [error, setError] = useState(null); 
+
 
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const currentTime = Date.now();
+    const currentTestUrl = "/creative-bricks-game";
+    const previousTestUrl = "/rotation-test-part-2";
+    const test_name_given = 'Creative-Bricks-Game';
 
     // State to store responses
     const [responses, setResponses] = useState({
         // prolific_id: prolificId,
         prolific_id: '',
-        test_name: 'Creative-Bricks-Game',
+        test_name: test_name_given,
         consent: consent === "yes" ? true : false,
         page_number: 11,
         chart_number: 0,
         responses: {},
-        time_spent: 0
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0,
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
     });
 
     useEffect(() => {
@@ -73,46 +85,54 @@ const CreativeBricksGame = () => {
         }));
     };
 
-    // Function to handle form submission and navigate to the next page
-    const handleNext = async (event) => {
-        event.preventDefault();  // Prevent default form submission
-        setLoading(true);  // Set loading state to true
+    const handleTimerCompletion = () => {
+        const nextTestUrl = "/proceed-to-dashboard"; 
+        navigate(nextTestUrl);
+    };
 
-        const endTime = Date.now();  // Capture end time
-        const timeSpent = (endTime - startTimeRef.current) / 1000;  // Calculate time spent in seconds
+    const handleNext = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+        const endTime = Date.now();
+        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        const nextTestUrl = "/proceed-to-dashboard"; 
 
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            time_spent: timeSpent
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
         };
 
         try {
-            // Make a POST request to your API
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updatedResponses),  // Convert responses to JSON string
+                body: JSON.stringify(updatedResponses),
             });
 
+            // Simulate API call to save survey responses
+            console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
             const responseText = await response.text();
-            if (!response.ok) {  // Check if the request was not successful
+            if (!response.ok) {
                 throw new Error(responseText || 'Network response was not ok');
             }
-            console.log('Response text:', responseText);  // Log response text for debugging
-            navigate("/proceed-to-dashboard");  // Navigate to the next page after successful submission
-        } catch (error) {
-            console.error('Error:', error);  // Log any errors
-            setError(error);  // Set error state
-        } finally {
-            setLoading(false);  // Reset loading state
-        }
-    };
+            console.log('Response text:', responseText);
 
-    const handleTimerCompletion = () => {
-        navigate("/proceed-to-dashboard");
+            navigate(nextTestUrl)
+
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

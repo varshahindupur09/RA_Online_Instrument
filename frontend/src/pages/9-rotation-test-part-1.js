@@ -123,30 +123,6 @@ import { useConsent } from './ConsentContext';
 
 const RotationTestPart1 = () => {
     const navigate = useNavigate();
-
-     // Prevent back button navigation
-     useEffect(() => {
-        const preventBackNavigation = () => {
-            window.history.pushState(null, null, window.location.href);
-        };
-
-        preventBackNavigation();
-
-        window.onpopstate = function() {
-            window.history.go(1);
-        };
-
-        // Listen for clicks and key presses to ensure back button remains disabled
-        window.addEventListener('click', preventBackNavigation);
-        window.addEventListener('keydown', preventBackNavigation);
-
-        // Clean up the event listeners on component unmount
-        return () => {
-            window.removeEventListener('click', preventBackNavigation);
-            window.removeEventListener('keydown', preventBackNavigation);
-        };
-    }, []);
-
     // State to manage timer visibility
     const [timerVisible] = useState(true);
 
@@ -156,8 +132,8 @@ const RotationTestPart1 = () => {
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
 
-     // Prevent back button navigation
-     useEffect(() => {
+    // Prevent back button navigation
+    useEffect(() => {
         const preventBackNavigation = () => {
             window.history.pushState(null, null, window.location.href);
         };
@@ -182,30 +158,73 @@ const RotationTestPart1 = () => {
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const currentTime = Date.now();
+    const currentTestUrl = "/rotation-test-part-1";
+    const previousTestUrl = "/sample-rotation-test";
+    const test_name_given = 'Rotation-Test-1';
+
+    // State to store responses
+    // const [responses, setResponses] = useState({
+    //     // prolific_id: prolificId,
+    //     prolific_id: '',
+    //     test_name: test_name_given,
+    //     consent: consent === "yes" ? true : false,
+    //     page_number: 9,
+    //     chart_number: 0,
+    //     responses: {
+    //         question1: Array(8).fill(''),
+    //         question2: Array(8).fill(''), // Creates an array of 8 empty strings
+    //         question3: Array(8).fill(''),
+    //         question4: Array(8).fill(''),
+    //         question5: Array(8).fill(''),
+    //         question6: Array(8).fill(''),
+    //         question7: Array(8).fill(''),
+    //         question8: Array(8).fill(''),
+    //         question9: Array(8).fill(''),
+    //         question10: Array(8).fill(''),
+    //         question11: Array(8).fill(''),
+    //     },
+    //     time_spent: 0
+    // });
 
     // State to store responses
     const [responses, setResponses] = useState({
         // prolific_id: prolificId,
         prolific_id: '',
-        test_name: 'Rotation-Test-1',
+        test_name: test_name_given,
         consent: consent === "yes" ? true : false,
         page_number: 9,
         chart_number: 0,
         responses: {
-            question1: Array(8).fill(''),
-            question2: Array(8).fill(''), // Creates an array of 8 empty strings
-            question3: Array(8).fill(''),
-            question4: Array(8).fill(''),
-            question5: Array(8).fill(''),
-            question6: Array(8).fill(''),
-            question7: Array(8).fill(''),
-            question8: Array(8).fill(''),
-            question9: Array(8).fill(''),
-            question10: Array(8).fill(''),
-            question11: Array(8).fill(''),
+            question1: '',
+            question2: '', 
+            question3: '',
+            question4: '', 
+            question5: '',
+            question6: '', 
+            question7: '',
+            question8: '', 
+            question9: '',
+            question10: '', 
+            question11: '', 
         },
-        time_spent: 0
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0,
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
     });
+
+    // Restrict navigation to ensure users can't jump to different pages
+    useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
 
     useEffect(() => {
         startTimeRef.current = Date.now();
@@ -277,61 +296,96 @@ const RotationTestPart1 = () => {
         Part1Question11Answer1Option5, Part1Question11Answer1Option6, Part1Question11Answer1Option7, Part1Question11Answer1Option8
     ];
 
+    // const handleAnswerChange = (questionNumber, index, value) => {
+    //     setResponses(prevResponses => {
+    //         // Ensure the array exists, or create a new one with empty strings
+    //         const existingAnswers = prevResponses.responses[`question${questionNumber}`] || Array(8).fill('');
+    
+    //         // Create a copy of the existing array and update the specific index
+    //         const updatedAnswers = [...existingAnswers];
+    //         updatedAnswers[index] = value;
+    
+    //         return {
+    //             ...prevResponses,
+    //             responses: {
+    //                 ...prevResponses.responses,
+    //                 [`question${questionNumber}`]: updatedAnswers
+    //             }
+    //         };
+    //     });
+    // };
+
     const handleAnswerChange = (questionNumber, index, value) => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
-            const existingAnswers = prevResponses.responses[`question${questionNumber}`] || Array(8).fill('');
+            const questionKey = `question${questionNumber}`;
+            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,,";  
     
-            // Create a copy of the existing array and update the specific index
-            const updatedAnswers = [...existingAnswers];
-            updatedAnswers[index] = value;
+            // // Create a copy of the existing array and update the specific index
+            // const updatedAnswers = [...existingAnswers];
+            // updatedAnswers[index] = value;
+            // Split the current response string into an array
+            let responseArray = currentResponses.split(',');
+
+            // Update the specific index with the new value
+            responseArray[index] = value;
+
+            // Join the array back into a comma-separated string
+            const updatedResponse = responseArray.join(',');
     
             return {
                 ...prevResponses,
                 responses: {
                     ...prevResponses.responses,
-                    [`question${questionNumber}`]: updatedAnswers
+                    // [`${questionNumber}`]: updatedAnswers
+                    [questionKey]: updatedResponse
                 }
             };
         });
     };
 
     const handleTimerCompletion = () => {
-        navigate("/rotation-test-part-2");
+        const nextTestUrl = "/rotation-test-part-2"; 
+        navigate(nextTestUrl);
     };
 
-
-    // Function to handle form submission with validation
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
 
         const endTime = Date.now();
-        const timeSpent = (endTime - startTimeRef.current) / 1000;
+        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        const nextTestUrl = "/rotation-test-part-2"; 
 
-        // Convert each responses array to a comma-separated string
-        const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
-            acc[key] = responses.responses[key].join(',');
-            return acc;
-        }, {});
-
+        // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            responses: formattedResponses,
-            time_spent: timeSpent
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
         };
 
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify(updatedResponses),
             });
 
+            // Simulate API call to save survey responses
+            console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
+            const responseText = await response.text();
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(responseText || 'Network response was not ok');
             }
-            navigate("/rotation-test-part-2");
+            console.log('Response text:', responseText);
+
+            navigate(nextTestUrl)
+
         } catch (error) {
             console.error('Error:', error);
             setError(error);
@@ -339,6 +393,45 @@ const RotationTestPart1 = () => {
             setLoading(false);
         }
     };
+
+    // Function to handle form submission with validation
+    // const handleNext = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+
+    //     const endTime = Date.now();
+    //     const timeSpent = (endTime - startTimeRef.current) / 1000;
+
+    //     // Convert each responses array to a comma-separated string
+    //     const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
+    //         acc[key] = responses.responses[key].join(',');
+    //         return acc;
+    //     }, {});
+
+    //     const updatedResponses = {
+    //         ...responses,
+    //         responses: formattedResponses,
+    //         time_spent: timeSpent
+    //     };
+
+    //     try {
+    //         const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify(updatedResponses),
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         navigate("/rotation-test-part-2");
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         setError(error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
 
     // Function to render each question
