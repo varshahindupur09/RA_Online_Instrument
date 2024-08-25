@@ -8,6 +8,15 @@ import { useConsent } from './ConsentContext';
 
 const FeedbackQuestions = () => {
     const navigate = useNavigate();
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const currentTime = Date.now();
+    const currentTestUrl = "/feedback-questions";
+    const previousTestUrl = "/dashboard-router"; 
+    const test_name_given = 'Feedback-Questions';
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const startTimeRef = useRef(Date.now());
+    const { consent, chart_number } = useConsent(); 
 
      // Prevent back button navigation
      useEffect(() => {
@@ -32,12 +41,24 @@ const FeedbackQuestions = () => {
         };
     }, []);
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const startTimeRef = useRef(Date.now());
+    const [responses, setResponses] = useState({
+        prolific_id: '',
+        test_name: test_name_given,
+        consent: consent === "yes" ? true : false,
+        page_number: 17,
+        chart_number: chart_number,
+        responses: {},
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0, 
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
+    });
 
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
 
     const [feedback, setFeedback] = useState({
         mentalDemand: 50,
@@ -48,16 +69,12 @@ const FeedbackQuestions = () => {
         frustration: 50
     });
 
-    // // State to store responses
-    // const [responses, setResponses] = useState({
-    //     prolific_id: prolificId, 
-    //     test_name: 'Feedback-Questions', 
-    //     consent: consent === "yes" ? true : false, 
-    //     page_number: 16, 
-    //     chart_number: 0,
-    //     responses: {}, // Dynamic responses based on user input
-    //     time_spent: 0 
-    // });
+    // Restrict navigation to ensure users can't jump to different pages
+    useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
 
     // Handle dynamic question responses
     const handleChange = (event) => {
@@ -74,15 +91,12 @@ const FeedbackQuestions = () => {
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        let nextTestUrl = "/demographic-questions";
 
-        const updatedResponses = {
-            prolific_id: prolificId, 
-            test_name: 'Feedback-Questions', 
-            consent: consent === "yes", 
-            page_number: 16, 
-            chart_number: 0,
+        const updatedresponses = {
             responses: feedback,
-            time_spent: timeSpent 
+            timeSpent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
         };
 
         try {
@@ -91,7 +105,7 @@ const FeedbackQuestions = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updatedResponses),
+                body: JSON.stringify(updatedresponses),
             });
 
             const responseText = await response.text();
@@ -99,7 +113,8 @@ const FeedbackQuestions = () => {
                 throw new Error(responseText || 'Network response was not ok');
             }
             console.log('Response text:', responseText);
-            navigate("/demographic-questions"); // Redirect to the next page after successful submission
+
+            navigate(nextTestUrl); // Redirect to the next page after successful submission
 
         } catch (error) {
             console.error('Error:', error);

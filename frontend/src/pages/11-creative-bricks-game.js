@@ -68,6 +68,14 @@ const CreativeBricksGame = () => {
         next_visit_test_name: currentTestUrl, 
     });
 
+    // Restrict navigation to ensure users can't jump to different pages
+    useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
+
+
     useEffect(() => {
         startTimeRef.current = Date.now();
     }, []);

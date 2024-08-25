@@ -22,14 +22,14 @@ import CreativeBricksGame from "./pages/11-creative-bricks-game";
 // dashboard
 import ProceedToDashboard from "./pages/proceed-to-dashboard";
 import DashboardRouter from "./pages/dashboard-router";
-import StructuralColDashboard from "./pages/12-StructuralColDashboard";
-import StructuralBarDashboard from "./pages/13-StructuralBarDashboard";
-import TimeSeriesBarDashboard from "./pages/14-TimeSeriesBarDashboard";
-import TimeSeriesColDashboard from "./pages/15-TimeSeriesColDashboard";
+import StructuralColDashboard from "./pages/13-StructuralColDashboard";
+import StructuralBarDashboard from "./pages/14-StructuralBarDashboard";
+import TimeSeriesBarDashboard from "./pages/15-TimeSeriesBarDashboard";
+import TimeSeriesColDashboard from "./pages/16-TimeSeriesColDashboard";
 //feedback
-import FeedbackQuestions from "./pages/16-feedback-questions";
+import FeedbackQuestions from "./pages/17-feedback-questions";
 //demographic
-import Demographics from "./pages/17-demographic-questions";
+import Demographics from "./pages/18-demographic-questions";
 // Import ConsentProvider
 import { ConsentProvider } from './pages/ConsentContext';
 
@@ -64,11 +64,12 @@ function App() {
                         <Route path="/creative-bricks-game" element={<CreativeBricksGame />} />
                         <Route path="/proceed-to-dashboard" element={<ProceedToDashboard />} />
                         {/* <Route path="/dashboard" element={<DashboardAllCharts />} /> */}
+                        {/* selecting any one of the dashboards */}
                         <Route path="/dashboard-router" element={<DashboardRouter />} />
-                        <Route path="/time-series-bar-dashboard" element={<TimeSeriesBarDashboard />} />
-                        <Route path="/structure-bar-dashboard" element={<StructuralBarDashboard />} />
-                        <Route path="/time-series-col-dashboard" element={<TimeSeriesColDashboard />} />
                         <Route path="/structure-col-dashboard" element={<StructuralColDashboard />} />
+                        <Route path="/structure-bar-dashboard" element={<StructuralBarDashboard />} />
+                        <Route path="/time-series-bar-dashboard" element={<TimeSeriesBarDashboard />} />
+                        <Route path="/time-series-col-dashboard" element={<TimeSeriesColDashboard />} />
                         {/* feedback */}
                         <Route path="/feedback-questions" element={<FeedbackQuestions />} />
                         {/* demographics */}

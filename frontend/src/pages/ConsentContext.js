@@ -7,13 +7,16 @@ const ConsentContext = createContext();
 // Create a Provider Component
 export const ConsentProvider = ({ children }) => {
     const [consent, setConsent] = useState();
-    // const [prolificId, setProlificId] = useState('');
+    const [prolificId, setProlificId] = useState('');
+    const [chartNumber, setChartNumber] = useState(null); // Add chartNumber to the context
 
     const value = {
         consent,
         setConsent,
-        // prolificId,
-        // setProlificId,
+        prolificId,
+        setProlificId,
+        chartNumber,
+        setChartNumber,
     };
 
     return (

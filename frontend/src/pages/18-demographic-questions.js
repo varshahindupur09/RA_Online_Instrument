@@ -5,7 +5,16 @@ import '../components/styles_css/DemographicRadioButton.css';
 import { useConsent } from './ConsentContext';
 
 const Demographics = () => {
-    const { consent } = useConsent(); 
+    const navigate = useNavigate();
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const currentTime = Date.now();
+    const currentTestUrl = "";
+    const previousTestUrl = "/feedback-questions"; 
+    const test_name_given = 'Demographics-Questions';
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const startTimeRef = useRef(Date.now());
+    const { consent, chart_number, prolificId, setProlificId } = useConsent(); 
 
      // Prevent back button navigation
      useEffect(() => {
@@ -30,18 +39,13 @@ const Demographics = () => {
         };
     }, []);
 
-    const [prolificId] = useState('');
-    const startTimeRef = useRef(Date.now());
-    const [error, setError] = useState(null);
-
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     const [demographicData, setDemographicData] = useState({
         prolific_id: '',
-        test_name: 'Demographics-Questions',
+        test_name: test_name_given,
         consent: consent === "yes" ? true : false, 
-        page_number: 17,
-        chart_number: 0,
+        page_number: 18,
+        chart_number: chart_number,
         responses: {
             "age": '',
             "education-level": '',
@@ -49,8 +53,24 @@ const Demographics = () => {
             "management-experience": '',
             "employment-sector": ''
         },
-        time_spent: 0 
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0, 
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
     });
+
+    // Restrict navigation to ensure users can't jump to different pages
+    useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
+
 
     // Update demographic data
     const handleChange = (field, value) => {
@@ -58,7 +78,6 @@ const Demographics = () => {
             ...prev,
             responses: {
                 ...prev.responses,
-                // [field]: Array.isArray(value) ? value : [value] 
                 [field]: value
             }
         }));
@@ -78,10 +97,12 @@ const Demographics = () => {
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; 
 
+        let nextTestUrl = "/demographic-questions";
+
         const updatedData = {
             ...demographicData,
-            // responses: formattedResponses,
-            time_spent: timeSpent
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, 
         };
 
         console.log("updated responses" , updatedData)
@@ -98,6 +119,8 @@ const Demographics = () => {
             if (!postResponse.ok) {
                 throw new Error('Failed to submit demographic data');
             }
+
+            // no navigation as this is the end
 
         } catch (error) {
             console.error('Error:', error);

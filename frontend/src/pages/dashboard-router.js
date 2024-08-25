@@ -1,12 +1,15 @@
+// pages/dashboardrouter.js
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useConsent } from './ConsentContext';
 
 const DashboardRouter = () => {
-    const [chartNumber, setChartNumber] = useState(null);
+    // const [chartNumber, setChartNumber] = useState(null);
+    const { chartNumber, setChartNumber } = useConsent(); // Destructure setChartNumber from context
     const navigate = useNavigate();
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-    console.log("Component rendered with chartNumber:", chartNumber); // Log on each render
+    // console.log("Component rendered with chartNumber:", chartNumber); // Log on each render
 
     useEffect(() => {
         const manageChartNumber = async () => {
@@ -19,7 +22,8 @@ const DashboardRouter = () => {
                 let data = await response.json();
                 if (!response.ok) throw new Error('Failed to fetch chart number');
 
-                if (data.last_assigned_chart !== undefined) {
+                if (data.last_assigned_chart !== undefined) 
+                {
                     // Chart number exists, proceed to update
                     console.log("Existing chart number found:", data.last_assigned_chart);
                     const nextChartNumber = (data.last_assigned_chart % 4) + 1;
@@ -28,8 +32,11 @@ const DashboardRouter = () => {
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({ last_assigned_chart: nextChartNumber }),
                     });
+
                     if (!response.ok) throw new Error('Failed to update chart number');
-                    setChartNumber(nextChartNumber);
+
+                    setChartNumber(nextChartNumber); // Set the chart number in context for existing chart number found condition
+
                     console.log("Chart number updated to:", nextChartNumber);
                 } else {
                     // No chart number found, proceed to post new one
@@ -41,7 +48,7 @@ const DashboardRouter = () => {
                     });
                     if (!response.ok) throw new Error('Failed to post chart number');
                     data = await response.json();
-                    setChartNumber(data.last_assigned_chart);
+                    setChartNumber(data.last_assigned_chart); // Set the chart number in context for No chart number found condition
                     console.log("New chart number posted:", data.last_assigned_chart);
                 }
             } catch (error) {
@@ -50,7 +57,7 @@ const DashboardRouter = () => {
         };
 
         manageChartNumber();
-    }, [API_BASE_URL]);
+    }, [API_BASE_URL, setChartNumber]);
 
 
     useEffect(() => {
