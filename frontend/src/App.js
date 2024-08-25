@@ -68,8 +68,8 @@ function App() {
                         <Route path="/dashboard-router" element={<DashboardRouter />} />
                         <Route path="/structure-col-dashboard" element={<StructuralColDashboard />} />
                         <Route path="/structure-bar-dashboard" element={<StructuralBarDashboard />} />
-                        <Route path="/time-series-bar-dashboard" element={<TimeSeriesBarDashboard />} />
-                        <Route path="/time-series-col-dashboard" element={<TimeSeriesColDashboard />} />
+                        <Route path="/timeseries-bar-dashboard" element={<TimeSeriesBarDashboard />} />
+                        <Route path="/timeseries-col-dashboard" element={<TimeSeriesColDashboard />} />
                         {/* feedback */}
                         <Route path="/feedback-questions" element={<FeedbackQuestions />} />
                         {/* demographics */}

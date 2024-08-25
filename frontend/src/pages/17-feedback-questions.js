@@ -94,6 +94,7 @@ const FeedbackQuestions = () => {
         let nextTestUrl = "/demographic-questions";
 
         const updatedresponses = {
+            ...responses, 
             responses: feedback,
             timeSpent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL

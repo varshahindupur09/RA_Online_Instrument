@@ -3,6 +3,7 @@ import '../components/styles_css/PageStyle.css';
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import '../components/styles_css/DemographicRadioButton.css'; 
 import { useConsent } from './ConsentContext';
+import { useNavigate } from "react-router-dom";
 
 const Demographics = () => {
     const navigate = useNavigate();
@@ -66,10 +67,10 @@ const Demographics = () => {
 
     // Restrict navigation to ensure users can't jump to different pages
     useEffect(() => {
-        if (window.location.pathname !== responses.next_visit_test_name) {
-            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        if (window.location.pathname !== demographicData.next_visit_test_name) {
+            navigate(demographicData.next_visit_test_name); // Redirect to the current test URL
         }
-    }, [navigate, responses.next_visit_test_name]);
+    }, [navigate, demographicData.next_visit_test_name]);
 
 
     // Update demographic data

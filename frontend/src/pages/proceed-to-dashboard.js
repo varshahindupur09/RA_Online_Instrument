@@ -7,7 +7,8 @@ import { useConsent } from './ConsentContext';
 
 const ProceedToDashboard = () => {
     const navigate = useNavigate(); 
-    const { consent } = useConsent(); 
+    // chartnumber will not be accessed here
+    const { consent} = useConsent(); 
     const startTimeRef = useRef(null);
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
@@ -46,7 +47,7 @@ const ProceedToDashboard = () => {
         // prolific_id: prolificId,
         prolific_id: '',
         test_name: test_name_given,
-        consent: consent === "yes" ? true : false,
+        consent: consent === "yes"? true : false, 
         page_number: 12,
         chart_number: 0,
         responses: {},
@@ -75,7 +76,7 @@ const ProceedToDashboard = () => {
 
         // Update responses with the calculated time spent
         const updatedResponses = {
-            ...responses,
+            ...responses, 
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
