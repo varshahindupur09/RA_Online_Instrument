@@ -6,7 +6,7 @@ import logoImageDoc from '../images/UCF_logo_doc.png';
 const ProceedToPart1PaperFoldingTest = () => {
     const navigate = useNavigate(); 
 
-    // / Prevent back button navigation
+    // Prevent back button navigation
     useEffect(() => {
         const preventBackNavigation = () => {
             window.history.pushState(null, null, window.location.href);

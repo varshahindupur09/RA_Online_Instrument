@@ -49,48 +49,88 @@ const ConsentPage = () => {
         startTimeRef.current = Date.now();
     }, []);
 
+    const currentTime = Date.now();
+    const currentTestUrl = "/ask-consent-again";
+    const previousTestUrl = "/";
+    const test_name_given = 'Second-Consent';
+
+    const [responses, setResponses] = useState({
+        // prolific_id: prolificId,
+        prolific_id: '',
+        test_name: test_name_given, 
+        consent: consent === "yes" ? true : false,
+        page_number: 2,
+        chart_number: 0,
+        responses: {}, // Initialize as an empty object to dynamically add responses
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0,
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, // Update with the previously traversed url //contains urls of the last visited page
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
+    });
+
+     // Restrict navigation to ensure users can't jump to different pages
+     useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
+
     const handleConsent = (value) => {
         setConsent(value);
     };
 
-    const handleNext = async () => {
+    const handleNext = async (event) => {
+        event.preventDefault(); // Prevent form submission default behavior
         setLoading(true);
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        let nextTestUrl = ""; // Use let instead of const as const is unmutable
 
-        const responses = {
+        // Navigate based on the actual consent state from context
+         if (consent === "yes") {
+            nextTestUrl = "/paper-folding-test-sample-question"
+        } else {
+            nextTestUrl = "/exit-survey-page"
+        }
+    
+        // Ensure the updated responses use the actual state of consent directly
+        const updatedResponses = {
+            ...responses,
             // prolific_id: prolificId,
-            prolific_id: '',
-            test_name: 'Second-Consent', 
-            consent: consent === "yes" ? true : false,
-            page_number: 2,
-            chart_number: 0,
-            time_spent: timeSpent
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
         };
-
+       
         try {
+            // Simulate API call to save survey responses
+            console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(responses), // Send responses to the backend
+                body: JSON.stringify(updatedResponses), // Send updated responses
             });
-
+    
+            console.log('Response:', response);
+    
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
+    
             const result = await response.json();
             console.log('Success:', result);
-
-            // Navigate based on the actual consent value from context
-            if (consent === "yes") {
-                navigate("/paper-folding-test-sample-question"); 
-            } else {
-                navigate("/exit-survey-page"); 
-            }
+    
+            navigate(nextTestUrl);
 
         } catch (error) {
             console.error('Error:', error);

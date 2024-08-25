@@ -45,7 +45,7 @@ function App() {
             <Router>
                 <div>
                     <Routes>
-                        {/* <Route path="/" element={<Home />} default /> */} Page 
+                        {/* <Route path="/" element={<Home />} default /> */} 
                         <Route path="/" element={<FirstInstrConsent />} default /> 
                         <Route path="/ask-consent-again" element={<AskAgainConsentPage />} />
                         <Route path="/exit-survey-page" element={<ExitSurveyPage />} />

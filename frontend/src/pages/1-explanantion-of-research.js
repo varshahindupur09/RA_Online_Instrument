@@ -49,16 +49,36 @@ const FirstInstrConsent = () => {
     //         setProlificId(id);
     //     }
     // }, [query, setProlificId]);
+
+    const currentTime = Date.now();
+    const currentTestUrl = "/";
+    const previousTestUrl = "/";
+    const test_name_given = 'First-Consent';
     
     const [responses, setResponses] = useState({
         prolific_id: '', // Set the default prolific_id
-        test_name: 'First-Consent', // Set test name
+        test_name: test_name_given, // Set test name
         consent: false, // Initialize consent as boolean
         page_number: 1, // Page number of where we are navigating, helps with debugging
         chart_number: 0,
         responses: {}, // Initialize as an empty object to dynamically add responses
-        time_spent: 0 // Add time_spent field
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0,
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, // Update with the previously traversed url //contains urls of the last visited page
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl,
     });
+
+    // Restrict navigation to ensure users can't jump to different pages
+    useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
 
     // const handleInputChange = (e) => {
     //     setProlificId(e.target.value);
@@ -85,15 +105,30 @@ const FirstInstrConsent = () => {
     
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        let nextTestUrl = ""; // Use let instead of const as const is unmutable
+
+        // Navigate based on the actual consent state from context
+        if (consent === "yes") {
+            nextTestUrl = "/financial-literacy"
+        } else {
+            nextTestUrl = "/ask-consent-again"
+        }
     
         // Ensure the updated responses use the actual state of consent directly
         const updatedResponses = {
             ...responses,
             // prolific_id: prolificId,
             time_spent: timeSpent,
+            last_visited_test_name: responses.current_visit_test_name, // Update the last visited page
+            next_visit_test_name: nextTestUrl, // The next page URL
         };
     
         try {
+            // Simulate API call to save survey responses
+            console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
                 headers: {
@@ -111,12 +146,7 @@ const FirstInstrConsent = () => {
             const result = await response.json();
             console.log('Success:', result);
     
-            // Navigate based on the actual consent state from context
-            if (consent === "yes") {
-                navigate("/financial-literacy"); // Go to financial literacy if consent is "yes"
-            } else {
-                navigate("/ask-consent-again"); // Ask for consent again if not "yes"
-            }
+            navigate(nextTestUrl);
         } catch (error) {
             console.error('Error:', error);
             setError(error);
@@ -124,7 +154,6 @@ const FirstInstrConsent = () => {
             setLoading(false);
         }
     };
-    
 
     return (
         <div>

@@ -40,11 +40,15 @@ const FinancialLiteracy = () => {
     // const API_BASE_URL = 'http://localhost:8080';
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
+    const currentTime = Date.now();
+    const currentTestUrl = "/financial-literacy";
+    const test_name_given = 'Financial-Literacy';
+
     // State to store responses
     const [responses, setResponses] = useState({
         // prolific_id: prolificId, 
         prolific_id: '',
-        test_name: 'Financial-Literacy', 
+        test_name: test_name_given, 
         consent: consent === "yes" ? true : false, 
         page_number: 4, 
         chart_number: 0,
@@ -53,8 +57,23 @@ const FinancialLiteracy = () => {
             question_2: "",
             question_3: ""
         }, // Dynamic responses based on user input
-        time_spent: 0 
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0,
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: consent === "yes" ? "/" : "/ask-consent-again", 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl,
     });
+
+     // Restrict navigation to ensure users can't jump to different pages
+     useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
 
     // Handle dynamic question responses
     const handleChange = (questionNumber, value) => {
@@ -73,11 +92,14 @@ const FinancialLiteracy = () => {
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        const nextTestUrl = "/paper-folding-test-sample-question"; // Use let instead of const as const is unmutable
 
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            time_spent: timeSpent
+            time_spent: timeSpent,
+            last_visited_test_name: consent === "yes" ? "/" : "/ask-consent-again", // Update the last visited page
+            next_visit_test_name: nextTestUrl, // The next page URL
         };
 
         try {
@@ -89,13 +111,18 @@ const FinancialLiteracy = () => {
                 body: JSON.stringify(updatedResponses),
             });
 
+            // Simulate API call to save survey responses
+            console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
             const responseText = await response.text();
             if (!response.ok) {
                 throw new Error(responseText || 'Network response was not ok');
             }
             console.log('Response text:', responseText);
-            // navigate("/paper-folding-test-sample-question");
-            navigate("proceed-to-part1-paper-folding-test")
+
+            navigate(nextTestUrl)
 
         } catch (error) {
             console.error('Error:', error);

@@ -4,14 +4,19 @@ const mongoose = require('mongoose');
 const SurveyResponseSchema = new mongoose.Schema({
     prolific_id: { type: String}, //, required: true}, //unique: true
     test_name: { type: String, required: true},
-    page_number: { type: Number , required: true},
+    page_number: { type: Number, required: true},
     consent: {type: Boolean},
     chart_number: { type: Number},
     responses: { type: Map, of: String},
     graph_question_durations: [{ type: Number }],
     per_graph_durations: [{ type: [Number] }],
-    time_spent: { type: Number},
-    completed_at: { type: Date, default: Date.now },
+    time_spent: { type: Number }, // Total time spent on the page
+    started_at: { type: Date }, // Time when the survey began
+    ended_at: { type: Date }, // Time when the survey ended
+    time_user_entered_current_page: { type: Date, default: Date.now }, // Time when the user entered the current page
+    last_visited_test_name: { type: String}, 
+    current_visit_test_name: { type: String},
+    next_visit_test_name:  { type: String},
 });
 
 // Create a unique compound index

@@ -12,6 +12,8 @@ const PaperFoldingSampleQuestion = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { consent } = useConsent(); 
+    const startTimeRef = useRef(Date.now());
 
     // const [showSolution, setShowSolution] = useState(false);
 
@@ -43,8 +45,82 @@ const PaperFoldingSampleQuestion = () => {
         };
     }, []);
 
-    const handleNext = () => {
-        navigate("/paper-folding-test-part-1");
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const currentTime = Date.now();
+    const currentTestUrl = "/paper-folding-test-sample-question";
+    const previousTestUrl = "/financial-literacy";
+    const test_name_given = '/Paper-Folding-Test-Sample-Question';
+
+    // State to store responses
+    const [responses, setResponses] = useState({
+        // prolific_id: prolificId, 
+        prolific_id: '',
+        test_name: test_name_given, 
+        consent: consent === "yes" ? true : false, 
+        page_number: 5, 
+        chart_number: 0,
+        responses: {}, // Dynamic responses based on user input
+        graph_question_durations: [],
+        per_graph_durations: [],
+        time_spent: 0,
+        started_at: currentTime, // Time when the survey began
+        ended_at: currentTime, // Time when the survey ended
+        time_user_entered_current_page: currentTime, // Time when the user entered the current page
+        last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl,
+    });
+
+    // Restrict navigation to ensure users can't jump to different pages
+    useEffect(() => {
+        if (window.location.pathname !== responses.next_visit_test_name) {
+            navigate(responses.next_visit_test_name); // Redirect to the current test URL
+        }
+    }, [navigate, responses.next_visit_test_name]);
+
+    const handleNext = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+        const endTime = Date.now();
+        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        const nextTestUrl = "/paper-folding-test-part-1"; // Use let instead of const as const is unmutable
+
+        // Update responses with the calculated time spent
+        const updatedResponses = {
+            ...responses,
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
+        };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedResponses),
+            });
+
+            // Simulate API call to save survey responses
+            console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
+            const responseText = await response.text();
+            if (!response.ok) {
+                throw new Error(responseText || 'Network response was not ok');
+            }
+            console.log('Response text:', responseText);
+
+            navigate(nextTestUrl)
+
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
 
