@@ -172,7 +172,14 @@ Now that you have your rootCA.pem, mongodb.key, and mongodb.crt files generated,
 Admin: hindupurv
 pass: NinjaKellyV4613
 
+# aws cli - configure using creds in .env
+aws config
+
 # s3 bucket commands AWS CLI
 npm run build
 aws s3 rm s3://adg429.com --recursive
 aws s3 cp "/Users/varshahindupur/Downloads/RA_Online_Instrument/frontend/build" s3://adg429.com/ --recursive --exclude "*/" --include "*"
+
+# backend deploy
+cd backend
+zip -r ../nodejs.zip . -x "node_modules/*" -x ".git/*"
