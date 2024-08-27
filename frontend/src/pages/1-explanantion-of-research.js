@@ -87,7 +87,7 @@ const FirstInstrConsent = () => {
     // Parse the Prolific ID from the URL and store it in the state
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        console.logs("Printing URL: ", urlParams)
+        // console.logs("Printing URL: ", urlParams)
         const prolificIdFromUrl = urlParams.get('PROLIFIC_PID');
         
         if (prolificId) {

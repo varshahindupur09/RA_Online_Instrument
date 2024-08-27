@@ -23,7 +23,7 @@ import Timer from "../components/Timer";
 const StructuralColDashboard = () => {
     const navigate = useNavigate();
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-    const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    const { consent, prolificId, chart_number } = useConsent(); // Access consent and Prolific ID from context
     // const { consent, chart_number } = useConsent(); 
 
     const currentTime = Date.now();
