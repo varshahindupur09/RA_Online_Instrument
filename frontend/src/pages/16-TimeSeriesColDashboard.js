@@ -23,6 +23,25 @@ import Timer from "../components/Timer";
 
 const TimeSeriesColDashboard = () => {
     const navigate = useNavigate();
+      
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState('');
+    const [questionIndex, setQuestionIndex] = useState(0);
+    const [selectedOption, setSelectedOption] = useState('');
+    const [questionStartTime, setQuestionStartTime] = useState(new Date());
+    const [graphStartTime, setGraphStartTime] = useState(null);
+    const [questionDurations, setQuestionDurations] = useState([]);
+    const [graphDurations, setGraphDurations] = useState([]);
+    const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
+
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    // const { consent, chart_number } = useConsent(); 
+
+    const currentTime = Date.now();
+    const currentTestUrl = "/timeseries-col-dashboard";
+    const previousTestUrl = "/dashboard-router";
+    const test_name_given = "TimeSeries-Col-Dashboard";
 
     // Prevent back button navigation
     useEffect(() => {
@@ -46,25 +65,7 @@ const TimeSeriesColDashboard = () => {
             window.removeEventListener('keydown', preventBackNavigation);
         };
     }, []);
-    
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState('');
-    const [questionIndex, setQuestionIndex] = useState(0);
-    const [selectedOption, setSelectedOption] = useState('');
-    const [questionStartTime, setQuestionStartTime] = useState(new Date());
-    const [graphStartTime, setGraphStartTime] = useState(null);
-    const [questionDurations, setQuestionDurations] = useState([]);
-    const [graphDurations, setGraphDurations] = useState([]);
-    const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
 
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-    // const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
-    const { consent, chart_number } = useConsent(); 
-
-    const currentTime = Date.now();
-    const currentTestUrl = "/timeseries-col-dashboard";
-    const previousTestUrl = "/dashboard-router";
-    const test_name_given = "TimeSeries-Col-Dashboard";
 
     const [responses, setResponses] = useState({
         prolific_id: '', 
@@ -247,6 +248,7 @@ const TimeSeriesColDashboard = () => {
             nextTestUrl = "/feedback-questions";
 
             const updatedresponses = {
+                prolificId: prolificId,
                 question_durations: questionDurations,
                 graph_durations: graphDurations,
                 current_visit_test_name: nextTestUrl, // The next page URL

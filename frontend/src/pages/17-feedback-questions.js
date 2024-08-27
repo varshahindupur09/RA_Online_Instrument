@@ -16,7 +16,7 @@ const FeedbackQuestions = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const startTimeRef = useRef(Date.now());
-    const { consent, chart_number } = useConsent(); 
+    const { consent, chart_number, prolificId } = useConsent(); 
 
      // Prevent back button navigation
      useEffect(() => {
@@ -95,6 +95,7 @@ const FeedbackQuestions = () => {
 
         const updatedresponses = {
             ...responses, 
+            prolificId: prolificId,
             responses: feedback,
             timeSpent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL

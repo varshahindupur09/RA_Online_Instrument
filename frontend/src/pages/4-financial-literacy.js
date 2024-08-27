@@ -8,8 +8,8 @@ const FinancialLiteracy = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
-    const { consent } = useConsent(); 
+    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    // const { consent } = useConsent(); 
     const startTimeRef = useRef(Date.now());
 
     // Prevent back button navigation
@@ -97,6 +97,7 @@ const FinancialLiteracy = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
+            prolificId: prolificId,
             time_spent: timeSpent,
             last_visited_test_name: consent === "yes" ? "/" : "/ask-consent-again", // Update the last visited page
             next_visit_test_name: nextTestUrl, // The next page URL

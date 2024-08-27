@@ -22,6 +22,14 @@ import Timer from "../components/Timer";
 
 const StructuralColDashboard = () => {
     const navigate = useNavigate();
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    // const { consent, chart_number } = useConsent(); 
+
+    const currentTime = Date.now();
+    const currentTestUrl = "/structure-col-dashboard";
+    const previousTestUrl = "/dashboard-router";
+    const test_name_given = 'Structural-Col-Dashboard';
 
     // Prevent back button navigation
     useEffect(() => {
@@ -55,15 +63,6 @@ const StructuralColDashboard = () => {
     const [questionDurations, setQuestionDurations] = useState([]);
     const [graphDurations, setGraphDurations] = useState([]);
     const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
-
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-    // const { consent, prolificId } = useConsent(); // Access consent and Prolific ID from context
-    const { consent, chart_number } = useConsent(); 
-
-    const currentTime = Date.now();
-    const currentTestUrl = "/structure-col-dashboard";
-    const previousTestUrl = "/dashboard-router";
-    const test_name_given = 'Structural-Col-Dashboard';
 
     const [responses, setResponses] = useState({
         prolific_id: '', 
@@ -240,6 +239,7 @@ const StructuralColDashboard = () => {
         {
             nextTestUrl = "/feedback-questions";
             const updatedresponses = {
+                prolificId: prolificId,
                 question_durations: questionDurations,
                 graph_durations: graphDurations,
                 next_visit_test_name: nextTestUrl, // The next page URL

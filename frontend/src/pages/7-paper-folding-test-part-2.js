@@ -83,6 +83,7 @@ const PaperFoldingPart2Questions = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const startTimeRef = useRef(null);
 
     // Prevent back button navigation
     useEffect(() => {
@@ -107,8 +108,8 @@ const PaperFoldingPart2Questions = () => {
         };
     }, []);
 
-    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
-    const { consent } = useConsent();
+    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    // const { consent } = useConsent();
 
     // State to manage timer visibility
     const [timerVisible] = useState(true);
@@ -169,8 +170,6 @@ const PaperFoldingPart2Questions = () => {
         }));
     };
 
-    const startTimeRef = useRef(null);
-
     useEffect(() => {
         startTimeRef.current = Date.now();
     }, []);
@@ -186,6 +185,7 @@ const PaperFoldingPart2Questions = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
+            prolificId: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };

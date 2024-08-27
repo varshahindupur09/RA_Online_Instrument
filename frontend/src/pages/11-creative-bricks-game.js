@@ -10,8 +10,8 @@ const CreativeBricksGame = () => {
     const navigate = useNavigate();
     const [count, setCount] = React.useState(0);
     const [timerVisible] = useState(true);
-    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
-    const { consent } = useConsent(); 
+    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    // const { consent } = useConsent(); 
     const startTimeRef = useRef(null);
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
@@ -109,6 +109,7 @@ const CreativeBricksGame = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
+            prolificId: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };

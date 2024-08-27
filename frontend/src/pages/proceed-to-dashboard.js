@@ -8,7 +8,7 @@ import { useConsent } from './ConsentContext';
 const ProceedToDashboard = () => {
     const navigate = useNavigate(); 
     // chartnumber will not be accessed here
-    const { consent} = useConsent(); 
+    const { consent, prolificId } = useConsent(); 
     const startTimeRef = useRef(null);
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
@@ -77,6 +77,7 @@ const ProceedToDashboard = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses, 
+            prolificId: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };

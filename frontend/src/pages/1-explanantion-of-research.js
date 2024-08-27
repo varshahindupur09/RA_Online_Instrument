@@ -34,8 +34,8 @@ const FirstInstrConsent = () => {
         };
     }, []);
 
-    // const { consent, setConsent, prolificId, setProlificId } = useConsent();
-    const { consent, setConsent} = useConsent();
+    const { consent, setConsent, prolificId, setProlificId } = useConsent();
+    // const { consent, setConsent} = useConsent();
 
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
@@ -84,11 +84,25 @@ const FirstInstrConsent = () => {
     //     setProlificId(e.target.value);
     // };
 
+    // Parse the Prolific ID from the URL and store it in the state
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.logs("Printing URL: ", urlParams)
+        const prolificIdFromUrl = urlParams.get('PROLIFIC_PID');
+        
+        if (prolificId) {
+            setResponses(prevResponses => ({
+                ...prevResponses,
+                prolific_id: prolificIdFromUrl
+            }));
+        }
+    }, []);
+
     const startTimeRef = useRef(null);
 
     useEffect(() => {
         startTimeRef.current = Date.now();
-    }, []);
+    }, [setProlificId]);
 
     const handleConsent = (value) => {
         const consentValue = value === "yes"; // Convert to boolean
@@ -117,7 +131,7 @@ const FirstInstrConsent = () => {
         // Ensure the updated responses use the actual state of consent directly
         const updatedResponses = {
             ...responses,
-            // prolific_id: prolificId,
+            prolific_id: prolificId, //using prolific id from consent
             time_spent: timeSpent,
             last_visited_test_name: responses.current_visit_test_name, // Update the last visited page
             next_visit_test_name: nextTestUrl, // The next page URL

@@ -5,7 +5,7 @@ import { useConsent } from './ConsentContext';
 
 const DashboardRouter = () => {
     // here chartnumber gets set into context
-    const { consent, chartNumber, setChartNumber } = useConsent(); // Destructure setChartNumber from context
+    const { consent, chartNumber, setChartNumber, prolificId } = useConsent(); // Destructure setChartNumber from context
     const navigate = useNavigate();
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const [isChartNumberFetched, setIsChartNumberFetched] = useState(false); // Flag to track if chart number has been fetched
@@ -60,6 +60,7 @@ const DashboardRouter = () => {
                     // Update responses with the calculated time spent
                     const updatedResponses = {
                         ...responses, 
+                        prolificId: prolificId,
                         chart_number: nextChartNumber,
                         next_visit_test_name: nextTestUrl, // The next page URL
                     };

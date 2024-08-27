@@ -115,8 +115,8 @@ const RotationTestPart2 = () => {
     // State to manage timer visibility
     const [timerVisible] = useState(true);
 
-    // const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
-    const { consent } = useConsent(); 
+    const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
+    // const { consent } = useConsent(); 
 
     const startTimeRef = useRef(null);
     const [loading, setLoading] = useState(false);  
@@ -281,64 +281,6 @@ const RotationTestPart2 = () => {
         Part2Question10Answer1Option5, Part2Question10Answer1Option6, Part2Question10Answer1Option7, Part2Question10Answer1Option8
     ];
 
-    // const handleAnswerChange = (questionNumber, index, value) => {
-    //     setResponses(prevResponses => {
-    //         // Ensure the array exists, or create a new one with empty strings
-    //         const existingAnswers = prevResponses.responses[`question${questionNumber}`] || Array(8).fill('');
-    
-    //         // Create a copy of the existing array and update the specific index
-    //         const updatedAnswers = [...existingAnswers];
-    //         updatedAnswers[index] = value;
-    
-    //         return {
-    //             ...prevResponses,
-    //             responses: {
-    //                 ...prevResponses.responses,
-    //                 [`question${questionNumber}`]: updatedAnswers
-    //             }
-    //         };
-    //     });
-    // };
-
-    // // Function to handle form submission with validation
-    // const handleNext = async (event) => {
-    //     event.preventDefault();
-    //     setLoading(true);
-
-    //     const endTime = Date.now();
-    //     const timeSpent = (endTime - startTimeRef.current) / 1000;
-
-    //     // Convert each responses array to a comma-separated string
-    //     const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
-    //         acc[key] = responses.responses[key].join(',');
-    //         return acc;
-    //     }, {});
-
-    //     const updatedResponses = {
-    //         ...responses,
-    //         responses: formattedResponses,
-    //         time_spent: timeSpent
-    //     };
-
-    //     try {
-    //         const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify(updatedResponses),
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         navigate("/creative-bricks-game");
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //         setError(error);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
     const handleAnswerChange = (questionNumber, index, value) => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
@@ -384,6 +326,7 @@ const RotationTestPart2 = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
+            prolificId: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };

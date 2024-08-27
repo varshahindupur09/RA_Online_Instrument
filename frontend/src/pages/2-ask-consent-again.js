@@ -11,8 +11,8 @@ import { useConsent } from './ConsentContext';
 
 const ConsentPage = () => {
     const navigate = useNavigate();
-    // const { consent, setConsent, prolificId } = useConsent(); // Access consent and Prolific ID from context
-    const { consent, setConsent } = useConsent();
+    const { consent, setConsent, prolificId } = useConsent(); // Access consent and Prolific ID from context
+    // const { consent, setConsent } = useConsent();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const startTimeRef = useRef(null);
@@ -102,7 +102,7 @@ const ConsentPage = () => {
         // Ensure the updated responses use the actual state of consent directly
         const updatedResponses = {
             ...responses,
-            // prolific_id: prolificId,
+            prolific_id: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };

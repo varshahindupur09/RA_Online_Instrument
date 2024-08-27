@@ -15,7 +15,7 @@ const Demographics = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const startTimeRef = useRef(Date.now());
-    const { consent, chart_number, prolificId, setProlificId } = useConsent(); 
+    const { consent, chart_number, prolificId} = useConsent(); 
 
      // Prevent back button navigation
      useEffect(() => {
@@ -102,6 +102,7 @@ const Demographics = () => {
 
         const updatedData = {
             ...demographicData,
+            prolificId: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, 
         };
