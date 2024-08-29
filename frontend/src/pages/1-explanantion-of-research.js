@@ -42,14 +42,6 @@ const FirstInstrConsent = () => {
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-    // Retrieve the Prolific ID from the query parameters
-    // useEffect(() => {
-    //     const id = query.get('prolificId');
-    //     if (id) {
-    //         setProlificId(id);
-    //     }
-    // }, [query, setProlificId]);
-
     const currentTime = Date.now();
     const currentTestUrl = "/";
     const previousTestUrl = "/";
@@ -80,23 +72,35 @@ const FirstInstrConsent = () => {
         }
     }, [navigate, responses.next_visit_test_name]);
 
-    // const handleInputChange = (e) => {
-    //     setProlificId(e.target.value);
-    // };
+    const handleInputChange = (e) => {
+        const trimmedId = e.target.value.trim();
+        if (trimmedId.length <= 24) {
+            setProlificId(trimmedId); // Update the Prolific ID in the ConsentContext
+        }
+    };
 
     // Parse the Prolific ID from the URL and store it in the state
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        // console.logs("Printing URL: ", urlParams)
-        const prolificIdFromUrl = urlParams.get('PROLIFIC_PID');
+    // useEffect(() => {
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     console.log("URL: ", urlParams)
+    //     const prolificIdFromUrl = urlParams.get('PROLIFIC_PID');
+    //     console.log("URL Prolific ID: ", prolificIdFromUrl)
         
-        if (prolificId) {
-            setResponses(prevResponses => ({
-                ...prevResponses,
-                prolific_id: prolificIdFromUrl
-            }));
+    //     if (prolificId) {
+    //         setResponses(prevResponses => ({
+    //             ...prevResponses,
+    //             prolific_id: prolificIdFromUrl
+    //         }));
+    //     }
+    // }, []);
+
+     // Retrieve the Prolific ID from the query parameters
+     useEffect(() => {
+        const id = query.get('prolificId');
+        if (id) {
+            setProlificId(id);
         }
-    }, []);
+    }, [query, setProlificId]);
 
     const startTimeRef = useRef(null);
 
@@ -121,6 +125,12 @@ const FirstInstrConsent = () => {
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         let nextTestUrl = ""; // Use let instead of const as const is unmutable
 
+        // this is just to see if code is working:
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log("URL: ", urlParams)
+        const prolificIdFromUrl = urlParams.get('PROLIFIC_PID');
+        console.log("URL Prolific ID: ", prolificIdFromUrl)
+
         // Navigate based on the actual consent state from context
         if (consent === "yes") {
             nextTestUrl = "/financial-literacy"
@@ -139,7 +149,7 @@ const FirstInstrConsent = () => {
     
         try {
             // Simulate API call to save survey responses
-            console.log('Saving responses:', updatedResponses);
+            // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
 
@@ -151,7 +161,7 @@ const FirstInstrConsent = () => {
                 body: JSON.stringify(updatedResponses), // Send updated responses
             });
     
-            console.log('Response:', response);
+            // console.log('Response:', response);
     
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -187,13 +197,13 @@ const FirstInstrConsent = () => {
                 {loading && <p>Loading...</p>}
                 {error && <p>Error: {error.message}</p>}
                 <div name="instructions">
-                    {/* <label>
+                    <label>
                         Enter your Prolific ID:
                         <input 
                             type="text" 
                             value={prolificId} 
-                            // onChange={handleInputChange} 
-                            onChange={(e) => setProlificId(e.target.value)}
+                            onChange={handleInputChange} 
+                            // onChange={(e) => setProlificId(e.target.value)}
                             required
                             maxLength={24}  // Restrict the input length to 24 characters
                             pattern=".{24,24}" // Enforce exactly 24 characters
@@ -202,7 +212,7 @@ const FirstInstrConsent = () => {
                     </label>
                     <div>
                         {prolificId && <p>Your Prolific ID: {prolificId}</p>}
-                    </div> */}
+                    </div>
                     <div name="instructionsh3">
                         <h3><u>Title of Study:</u> Data Visualization in Managerial Judgments</h3>	    
                         <h3><u>Principal Investigator:</u> Kelly Wellman</h3>

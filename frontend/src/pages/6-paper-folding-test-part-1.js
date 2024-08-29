@@ -85,7 +85,7 @@ const PaperFoldingPart1Questions = () => {
     const [error, setError] = useState(null);
 
     // Prevent back button navigation
-    useEffect(() => {
+    useEffect(() => {  
         const preventBackNavigation = () => {
             window.history.pushState(null, null, window.location.href);
         };
