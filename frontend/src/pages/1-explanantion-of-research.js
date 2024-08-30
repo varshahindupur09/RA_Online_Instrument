@@ -5,11 +5,28 @@ import { useConsent } from './ConsentContext'; // Import the custom hook
 import '../components/styles_css/RadioButton.css'; 
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
+import { useLocation } from 'react-router-dom';
 
 const FirstInstrConsent = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { consent, setConsent, prolificId, setProlificId } = useConsent();
+
+    //url catch
+    const location = useLocation();
+    console.log("URL LOCATION ***** ", location)
+    const query = new URLSearchParams(location.search);
+    console.log("URL QUERY ***** ", query)
+
+    useEffect(() => {
+        const id = query.get('PROLIFIC_PID');
+        if (id) {
+            setProlificId(id);
+        }
+    }, [query, setProlificId]);
+    
+
 
     // Prevent back button navigation
     useEffect(() => {
@@ -34,7 +51,6 @@ const FirstInstrConsent = () => {
         };
     }, []);
 
-    const { consent, setConsent, prolificId, setProlificId } = useConsent();
     // const { consent, setConsent} = useConsent();
 
     // const API_BASE_URL = 'https://backend.adg429.com';
@@ -94,14 +110,6 @@ const FirstInstrConsent = () => {
     //     }
     // }, []);
 
-     // Retrieve the Prolific ID from the query parameters
-     useEffect(() => {
-        const id = query.get('prolificId');
-        if (id) {
-            setProlificId(id);
-        }
-    }, [query, setProlificId]);
-
     const startTimeRef = useRef(null);
 
     useEffect(() => {
@@ -130,6 +138,7 @@ const FirstInstrConsent = () => {
         console.log("URL: ", urlParams)
         const prolificIdFromUrl = urlParams.get('PROLIFIC_PID');
         console.log("URL Prolific ID: ", prolificIdFromUrl)
+        console.log("Current URL with query params:", window.location.href);
 
         // Navigate based on the actual consent state from context
         if (consent === "yes") {
@@ -198,7 +207,7 @@ const FirstInstrConsent = () => {
                 {error && <p>Error: {error.message}</p>}
                 <div name="instructions">
                     <label>
-                        Enter your Prolific ID:
+                        Enter your Prolific ID:  &nbsp;  
                         <input 
                             type="text" 
                             value={prolificId} 
@@ -213,6 +222,8 @@ const FirstInstrConsent = () => {
                     <div>
                         {prolificId && <p>Your Prolific ID: {prolificId}</p>}
                     </div>
+                    <br></br>
+                    <br></br>
                     <div name="instructionsh3">
                         <h3><u>Title of Study:</u> Data Visualization in Managerial Judgments</h3>	    
                         <h3><u>Principal Investigator:</u> Kelly Wellman</h3>

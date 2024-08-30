@@ -95,7 +95,7 @@ const FeedbackQuestions = () => {
 
         const updatedresponses = {
             ...responses, 
-            prolificId: prolificId,
+            prolific_id: prolificId,
             responses: feedback,
             timeSpent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL

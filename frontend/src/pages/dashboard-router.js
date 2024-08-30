@@ -60,7 +60,7 @@ const DashboardRouter = () => {
                     // Update responses with the calculated time spent
                     const updatedResponses = {
                         ...responses, 
-                        prolificId: prolificId,
+                        prolific_id: prolificId,
                         chart_number: nextChartNumber,
                         next_visit_test_name: nextTestUrl, // The next page URL
                     };

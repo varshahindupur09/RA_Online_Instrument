@@ -360,7 +360,7 @@ const RotationTestPart1 = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            prolificId: prolificId,
+            prolific_id: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
@@ -491,7 +491,7 @@ const RotationTestPart1 = () => {
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br />
-            {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
+            {/* {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />} */}
             <br />
             <br />
             <div name="instructions">

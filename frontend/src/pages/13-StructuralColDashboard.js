@@ -239,7 +239,8 @@ const StructuralColDashboard = () => {
         {
             nextTestUrl = "/feedback-questions";
             const updatedresponses = {
-                prolificId: prolificId,
+                ...responses,
+                prolific_id: prolificId,
                 question_durations: questionDurations,
                 graph_durations: graphDurations,
                 next_visit_test_name: nextTestUrl, // The next page URL
@@ -298,7 +299,7 @@ const StructuralColDashboard = () => {
                 </div>
                 <br />
                 <br />
-                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />}
+                {/* {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />} */}
                 <br />
                 <br />
                 <br />

@@ -94,10 +94,12 @@ const FinancialLiteracy = () => {
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/paper-folding-test-sample-question"; // Use let instead of const as const is unmutable
 
+        console.log("handleNext fl prolificid from consent: ", prolificId)
+
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            prolificId: prolificId,
+            prolific_id: prolificId,
             time_spent: timeSpent,
             last_visited_test_name: consent === "yes" ? "/" : "/ask-consent-again", // Update the last visited page
             next_visit_test_name: nextTestUrl, // The next page URL

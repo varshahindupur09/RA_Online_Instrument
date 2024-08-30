@@ -102,7 +102,7 @@ const Demographics = () => {
 
         const updatedData = {
             ...demographicData,
-            prolificId: prolificId,
+            prolific_id: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, 
         };

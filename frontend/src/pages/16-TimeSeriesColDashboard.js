@@ -248,7 +248,8 @@ const TimeSeriesColDashboard = () => {
             nextTestUrl = "/feedback-questions";
 
             const updatedresponses = {
-                prolificId: prolificId,
+                ...responses,
+                prolific_id: prolificId,
                 question_durations: questionDurations,
                 graph_durations: graphDurations,
                 current_visit_test_name: nextTestUrl, // The next page URL
@@ -302,7 +303,7 @@ const TimeSeriesColDashboard = () => {
                 </div>
                 <br />
                 <br />
-                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />}
+                {/* {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />} */}
                 <br />
                 <br />
                 <br />
