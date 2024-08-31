@@ -14,6 +14,11 @@ const ExitSurveyPage = () => {
     const startTimeRef = useRef(Date.now());
     const hasCalledAPI = useRef(false); // Ref to track if the API has been called
 
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
+
     // Prevent back button navigation
     useEffect(() => {
         const preventBackNavigation = () => {

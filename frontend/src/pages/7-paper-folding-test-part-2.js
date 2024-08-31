@@ -85,6 +85,11 @@ const PaperFoldingPart2Questions = () => {
     const [error, setError] = useState(null);
     const startTimeRef = useRef(null);
 
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
+
     // Prevent back button navigation
     useEffect(() => {
         const preventBackNavigation = () => {

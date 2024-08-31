@@ -104,16 +104,6 @@ import Part1Question10Answer1Option6 from '../images/rotation-test/rotation-test
 import Part1Question10Answer1Option7 from '../images/rotation-test/rotation-test-part-1/question-10/answer-7.png'; 
 import Part1Question10Answer1Option8 from '../images/rotation-test/rotation-test-part-1/question-10/answer-8.png';
 
-import Part1Question11 from '../images/rotation-test/rotation-test-part-1/question-11/part-1-question-11.png';
-import Part1Question11Answer1Option1 from '../images/rotation-test/rotation-test-part-1/question-11/answer-1.png'; 
-import Part1Question11Answer1Option2 from '../images/rotation-test/rotation-test-part-1/question-11/answer-2.png'; 
-import Part1Question11Answer1Option3 from '../images/rotation-test/rotation-test-part-1/question-11/answer-3.png'; 
-import Part1Question11Answer1Option4 from '../images/rotation-test/rotation-test-part-1/question-11/answer-4.png'; 
-import Part1Question11Answer1Option5 from '../images/rotation-test/rotation-test-part-1/question-11/answer-5.png'; 
-import Part1Question11Answer1Option6 from '../images/rotation-test/rotation-test-part-1/question-11/answer-6.png'; 
-import Part1Question11Answer1Option7 from '../images/rotation-test/rotation-test-part-1/question-11/answer-7.png'; 
-import Part1Question11Answer1Option8 from '../images/rotation-test/rotation-test-part-1/question-11/answer-8.png';
-
 
 import Timer from "../components/Timer"; 
 import '../components/styles_css/PageStyle.css'; 
@@ -131,6 +121,11 @@ const RotationTestPart1 = () => {
     const startTimeRef = useRef(null);
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
+
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
 
     // Prevent back button navigation
     useEffect(() => {
@@ -205,8 +200,7 @@ const RotationTestPart1 = () => {
             question7: '',
             question8: '', 
             question9: '',
-            question10: '', 
-            question11: '', 
+            question10: '',
         },
         graph_question_durations: [],
         per_graph_durations: [],
@@ -288,12 +282,6 @@ const RotationTestPart1 = () => {
     const question10Answers = [
         Part1Question10Answer1Option1, Part1Question10Answer1Option2, Part1Question10Answer1Option3, Part1Question10Answer1Option4,
         Part1Question10Answer1Option5, Part1Question10Answer1Option6, Part1Question10Answer1Option7, Part1Question10Answer1Option8
-    ];
-
-    const question11 = Part1Question11; 
-    const question11Answers = [
-        Part1Question11Answer1Option1, Part1Question11Answer1Option2, Part1Question11Answer1Option3, Part1Question11Answer1Option4,
-        Part1Question11Answer1Option5, Part1Question11Answer1Option6, Part1Question11Answer1Option7, Part1Question11Answer1Option8
     ];
 
     // const handleAnswerChange = (questionNumber, index, value) => {
@@ -533,10 +521,6 @@ const RotationTestPart1 = () => {
                 <br />
                 <p><strong>[Q10]</strong></p>
                 {renderQuestion(question10, question10Answers, 10)}
-                <br />
-                <br />
-                <p><strong>[Q11]</strong></p>
-                {renderQuestion(question11, question11Answers, 11)}
             </div>
             <br />
             <br />

@@ -18,6 +18,11 @@ const FeedbackQuestions = () => {
     const startTimeRef = useRef(Date.now());
     const { consent, chart_number, prolificId } = useConsent(); 
 
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
+
      // Prevent back button navigation
      useEffect(() => {
         const preventBackNavigation = () => {

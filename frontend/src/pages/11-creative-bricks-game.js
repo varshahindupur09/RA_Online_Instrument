@@ -155,7 +155,7 @@ const CreativeBricksGame = () => {
                 </div>
                 <br />
                 <br />
-                {timerVisible && <Timer initialTime={120} onCompletion={handleTimerCompletion} />}
+                {/* {timerVisible && <Timer initialTime={120} onCompletion={handleTimerCompletion} />} */}
                 <br />
                 <br />
                 <p>Below, you will see a picture of a common household brick.</p>

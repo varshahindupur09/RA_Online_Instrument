@@ -12,6 +12,11 @@ const FinancialLiteracy = () => {
     // const { consent } = useConsent(); 
     const startTimeRef = useRef(Date.now());
 
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
+
     // Prevent back button navigation
     useEffect(() => {
         const preventBackNavigation = () => {
@@ -135,6 +140,9 @@ const FinancialLiteracy = () => {
         }
     };
 
+    // Check if all questions are answered
+    const isNextDisabled = !responses.responses.question_1 || !responses.responses.question_2 || !responses.responses.question_3;
+
     return (
         <div>
             <div className="container">
@@ -173,7 +181,6 @@ const FinancialLiteracy = () => {
                         <label htmlFor="answer-fl-1-4">Do not know</label>
                     </div>
                     <br />
-                    <br />
                     
                     <div className="instructionsFL">
                         <h4>
@@ -194,7 +201,6 @@ const FinancialLiteracy = () => {
                         <label htmlFor="answer-fl-2-4">Do not know</label>
                     </div>
                     <br />
-                    <br />
 
                     <div className="instructionsFL">
                         <h4>
@@ -213,11 +219,15 @@ const FinancialLiteracy = () => {
                     </div>
                 </div>
                 <br />
-                <br />
-                <button type="button" className="button" onClick={handleNext}>Next</button>
+                <button 
+                    type="button"
+                    className="button"
+                    onClick={handleNext}
+                    disabled={isNextDisabled} // Disable button if not all questions are answered
+                    >
+                        Next
+                </button>
                 {error && <p className="error-message">{error.message}</p>}
-                <br/>
-                <br/>
                 <br/>
                 <br/>
             </div>

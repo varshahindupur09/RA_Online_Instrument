@@ -17,6 +17,11 @@ const PaperFoldingSampleQuestion = () => {
     const { prolificId, consent } = useConsent(); // Access Prolific ID and consent from context
     const startTimeRef = useRef(Date.now());
 
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
+
     // const [showSolution, setShowSolution] = useState(false);
 
     // Toggles the visibility of the solution.
@@ -134,18 +139,22 @@ const PaperFoldingSampleQuestion = () => {
                 <div className="LogoStyleImage">
                         <p>
                         <img src={logoImage} alt="ucflogo" className="ucflogo" /> 
-                        <h2> PAPER FOLDING TEST </h2> 
+                        <h2><strong><u>PAPER FOLDING TEST</u></strong></h2> 
                     </p>
-                    <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                    <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
-                <br />
                 <h2>Paper Folding Test: Sample Question</h2>
-                <br />
                 {loading && <p>Loading...</p>}
                 {error && <p>Error: {error.message}</p>}
                 <div name="instructions">
                     <p>
                         In this test, you are to imagine the folding and unfolding of pieces of paper. In each problem in the test there are some figures drawn on top and there are others drawn below. The figures on top represent a square piece of paper being folded, and the last of these figures has one or two small circles drawn on it to show where the paper has been punched. 
+                    </p>
+                    <p>
+                        Each hole is punched through all the thicknesses of paper at that point. One of the five figures below shows where the holes will be when the paper is completely unfolded. You are to decide which one of these figures is correct and click the circle close to that figure.
+                    </p>
+                    <p>
+                        In these problems all of the folds that are made are shown in the figures on top, and the paper is not turned or moved in any way except to make the folds shown in the figures. Remember, the answer is the figure that shows the positions of the holes when the paper is completely unfolded.
                     </p>
                     <p>
                         You will have <strong><u>3 minutes</u></strong> for each of the two parts of this test. Each part has one page. You will not be able to go back from part 2 to part 1. 

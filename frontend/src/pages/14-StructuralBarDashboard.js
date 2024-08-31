@@ -20,7 +20,6 @@ import StructuralBarEnlargedImage4 from "../images/dashboard/structural-bar/enla
 import { useConsent } from './ConsentContext';
 import Timer from "../components/Timer";
 
-
 const StructuralBarDashboard = () => {
     const navigate = useNavigate();
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -31,6 +30,11 @@ const StructuralBarDashboard = () => {
     const currentTestUrl = "/structure-bar-dashboard";
     const previousTestUrl = "/dashboard-router";
     const test_name_given = 'Structural-Bar-Dashboard';
+
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
 
     // Prevent back button navigation
     useEffect(() => {

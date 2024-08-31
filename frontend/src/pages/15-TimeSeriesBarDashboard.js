@@ -40,6 +40,11 @@ const TimeSeriesBarDashboard = () => {
     const previousTestUrl = "/dashboard-router";
     const test_name_given = 'TimeSeries-Bar-Dashboard';
 
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
+
     // Prevent back button navigation
     useEffect(() => {
         const preventBackNavigation = () => {

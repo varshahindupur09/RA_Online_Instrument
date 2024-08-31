@@ -126,6 +126,11 @@ const RotationTestPart2 = () => {
     // const API_BASE_URL = 'http://localhost:8080';
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
+
      // Prevent back button navigation
      useEffect(() => {
         const preventBackNavigation = () => {

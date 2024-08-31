@@ -6,6 +6,11 @@ import logoImageDoc from '../images/UCF_logo_doc.png';
 const ProceedToPart1PaperFoldingTest = () => {
     const navigate = useNavigate(); 
 
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
+
     // Prevent back button navigation
     useEffect(() => {
         const preventBackNavigation = () => {

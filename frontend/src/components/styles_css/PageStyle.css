@@ -53,10 +53,10 @@ div[name="instructions"] li {
     margin-bottom: 10px;
 }
 
-div[name="instructions"] img {
+/* div[name="instructions"] img {
     display: block;
     margin: 0 auto;
-}
+} */
 
 .form-container {
     font-size: 18px;
@@ -74,8 +74,9 @@ div[name="instructions"] img {
 
 .instructionsred {
     padding: 15px;
-    border-left: 4px solid #d32f2f;
+    border-left: 4px solid #0e0303;
     background-color: #f9f9f9;
+    font-family: Arial;
 }
 
 .instructionsred p {
@@ -84,7 +85,8 @@ div[name="instructions"] img {
 
 .instructionsred .contact-heading {
     font-weight: bold;
-    color: #d32f2f;
+    color: #0e0303;
+    font-family: Arial;
 }
 
 .instructionsred .contact-info {
@@ -94,12 +96,13 @@ div[name="instructions"] img {
 .instructionsred .email,
 .instructionsred .phone {
     font-style: italic;
-    color: #d32f2f;
+    color: #0e0303;
+    font-family: Arial;
 }
 
 .instructionsFL {
     text-align: left;
-    padding: 50px;
+    /* padding: 50px; */
 }
 
 .bricksimage {
