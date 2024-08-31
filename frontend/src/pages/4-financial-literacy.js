@@ -97,7 +97,7 @@ const FinancialLiteracy = () => {
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
-        const nextTestUrl = "/paper-folding-test-sample-question"; // Use let instead of const as const is unmutable
+        const nextTestUrl = "/sample-paper-folding-test"; // Use let instead of const as const is unmutable
 
         console.log("handleNext fl prolificid from consent: ", prolificId)
 

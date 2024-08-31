@@ -12,7 +12,7 @@ import AskAgainConsentPage from "./pages/2-ask-consent-again";
 import ExitSurveyPage from "./pages/3-exit-survey-page";
 import FinancialLiteracy from "./pages/4-financial-literacy";
 import ProceedToPart1PaperFoldingTest from "./pages/proceed-to-part1-paper-folding-test"; // buffer
-import PaperFoldingSampleQuestion from "./pages/5-paper-folding-test-sample-question";
+import PaperFoldingSampleQuestion from "./pages/5-sample-paper-folding-test";
 import PaperFoldingPart1Questions from "./pages/6-paper-folding-test-part-1";
 import PaperFoldingPart2Questions from "./pages/7-paper-folding-test-part-2";
 import RotationTest from "./pages/8-sample-rotation-test";
@@ -51,7 +51,7 @@ function App() {
                         <Route path="/exit-survey-page" element={<ExitSurveyPage />} />
                         <Route exact path="/financial-literacy" element={<FinancialLiteracy />} />
                          <Route path="/proceed-to-part1-paper-folding-test" element={<ProceedToPart1PaperFoldingTest />} />
-                        <Route path="/paper-folding-test-sample-question" element={<PaperFoldingSampleQuestion />} />
+                        <Route path="/sample-paper-folding-test" element={<PaperFoldingSampleQuestion />} />
                         <Route path="/paper-folding-test-part-1" element={<PaperFoldingPart1Questions />} />
                         {/* <Route path="/proceed-to-part2-paper-folding-test" element={<ProceedToPart2PaperFoldingTest />} /> */}
                         <Route path="/paper-folding-test-part-2" element={<PaperFoldingPart2Questions />} />

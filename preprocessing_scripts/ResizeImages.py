@@ -25,7 +25,7 @@ def resize_and_rename_images(input_folder, output_folder, size=(120, 120)):
 # Example usage:
 input_folder = "/Users/varshahindupur/Desktop/input"
 part="1"
-question="4"
+question="10"
 output_folder = f"/Users/varshahindupur/Downloads/RA_Online_Instrument/frontend/src/images/rotation-test/rotation-test-part-{part}/question-{question}"
 
 resize_and_rename_images(input_folder, output_folder)

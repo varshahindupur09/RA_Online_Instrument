@@ -16,6 +16,11 @@ const CreativeBricksGame = () => {
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
 
+    // Scroll to the top of the page
+    useEffect(() => {
+        window.scrollTo(0, 0); 
+    }, []);
+
      // Prevent back button navigation
      useEffect(() => {
         const preventBackNavigation = () => {

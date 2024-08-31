@@ -150,7 +150,7 @@ const StructuralBarDashboard = () => {
             options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
         },
         {
-            question: "In which country were total unit sales of chips?",
+            question: "In which country were total unit sales of chips lowest?",
             options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
         },
         {

@@ -123,7 +123,7 @@ const PaperFoldingPart1Questions = () => {
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const currentTime = Date.now();
     const currentTestUrl = "/paper-folding-test-part-1";
-    const previousTestUrl = "/paper-folding-test-sample-question";
+    const previousTestUrl = "/sample-paper-folding-test";
     const test_name_given = 'Paper-Folding-Test-1';
     
     //api integration

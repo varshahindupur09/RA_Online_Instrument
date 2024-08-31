@@ -6,7 +6,7 @@ import SampleQuestion from '../images/fl-paper-folding-test/sample-question/enti
 // import SampleQuestionSolution from '../images/fl-paper-folding-test/sample-question/solution-sample-question-1.png';
 import '../components/styles_css/PageStyle.css'; 
 import logoImage from '../images/UCF_Logo.png';
-import Navbar from "../components/NavbarPage";
+// import Navbar from "../components/NavbarPage";
 import { useConsent } from './ConsentContext';
 
 const PaperFoldingSampleQuestion = () => {
@@ -134,7 +134,7 @@ const PaperFoldingSampleQuestion = () => {
 
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
             <div className="container">
                 <div className="LogoStyleImage">
                         <p>

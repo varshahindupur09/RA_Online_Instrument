@@ -292,6 +292,8 @@ const RotationTestQuestion = () => {
                 <br />
             <div name="instructions">
                 {renderQuestion(question1, question1Answers, 1)}
+                <br />
+                <br />
                 {renderQuestion(question2, question2Answers, 2)}
             </div>
             <br />
