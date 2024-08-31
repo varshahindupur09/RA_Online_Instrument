@@ -218,7 +218,7 @@ const FirstInstrConsent = () => {
                             // onChange={(e) => setProlificId(e.target.value)}
                             required
                             maxLength={24}  // Restrict the input length to 24 characters
-                            pattern=".{24,24}" // Enforce exactly 24 characters
+                            pattern="[A-Za-z0-9]{24}" // Alphanumeric pattern, exactly 24 characters
                             title="Prolific ID must be exactly 24 characters long" // Message displayed on invalid input
                         />
                     </label>

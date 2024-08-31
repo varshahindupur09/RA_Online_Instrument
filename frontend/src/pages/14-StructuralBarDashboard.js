@@ -78,7 +78,32 @@ const StructuralBarDashboard = () => {
         consent: consent === "yes"? true : false, 
         page_number: 14, // Page number of where we are navigating, helps with debugging
         chart_number: chart_number,
-        responses: {}, 
+        responses: {
+            SBD_question1:'',
+            SBD_question2:'',
+            SBD_question3:'',
+            SBD_question4:'',
+            SBD_question5:'',
+            SBD_question6:'',
+            SBD_question7:'',
+            SBD_question8:'',
+            SBD_question9:'',
+            SBD_question10:'',
+            SBD_question11:'',
+            SBD_question12:'',
+            SBD_question13:'',
+            SBD_question14:'',
+            SBD_question15:'',
+            SBD_question16:'',
+            SBD_question17:'',
+            SBD_question18:'',
+            SBD_question19:'',
+            SBD_question20:'',
+            SBD_question21:'',
+            SBD_question22:'',
+            SBD_question23:'',
+            SBD_question24:'',
+        }, 
         graph_question_durations: [],
         per_graph_durations: [],
         time_spent: 0,
@@ -228,8 +253,18 @@ const StructuralBarDashboard = () => {
         setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
         setGraphDurations(prevDurations => [...prevDurations, [...currentGraphDurations]]); // Ensure deep copy
     
-        console.log(`Time spent on question ${questionIndex + 1}: ${questionDuration} seconds`);
-        console.log(`Time spent on each graph for question ${questionIndex + 1}:`, currentGraphDurations);
+        // console.log(`Time spent on question ${questionIndex + 1}: ${questionDuration} seconds`);
+        // console.log(`Time spent on each graph for question ${questionIndex + 1}:`, currentGraphDurations);
+
+        // Update the specific question's response in the responses state
+        const questionKey = `SBD_question${questionIndex + 1}`;
+        setResponses(prevResponses => ({
+            ...prevResponses,
+            responses: {
+                ...prevResponses.responses,
+                [questionKey]: selectedOption, // Store the selected option
+            },
+        }));
 
         let nextTestUrl = "";
     

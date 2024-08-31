@@ -136,16 +136,16 @@ const PaperFoldingPart2Questions = () => {
         page_number: 7,
         chart_number: 0,
         responses: {
-            question_1: "",
-            question_2: "",
-            question_3: "",
-            question_4: "",
-            question_5: "",
-            question_6: "",
-            question_7: "",
-            question_8: "",
-            question_9: "",
-            question_10: ""
+            PFT2_question_1: "",
+            PFT2_question_2: "",
+            PFT2_question_3: "",
+            PFT2_question_4: "",
+            PFT2_question_5: "",
+            PFT2_question_6: "",
+            PFT2_question_7: "",
+            PFT2_question_8: "",
+            PFT2_question_9: "",
+            PFT2_question_10: ""
         },
         graph_question_durations: [],
         per_graph_durations: [],
@@ -170,7 +170,7 @@ const PaperFoldingPart2Questions = () => {
             ...prevResponses,
             responses: {
                 ...prevResponses.responses,
-                [`question_${questionNumber}`]: value
+                [`PFT2_question_${questionNumber}`]: value
             }
         }));
     };

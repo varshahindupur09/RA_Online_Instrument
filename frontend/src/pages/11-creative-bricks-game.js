@@ -61,7 +61,9 @@ const CreativeBricksGame = () => {
         consent: consent === "yes" ? true : false,
         page_number: 11,
         chart_number: 0,
-        responses: {},
+        responses: {
+            CBG_question: '',
+        },
         graph_question_durations: [],
         per_graph_durations: [],
         time_spent: 0,
@@ -93,7 +95,7 @@ const CreativeBricksGame = () => {
             ...prevResponses,
             responses: {
                 ...prevResponses.responses,
-                question_1: value  // Store the text area input as question_1
+                CBG_question: value  // Store the text area input as question_1
             }
         }));
     };

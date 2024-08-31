@@ -1,5 +1,9 @@
+// SurveyResponse.js
 const SurveyResponse = require('../models/SurveyResponseModel.js');
 const dbStatus = require('../config/db.js');
+const XLSX = require('xlsx');
+const path = require('path');
+const fs = require('fs');
 
 console.log('Database connection flag: ', dbStatus.flag);
 
@@ -77,5 +81,38 @@ exports.deleteAllSurveyResponses = async (req, res) => {
         res.status(200).json({ message: 'All documents deleted successfully' });
     } catch (err) {
         res.status(500).json({ message: 'Error deleting documents: ' + err.message });
+    }
+};
+
+exports.exportSurveyResponsesToExcel = async (req, res) => {
+    try {
+        const { filename } = req.query;
+
+        // Set a default filename if none is provided
+        const outputFilename = filename ? `${filename}.xlsx` : 'SurveyResponsesInExcel.xlsx';
+
+        const data = await SurveyResponse.find({});
+        if (!data.length) {
+            return res.status(404).json({ message: 'No data found in the collection.' });
+        }
+
+        // Convert data to JSON format suitable for XLSX
+        const jsonData = data.map(doc => doc.toObject());
+
+        // Create a new workbook and add data to the first sheet
+        const worksheet = XLSX.utils.json_to_sheet(jsonData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'SurveyResponses');
+
+        // Generate Excel file buffer
+        const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+        // Send the Excel file as a response
+        res.setHeader('Content-Disposition', 'attachment; filename=${outputFilename}');
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.send(excelBuffer);
+    } catch (err) {
+        console.error('Error exporting data to Excel:', err);
+        res.status(500).json({ message: 'Error exporting data to Excel' });
     }
 };

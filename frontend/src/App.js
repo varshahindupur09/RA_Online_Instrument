@@ -50,8 +50,8 @@ function App() {
                         <Route path="/ask-consent-again" element={<AskAgainConsentPage />} />
                         <Route path="/exit-survey-page" element={<ExitSurveyPage />} />
                         <Route exact path="/financial-literacy" element={<FinancialLiteracy />} />
-                         <Route path="/proceed-to-part1-paper-folding-test" element={<ProceedToPart1PaperFoldingTest />} />
-                        <Route path="/sample-paper-folding-test" element={<PaperFoldingSampleQuestion />} />
+                        <Route path="/proceed-to-part1-paper-folding-test" element={<ProceedToPart1PaperFoldingTest />} />
+                        <Route path="paper-folding-test-sample-question" element={<PaperFoldingSampleQuestion />} />
                         <Route path="/paper-folding-test-part-1" element={<PaperFoldingPart1Questions />} />
                         {/* <Route path="/proceed-to-part2-paper-folding-test" element={<ProceedToPart2PaperFoldingTest />} /> */}
                         <Route path="/paper-folding-test-part-2" element={<PaperFoldingPart2Questions />} />

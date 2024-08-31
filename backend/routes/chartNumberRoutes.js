@@ -9,6 +9,7 @@ const { createChartNumber, getChartNumber, updateChartNumber, deleteChartNumber 
  * /api/chart-number:
  *   post:
  *     summary: Create a new chart number
+ *     tags: [ChartNumber]
  *     requestBody:
  *       required: true
  *       content:
@@ -38,6 +39,7 @@ const { createChartNumber, getChartNumber, updateChartNumber, deleteChartNumber 
  * /api/chart-number:
  *   get:
  *     summary: Retrieve the last assigned chart number
+ *     tags: [ChartNumber]
  *     responses:
  *       200:
  *         description: A single chart number
@@ -57,6 +59,7 @@ const { createChartNumber, getChartNumber, updateChartNumber, deleteChartNumber 
  * /api/chart-number:
  *   put:
  *     summary: Update the last assigned chart number
+ *     tags: [ChartNumber]
  *     requestBody:
  *       required: true
  *       content:
@@ -86,6 +89,7 @@ const { createChartNumber, getChartNumber, updateChartNumber, deleteChartNumber 
  * /api/chart-number:
  *   delete:
  *     summary: Delete the specified chart number
+ *     tags: [ChartNumber]
  *     responses:
  *       200:
  *         description: Chart number deleted successfully

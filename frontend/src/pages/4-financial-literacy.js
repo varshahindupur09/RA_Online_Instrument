@@ -58,9 +58,9 @@ const FinancialLiteracy = () => {
         page_number: 4, 
         chart_number: 0,
         responses: {
-            question_1: "",
-            question_2: "",
-            question_3: ""
+            FL_question_1: "",
+            FL_question_2: "",
+            FL_question_3: ""
         }, // Dynamic responses based on user input
         graph_question_durations: [],
         per_graph_durations: [],
@@ -86,7 +86,7 @@ const FinancialLiteracy = () => {
             ...prevResponses,
             responses: {
                 ...prevResponses.responses,
-                [`question_${questionNumber}`]: value
+                [`FL_question_${questionNumber}`]: value
             }
         }));
     };
@@ -97,7 +97,7 @@ const FinancialLiteracy = () => {
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
-        const nextTestUrl = "/sample-paper-folding-test"; // Use let instead of const as const is unmutable
+        const nextTestUrl = "/paper-folding-test-sample-question"; // Use let instead of const as const is unmutable
 
         console.log("handleNext fl prolificid from consent: ", prolificId)
 
@@ -141,7 +141,7 @@ const FinancialLiteracy = () => {
     };
 
     // Check if all questions are answered
-    const isNextDisabled = !responses.responses.question_1 || !responses.responses.question_2 || !responses.responses.question_3;
+    const isNextDisabled = !responses.responses.FL_question_1 || !responses.responses.FL_question_2 || !responses.responses.FL_question_3;
 
     return (
         <div>

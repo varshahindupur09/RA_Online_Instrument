@@ -85,8 +85,8 @@ const RotationTestQuestion = () => {
         page_number: 8,
         chart_number: 0,
         responses: {
-            question1: '',
-            question2: '', // Creates an array of 8 empty string
+            SRT_question1: '',
+            SRT_question2: '', // Creates an array of 8 empty string
         },
         graph_question_durations: [],
         per_graph_durations: [],
@@ -125,8 +125,8 @@ const RotationTestQuestion = () => {
     const handleAnswerChange = (questionNumber, index, value) => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
-            const questionKey = `question${questionNumber}`;
-            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,,";  
+            const questionKey = `SRT_question${questionNumber}`;
+            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,";  
     
             let responseArray = currentResponses.split(',');
 
@@ -220,7 +220,7 @@ const RotationTestQuestion = () => {
                         <td>Same</td>
                         {answerImages.map((_, index) => (
                             <td key={`same-${index}`}>
-                                <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="same"
+                                <input type="radio" name={`SRT_question${questionNumber}answer${index + 1}`} value="same"
                                     onChange={() => handleAnswerChange(`${questionNumber}`, index, 'same')} />
                             </td>
                         ))}
@@ -229,7 +229,7 @@ const RotationTestQuestion = () => {
                         <td>Different</td>
                         {answerImages.map((_, index) => (
                             <td key={`different-${index}`}>
-                                <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="different" 
+                                <input type="radio" name={`SRT_question${questionNumber}answer${index + 1}`} value="different" 
                                     onChange={() => handleAnswerChange(`${questionNumber}`, index, 'different')} />
                             </td>
                         ))}

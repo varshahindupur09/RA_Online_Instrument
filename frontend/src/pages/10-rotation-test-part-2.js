@@ -154,30 +154,6 @@ const RotationTestPart2 = () => {
         };
     }, []);
 
-
-    // // State to store responses
-    // const [responses, setResponses] = useState({
-    //     // prolific_id: prolificId,
-    //     prolific_id: '',
-    //     test_name: 'Rotation-Test-2',
-    //     consent: consent === "yes" ? true : false,
-    //     page_number: 10,
-    //     chart_number: 0,
-    //     responses: {
-    //         question1: Array(8).fill(''), 
-    //         question2: Array(8).fill(''), // Creates an array of 8 empty strings
-    //         question3: Array(8).fill(''),
-    //         question4: Array(8).fill(''),
-    //         question5: Array(8).fill(''),
-    //         question6: Array(8).fill(''),
-    //         question7: Array(8).fill(''),
-    //         question8: Array(8).fill(''),
-    //         question9: Array(8).fill(''),
-    //         question10: Array(8).fill('')
-    //     },
-    //     time_spent: 0
-    // });
-
     const currentTime = Date.now();
     const currentTestUrl = "/rotation-test-part-2";
     const previousTestUrl = "/rotation-test-part-1";
@@ -192,16 +168,16 @@ const RotationTestPart2 = () => {
         page_number: 9,
         chart_number: 0,
         responses: {
-            question1: '',
-            question2: '', 
-            question3: '',
-            question4: '', 
-            question5: '',
-            question6: '', 
-            question7: '',
-            question8: '', 
-            question9: '',
-            question10: '', 
+            RT2_question1: '',
+            RT2_question2: '', 
+            RT2_question3: '',
+            RT2_question4: '', 
+            RT2_question5: '',
+            RT2_question6: '', 
+            RT2_question7: '',
+            RT2_question8: '', 
+            RT2_question9: '',
+            RT2_question10: '', 
         },
         graph_question_durations: [],
         per_graph_durations: [],
@@ -289,7 +265,7 @@ const RotationTestPart2 = () => {
     const handleAnswerChange = (questionNumber, index, value) => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
-            const questionKey = `question${questionNumber}`;
+            const questionKey = `RT2_question${questionNumber}`;
             const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,,";  
     
             // // Create a copy of the existing array and update the specific index
@@ -367,51 +343,51 @@ const RotationTestPart2 = () => {
     };
 
 
-    // Function to render each question
-    const renderQuestion = (questionImage, answerImages, questionNumber) => (
-        <>
-            <div className="question-image-container">
-                <br></br>
-                <div className='question-image'>
-                    <img src={questionImage} alt={`Question ${questionNumber}`} className="question-main-image" />
-                </div>
-                <br></br>
+   // Function to render each question
+   const renderQuestion = (questionImage, answerImages, questionNumber) => (
+    <>
+        <div className="question-image-container">
+            <br></br>
+            <div className='question-image'>
+                <img src={questionImage} alt={`Question ${questionNumber}`} className="question-main-image" /> 
             </div>
-            <table className="answers-table">
-                <br></br>
-                <thead>
-                    <tr>
-                        <th></th> {/* Empty header for the labels 'Same' and 'Different' */}
-                        {answerImages.map((imgSrc, index) => (
-                            <th key={`header-${index}`}>
-                                <img src={imgSrc} alt={`Answer ${index + 1}`} />
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Same</td>
-                        {answerImages.map((_, index) => (
-                            <td key={`same-${index}`}>
-                                <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="same"
-                                    onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'same')} />
-                            </td>
-                        ))}
-                    </tr>
-                    <tr>
-                        <td>Different</td>
-                        {answerImages.map((_, index) => (
-                            <td key={`different-${index}`}>
-                                <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="different" 
-                                    onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'different')} />
-                            </td>
-                        ))}
-                    </tr>
-                </tbody>
-            </table>
-        </>
-    );
+            <br></br>
+        </div>
+        <table className="answers-table">
+            <br></br>
+            <thead>
+                <tr>
+                    <th></th> {/* Empty header for the labels 'Same' and 'Different' */}
+                    {answerImages.map((imgSrc, index) => (
+                        <th key={`header-${index}`}>
+                            <img src={imgSrc} alt={`Answer ${index + 1}`} />
+                        </th>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Same</td>
+                    {answerImages.map((_, index) => (
+                        <td key={`same-${index}`}>
+                            <input type="radio" name={`RT2_question${questionNumber}answer${index + 1}`} value="same"
+                                onChange={() => handleAnswerChange(`${questionNumber}`, index, 'same')} />
+                        </td>
+                    ))}
+                </tr>
+                <tr>
+                    <td>Different</td>
+                    {answerImages.map((_, index) => (
+                        <td key={`different-${index}`}>
+                            <input type="radio" name={`RT2_question${questionNumber}answer${index + 1}`} value="different" 
+                                onChange={() => handleAnswerChange(`${questionNumber}`, index, 'different')} />
+                        </td>
+                    ))}
+                </tr>
+            </tbody>
+        </table>
+    </>
+);
 
     return (
         <div className="container">

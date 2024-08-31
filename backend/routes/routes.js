@@ -54,6 +54,32 @@ const surveyController = require('../controllers/SurveyResponse');
  *         description: Error fetching documents
  */
 
+
+/**
+ * @swagger
+ * /api/exportSurveyResponsesToExcel:
+ *   get:
+ *     summary: Export all survey responses to an Excel file
+ *     tags: [SurveyResponse]
+ *     parameters:
+ *         - in: query
+ *         name: filename
+ *         schema:
+ *           type: string
+ *           required: false
+ *           description: The filename for the exported Excel file (without extension)
+ *     responses:
+ *       200:
+ *         description: An Excel file containing all survey responses
+ *         content:
+ *           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       500:
+ *         description: Error exporting data to Excel
+ */
+
 /**
  * @swagger
  * /api/surveyResponse/{id}:
@@ -159,6 +185,7 @@ const surveyController = require('../controllers/SurveyResponse');
 router.post('/surveyResponse', surveyController.createSurveyResponse);
 router.get('/surveyResponse', surveyController.getAllSurveyResponses);
 router.get('/surveyResponse/:id', surveyController.getSurveyResponseById);
+router.get('/exportSurveyResponsesToExcel', surveyController.exportSurveyResponsesToExcel);
 router.put('/surveyResponse/:id', surveyController.updateSurveyResponse);
 router.delete('/surveyResponse/:id', surveyController.deleteSurveyResponse);
 router.get('/dbHealthCheck', surveyController.dbHealthCheckResponse);

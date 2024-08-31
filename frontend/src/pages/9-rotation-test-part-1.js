@@ -191,16 +191,16 @@ const RotationTestPart1 = () => {
         page_number: 9,
         chart_number: 0,
         responses: {
-            question1: '',
-            question2: '', 
-            question3: '',
-            question4: '', 
-            question5: '',
-            question6: '', 
-            question7: '',
-            question8: '', 
-            question9: '',
-            question10: '',
+            RT1_question1: '',
+            RT1_question2: '', 
+            RT1_question3: '',
+            RT1_question4: '', 
+            RT1_question5: '',
+            RT1_question6: '', 
+            RT1_question7: '',
+            RT1_question8: '', 
+            RT1_question9: '',
+            RT1_question10: '',
         },
         graph_question_durations: [],
         per_graph_durations: [],
@@ -284,35 +284,13 @@ const RotationTestPart1 = () => {
         Part1Question10Answer1Option5, Part1Question10Answer1Option6, Part1Question10Answer1Option7, Part1Question10Answer1Option8
     ];
 
-    // const handleAnswerChange = (questionNumber, index, value) => {
-    //     setResponses(prevResponses => {
-    //         // Ensure the array exists, or create a new one with empty strings
-    //         const existingAnswers = prevResponses.responses[`question${questionNumber}`] || Array(8).fill('');
-    
-    //         // Create a copy of the existing array and update the specific index
-    //         const updatedAnswers = [...existingAnswers];
-    //         updatedAnswers[index] = value;
-    
-    //         return {
-    //             ...prevResponses,
-    //             responses: {
-    //                 ...prevResponses.responses,
-    //                 [`question${questionNumber}`]: updatedAnswers
-    //             }
-    //         };
-    //     });
-    // };
 
     const handleAnswerChange = (questionNumber, index, value) => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
-            const questionKey = `question${questionNumber}`;
-            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,,";  
-    
-            // // Create a copy of the existing array and update the specific index
-            // const updatedAnswers = [...existingAnswers];
-            // updatedAnswers[index] = value;
-            // Split the current response string into an array
+            const questionKey = `RT1_question${questionNumber}`;
+            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,";  
+
             let responseArray = currentResponses.split(',');
 
             // Update the specific index with the new value
@@ -383,45 +361,6 @@ const RotationTestPart1 = () => {
         }
     };
 
-    // Function to handle form submission with validation
-    // const handleNext = async (event) => {
-    //     event.preventDefault();
-    //     setLoading(true);
-
-    //     const endTime = Date.now();
-    //     const timeSpent = (endTime - startTimeRef.current) / 1000;
-
-    //     // Convert each responses array to a comma-separated string
-    //     const formattedResponses = Object.keys(responses.responses).reduce((acc, key) => {
-    //         acc[key] = responses.responses[key].join(',');
-    //         return acc;
-    //     }, {});
-
-    //     const updatedResponses = {
-    //         ...responses,
-    //         responses: formattedResponses,
-    //         time_spent: timeSpent
-    //     };
-
-    //     try {
-    //         const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify(updatedResponses),
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         navigate("/rotation-test-part-2");
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //         setError(error);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
 
     // Function to render each question
     const renderQuestion = (questionImage, answerImages, questionNumber) => (
@@ -429,7 +368,7 @@ const RotationTestPart1 = () => {
             <div className="question-image-container">
                 <br></br>
                 <div className='question-image'>
-                    <img src={questionImage} alt={`Question ${questionNumber}`} className="question-main-image" />
+                    <img src={questionImage} alt={`Question ${questionNumber}`} className="question-main-image" /> 
                 </div>
                 <br></br>
             </div>
@@ -450,8 +389,8 @@ const RotationTestPart1 = () => {
                         <td>Same</td>
                         {answerImages.map((_, index) => (
                             <td key={`same-${index}`}>
-                                <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="same"
-                                    onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'same')} />
+                                <input type="radio" name={`RT1_question${questionNumber}answer${index + 1}`} value="same"
+                                    onChange={() => handleAnswerChange(`${questionNumber}`, index, 'same')} />
                             </td>
                         ))}
                     </tr>
@@ -459,8 +398,8 @@ const RotationTestPart1 = () => {
                         <td>Different</td>
                         {answerImages.map((_, index) => (
                             <td key={`different-${index}`}>
-                                <input type="radio" name={`question${questionNumber}answer${index + 1}`} value="different" 
-                                    onChange={() => handleAnswerChange(`question${questionNumber}`, index, 'different')} />
+                                <input type="radio" name={`RT1_question${questionNumber}answer${index + 1}`} value="different" 
+                                    onChange={() => handleAnswerChange(`${questionNumber}`, index, 'different')} />
                             </td>
                         ))}
                     </tr>

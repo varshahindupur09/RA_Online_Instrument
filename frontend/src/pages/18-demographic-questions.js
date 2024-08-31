@@ -16,6 +16,8 @@ const Demographics = () => {
     const [error, setError] = useState(null);
     const startTimeRef = useRef(Date.now());
     const { consent, chart_number, prolificId} = useConsent(); 
+    const [submitted, setSubmitted] = useState(false);
+    console.log("submitted ", submitted)
 
     // Scroll to the top of the page
     useEffect(() => {
@@ -96,9 +98,38 @@ const Demographics = () => {
         }));
     };
 
+    const handleAgeChange = (e) => {
+        const value = e.target.value;
+        const numericValue = value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+    
+        if (numericValue === '' || (numericValue >= 18 && numericValue <= 90)) {
+            handleChange("age", numericValue);
+            setError(null); // Clear the error if valid
+        } else {
+            handleChange("age", numericValue); // Update the state even if it's not in the range, to allow further typing
+            setError(new Error("Age must be between 18 and 90."));
+        }
+    };
+    
+    const handleAgeBlur = () => {
+        const age = parseInt(demographicData.responses["age"], 10);
+        if (isNaN(age) || age < 18 || age > 90) {
+            setError(new Error("Age must be between 18 and 90."));
+        } else {
+            setError(null); // Clear the error if valid
+        }
+    };
+    
+
     // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        const age = parseInt(demographicData.responses["age"], 10);
+        if (isNaN(age) || age < 18 || age > 90) {
+            setError(new Error("Age must be between 18 and 90."));
+            return; // Stop form submission if age is invalid
+        }
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; 
@@ -129,6 +160,33 @@ const Demographics = () => {
 
             // no navigation as this is the end
 
+            // Reset the demographic data after submission
+            setDemographicData({
+                prolific_id: '',
+                test_name: test_name_given,
+                consent: consent === "yes" ? true : false, 
+                page_number: 18,
+                chart_number: chart_number,
+                responses: {
+                    "age": '',
+                    "education-level": '',
+                    "work-experience": '',
+                    "management-experience": '',
+                    "employment-sector": ''
+                },
+                graph_question_durations: [],
+                per_graph_durations: [],
+                time_spent: 0, 
+                started_at: currentTime, // Time when the survey began
+                ended_at: currentTime, // Time when the survey ended
+                time_user_entered_current_page: currentTime, // Time when the user entered the current page
+                last_visited_test_name: previousTestUrl, 
+                current_visit_test_name: currentTestUrl,
+                next_visit_test_name: currentTestUrl, 
+            });
+
+            setSubmitted(true); // Disable the submit button after submission
+
         } catch (error) {
             console.error('Error:', error);
             setError(error);
@@ -149,13 +207,18 @@ const Demographics = () => {
                     <label>What's your age?</label>
                     <br></br>
                     <br></br>
-                        <input 
-                            type="number" 
-                            value={demographicData.responses["age"]}
-                            onChange={e => handleChange("age", e.target.value)}
-                            required
-                            className="text-input"
-                        />
+                    <input 
+                        type="text"
+                        onChange={handleAgeChange}
+                        onBlur={handleAgeBlur}
+                        value={demographicData.responses["age"]}
+                        required
+                        className={`text-input ${error ? 'input-error' : ''}`}
+                        disabled={submitted}
+                        maxLength={2}
+                        title="Age must be between 18 and 90"
+                    />
+                    {error && <p className="error-message">{error.message}</p>}
                     <br></br>
                     <br></br>
 
@@ -170,6 +233,7 @@ const Demographics = () => {
                                 value={level}
                                 checked={demographicData.responses["education-level"] === level} 
                                 onChange={e => handleChange("education-level", e.target.value)}
+                                disabled={submitted} // Disable input after submission
                             />
                             <label htmlFor={`education-${level.replace(/\s+/g, '-')}`}>{level}</label> {/* Correct label */}
                             </div>
@@ -190,6 +254,7 @@ const Demographics = () => {
                                     value={years} 
                                     checked={demographicData.responses["work-experience"] === years} 
                                     onChange={e => handleChange("work-experience", e.target.value)}
+                                    disabled={submitted} // Disable input after submission
                                 />
                                 <label htmlFor={`work-experience-${years.replace(/\s+/g, '-')}`}>{years}</label>
                         </div>
@@ -210,6 +275,7 @@ const Demographics = () => {
                                 value={years} 
                                 checked={demographicData.responses["management-experience"] === years} 
                                 onChange={e => handleChange("management-experience", e.target.value)}
+                                disabled={submitted} // Disable input after submission
                             />
                              <label htmlFor={`management-experience-${years.replace(/\s+/g, '-')}`}>{years}</label>
                         </div>
@@ -243,16 +309,24 @@ const Demographics = () => {
                             value={demographicData.prolific_id}
                             onChange={e => handleProlificIdChange(e.target.value)}
                             required
-                            pattern="[A-Za-z0-9]+" // Alphanumeric patter
+                            pattern="[A-Za-z0-9]{24}" // Alphanumeric pattern, exactly 24 characters
                             title="Prolific ID must be alphanumeric." // Tooltip for guidance
                             className="text-input-larger"
+                            maxLength={24}  // Restrict the input length to 24 characters
+                            disabled={submitted} // Disable input after submission
                         />
                     <br></br>
                     <br></br>
                     
                     <p>Your completion code is ******** .</p>
 
-                    <button className="button" type="submit">Submit</button>
+                    <button 
+                        className={`button ${submitted ? 'button-grey' : 'button-green'}`} 
+                        type="submit"
+                        disabled={submitted}
+                        >
+                            Submit
+                    </button>
                     {error && <p className="error-message">{error.message}</p>}
                 </div>
             </form>
