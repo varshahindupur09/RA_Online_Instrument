@@ -25,7 +25,7 @@ jobs:
       - name: Package application
         run: |
           cd backend
-          zip -r nodejs.zip
+          zip -r ../nodejs.zip . -x "node_modules/*" -x ".git/*"
       - name: Deploy to Elastic Beanstalk
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
