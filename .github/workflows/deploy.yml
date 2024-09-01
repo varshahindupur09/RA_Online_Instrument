@@ -1,0 +1,39 @@
+name: Deploy to Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main  # or the branch you want to deploy from
+
+jobs:
+  deploy:
+    name: Deploy to AWS Elastic Beanstalk
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '23'  # or the version your application requires
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Package application
+        run: |
+          cd backend
+          zip -r ../nodejs.zip . -x "node_modules/*" -x ".git/*"
+
+      - name: Deploy to Elastic Beanstalk
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          eb init -p node.js my-app --region $AWS_REGION
+          eb use Survey-web-app-env  # Replace with your Elastic Beanstalk environment name
+          eb deploy
+
