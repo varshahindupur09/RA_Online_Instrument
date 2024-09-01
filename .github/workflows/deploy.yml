@@ -33,7 +33,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          eb init -p node.js my-app --region $AWS_REGION
+          eb init -p node.js survey-web-app --region $AWS_REGION
           eb use Survey-web-app-env  # Replace with your Elastic Beanstalk environment name
           eb deploy
 
