@@ -95,7 +95,6 @@ docker kill ad573933fed84fbd57172d36f9bc9349bbef3dd9b76cf5c36d80b49cbf41c520
       NODE_ENV: production
       MONGO_URI: YOUR_MONGO_URI_HERE
 3. cd backend
-zip -r ../backend-deployment.zip . -x "node_modules/*" -x ".git/*"
 zip -r ../nodejs.zip . -x "node_modules/*" -x ".git/*"
 
 # adding cors
