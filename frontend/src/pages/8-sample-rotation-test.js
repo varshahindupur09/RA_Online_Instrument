@@ -173,7 +173,7 @@ const RotationTestQuestion = () => {
             });
 
             // Simulate API call to save survey responses
-            console.log('Saving responses:', updatedResponses);
+            // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
 
@@ -181,7 +181,7 @@ const RotationTestQuestion = () => {
             if (!response.ok) {
                 throw new Error(responseText || 'Network response was not ok');
             }
-            console.log('Response text:', responseText);
+            // console.log('Response text:', responseText);
 
             navigate(nextTestUrl)
 

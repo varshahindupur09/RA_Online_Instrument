@@ -100,9 +100,45 @@ const CreativeBricksGame = () => {
         }));
     };
 
-    const handleTimerCompletion = () => {
+    const handleTimerCompletion = async () => {
+        setLoading(true);
+    
+        const endTime = Date.now();
+        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/proceed-to-dashboard"; 
-        navigate(nextTestUrl);
+    
+        // Update responses with the calculated time spent
+        const updatedResponses = {
+            ...responses,
+            prolific_id: prolificId,
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
+        };
+    
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedResponses),
+            });
+    
+            setResponses(updatedResponses);
+    
+            const responseText = await response.text();
+            if (!response.ok) {
+                throw new Error(responseText || 'Network response was not ok');
+            }
+    
+            navigate(nextTestUrl);
+    
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleNext = async (event) => {
@@ -131,7 +167,7 @@ const CreativeBricksGame = () => {
             });
 
             // Simulate API call to save survey responses
-            console.log('Saving responses:', updatedResponses);
+            // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
 
@@ -139,7 +175,7 @@ const CreativeBricksGame = () => {
             if (!response.ok) {
                 throw new Error(responseText || 'Network response was not ok');
             }
-            console.log('Response text:', responseText);
+            // console.log('Response text:', responseText);
 
             navigate(nextTestUrl)
 
@@ -162,7 +198,7 @@ const CreativeBricksGame = () => {
                 </div>
                 <br />
                 <br />
-                {/* {timerVisible && <Timer initialTime={120} onCompletion={handleTimerCompletion} />} */}
+                {timerVisible && <Timer initialTime={120} onCompletion={handleTimerCompletion} />}
                 <br />
                 <br />
                 <p>Below, you will see a picture of a common household brick.</p>
@@ -188,7 +224,7 @@ const CreativeBricksGame = () => {
             <br />
 
             {/* Next button */}
-            <button className="button" onClick={handleNext} > Next </button> 
+            {/* <button className="button" onClick={handleNext} > Next </button>  */}
             {/* disabled={!allAnswered} */}
             {loading && <p>Loading...</p>} 
             {error && <p>Error: {error.message}</p>}

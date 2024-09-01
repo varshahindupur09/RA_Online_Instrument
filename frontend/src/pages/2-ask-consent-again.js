@@ -114,7 +114,7 @@ const ConsentPage = () => {
        
         try {
             // Simulate API call to save survey responses
-            console.log('Saving responses:', updatedResponses);
+            // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
 

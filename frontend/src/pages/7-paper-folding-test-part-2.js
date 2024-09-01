@@ -205,7 +205,7 @@ const PaperFoldingPart2Questions = () => {
             });
 
             // Simulate API call to save survey responses
-            console.log('Saving responses:', updatedResponses);
+            // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
 
@@ -213,7 +213,7 @@ const PaperFoldingPart2Questions = () => {
             if (!response.ok) {
                 throw new Error(responseText || 'Network response was not ok');
             }
-            console.log('Response text:', responseText);
+            // console.log('Response text:', responseText);
 
             navigate(nextTestUrl)
 
@@ -243,7 +243,7 @@ const PaperFoldingPart2Questions = () => {
             <h2>Paper Folding Test: Part 2: 3 minutes</h2>
             <br></br>
             <br/>
-            {/* {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />} */}
+            {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
             <br></br>
             <br></br>
             <br></br>

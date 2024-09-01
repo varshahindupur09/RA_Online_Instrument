@@ -322,7 +322,7 @@ const RotationTestPart2 = () => {
             });
 
             // Simulate API call to save survey responses
-            console.log('Saving responses:', updatedResponses);
+            // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
 
@@ -330,7 +330,7 @@ const RotationTestPart2 = () => {
             if (!response.ok) {
                 throw new Error(responseText || 'Network response was not ok');
             }
-            console.log('Response text:', responseText);
+            // console.log('Response text:', responseText);
 
             navigate(nextTestUrl)
 
@@ -401,7 +401,7 @@ const RotationTestPart2 = () => {
             <br />
             <h2>Rotation Test Part 2: 3 minutes</h2>
             <br />
-            {/* {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />} */}
+            {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
             <br />
             <br />
             <div name="instructions">

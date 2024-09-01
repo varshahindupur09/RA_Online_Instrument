@@ -98,7 +98,7 @@ const ExitSurveyPage = () => {
         
             try {
                  // Simulate API call to save survey responses
-            console.log('Saving responses:', updatedResponses);
+            // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
 
@@ -110,14 +110,14 @@ const ExitSurveyPage = () => {
                 body: JSON.stringify(updatedResponses), // Send updated responses
             });
     
-            console.log('Response:', response);
+            // console.log('Response:', response);
     
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
     
             const result = await response.json();
-            console.log('Success:', result);
+            // console.log('Success:', result);
     
             navigate(nextTestUrl);
 

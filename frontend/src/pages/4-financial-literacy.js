@@ -99,7 +99,7 @@ const FinancialLiteracy = () => {
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/paper-folding-test-sample-question"; // Use let instead of const as const is unmutable
 
-        console.log("handleNext fl prolificid from consent: ", prolificId)
+        // console.log("handleNext fl prolificid from consent: ", prolificId)
 
         // Update responses with the calculated time spent
         const updatedResponses = {
@@ -120,7 +120,7 @@ const FinancialLiteracy = () => {
             });
 
             // Simulate API call to save survey responses
-            console.log('Saving responses:', updatedResponses);
+            // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
 
@@ -128,7 +128,7 @@ const FinancialLiteracy = () => {
             if (!response.ok) {
                 throw new Error(responseText || 'Network response was not ok');
             }
-            console.log('Response text:', responseText);
+            // console.log('Response text:', responseText);
 
             navigate(nextTestUrl)
 

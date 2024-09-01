@@ -310,7 +310,7 @@ const TimeSeriesColDashboard = () => {
     
                 const result = await response.json();
 
-                console.log('Success:', result);
+                // console.log('Success:', result);
 
                 navigate(nextTestUrl);  // Navigate to the next page
             } catch (error) {
@@ -326,8 +326,9 @@ const TimeSeriesColDashboard = () => {
 
     useEffect(() => {
         if (questionIndex >= questionsTimeSeriesCol.length) {
-            console.log("Durations for each question:", questionDurations);
-            console.log("Durations for each graph in each question:", graphDurations);
+            // console.log("Durations for each question:", questionDurations);
+            // console.log("Durations for each graph in each question:", graphDurations);
+            console.log("No logs")
         }
     }, [questionIndex, questionDurations, graphDurations]);
 
@@ -343,7 +344,7 @@ const TimeSeriesColDashboard = () => {
                 </div>
                 <br />
                 <br />
-                {/* {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />} */}
+                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />}
                 <br />
                 <br />
                 <br />

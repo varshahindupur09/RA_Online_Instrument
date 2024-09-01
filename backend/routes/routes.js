@@ -62,12 +62,12 @@ const surveyController = require('../controllers/SurveyResponse');
  *     summary: Export all survey responses to an Excel file
  *     tags: [SurveyResponse]
  *     parameters:
- *         - in: query
+ *       - in: query
  *         name: filename
  *         schema:
  *           type: string
- *           required: false
- *           description: The filename for the exported Excel file (without extension)
+ *         required: false
+ *         description: The filename for the exported Excel file (without extension)
  *     responses:
  *       200:
  *         description: An Excel file containing all survey responses
@@ -79,6 +79,7 @@ const surveyController = require('../controllers/SurveyResponse');
  *       500:
  *         description: Error exporting data to Excel
  */
+
 
 /**
  * @swagger

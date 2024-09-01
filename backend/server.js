@@ -6,6 +6,7 @@ const routes = require('./routes/routes');
 const chartNumberRoutes = require('./routes/chartNumberRoutes');
 const cors = require('cors');
 require('dotenv').config(); 
+const checkProlificId = require('./middleware/checkProlificId'); 
 
 // const redisRoutes = require('./routes/redisRoute');
 
@@ -68,6 +69,9 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Use the middleware globally
+app.use('/api',checkProlificId);
 
 // Use the routes defined in routes.js
 app.use('/api', routes);

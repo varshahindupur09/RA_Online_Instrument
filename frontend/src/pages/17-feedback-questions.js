@@ -119,7 +119,7 @@ const FeedbackQuestions = () => {
             if (!response.ok) {
                 throw new Error(responseText || 'Network response was not ok');
             }
-            console.log('Response text:', responseText);
+            // console.log('Response text:', responseText);
 
             navigate(nextTestUrl); // Redirect to the next page after successful submission
 

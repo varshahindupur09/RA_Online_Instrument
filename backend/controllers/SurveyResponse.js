@@ -2,8 +2,6 @@
 const SurveyResponse = require('../models/SurveyResponseModel.js');
 const dbStatus = require('../config/db.js');
 const XLSX = require('xlsx');
-const path = require('path');
-const fs = require('fs');
 
 console.log('Database connection flag: ', dbStatus.flag);
 

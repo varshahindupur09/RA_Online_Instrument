@@ -17,7 +17,7 @@ const Demographics = () => {
     const startTimeRef = useRef(Date.now());
     const { consent, chart_number, prolificId} = useConsent(); 
     const [submitted, setSubmitted] = useState(false);
-    console.log("submitted ", submitted)
+    // console.log("submitted the test: ", submitted)
 
     // Scroll to the top of the page
     useEffect(() => {
@@ -143,7 +143,7 @@ const Demographics = () => {
             next_visit_test_name: nextTestUrl, 
         };
 
-        console.log("updated responses" , updatedData)
+        // console.log("updated responses" , updatedData)
 
         try {
             const postResponse = await fetch(`${API_BASE_URL}/api/surveyresponse`, {
@@ -152,7 +152,7 @@ const Demographics = () => {
                 body: JSON.stringify(updatedData)
             });
 
-            console.log("response from POST" , postResponse)
+            // console.log("response from POST" , postResponse)
 
             if (!postResponse.ok) {
                 throw new Error('Failed to submit demographic data');
