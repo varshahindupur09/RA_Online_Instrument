@@ -52,7 +52,8 @@ else:
     print("\nConverted DataFrame:")
     # print(df)
 
+    filenameExcel = "SurveyResponsesInExcelPythonCode.xlsx"
     # Save the DataFrame to an Excel file
-    df.to_excel("instrument.xlsx", index=False)
+    df.to_excel(filenameExcel, index=False)
 
     print("Data has been successfully fetched from MongoDB Atlas and converted to an Excel file.")
