@@ -289,7 +289,7 @@ const TimeSeriesBarDashboard = () => {
                 prolific_id: prolificId,
                 question_durations: questionDurations,
                 graph_durations: graphDurations,
-                current_visit_test_name: nextTestUrl, // The next page URL
+                next_visit_test_name: nextTestUrl, // The next page URL
             };
     
             try {
