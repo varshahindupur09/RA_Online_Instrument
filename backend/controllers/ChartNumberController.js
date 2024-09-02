@@ -63,35 +63,6 @@ exports.deleteChartNumber = async (req, res) => {
     }
 };
 
-
-// // Update an existing chart number
-// exports.updateChartNumber = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const chartNumber = await ChartNumberResponse.findByIdAndUpdate(id, req.body, { new: true });
-//         if (!chartNumber) {
-//             return res.status(404).json({ message: 'Chart number not found' });
-//         }
-//         res.json({ message: 'Chart number updated successfully', data: chartNumber });
-//     } catch (err) {
-//         res.status(500).json({ message: 'Error updating chart number: ' + err.message });
-//     }
-// };
-
-// // Delete a chart number
-// exports.deleteChartNumber = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const chartNumber = await ChartNumberResponse.findByIdAndDelete(id);
-//         if (!chartNumber) {
-//             return res.status(404).json({ message: 'Chart number not found' });
-//         }
-//         res.json({ message: 'Chart number deleted successfully' });
-//     } catch (err) {
-//         res.status(500).json({ message: 'Error deleting chart number: ' + err.message });
-//     }
-// };
-
 // module.exports = router;
 module.exports = {
     createChartNumber: exports.createChartNumber,

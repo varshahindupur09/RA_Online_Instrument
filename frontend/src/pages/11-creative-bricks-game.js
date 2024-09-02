@@ -55,8 +55,8 @@ const CreativeBricksGame = () => {
 
     // State to store responses
     const [responses, setResponses] = useState({
-        // prolific_id: prolificId,
-        prolific_id: '',
+        prolific_id: prolificId,
+        // prolific_id: '',
         test_name: test_name_given,
         consent: consent === "yes" ? true : false,
         page_number: 11,
@@ -114,6 +114,8 @@ const CreativeBricksGame = () => {
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
+
+        let shouldNavigate = true;
     
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
@@ -125,13 +127,27 @@ const CreativeBricksGame = () => {
             });
     
             setResponses(updatedResponses);
-    
-            const responseText = await response.text();
+
             if (!response.ok) {
-                throw new Error(responseText || 'Network response was not ok');
+                // window.alert('An unexpected error occurred.');
+                const errorText = await response.text();
+
+                shouldNavigate = false; // Prevent navigation if there's an error
+                console.log("error ", errorText)
+                throw new Error('Network response was not ok');
+            }
+
+            // Only navigate if there were no errors
+            if (shouldNavigate) {
+                navigate(updatedResponses.next_visit_test_name);
             }
     
-            navigate(nextTestUrl);
+            // const responseText = await response.text();
+            // if (!response.ok) {
+            //     throw new Error(responseText || 'Network response was not ok');
+            // }
+    
+            // navigate(nextTestUrl);
     
         } catch (error) {
             console.error('Error:', error);
@@ -223,8 +239,8 @@ const CreativeBricksGame = () => {
             <br />
             <br />
 
-            {/* Next button */}
-            {/* <button className="button" onClick={handleNext} > Next </button>  */}
+            {/* Next button  */}
+            <button className="button" onClick={handleNext} > Next </button> 
             {/* disabled={!allAnswered} */}
             {loading && <p>Loading...</p>} 
             {error && <p>Error: {error.message}</p>}

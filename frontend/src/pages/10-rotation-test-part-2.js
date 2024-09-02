@@ -165,7 +165,7 @@ const RotationTestPart2 = () => {
         prolific_id: '',
         test_name: test_name_given,
         consent: consent === "yes" ? true : false,
-        page_number: 9,
+        page_number: 10,
         chart_number: 0,
         responses: {
             RT2_question1: '',
@@ -312,6 +312,8 @@ const RotationTestPart2 = () => {
             next_visit_test_name: nextTestUrl, // The next page URL
         };
 
+        let shouldNavigate = true;
+
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
@@ -324,15 +326,29 @@ const RotationTestPart2 = () => {
             // Simulate API call to save survey responses
             // console.log('Saving responses:', updatedResponses);
 
-            setResponses(updatedResponses);
+            // setResponses(updatedResponses);
 
-            const responseText = await response.text();
+            // const responseText = await response.text();
+            // if (!response.ok) {
+            //     throw new Error(responseText || 'Network response was not ok');
+            // }
+            // // console.log('Response text:', responseText);
+
+            // navigate(nextTestUrl)
+
             if (!response.ok) {
-                throw new Error(responseText || 'Network response was not ok');
-            }
-            // console.log('Response text:', responseText);
+                // window.alert('An unexpected error occurred.');
+                const errorText = await response.text();
 
-            navigate(nextTestUrl)
+                shouldNavigate = false; // Prevent navigation if there's an error
+                console.log("error ", errorText)
+                throw new Error('Network response was not ok');
+            }
+
+            // Only navigate if there were no errors
+            if (shouldNavigate) {
+                navigate(updatedResponses.next_visit_test_name);
+            }
 
         } catch (error) {
             console.error('Error:', error);

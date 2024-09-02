@@ -12,7 +12,8 @@ const FirstInstrConsent = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { consent, setConsent, prolificId, setProlificId } = useConsent();
-    const [isContentDisabled, setIsContentDisabled] = useState(true);
+    const [isConsentDisabled, setIsConsentDisabled ] = useState(true);
+    const [ manualProlificIdSet, setManualProlificIdSet ] = useState(false);  // New state variable
 
     //url catch
     const location = useLocation();
@@ -21,15 +22,16 @@ const FirstInstrConsent = () => {
     // console.log("URL QUERY ***** ", query)
 
     useEffect(() => {
-        const id = query.get('PROLIFIC_PID');
-        if (id) {
-            setProlificId(id);
-            // setIsContentDisabled(false); 
+        if (!manualProlificIdSet) {
+            const id = query.get('PROLIFIC_PID');
+
+            if (id && id.length === 24)  {
+                setProlificId(id);
+                console.log("Enabling consent buttons in useeffect for prolific id");  
+                setIsConsentDisabled(false); // Enable consent buttons
+            }
         }
-        else {
-            // alert('Access Denied: Prolific ID is required to proceed.');
-        }
-    }, [query, setProlificId]);
+    }, [query, setProlificId, manualProlificIdSet]);
 
     
     // Scroll to the top of the page
@@ -97,10 +99,22 @@ const FirstInstrConsent = () => {
         }
     }, [navigate, responses.next_visit_test_name]);
 
+
+    // Handle input changes and validate Prolific ID format
     const handleInputChange = (e) => {
         const trimmedId = e.target.value.trim();
-        if (trimmedId.length <= 24) {
-            setProlificId(trimmedId); // Update the Prolific ID in the ConsentContext
+        setProlificId(trimmedId); // Update the Prolific ID in the ConsentContext
+        console.log("Prolific ID entered handleInputChange: ", trimmedId);  // Debugging statement
+        console.log("Prolific ID length handleInputChange: ", trimmedId.length);  // Debugging statement
+        setManualProlificIdSet(true);
+
+        // Enable consent if Prolific ID is exactly 24 characters
+        if (trimmedId.length === 24) {
+            console.log("Enabling consent buttons if Prolific ID is exactly 24 characters ");  // Debugging statement
+            setIsConsentDisabled(false); 
+        } else {
+            console.log("Enabling consent buttons if Prolific ID is NOT exactly 24 characters");  // Debugging statement
+            setIsConsentDisabled(true);  // Disable consent if Prolific ID is invalid
         }
     };
 
@@ -140,31 +154,19 @@ const FirstInstrConsent = () => {
     
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
-        let nextTestUrl = ""; // Use let instead of const as const is unmutable
-
-
-        // Navigate based on the actual consent state from context
-        if (consent === "yes") {
-            nextTestUrl = "/financial-literacy"
-        } else {
-            nextTestUrl = "/ask-consent-again"
-        }
     
         // Ensure the updated responses use the actual state of consent directly
         const updatedResponses = {
             ...responses,
-            prolific_id: prolificId, //using prolific id from consent
+            prolific_id: prolificId, // using prolific id from consent
             time_spent: timeSpent,
             last_visited_test_name: responses.current_visit_test_name, // Update the last visited page
-            next_visit_test_name: nextTestUrl, // The next page URL
+            next_visit_test_name: consent === "yes" ? "/financial-literacy" : "/ask-consent-again", // The next page URL
         };
     
+        let shouldNavigate = true; // Default to navigating unless an error occurs
+    
         try {
-            // Simulate API call to save survey responses
-            // console.log('Saving responses:', updatedResponses);
-
-            setResponses(updatedResponses);
-
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
                 headers: {
@@ -173,23 +175,27 @@ const FirstInstrConsent = () => {
                 body: JSON.stringify(updatedResponses), // Send updated responses
             });
     
-            // console.log('Response:', response);
-    
             if (!response.ok) {
+                const errorText = await response.text();
+    
+                shouldNavigate = false; // Prevent navigation if there's an error
+                console.log("error ", errorText)
                 throw new Error('Network response was not ok');
             }
     
-            const result = await response.json();
-            console.log('Success:', result);
-    
-            navigate(nextTestUrl);
         } catch (error) {
             console.error('Error:', error);
-            setError(error);
+            window.alert(`Error: ${error.message || 'An unexpected error occurred.'}`);
+            shouldNavigate = false; // Prevent navigation in case of an error
         } finally {
             setLoading(false);
         }
-    };
+    
+        // Only navigate if there were no errors
+        if (shouldNavigate) {
+            navigate(updatedResponses.next_visit_test_name);
+        }
+    };    
 
     return (
         <div>
@@ -224,29 +230,48 @@ const FirstInstrConsent = () => {
                     {loading && <p>Loading...</p>}
                     {error && <p>Error: {error.message}</p>}
                     <div name="instructions">
-                        {prolificId ? (
-                        <div>
-                            <p>Your Prolific ID: {prolificId}</p>
-                        </div>
-                        ) : (
-                            <label>
-                                Enter your Prolific ID: &nbsp;
-                                <input
-                                    type="text"
-                                    value={prolificId || ''} // Ensure the value is an empty string if null
-                                    onChange={handleInputChange}
-                                    required
-                                    maxLength={24}  // Restrict the input length to 24 characters
-                                    pattern="[A-Za-z0-9]{24}" // Alphanumeric pattern, exactly 24 characters
-                                    title="Prolific ID must be exactly 24 characters long" // Message displayed on invalid input
-                                />
-                            </label>
-                        )}
+                        {/* Input field for Prolific ID, visible if not present in URL */}
+                        <label>
+                            Enter your Prolific ID: &nbsp;
+                            <input
+                                type="text"
+                                value={prolificId || ''}
+                                onChange={handleInputChange}
+                                required
+                                maxLength={24}  // Restrict the input length to 24 characters
+                                pattern="[A-Za-z0-9]{24}" // Alphanumeric pattern, exactly 24 characters
+                                title="Prolific ID must be exactly 24 characters long"
+                            />
+                        </label>
                         <div>
                             {prolificId && <p>Your Prolific ID: {prolificId}</p>}
                         </div>
+
+                        {/* {isProlificIdInputVisible ? (
+                            <div>
+                                <p>Your Prolific ID: {prolificId}</p>
+                            </div>
+                            ) : (
+                                <label>
+                                    Enter your Prolific ID: &nbsp;
+                                    <input
+                                        type="text"
+                                        value={prolificId || ''} // Ensure the value is an empty string if null
+                                        onChange={handleInputChange}
+                                        required
+                                        maxLength={24}  // Restrict the input length to 24 characters
+                                        pattern="[A-Za-z0-9]{24}" // Alphanumeric pattern, exactly 24 characters
+                                        title="Prolific ID must be exactly 24 characters long" // Message displayed on invalid input
+                                    />
+                                </label>
+                            )}
+                            <div>
+                                {prolificId && <p>Your Prolific ID: {prolificId}</p>}
+                            </div> */}
                         <br></br>
                         <br></br>
+
+
                         <div name="instructionsh3">
                             <h3><u>Title of Study:</u> Data Visualization in Managerial Judgments</h3>	    
                             <h3><u>Principal Investigator:</u> Kelly Wellman</h3>
@@ -303,6 +328,7 @@ const FirstInstrConsent = () => {
                                 name="consent" 
                                 onChange={() => handleConsent("no")}
                                 // disabled={isContentDisabled}
+                                disabled={isConsentDisabled} // Disable based on state
                             /> 
                             <label htmlFor="consent-no"> 
                                 No
@@ -313,6 +339,7 @@ const FirstInstrConsent = () => {
                                 name="consent" 
                                 onChange={() => handleConsent("yes")}
                                 // disabled={isContentDisabled}
+                                disabled={isConsentDisabled} // Disable based on state
                             />
                             <label htmlFor="consent-yes"> 
                                 Yes
@@ -325,8 +352,8 @@ const FirstInstrConsent = () => {
                         <button 
                             className="button" 
                             onClick={handleNext} 
-                            disabled={loading || consent === null} // Disable button until consent is selected
-                            // disabled={loading || consent === null || isContentDisabled} // Disable button until consent is selected and content is interactive
+                            // disabled={loading || consent === null} // Disable button until consent is selected
+                            disabled={loading || consent === null || isConsentDisabled} // Disable button until consent is selected and content is interactive
                         > 
                             Next 
                         </button>

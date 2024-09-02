@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../components/styles_css/PageStyle.css'; 
-import Navbar from "../components/NavbarPage";
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
 
@@ -95,39 +94,50 @@ const ExitSurveyPage = () => {
                 time_spent: timeSpent,
                 next_visit_test_name: nextTestUrl, // The next page URL
             };
+
+            let shouldNavigate = true; // Default to navigating unless an error occurs
         
-            try {
+            try 
+            {
                  // Simulate API call to save survey responses
-            // console.log('Saving responses:', updatedResponses);
+                // console.log('Saving responses:', updatedResponses);
 
-            setResponses(updatedResponses);
+                setResponses(updatedResponses);
 
-            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedResponses), // Send updated responses
-            });
+                const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedResponses), // Send updated responses
+                });
+        
+                // console.log('Response:', response);
+        
+                if (!response.ok) {
+                    // window.alert('An unexpected error occurred.');
+                    const errorText = await response.text();
     
-            // console.log('Response:', response);
-    
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-    
-            const result = await response.json();
-            // console.log('Success:', result);
-    
-            navigate(nextTestUrl);
+                    shouldNavigate = false; // Prevent navigation if there's an error
+                    console.log("error ", errorText)
+                    throw new Error('Network response was not ok');
+                }
+                
+                 // Only navigate if there were no errors
+                if (shouldNavigate) {
+                    navigate(updatedResponses.next_visit_test_name);
+                }
+            
+                // const result = await response.json();
+                // console.log('Success:', result);
 
-            } catch (error) {
-                console.error('Error:', error);
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
+                } catch (error) {
+                    console.error('Error:', error);
+                    setError(error);
+                } finally {
+                    setLoading(false);
+                }
+            };
 
         // Trigger the API call as soon as the component mounts
         handleExitSurveyResponse();
@@ -136,7 +146,7 @@ const ExitSurveyPage = () => {
 
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
             <div className="container">
                 <div className="LogoStyleImage">
                     <p>

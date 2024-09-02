@@ -276,6 +276,7 @@ const TimeSeriesColDashboard = () => {
         }));
 
         let nextTestUrl = "";
+        let shouldNavigate = true;
     
         if (questionIndex < questionsTimeSeriesCol.length - 1) {
             // Prepare for the next question
@@ -305,16 +306,23 @@ const TimeSeriesColDashboard = () => {
                 });
     
                 if (!response.ok) {
+                    // window.alert('An unexpected error occurred.');
+                    const errorText = await response.text();
+    
+                    shouldNavigate = false; // Prevent navigation if there's an error
+                    console.log("error ", errorText)
                     throw new Error('Network response was not ok');
                 }
-    
-                const result = await response.json();
-
-                // console.log('Success:', result);
 
                 navigate(nextTestUrl);  // Navigate to the next page
             } catch (error) {
                 console.error('Error:', error);
+                shouldNavigate = false;
+            }
+
+            // Only navigate if there were no errors
+            if (shouldNavigate) {
+                navigate(updatedresponses.next_visit_test_name);
             }
         }
     };

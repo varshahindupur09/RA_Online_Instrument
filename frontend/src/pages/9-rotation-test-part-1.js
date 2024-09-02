@@ -331,6 +331,8 @@ const RotationTestPart1 = () => {
             next_visit_test_name: nextTestUrl, // The next page URL
         };
 
+        let shouldNavigate = true;
+
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
@@ -345,13 +347,27 @@ const RotationTestPart1 = () => {
 
             setResponses(updatedResponses);
 
-            const responseText = await response.text();
-            if (!response.ok) {
-                throw new Error(responseText || 'Network response was not ok');
-            }
-            // console.log('Response text:', responseText);
+            // const responseText = await response.text();
+            // if (!response.ok) {
+            //     throw new Error(responseText || 'Network response was not ok');
+            // }
+            // // console.log('Response text:', responseText);
 
-            navigate(nextTestUrl)
+            // navigate(nextTestUrl)
+
+            if (!response.ok) {
+                // window.alert('An unexpected error occurred.');
+                const errorText = await response.text();
+
+                shouldNavigate = false; // Prevent navigation if there's an error
+                console.log("error ", errorText)
+                throw new Error('Network response was not ok');
+            }
+
+            // Only navigate if there were no errors
+            if (shouldNavigate) {
+                navigate(updatedResponses.next_visit_test_name);
+            }
 
         } catch (error) {
             console.error('Error:', error);

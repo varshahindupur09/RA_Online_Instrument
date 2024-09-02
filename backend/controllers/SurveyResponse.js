@@ -1,7 +1,6 @@
 // SurveyResponse.js
 const SurveyResponse = require('../models/SurveyResponseModel.js');
 const dbStatus = require('../config/db.js');
-const XLSX = require('xlsx');
 
 console.log('Database connection flag: ', dbStatus.flag);
 
@@ -10,7 +9,6 @@ exports.createSurveyResponse = async (req, res) => {
         // Create a new instance of SurveyResponse with the request body
         const newResponse = new SurveyResponse(req.body);
         await newResponse.save();
-
         res.status(201).json({ message: 'Document inserted successfully', data: newResponse });
     } catch (err) {
         res.status(500).json({ message: 'Error inserting document: ' + err.message });
@@ -82,35 +80,86 @@ exports.deleteAllSurveyResponses = async (req, res) => {
     }
 };
 
+const XLSX = require('xlsx');
+
+function flattenObject(ob) {
+    let result = {};
+
+    for (const i in ob) {
+        if ((typeof ob[i]) === 'object' && ob[i] !== null && !Array.isArray(ob[i])) {
+            const flatObject = flattenObject(ob[i]);
+            for (const x in flatObject) {
+                result[`${i}.${x}`] = flatObject[x];
+            }
+        } else {
+            result[i] = ob[i];
+        }
+    }
+
+    return result;
+}
+
 exports.exportSurveyResponsesToExcel = async (req, res) => {
     try {
-        const { filename } = req.query;
+        // console.log("Starting exportSurveyResponsesToExcel...");
 
-        // Set a default filename if none is provided
-        const outputFilename = filename ? `${filename}.xlsx` : 'SurveyResponsesInExcel.xlsx';
+        // Fetch all survey responses from the database
+        const responses = await SurveyResponse.find({}).lean(); // Use lean() to get plain JavaScript objects
+        // console.log("Fetched survey responses from database:", responses.length);
 
-        const data = await SurveyResponse.find({});
-        if (!data.length) {
+        // Check if any data was fetched
+        if (responses.length === 0) {
             return res.status(404).json({ message: 'No data found in the collection.' });
         }
+        
+        // console.log("cleaned *********")
+        // Convert the MongoDB ObjectId and other special types into strings
+        const cleanedResponses = responses.map((doc, index) => {
+            doc._id = doc._id.toString(); // Convert _id from ObjectId to string
+            
+            // // Log the conversion of the first response for debugging
+            // if (index === 5) {
+            //     console.log("Original Document:", doc);
+            //     console.log("Cleaned Response:", doc);
+            // }
+            
+            return doc;
+        });
+        // console.log("cleaned done *********")
 
-        // Convert data to JSON format suitable for XLSX
-        const jsonData = data.map(doc => doc.toObject());
+        // Flatten the nested objects in each document
+        const flattenedResponses = cleanedResponses.map((doc, index) => {
+            const flattenedDoc = flattenObject(doc);
 
-        // Create a new workbook and add data to the first sheet
-        const worksheet = XLSX.utils.json_to_sheet(jsonData);
+            // // Log the first flattened response for debugging
+            // if (index === 5) {
+            //     console.log("Flattened Response:", flattenedDoc);
+            // }
+
+            return flattenedDoc;
+        });
+        // console.log("Flattened responses:", flattenedResponses.length);
+
+        // Create a new Excel workbook and worksheet
+        const worksheet = XLSX.utils.json_to_sheet(flattenedResponses);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'SurveyResponses');
+        // console.log("Created Excel workbook.");
 
-        // Generate Excel file buffer
+        // Write the Excel file to a buffer
         const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+        // console.log("Excel file written to buffer.");
 
-        // Send the Excel file as a response
-        res.setHeader('Content-Disposition', 'attachment; filename=${outputFilename}');
+        // Set response headers for file download
+        res.setHeader('Content-Disposition', 'attachment; filename=SurveyResponsesNodeJSAPI.xlsx');
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+        // Send the buffer as a file download
         res.send(excelBuffer);
+        // console.log("Excel file sent successfully.");
+
     } catch (err) {
-        console.error('Error exporting data to Excel:', err);
+        console.error("Error exporting data to Excel:", err);
         res.status(500).json({ message: 'Error exporting data to Excel' });
     }
 };

@@ -110,6 +110,8 @@ const FinancialLiteracy = () => {
             next_visit_test_name: nextTestUrl, // The next page URL
         };
 
+        let shouldNavigate = true; 
+
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',
@@ -124,17 +126,24 @@ const FinancialLiteracy = () => {
 
             setResponses(updatedResponses);
 
-            const responseText = await response.text();
             if (!response.ok) {
-                throw new Error(responseText || 'Network response was not ok');
-            }
-            // console.log('Response text:', responseText);
+                // window.alert('An unexpected error occurred.');
+                const errorText = await response.text();
 
-            navigate(nextTestUrl)
+                shouldNavigate = false; // Prevent navigation if there's an error
+                console.log("error ", errorText)
+                throw new Error('Network response was not ok');
+            }
+
+            // Only navigate if there were no errors
+            if (shouldNavigate) {
+                navigate(updatedResponses.next_visit_test_name);
+            }
 
         } catch (error) {
             console.error('Error:', error);
             setError(error);
+            shouldNavigate = false;
         } finally {
             setLoading(false);
         }

@@ -96,20 +96,14 @@ const ConsentPage = () => {
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         let nextTestUrl = ""; // Use let instead of const as const is unmutable
+        let shouldNavigate = true; // Default to navigating unless an error occurs
 
-        // Navigate based on the actual consent state from context
-         if (consent === "yes") {
-            nextTestUrl = "/paper-folding-test-sample-question"
-        } else {
-            nextTestUrl = "/exit-survey-page"
-        }
-    
         // Ensure the updated responses use the actual state of consent directly
         const updatedResponses = {
             ...responses,
             prolific_id: prolificId,
             time_spent: timeSpent,
-            next_visit_test_name: nextTestUrl, // The next page URL
+            next_visit_test_name: consent === "yes" ? "/paper-folding-test-sample-question" : "/exit-survey-page", // The next page URL
         };
        
         try {
@@ -126,20 +120,29 @@ const ConsentPage = () => {
                 body: JSON.stringify(updatedResponses), // Send updated responses
             });
     
-            console.log('Response:', response);
+            // console.log('Response:', response);
     
             if (!response.ok) {
+                const errorText = await response.text();
+    
+                shouldNavigate = false; // Prevent navigation if there's an error
+                console.log("error ", errorText)
                 throw new Error('Network response was not ok');
+                // window.alert('An unexpected error occurred.');
             }
-    
-            const result = await response.json();
-            console.log('Success:', result);
-    
-            navigate(nextTestUrl);
+        
+            // const result = await response.json();
+            // console.log('Success:', result);
+
+             // Only navigate if there were no errors
+            if (shouldNavigate) {
+                navigate(updatedResponses.next_visit_test_name);
+            }
 
         } catch (error) {
             console.error('Error:', error);
-            setError(error);
+            window.alert(`Error: ${error.message || 'An unexpected error occurred.'}`);
+            shouldNavigate = false; // Prevent navigation in case of an error
         } finally {
             setLoading(false);
         }

@@ -97,6 +97,7 @@ const FeedbackQuestions = () => {
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         let nextTestUrl = "/demographic-questions";
+        let shouldNavigate = true;
 
         const updatedresponses = {
             ...responses, 
@@ -115,19 +116,26 @@ const FeedbackQuestions = () => {
                 body: JSON.stringify(updatedresponses),
             });
 
-            const responseText = await response.text();
             if (!response.ok) {
-                throw new Error(responseText || 'Network response was not ok');
-            }
-            // console.log('Response text:', responseText);
+                // window.alert('An unexpected error occurred.');
+                const errorText = await response.text();
 
-            navigate(nextTestUrl); // Redirect to the next page after successful submission
+                shouldNavigate = false; // Prevent navigation if there's an error
+                console.log("error ", errorText)
+                throw new Error('Network response was not ok');
+            }
 
         } catch (error) {
             console.error('Error:', error);
             setError(error);
+            shouldNavigate = false;
         } finally {
             setLoading(false);
+        }
+
+         // Only navigate if there were no errors
+         if (shouldNavigate) {
+            navigate(updatedresponses.next_visit_test_name);
         }
     };
   

@@ -49,8 +49,8 @@ const ProceedToDashboard = () => {
 
     // State to store responses
     const [responses, setResponses] = useState({
-        // prolific_id: prolificId,
-        prolific_id: '',
+        prolific_id: prolificId,
+        // prolific_id: '',
         test_name: test_name_given,
         consent: consent === "yes"? true : false, 
         page_number: 12,
@@ -78,6 +78,7 @@ const ProceedToDashboard = () => {
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/dashboard-router"; 
+        let shouldNavigate = true;
 
         // Update responses with the calculated time spent
         const updatedResponses = {
@@ -103,11 +104,15 @@ const ProceedToDashboard = () => {
 
             const responseText = await response.text();
             if (!response.ok) {
+                shouldNavigate = false;
                 throw new Error(responseText || 'Network response was not ok');
             }
             console.log('Response text:', responseText);
 
-            navigate(nextTestUrl)
+            if (shouldNavigate)
+            {
+                navigate(nextTestUrl)
+            }
 
         } catch (error) {
             console.error('Error:', error);

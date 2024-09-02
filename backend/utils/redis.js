@@ -1,17 +1,17 @@
-//backend/utils/redis.js
-const Redis = require('ioredis');
+// //backend/utils/redis.js
+// const Redis = require('ioredis');
 
-// Connect to Redis
-const redis = new Redis({
-  host: 'rediscacheinstrument-yjxgjt.serverless.use1.cache.amazonaws.com', 
-  port: 6379,
-  connectTimeout: 10000
-});
+// // Connect to Redis
+// const redis = new Redis({
+//   host: 'rediscacheinstrument-yjxgjt.serverless.use1.cache.amazonaws.com', 
+//   port: 6379,
+//   connectTimeout: 10000
+// });
 
-redis.on('connect', () => {
-  console.log('Connected to Redis!');
-});
+// redis.on('connect', () => {
+//   console.log('Connected to Redis!');
+// });
 
-redis.on('error', (err) => {
-  console.error('Redis error', err);
-});
+// redis.on('error', (err) => {
+//   console.error('Redis error', err);
+// });

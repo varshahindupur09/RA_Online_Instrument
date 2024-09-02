@@ -135,6 +135,7 @@ const Demographics = () => {
         const timeSpent = (endTime - startTimeRef.current) / 1000; 
 
         let nextTestUrl = "/demographic-questions";
+        let shouldNavigate = true;
 
         const updatedData = {
             ...demographicData,
@@ -155,9 +156,13 @@ const Demographics = () => {
             // console.log("response from POST" , postResponse)
 
             if (!postResponse.ok) {
-                throw new Error('Failed to submit demographic data');
-            }
+                // window.alert('An unexpected error occurred.');
+                const errorText = await postResponse.text();
 
+                shouldNavigate = false; // Prevent navigation if there's an error
+                console.log("error ", errorText)
+                throw new Error('Network response was not ok');
+            }
             // no navigation as this is the end
 
             // Reset the demographic data after submission
@@ -172,7 +177,8 @@ const Demographics = () => {
                     "education-level": '',
                     "work-experience": '',
                     "management-experience": '',
-                    "employment-sector": ''
+                    "employment-sector": '',
+                    "prolific-id-input": '',
                 },
                 graph_question_durations: [],
                 per_graph_durations: [],
@@ -190,6 +196,11 @@ const Demographics = () => {
         } catch (error) {
             console.error('Error:', error);
             setError(error);
+        }
+
+        // Only navigate if there were no errors
+        if (shouldNavigate) {
+            navigate(updatedData.next_visit_test_name);
         }
     };
 
@@ -306,7 +317,7 @@ const Demographics = () => {
                         <input 
                             type="text" 
                             id="prolific-id-input"
-                            value={demographicData.prolific_id}
+                            value={demographicData.responses["prolific-id-input"]}
                             onChange={e => handleProlificIdChange(e.target.value)}
                             required
                             pattern="[A-Za-z0-9]{24}" // Alphanumeric pattern, exactly 24 characters
