@@ -54,6 +54,68 @@ const surveyController = require('../controllers/SurveyResponse');
  *         description: Error fetching documents
  */
 
+/**
+ * @swagger
+ * /api/surveyResponses/{prolificId}:
+ *   get:
+ *     summary: Fetch all survey responses for a particular Prolific ID
+ *     tags: [SurveyResponse]
+ *     parameters:
+ *       - in: path
+ *         name: prolificId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The Prolific ID to fetch the survey responses
+ *     responses:
+ *       200:
+ *         description: Survey responses fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       prolific_id:
+ *                         type: string
+ *                       test_name:
+ *                         type: string
+ *                       page_number:
+ *                         type: integer
+ *                       consent:
+ *                         type: boolean
+ *                       chart_number:
+ *                         type: integer
+ *                       graph_question_durations:
+ *                         type: array
+ *                         items:
+ *                           type: number
+ *                       per_graph_durations:
+ *                         type: array
+ *                         items:
+ *                           type: number
+ *                       time_spent:
+ *                         type: number
+ *                       last_visited_test_name:
+ *                         type: string
+ *                       current_visit_test_name:
+ *                         type: string
+ *                       next_visit_test_name:
+ *                         type: string
+ *       404:
+ *         description: No survey responses found for this Prolific ID
+ *       500:
+ *         description: Error fetching survey responses
+ */
+
 
 /**
  * @swagger
@@ -150,6 +212,35 @@ const surveyController = require('../controllers/SurveyResponse');
 
 /**
  * @swagger
+ * /api/surveyResponses/{prolificId}:
+ *   delete:
+ *     summary: Delete all survey responses for a particular Prolific ID
+ *     tags: [SurveyResponse]
+ *     parameters:
+ *       - in: path
+ *         name: prolificId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The Prolific ID to delete the survey responses
+ *     responses:
+ *       200:
+ *         description: Deleted survey response(s) for Prolific ID successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: No survey responses found to delete for this Prolific ID
+ *       500:
+ *         description: Error deleting survey responses
+ */
+
+/**
+ * @swagger
  * /api/surveyResponse/{id}:
  *   delete:
  *     summary: Delete a survey response by ID
@@ -185,11 +276,13 @@ const surveyController = require('../controllers/SurveyResponse');
 
 router.post('/surveyResponse', surveyController.createSurveyResponse);
 router.get('/surveyResponse', surveyController.getAllSurveyResponses);
+router.get('/surveyResponses/:prolificId', surveyController.getSurveyResponsesByProlificId);
 router.get('/surveyResponse/:id', surveyController.getSurveyResponseById);
 router.get('/exportSurveyResponsesToExcel', surveyController.exportSurveyResponsesToExcel);
 router.put('/surveyResponse/:id', surveyController.updateSurveyResponse);
 router.delete('/surveyResponse/:id', surveyController.deleteSurveyResponse);
-router.get('/dbHealthCheck', surveyController.dbHealthCheckResponse);
+router.delete('/surveyResponses/:prolificId', surveyController.deleteSurveyResponsesByProlificId);
 router.delete('/surveyResponses', surveyController.deleteAllSurveyResponses);
+router.get('/dbHealthCheck', surveyController.dbHealthCheckResponse);
 
 module.exports = router;

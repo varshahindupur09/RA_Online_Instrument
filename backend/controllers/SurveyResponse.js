@@ -24,6 +24,40 @@ exports.getAllSurveyResponses = async (req, res) => {
     }
 };
 
+// Fetch all survey responses for a particular Prolific ID
+exports.getSurveyResponsesByProlificId = async (req, res) => {
+    try {
+        const prolificId = req.params.prolificId;
+        const responses = await SurveyResponse.find({ prolific_id: prolificId }).lean(); // Use lean() for better performance
+
+        if (responses.length === 0) {
+            return res.status(404).json({ message: 'No survey responses found for this Prolific ID.' });
+        }
+
+        res.status(200).json({ message: 'Survey responses fetched successfully.', data: responses });
+    } catch (err) {
+        console.error('Error fetching survey responses:', err);
+        res.status(500).json({ message: 'Error fetching survey responses' });
+    }
+};
+
+// Delete all survey responses for a particular Prolific ID
+exports.deleteSurveyResponsesByProlificId = async (req, res) => {
+    try {
+        const prolificId = req.params.prolificId;
+        const result = await SurveyResponse.deleteMany({ prolific_id: prolificId });
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: 'No survey responses found to delete for this Prolific ID.' });
+        }
+
+        res.status(200).json({ message: `Deleted ${result.deletedCount} survey response(s) for Prolific ID: ${prolificId}` });
+    } catch (err) {
+        console.error('Error deleting survey responses:', err);
+        res.status(500).json({ message: 'Error deleting survey responses' });
+    }
+};
+
 exports.getSurveyResponseById = async (req, res) => {
     try {
         const response = await SurveyResponse.findById(req.params.id);
@@ -163,3 +197,4 @@ exports.exportSurveyResponsesToExcel = async (req, res) => {
         res.status(500).json({ message: 'Error exporting data to Excel' });
     }
 };
+
