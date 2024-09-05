@@ -13,7 +13,7 @@ const FirstInstrConsent = () => {
     const [error, setError] = useState(null);
     const { consent, setConsent, prolificId, setProlificId } = useConsent();
     const [isConsentDisabled, setIsConsentDisabled ] = useState(true);
-    const [ manualProlificIdSet, setManualProlificIdSet ] = useState(false);  // New state variable
+    const [ manualProlificIdSet, setManualProlificIdSet ] = useState(false); 
 
     //url catch
     const location = useLocation();
@@ -24,6 +24,7 @@ const FirstInstrConsent = () => {
     useEffect(() => {
         if (!manualProlificIdSet) {
             const id = query.get('PROLIFIC_PID');
+            // const id = "66ce204a5c724a497b287acc"
 
             if (id && id.length === 24)  {
                 setProlificId(id);
@@ -187,6 +188,7 @@ const FirstInstrConsent = () => {
             console.error('Error:', error);
             window.alert(`Error: ${error.message || 'An unexpected error occurred.'}`);
             shouldNavigate = false; // Prevent navigation in case of an error
+            setError(error);
         } finally {
             setLoading(false);
         }
@@ -200,21 +202,6 @@ const FirstInstrConsent = () => {
     return (
         <div>
             {/* <Navbar /> */}
-            {/* <div style={{ position: 'relative' }}>
-                {isContentDisabled && (
-                    <div
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                            zIndex: 1000,
-                            cursor: 'not-allowed',
-                        }}
-                    />
-                )} */}
                 <div className="container">
                     <div className="LogoStyleImage">
                         <p>
@@ -230,7 +217,8 @@ const FirstInstrConsent = () => {
                     {loading && <p>Loading...</p>}
                     {error && <p>Error: {error.message}</p>}
                     <div name="instructions">
-                        {/* Input field for Prolific ID, visible if not present in URL */}
+                        {/* Input field for Prolific ID, only visible if it hasn't been set via URL and not manually entered */}
+                        {!prolificId && !manualProlificIdSet && (
                         <label>
                             Enter your Prolific ID: &nbsp;
                             <input
@@ -243,31 +231,11 @@ const FirstInstrConsent = () => {
                                 title="Prolific ID must be exactly 24 characters long"
                             />
                         </label>
+                        )}
                         <div>
                             {prolificId && <p>Your Prolific ID: {prolificId}</p>}
                         </div>
 
-                        {/* {isProlificIdInputVisible ? (
-                            <div>
-                                <p>Your Prolific ID: {prolificId}</p>
-                            </div>
-                            ) : (
-                                <label>
-                                    Enter your Prolific ID: &nbsp;
-                                    <input
-                                        type="text"
-                                        value={prolificId || ''} // Ensure the value is an empty string if null
-                                        onChange={handleInputChange}
-                                        required
-                                        maxLength={24}  // Restrict the input length to 24 characters
-                                        pattern="[A-Za-z0-9]{24}" // Alphanumeric pattern, exactly 24 characters
-                                        title="Prolific ID must be exactly 24 characters long" // Message displayed on invalid input
-                                    />
-                                </label>
-                            )}
-                            <div>
-                                {prolificId && <p>Your Prolific ID: {prolificId}</p>}
-                            </div> */}
                         <br></br>
                         <br></br>
 
@@ -302,7 +270,8 @@ const FirstInstrConsent = () => {
                                     <span className="email"> Theresa.libby@ucf.edu</span>
                                 </p>
                             </div>
-                            
+                            <br></br>
+                            <br></br>
                             <p className="contact-heading">IRB contact about your rights in this study or to report a complaint:</p>
                             <div className="contact-info">
                                 <p>If you have questions about your rights as a research participant, or have concerns about the conduct of this study, please contact the:</p>

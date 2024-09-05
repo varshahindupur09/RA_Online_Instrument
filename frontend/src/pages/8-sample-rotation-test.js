@@ -147,13 +147,28 @@ const RotationTestQuestion = () => {
         });
     };
 
+    const validateResponses = () => {
+        console.log("validateResponses: ", responses.responses); // Debugging: check the actual structure of responses
+        const isQuestion1Answered = responses.responses.SRT_question1.split(',').every(answer => answer !== '');
+        const isQuestion2Answered = responses.responses.SRT_question2.split(',').every(answer => answer !== '');
+    
+        return isQuestion1Answered && isQuestion2Answered; // Return true if both are fully answered
+    };
+    
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
 
+        // Validate that all questions have been answered
+        if (!validateResponses()) {
+            window.alert("Please answer all the questions before proceeding.")
+            setLoading(false);
+            return; // Prevent form submission if validation fails
+        }
+
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
-        const nextTestUrl = "/rotation-test-part-1"; 
+        const nextTestUrl = "/attention-check"; 
 
         // Update responses with the calculated time spent
         const updatedResponses = {
@@ -276,7 +291,7 @@ const RotationTestQuestion = () => {
                     <p><strong>Please read the instructions carefully.</strong></p>
                     <div className="instructionsred">
                         <strong>
-                            <li>In addition to the fixed payment of $4, you will receive a bonus of $0.05 for each correct answer.</li>                        </strong>
+                            <li>In addition to the fixed payment of $4, you will receive a bonus of 5 cents for each correct answer. The sample 2 questions are for practise, therefore you won't be paid for those. </li>                        </strong>
                     </div>
                     <p>This is a test of your ability to see differences in figures. Look at the 5 triangle-shaped cards drawn below.</p>
                     <div className='other_images'>

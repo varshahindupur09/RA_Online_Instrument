@@ -179,6 +179,11 @@ const PaperFoldingPart2Questions = () => {
         startTimeRef.current = Date.now();
     }, []);
 
+    const validateResponses = () => {
+        const unansweredQuestions = Object.values(responses.responses).some(response => response === "");
+        return !unansweredQuestions; // Return true if all questions are answered
+    };
+
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -186,6 +191,13 @@ const PaperFoldingPart2Questions = () => {
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/sample-rotation-test"; 
+
+        // Validate that all questions have been answered
+        if (!validateResponses()) {
+            setLoading(false);
+            window.alert("Please answer all the questions before proceeding.")
+            return; // Prevent form submission if validation fails
+        }
 
         // Update responses with the calculated time spent
         const updatedResponses = {

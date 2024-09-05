@@ -291,6 +291,30 @@ const RotationTestPart2 = () => {
         });
     };
 
+    const validateResponses = () => {
+        const isQuestion1Answered = responses.responses.RT2_question1.split(',').every(answer => answer !== '');
+        const isQuestion2Answered = responses.responses.RT2_question2.split(',').every(answer => answer !== '');
+        const isQuestion3Answered = responses.responses.RT2_question3.split(',').every(answer => answer !== '');
+        const isQuestion4Answered = responses.responses.RT2_question4.split(',').every(answer => answer !== '');
+        const isQuestion5Answered = responses.responses.RT2_question5.split(',').every(answer => answer !== '');
+        const isQuestion6Answered = responses.responses.RT2_question6.split(',').every(answer => answer !== '');
+        const isQuestion7Answered = responses.responses.RT2_question7.split(',').every(answer => answer !== '');
+        const isQuestion8Answered = responses.responses.RT2_question8.split(',').every(answer => answer !== '');
+        const isQuestion9Answered = responses.responses.RT2_question9.split(',').every(answer => answer !== '');
+        const isQuestion10Answered = responses.responses.RT2_question10.split(',').every(answer => answer !== '');
+    
+        return isQuestion1Answered &&
+                isQuestion2Answered &&
+                isQuestion3Answered &&
+                isQuestion4Answered &&
+                isQuestion5Answered &&
+                isQuestion6Answered &&
+                isQuestion7Answered &&
+                isQuestion8Answered &&
+                isQuestion9Answered &&
+                isQuestion10Answered; // Return true all are answered
+    };
+
     const handleTimerCompletion = () => {
         const nextTestUrl = "/creative-bricks-game"; 
         navigate(nextTestUrl);
@@ -299,6 +323,13 @@ const RotationTestPart2 = () => {
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
+
+        // Validate that all questions have been answered
+        if (!validateResponses()) {
+            window.alert("Please answer all the questions before proceeding.")
+            setLoading(false);
+            return; // Prevent form submission if validation fails
+        }
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
@@ -322,19 +353,6 @@ const RotationTestPart2 = () => {
                 },
                 body: JSON.stringify(updatedResponses),
             });
-
-            // Simulate API call to save survey responses
-            // console.log('Saving responses:', updatedResponses);
-
-            // setResponses(updatedResponses);
-
-            // const responseText = await response.text();
-            // if (!response.ok) {
-            //     throw new Error(responseText || 'Network response was not ok');
-            // }
-            // // console.log('Response text:', responseText);
-
-            // navigate(nextTestUrl)
 
             if (!response.ok) {
                 // window.alert('An unexpected error occurred.');
@@ -415,6 +433,8 @@ const RotationTestPart2 = () => {
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br />
+            {loading && <p>Loading...</p>}
+            {error && <p>Error: {error.message}</p>}
             <h2>Rotation Test Part 2: 3 minutes</h2>
             <br />
             {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}

@@ -310,6 +310,31 @@ const RotationTestPart1 = () => {
         });
     };
 
+    const validateResponses = () => {
+        console.log("validateResponses: ", responses.responses); 
+        const isQuestion1Answered = responses.responses.RT1_question1.split(',').every(answer => answer !== '');
+        const isQuestion2Answered = responses.responses.RT1_question2.split(',').every(answer => answer !== '');
+        const isQuestion3Answered = responses.responses.RT1_question3.split(',').every(answer => answer !== '');
+        const isQuestion4Answered = responses.responses.RT1_question4.split(',').every(answer => answer !== '');
+        const isQuestion5Answered = responses.responses.RT1_question5.split(',').every(answer => answer !== '');
+        const isQuestion6Answered = responses.responses.RT1_question6.split(',').every(answer => answer !== '');
+        const isQuestion7Answered = responses.responses.RT1_question7.split(',').every(answer => answer !== '');
+        const isQuestion8Answered = responses.responses.RT1_question8.split(',').every(answer => answer !== '');
+        const isQuestion9Answered = responses.responses.RT1_question9.split(',').every(answer => answer !== '');
+        const isQuestion10Answered = responses.responses.RT1_question10.split(',').every(answer => answer !== '');
+    
+        return isQuestion1Answered 
+        && isQuestion2Answered 
+        && isQuestion3Answered
+        && isQuestion4Answered
+        && isQuestion5Answered
+        && isQuestion6Answered 
+        && isQuestion7Answered 
+        && isQuestion8Answered 
+        && isQuestion9Answered 
+        && isQuestion10Answered; // Return true all are answered
+    };
+
     const handleTimerCompletion = () => {
         const nextTestUrl = "/rotation-test-part-2"; 
         navigate(nextTestUrl);
@@ -318,6 +343,13 @@ const RotationTestPart1 = () => {
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
+
+        // Validate that all questions have been answered
+        if (!validateResponses()) {
+            window.alert("Please answer all the questions before proceeding.")
+            setLoading(false);
+            return; // Prevent form submission if validation fails
+        }
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
@@ -434,6 +466,8 @@ const RotationTestPart1 = () => {
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br />
+            {loading && <p>Loading...</p>}
+            {error && <p>Error: {error.message}</p>}
             {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
             <br />
             <br />

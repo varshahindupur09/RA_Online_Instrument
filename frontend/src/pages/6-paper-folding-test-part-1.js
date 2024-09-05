@@ -83,7 +83,7 @@ const PaperFoldingPart1Questions = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
+    
     // Scroll to the top of the page
     useEffect(() => {
         window.scrollTo(0, 0); 
@@ -181,9 +181,21 @@ const PaperFoldingPart1Questions = () => {
         startTimeRef.current = Date.now();
     }, []);
 
+    const validateResponses = () => {
+        const unansweredQuestions = Object.values(responses.responses).some(response => response === "");
+        return !unansweredQuestions; // Return true if all questions are answered
+    };
+
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
+
+         // Validate that all questions have been answered
+         if (!validateResponses()) {
+            setLoading(false);
+            window.alert("Please answer all the questions before proceeding.")
+            return; // Prevent form submission if validation fails
+        }
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds

@@ -15,6 +15,7 @@ const CreativeBricksGame = () => {
     const startTimeRef = useRef(null);
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
+    const [isTimerCompleted, setIsTimerCompleted] = useState(false); // New state for timer completion
 
     // Scroll to the top of the page
     useEffect(() => {
@@ -101,60 +102,7 @@ const CreativeBricksGame = () => {
     };
 
     const handleTimerCompletion = async () => {
-        setLoading(true);
-    
-        const endTime = Date.now();
-        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
-        const nextTestUrl = "/proceed-to-dashboard"; 
-    
-        // Update responses with the calculated time spent
-        const updatedResponses = {
-            ...responses,
-            prolific_id: prolificId,
-            time_spent: timeSpent,
-            next_visit_test_name: nextTestUrl, // The next page URL
-        };
-
-        let shouldNavigate = true;
-    
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedResponses),
-            });
-    
-            setResponses(updatedResponses);
-
-            if (!response.ok) {
-                // window.alert('An unexpected error occurred.');
-                const errorText = await response.text();
-
-                shouldNavigate = false; // Prevent navigation if there's an error
-                console.log("error ", errorText)
-                throw new Error('Network response was not ok');
-            }
-
-            // Only navigate if there were no errors
-            if (shouldNavigate) {
-                navigate(updatedResponses.next_visit_test_name);
-            }
-    
-            // const responseText = await response.text();
-            // if (!response.ok) {
-            //     throw new Error(responseText || 'Network response was not ok');
-            // }
-    
-            // navigate(nextTestUrl);
-    
-        } catch (error) {
-            console.error('Error:', error);
-            setError(error);
-        } finally {
-            setLoading(false);
-        }
+        setIsTimerCompleted(true);  // Set timer completion to true
     };
 
     const handleNext = async (event) => {
@@ -239,9 +187,12 @@ const CreativeBricksGame = () => {
             <br />
             <br />
 
-            {/* Next button  */}
-            <button className="button" onClick={handleNext} > Next </button> 
-            {/* disabled={!allAnswered} */}
+            {/* Conditionally render Next button */}
+            {isTimerCompleted ? (
+                <button className="button" onClick={handleNext}> Next </button> 
+            ) : (
+                <p>Please wait for the timer to finish before proceeding.</p>
+            )}
             {loading && <p>Loading...</p>} 
             {error && <p>Error: {error.message}</p>}
         </div>

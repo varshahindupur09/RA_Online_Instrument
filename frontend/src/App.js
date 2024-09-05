@@ -16,6 +16,7 @@ import PaperFoldingSampleQuestion from "./pages/5-sample-paper-folding-test";
 import PaperFoldingPart1Questions from "./pages/6-paper-folding-test-part-1";
 import PaperFoldingPart2Questions from "./pages/7-paper-folding-test-part-2";
 import RotationTest from "./pages/8-sample-rotation-test";
+import AttentionCheck from "./pages/attention-check"
 import RotationTestPart1 from "./pages/9-rotation-test-part-1";
 import RotationTestPart2 from "./pages/10-rotation-test-part-2";
 import CreativeBricksGame from "./pages/11-creative-bricks-game";
@@ -57,6 +58,7 @@ function App() {
                         <Route path="/paper-folding-test-part-2" element={<PaperFoldingPart2Questions />} />
                         {/* if a breather is needed in between we can add it  */}
                         <Route path="/sample-rotation-test" element={<RotationTest />} />
+                        <Route path="/attention-check" element={<AttentionCheck />} />
                         {/* <Route path="/proceed-to-part1-rotation-test" element={<ProceedToPart1RotationTest />} /> */}
                         <Route path="/rotation-test-part-1" element={<RotationTestPart1 />} />
                         {/* <Route path="/proceed-to-part2-rotation-test" element={<ProceedToPart2RotationTest />} /> */}
