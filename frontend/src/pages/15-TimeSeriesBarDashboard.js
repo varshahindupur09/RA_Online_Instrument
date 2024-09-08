@@ -107,8 +107,12 @@ const TimeSeriesBarDashboard = () => {
         started_at: currentTime, 
         ended_at: currentTime, 
         time_user_entered_current_page: currentTime, 
-        current_visit_test_name: currentTestUrl,
         last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
     // Restrict URL navigation to ensure users can't jump to different pages

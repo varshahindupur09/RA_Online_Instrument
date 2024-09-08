@@ -60,8 +60,7 @@ const PaperFoldingSampleQuestion = () => {
 
     // State to store responses
     const [responses, setResponses] = useState({
-        // prolific_id: prolificId, 
-        prolific_id: '',
+        prolific_id: prolificId,
         test_name: test_name_given, 
         consent: consent === "yes" ? true : false, 
         page_number: 5, 
@@ -76,6 +75,9 @@ const PaperFoldingSampleQuestion = () => {
         last_visited_test_name: previousTestUrl, 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl,
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
     // Restrict navigation to ensure users can't jump to different pages
@@ -96,7 +98,6 @@ const PaperFoldingSampleQuestion = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            prolific_id: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
@@ -147,6 +148,18 @@ const PaperFoldingSampleQuestion = () => {
                 {loading && <p>Loading...</p>}
                 {error && <p>Error: {error.message}</p>}
                 <div name="instructions">
+                    <p>
+                        Next you will answer some questions that will help me understand your spatial ability. Prior research shows that different people have different levels of spatial ability. Some people will find these questions easier while others will find them more difficult. 
+                    </p>
+                    <p>
+                        Please read the instructions carefully.
+                    </p> 
+                    <div className="instructionsred">
+                        <strong>
+                            In addition to the fixed payment of $4, you will receive a bonus of $5 cents for each correct answer that you provide.
+                        </strong>
+                    </div>
+                    <br></br>
                     <p>
                         In this test, you are to imagine the folding and unfolding of pieces of paper. In each problem in the test there are some figures drawn on top and there are others drawn below. The figures on top represent a square piece of paper being folded, and the last of these figures has one or two small circles drawn on it to show where the paper has been punched. 
                     </p>

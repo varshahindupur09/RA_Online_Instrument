@@ -91,6 +91,9 @@ const FirstInstrConsent = () => {
         last_visited_test_name: previousTestUrl, // Update with the previously traversed url //contains urls of the last visited page
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl,
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
     // Restrict navigation to ensure users can't jump to different pages

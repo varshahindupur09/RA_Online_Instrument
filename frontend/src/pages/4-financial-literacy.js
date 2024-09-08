@@ -51,8 +51,7 @@ const FinancialLiteracy = () => {
 
     // State to store responses
     const [responses, setResponses] = useState({
-        // prolific_id: prolificId, 
-        prolific_id: '',
+        prolific_id: prolificId, 
         test_name: test_name_given, 
         consent: consent === "yes" ? true : false, 
         page_number: 4, 
@@ -71,6 +70,9 @@ const FinancialLiteracy = () => {
         last_visited_test_name: consent === "yes" ? "/" : "/ask-consent-again", 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl,
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
      // Restrict navigation to ensure users can't jump to different pages
@@ -104,7 +106,6 @@ const FinancialLiteracy = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            prolific_id: prolificId,
             time_spent: timeSpent,
             last_visited_test_name: consent === "yes" ? "/" : "/ask-consent-again", // Update the last visited page
             next_visit_test_name: nextTestUrl, // The next page URL

@@ -57,7 +57,6 @@ const CreativeBricksGame = () => {
     // State to store responses
     const [responses, setResponses] = useState({
         prolific_id: prolificId,
-        // prolific_id: '',
         test_name: test_name_given,
         consent: consent === "yes" ? true : false,
         page_number: 11,
@@ -74,6 +73,9 @@ const CreativeBricksGame = () => {
         last_visited_test_name: previousTestUrl, 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl, 
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
     // Restrict navigation to ensure users can't jump to different pages
@@ -116,7 +118,6 @@ const CreativeBricksGame = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            prolific_id: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };

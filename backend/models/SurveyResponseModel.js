@@ -17,6 +17,9 @@ const SurveyResponseSchema = new mongoose.Schema({
     last_visited_test_name: { type: String}, 
     current_visit_test_name: { type: String},
     next_visit_test_name:  { type: String},
+    incentive_calculation: { type: String},
+    each_page_pay_calculation: { type: String}, //each page calculation
+    total_pay_till_now: { type: String}, //total calculation including current page pay
 });
 
 // Create a unique compound index

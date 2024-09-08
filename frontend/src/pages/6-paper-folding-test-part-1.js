@@ -83,6 +83,8 @@ const PaperFoldingPart1Questions = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const correctAnswersPart1 = ['A', 'D', 'B', 'D', 'B', 'E', 'A', 'C', 'E', 'E']; // Answers for Part 1
     
     // Scroll to the top of the page
     useEffect(() => {
@@ -128,8 +130,7 @@ const PaperFoldingPart1Questions = () => {
     
     //api integration
     const [responses, setResponses] = useState({
-        // prolific_id: prolificId, 
-        prolific_id: '',
+        prolific_id: prolificId, 
         test_name: test_name_given, 
         consent: consent === "yes" ? true : false, 
         page_number: 6, 
@@ -155,6 +156,9 @@ const PaperFoldingPart1Questions = () => {
         last_visited_test_name: previousTestUrl, 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl, 
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
     // Restrict navigation to ensure users can't jump to different pages
@@ -186,6 +190,26 @@ const PaperFoldingPart1Questions = () => {
         return !unansweredQuestions; // Return true if all questions are answered
     };
 
+    const calculateIncentive = () => {
+        let correctCount = 0;
+
+        // Loop through responses and check against correct answers
+        Object.keys(responses.responses).forEach((key, index) => {
+            const questionNumber = index + 1; // Question numbers start from 1
+            const userAnswer = responses.responses[`PFT1_question_${questionNumber}`];
+            const correctAnswer = correctAnswersPart1[index];
+
+            if (userAnswer === correctAnswer) {
+                correctCount++; // Increment count if the answer is correct
+            }
+        });
+
+        // Calculate the total incentive (5 cents per correct answer)
+        const totalIncentive = correctCount * 0.05;
+
+        return totalIncentive.toFixed(2);
+    };
+
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -197,6 +221,9 @@ const PaperFoldingPart1Questions = () => {
             return; // Prevent form submission if validation fails
         }
 
+         // Get the calculated incentive
+        const totalIncentive = calculateIncentive();
+
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/paper-folding-test-part-2"; 
@@ -204,9 +231,9 @@ const PaperFoldingPart1Questions = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            prolific_id: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
+            incentive_calculation: totalIncentive, // Update with calculated incentive
         };
 
         let shouldNavigate = true; 
@@ -238,14 +265,6 @@ const PaperFoldingPart1Questions = () => {
             if (shouldNavigate) {
                 navigate(updatedResponses.next_visit_test_name);
             }
-
-            // const responseText = await response.text();
-            // if (!response.ok) {
-            //     throw new Error(responseText || 'Network response was not ok');
-            // }
-            // console.log('Response text:', responseText);
-
-            // navigate(nextTestUrl)
 
         } catch (error) {
             console.error('Error:', error);

@@ -85,6 +85,8 @@ const PaperFoldingPart2Questions = () => {
     const [error, setError] = useState(null);
     const startTimeRef = useRef(null);
 
+    const correctAnswersPart2 = ['C', 'B', 'A', 'E', 'B', 'A', 'A', 'D', 'D', 'C']; // Answers for Part 2
+
     // Scroll to the top of the page
     useEffect(() => {
         window.scrollTo(0, 0); 
@@ -129,8 +131,7 @@ const PaperFoldingPart2Questions = () => {
 
     // State to store responses
     const [responses, setResponses] = useState({
-        // prolific_id: prolificId,
-        prolific_id: '',
+        prolific_id: prolificId,
         test_name: test_name_given,
         consent: consent === "yes" ? true : false,
         page_number: 7,
@@ -156,6 +157,9 @@ const PaperFoldingPart2Questions = () => {
         last_visited_test_name: previousTestUrl, 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl, 
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
     // Restrict navigation to ensure users can't jump to different pages
@@ -184,6 +188,26 @@ const PaperFoldingPart2Questions = () => {
         return !unansweredQuestions; // Return true if all questions are answered
     };
 
+    const calculateIncentive = () => {
+        let correctCount = 0;
+
+        // Loop through responses and check against correct answers
+        Object.keys(responses.responses).forEach((key, index) => {
+            const questionNumber = index + 1; // Question numbers start from 1
+            const userAnswer = responses.responses[`PFT2_question_${questionNumber}`];
+            const correctAnswer = correctAnswersPart2[index];
+
+            if (userAnswer === correctAnswer) {
+                correctCount++; // Increment count if the answer is correct
+            }
+        });
+
+        // Calculate the total incentive (5 cents per correct answer)
+        const totalIncentive = correctCount * 0.05;
+
+        return totalIncentive.toFixed(2);
+    };
+
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -199,12 +223,15 @@ const PaperFoldingPart2Questions = () => {
             return; // Prevent form submission if validation fails
         }
 
+        // Get the calculated incentive
+        const totalIncentive = calculateIncentive();
+
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            prolific_id: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
+            incentive_calculation: totalIncentive, // Update with calculated incentive
         };
 
         let shouldNavigate = true;

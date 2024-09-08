@@ -62,16 +62,19 @@ const FeedbackQuestions = () => {
         last_visited_test_name: previousTestUrl, 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl, 
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
 
     const [feedback, setFeedback] = useState({
-        mentalDemand: 50,
-        physicalDemand: 50,
-        temporalDemand: 50,
-        performance: 50,
-        effort: 50,
-        frustration: 50
+        mentalDemand: 0,
+        physicalDemand: 0,
+        temporalDemand: 0,
+        performance: 0,
+        effort: 0,
+        frustration: 0,
     });
 
     // Restrict navigation to ensure users can't jump to different pages

@@ -155,7 +155,7 @@ const RotationTestPart1 = () => {
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const currentTime = Date.now();
     const currentTestUrl = "/rotation-test-part-1";
-    const previousTestUrl = "/sample-rotation-test";
+    const previousTestUrl = "/attention-check";
     const test_name_given = 'Rotation-Test-1';
 
     // State to store responses
@@ -184,8 +184,7 @@ const RotationTestPart1 = () => {
 
     // State to store responses
     const [responses, setResponses] = useState({
-        // prolific_id: prolificId,
-        prolific_id: '',
+        prolific_id: prolificId,
         test_name: test_name_given,
         consent: consent === "yes" ? true : false,
         page_number: 9,
@@ -211,6 +210,9 @@ const RotationTestPart1 = () => {
         last_visited_test_name: previousTestUrl, 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl, 
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
     // Restrict navigation to ensure users can't jump to different pages
@@ -323,8 +325,8 @@ const RotationTestPart1 = () => {
         const isQuestion9Answered = responses.responses.RT1_question9.split(',').every(answer => answer !== '');
         const isQuestion10Answered = responses.responses.RT1_question10.split(',').every(answer => answer !== '');
     
-        return isQuestion1Answered 
-        && isQuestion2Answered 
+        return isQuestion1Answered
+        && isQuestion2Answered
         && isQuestion3Answered
         && isQuestion4Answered
         && isQuestion5Answered
@@ -358,7 +360,6 @@ const RotationTestPart1 = () => {
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
-            prolific_id: prolificId,
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
@@ -378,14 +379,6 @@ const RotationTestPart1 = () => {
             // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
-
-            // const responseText = await response.text();
-            // if (!response.ok) {
-            //     throw new Error(responseText || 'Network response was not ok');
-            // }
-            // // console.log('Response text:', responseText);
-
-            // navigate(nextTestUrl)
 
             if (!response.ok) {
                 // window.alert('An unexpected error occurred.');
@@ -476,7 +469,7 @@ const RotationTestPart1 = () => {
                 {renderQuestion(question1, question1Answers, 1)}
                 <br />
                 <br />
-                <p><strong>[Q2]</strong></p>
+                 <p><strong>[Q2]</strong></p>
                 {renderQuestion(question2, question2Answers, 2)}
                 <br />
                 <br />

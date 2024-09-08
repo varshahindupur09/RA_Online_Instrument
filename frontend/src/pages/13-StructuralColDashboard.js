@@ -70,7 +70,7 @@ const StructuralColDashboard = () => {
     const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
 
     const [responses, setResponses] = useState({
-        prolific_id: '', 
+        prolific_id: prolificId,
         test_name: test_name_given, 
         consent: consent === "yes"? true : false, 
         page_number: 13, // Page number of where we are navigating, helps with debugging
@@ -100,6 +100,7 @@ const StructuralColDashboard = () => {
             SCD_question22:'',
             SCD_question23:'',
             SCD_question24:'',
+            attention_check: '',
         }, 
         graph_question_durations: [],
         per_graph_durations: [],
@@ -107,8 +108,12 @@ const StructuralColDashboard = () => {
         started_at: currentTime, 
         ended_at: currentTime, 
         time_user_entered_current_page: currentTime, 
-        current_visit_test_name: currentTestUrl,
         last_visited_test_name: previousTestUrl, 
+        current_visit_test_name: currentTestUrl,
+        next_visit_test_name: currentTestUrl, 
+        incentive_calculation: '0',
+        each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
     // Restrict URL navigation to ensure users can't jump to different pages
@@ -122,101 +127,149 @@ const StructuralColDashboard = () => {
     const [timerVisible] = useState(true);
 
     const questionsStructuralCol = [
+        // 1
         {
             question: "In which country were total unit sales of transistors lowest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "UK"
         },
+        // 2
         {
             question: "In which countries were unit sales of CRT03 equal?",
-            options: ["US and Mexico", "Brazil and UK", "Mexico and UK", "Canada and Mexico", "US and UK"]
+            options: ["US and Mexico", "Brazil and UK", "Mexico and UK", "Canada and Mexico", "US and UK"],
+            correctAnswer: "Mexico and UK"
         },
+        // 3
         {
             question: "In which country were total unit sales of circuit boards highest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Mexico"
         },
+        // 4
         {
             question: "In which country were unit sales of CRT03 second lowest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Japan"
         },
+        // 5
         {
             question: "In which country were sales of TRN02 and TRN04 equal?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "US"
         },
+        // 6
         {
             question: "In what country were unit sales of CRT02 and CRT03 equal?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "UK"
         },
+        // 7
         {
             question: "In which country were the second-highest unit sales of TRN01?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Mexico"
         },
+        // 8
         {
             question: "In which country were unit sales of CHP04 second lowest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Brazil"
         },
-        {
-            question: "In which country were unit sales of CRT03 lowest? Regardless of the answer select Mexico.",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-        },
-        {
-            question: "In which country were unit sales of CHP03 and CHP04 closest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-        },
-        {
-            question: "In which country were unit sales of CRT02 second highest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-        },
-        {
-            question: "In which country were total unit sales of chips lowest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
-        },
+        // 9
         {
             question: "In which country were the unit sales of TRN03 the lowest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Brazil"
         },
+        // 10
+        {
+            question: "In which country were unit sales of CHP03 and CHP04 closest?",
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Japan"
+        },
+        // 11
+        {
+            question: "In which country were unit sales of CRT02 second highest?",
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "US"
+        },
+        // 12
+        {
+            question: "In which country were total unit sales of chips lowest?",
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Japan"
+        },
+        // 13
+        {
+            question: "In which country were unit sales of CRT03 lowest? Regardless of the answer select Mexico.",
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Mexico"
+        },
+        // 14
         {
             question: "In which country were total unit sales of chips?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "US"
         },
+        // 15
         {
             question: "In which countries were unit sales of CHP01 and CHP02 closest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Japan"
         },
+        // 16
         {
             question: "In which country were unit sales of CHP03 highest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Canada"
         },
+        // 17
         {
             question: "In which country were the total unit sales of all products lowest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Japan"
         },
+        // 18
         {
             question: "In which country were total unit sales lowest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Japan"
         },
+        // 19
         {
             question: "In which country were total unit sales highest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Mexico"
         },
+        // 20
         {
             question: "What was the second highest-selling transistor product in the US?",
-            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"],
+            correctAnswer: "TRN01"
         },
+        // 21
         {
             question: "In what country were unit sales of CRT02 highest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Mexico"
         },
+        // 22
         {
             question: "In what country were unit sales of CRT04 lowest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "US"
         },
+        // 23
         {
             question: "Which transistor line had the lowest total unit sales across all six countries?",
-            options: ["TRN01", "TRN02", "TRN03", "TRN04"]
+            options: ["TRN01", "TRN02", "TRN03", "TRN04"],
+            correctAnswer: "TRN02"
         },
+        // 24
         {
             question: "In which country were unit sales of CHP03 second lowest?",
-            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"]
+            options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
+            correctAnswer: "Japan"
         }
     ];
 
@@ -258,12 +311,16 @@ const StructuralColDashboard = () => {
 
         // Update the specific question's response in the responses state
         const questionKey = `SCD_question${questionIndex + 1}`;
+        const isCorrect = selectedOption === questionsStructuralCol[questionIndex].correctAnswer; // Check if answer is correct
+        const newIncentive = isCorrect ? 0.05 : 0; // 0.05 for each correct answer
+
         setResponses(prevResponses => ({
             ...prevResponses,
             responses: {
                 ...prevResponses.responses,
                 [questionKey]: selectedOption, // Store the selected option
             },
+            incentive_calculation: (parseFloat(prevResponses.incentive_calculation) + newIncentive).toFixed(2), // Update incentive
         }));
 
         let nextTestUrl = "";
@@ -281,7 +338,6 @@ const StructuralColDashboard = () => {
             nextTestUrl = "/feedback-questions";
             const updatedresponses = {
                 ...responses,
-                prolific_id: prolificId,
                 question_durations: questionDurations,
                 graph_durations: graphDurations,
                 next_visit_test_name: nextTestUrl, // The next page URL
@@ -321,13 +377,13 @@ const StructuralColDashboard = () => {
         setSelectedOption(event.target.value);
     };
 
-    useEffect(() => {
-        if (questionIndex >= questionsStructuralCol.length) {
-            // console.log("Durations for each question:", questionDurations);
-            // console.log("Durations for each graph in each question:", graphDurations);
-            console.logs("No logs!")
-        }
-    }, [questionIndex, questionDurations, graphDurations]);
+    // useEffect(() => {
+    //     if (questionIndex >= questionsStructuralCol.length) {
+    //         // console.log("Durations for each question:", questionDurations);
+    //         // console.log("Durations for each graph in each question:", graphDurations);
+    //         console.logs("No logs!")
+    //     }
+    // }, [questionIndex, questionDurations, graphDurations]);
 
     const handleTimerCompletion = () => {
         let nextTestUrl = "/feedback-questions";
@@ -412,6 +468,7 @@ const StructuralColDashboard = () => {
                 <br></br>
                 <div name="instructions">
                     <div className="question">
+                    <p>{`${questionIndex + 1}. ${questionsStructuralCol[questionIndex].question}`}</p>
                         <p>{questionsStructuralCol[questionIndex].question}</p>
                             {questionsStructuralCol[questionIndex].options.map((option, index) => ( 
                                 <label className="radio-container" key={index} >
