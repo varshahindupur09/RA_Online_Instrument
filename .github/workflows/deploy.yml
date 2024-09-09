@@ -38,43 +38,43 @@ jobs:
           deployment_package: nodejs.zip
 
   deploy-frontend:
-      name: Deploy Frontend to S3
-      runs-on: ubuntu-latest
+    name: Deploy Frontend to S3
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        - name: Set up Node.js
-          uses: actions/setup-node@v4
-          with:
-            node-version: '20'
-
-        - name: Install dependencies for frontend
-          run: |
-              cd frontend 
-              npm install --force
-
-        - name: Build frontend
-          run: |
-              cd frontend 
-              npm run build
-          
-        - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION_NAME }}
+          node-version: '20'
 
-      - name: Sync Build Folder to S3
+      - name: Install dependencies for frontend
         run: |
-          aws s3 sync frontend/build s3://adg429.com/
+            cd frontend 
+            npm install --force
 
-        # - name: Deploy to S3
-        #   env:
-        #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        #   run: |
-        #     aws s3 rm s3://adg429.com --recursive
-        #     # aws s3 cp frontend/build s3://adg429.com/ --recursive --exclude "*/" --include "*"
+      - name: Build frontend
+        run: |
+            cd frontend 
+            npm run build
+        
+      - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION_NAME }}
+
+    - name: Sync Build Folder to S3
+      run: |
+        aws s3 sync frontend/build s3://adg429.com/
+
+      # - name: Deploy to S3
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #   run: |
+      #     aws s3 rm s3://adg429.com --recursive
+      #     # aws s3 cp frontend/build s3://adg429.com/ --recursive --exclude "*/" --include "*"
