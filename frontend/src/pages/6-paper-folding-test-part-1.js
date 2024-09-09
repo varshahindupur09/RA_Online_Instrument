@@ -150,14 +150,14 @@ const PaperFoldingPart1Questions = () => {
         graph_question_durations: [],
         per_graph_durations: [],
         time_spent: 0,
-        started_at: currentTime, // Time when the survey began
-        ended_at: currentTime, // Time when the survey ended
+        // started_at: currentTime, // Time when the survey began
+        // ended_at: currentTime, // Time when the survey ended
         time_user_entered_current_page: currentTime, // Time when the user entered the current page
         last_visited_test_name: previousTestUrl, 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl, 
         incentive_calculation: '0',
-        each_page_pay_calculation: '0',
+        // each_page_pay_calculation: '0',
         total_pay_till_now: '0',
     });
 
@@ -275,10 +275,69 @@ const PaperFoldingPart1Questions = () => {
         }
     };
     
-    const handleTimerCompletion = () => {
-        // navigate("/proceed-to-part2-paper-folding-test"); //if a breather is needed in between we can add it 
+    const handleTimerCompletion = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+         // Validate that all questions have been answered
+         if (!validateResponses()) {
+            setLoading(false);
+            window.alert("Please answer all the questions before proceeding.")
+            return; // Prevent form submission if validation fails
+        }
+
+         // Get the calculated incentive
+        const totalIncentive = calculateIncentive();
+
+        const endTime = Date.now();
+        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/paper-folding-test-part-2"; 
-        navigate(nextTestUrl); 
+
+        // Update responses with the calculated time spent
+        const updatedResponses = {
+            ...responses,
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
+            incentive_calculation: totalIncentive, // Update with calculated incentive
+        };
+
+        let shouldNavigate = true; 
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedResponses),
+            });
+
+            // Simulate API call to save survey responses
+            // console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
+            if (!response.ok) {
+                // window.alert('An unexpected error occurred.');
+                const errorText = await response.text();
+
+                shouldNavigate = false; // Prevent navigation if there's an error
+                console.log("error ", errorText)
+                throw new Error('Network response was not ok');
+            }
+
+            // Only navigate if there were no errors
+            if (shouldNavigate) {
+                navigate(updatedResponses.next_visit_test_name);
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error);
+            shouldNavigate = false;
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

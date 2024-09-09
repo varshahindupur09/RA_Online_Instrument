@@ -68,6 +68,7 @@ const StructuralColDashboard = () => {
     const [questionDurations, setQuestionDurations] = useState([]);
     const [graphDurations, setGraphDurations] = useState([]);
     const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
+    const [timerExpired, setTimerExpired] = useState(false); // New state to track if timer expired
 
     const [responses, setResponses] = useState({
         prolific_id: prolificId,
@@ -105,14 +106,14 @@ const StructuralColDashboard = () => {
         graph_question_durations: [],
         per_graph_durations: [],
         time_spent: 0,
-        started_at: currentTime, 
-        ended_at: currentTime, 
+        // started_at: currentTime, 
+        // ended_at: currentTime, 
         time_user_entered_current_page: currentTime, 
         last_visited_test_name: previousTestUrl, 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl, 
         incentive_calculation: '0',
-        each_page_pay_calculation: '0',
+        // each_page_pay_calculation: '0',
         total_pay_till_now: '0',
     });
 
@@ -300,6 +301,25 @@ const StructuralColDashboard = () => {
         setModalIsOpen(false);
     };
 
+    // Watch for changes in selectedOption or questionIndex and update the responses
+    useEffect(() => {
+        if (selectedOption) {
+            const questionKey = `SCD_question${questionIndex + 1}`;
+            const isCorrect = selectedOption === questionsStructuralCol[questionIndex].correctAnswer;
+            const newIncentive = isCorrect ? 0.05 : 0;
+
+            // Update the responses as the user selects an option
+            setResponses(prevResponses => ({
+                ...prevResponses,
+                responses: {
+                    ...prevResponses.responses,
+                    [questionKey]: selectedOption,
+                },
+                incentive_calculation: (parseFloat(prevResponses.incentive_calculation) + newIncentive).toFixed(2),
+            }));
+        }
+    }, [selectedOption, questionIndex]);
+
     const handleNext = async () => {
         const endTime = new Date();
         const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
@@ -314,30 +334,48 @@ const StructuralColDashboard = () => {
         const isCorrect = selectedOption === questionsStructuralCol[questionIndex].correctAnswer; // Check if answer is correct
         const newIncentive = isCorrect ? 0.05 : 0; // 0.05 for each correct answer
 
-        setResponses(prevResponses => ({
-            ...prevResponses,
+
+        let updatedResponses = {
+            ...responses,
             responses: {
-                ...prevResponses.responses,
+                ...responses.responses,
                 [questionKey]: selectedOption, // Store the selected option
             },
-            incentive_calculation: (parseFloat(prevResponses.incentive_calculation) + newIncentive).toFixed(2), // Update incentive
-        }));
+            incentive_calculation: (parseFloat(responses.incentive_calculation) + newIncentive).toFixed(2), // Update incentive
+        };
+
+        // Special attention check logic for Question 13 (index 12)
+        if (questionIndex + 1 === 13) { // Question 13 is at index 12
+            const correctAnswerQ13 = questionsStructuralCol[12].correctAnswer;
+            if (selectedOption === correctAnswerQ13) {
+                updatedResponses = {
+                    ...updatedResponses,
+                    responses: {
+                        ...updatedResponses.responses,
+                        attention_check: 'passed',
+                    }
+                };
+            } 
+            else {
+                updatedResponses = {
+                    ...updatedResponses,
+                    responses: {
+                        ...updatedResponses.responses,
+                        attention_check: 'failed',
+                    }
+                };
+            }
+        }
 
         let nextTestUrl = "";
         let shouldNavigate = true;
     
-        if (questionIndex < questionsStructuralCol.length - 1) {
-            // Prepare for the next question
-            setQuestionIndex(questionIndex + 1);
-            setSelectedOption('');
-            setQuestionStartTime(new Date()); // Reset the start time for the next question
-            setCurrentGraphDurations([]); // Clear current graph durations
-        } 
-        else 
-        {
+        if (questionIndex === questionsStructuralCol.length - 1) {
+       
             nextTestUrl = "/feedback-questions";
-            const updatedresponses = {
-                ...responses,
+            
+            let finalResponses = {
+                ...updatedResponses,
                 question_durations: questionDurations,
                 graph_durations: graphDurations,
                 next_visit_test_name: nextTestUrl, // The next page URL
@@ -349,7 +387,7 @@ const StructuralColDashboard = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(updatedresponses), // Send responses to the backend
+                    body: JSON.stringify(finalResponses), // Send responses to the backend
                 });
 
                 if (!response.ok) {
@@ -368,8 +406,20 @@ const StructuralColDashboard = () => {
 
             // Only navigate if there were no errors
             if (shouldNavigate) {
-                navigate(updatedresponses.next_visit_test_name);
+                navigate(finalResponses.next_visit_test_name);
             }
+        }
+        else {
+            // If it's not the last question, just update the state and move to the next question
+            setResponses(updatedResponses);
+    
+            // Proceed to the next question
+            setQuestionIndex(questionIndex + 1);
+            setSelectedOption('');
+            setQuestionStartTime(new Date()); // Reset the start time for the next question
+            setCurrentGraphDurations([]); // Clear current graph durations
+
+            // console.log(" numb: ", questionIndex + 1)
         }
     };
 
@@ -385,11 +435,112 @@ const StructuralColDashboard = () => {
     //     }
     // }, [questionIndex, questionDurations, graphDurations]);
 
-    const handleTimerCompletion = () => {
-        let nextTestUrl = "/feedback-questions";
-        navigate(nextTestUrl);
-    };
+    const handleTimerCompletion = async () => {
+        setTimerExpired(true);
 
+        const endTime = new Date();
+        const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
+        setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
+        setGraphDurations(prevDurations => [...prevDurations, [...currentGraphDurations]]); // Ensure deep copy
+    
+        // console.log(`Time spent on question ${questionIndex + 1}: ${questionDuration} seconds`);
+        // console.log(`Time spent on each graph for question ${questionIndex + 1}:`, currentGraphDurations);
+
+        // Update the specific question's response in the responses state
+        const questionKey = `SCD_question${questionIndex + 1}`;
+        const isCorrect = selectedOption === questionsStructuralCol[questionIndex].correctAnswer; // Check if answer is correct
+        const newIncentive = isCorrect ? 0.05 : 0; // 0.05 for each correct answer
+
+
+        let updatedResponses = {
+            ...responses,
+            responses: {
+                ...responses.responses,
+                [questionKey]: selectedOption, // Store the selected option
+            },
+            incentive_calculation: (parseFloat(responses.incentive_calculation) + newIncentive).toFixed(2), // Update incentive
+        };
+
+        // Special attention check logic for Question 13 (index 12)
+        if (questionIndex + 1 === 13) { // Question 13 is at index 12
+            const correctAnswerQ13 = questionsStructuralCol[12].correctAnswer;
+            if (selectedOption === correctAnswerQ13) {
+                updatedResponses = {
+                    ...updatedResponses,
+                    responses: {
+                        ...updatedResponses.responses,
+                        attention_check: 'passed',
+                    }
+                };
+            } 
+            else {
+                updatedResponses = {
+                    ...updatedResponses,
+                    responses: {
+                        ...updatedResponses.responses,
+                        attention_check: 'failed',
+                    }
+                };
+            }
+        }
+
+        let nextTestUrl = "";
+        let shouldNavigate = true;
+
+    
+        if (timerExpired === true) {
+       
+            nextTestUrl = "/feedback-questions";
+
+            // Create final responses object including durations and unanswered questions
+            let finalResponses = {
+                ...updatedResponses,
+                question_durations: questionDurations,
+                graph_durations: graphDurations,
+                next_visit_test_name: "/feedback-questions", // Redirect after submission
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(finalResponses), // Send responses to the backend
+                });
+
+                if (!response.ok) {
+                    // window.alert('An unexpected error occurred.');
+                    const errorText = await response.text();
+    
+                    shouldNavigate = false; // Prevent navigation if there's an error
+                    console.log("error ", errorText)
+                    throw new Error('Network response was not ok');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                shouldNavigate = false;
+            }
+
+            // Only navigate if there were no errors
+            if (shouldNavigate) {
+                navigate(finalResponses.next_visit_test_name);
+            }
+        }
+        else {
+            // If it's not the last question, just update the state and move to the next question
+            setResponses(updatedResponses);
+    
+            // Proceed to the next question
+            setQuestionIndex(questionIndex + 1);
+            setSelectedOption('');
+            setQuestionStartTime(new Date()); // Reset the start time for the next question
+            setCurrentGraphDurations([]); // Clear current graph durations
+
+            // console.log(" numb: ", questionIndex + 1)
+        }
+    };
 
     return (
         <div className="container">
@@ -403,7 +554,8 @@ const StructuralColDashboard = () => {
                 </div>
                 <br />
                 <br />
-                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />}
+                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />} 
+                {/* 420 */}
                 <br />
                 <br />
                 <br />
@@ -468,7 +620,7 @@ const StructuralColDashboard = () => {
                 <br></br>
                 <div name="instructions">
                     <div className="question">
-                    <p>{`${questionIndex + 1}. ${questionsStructuralCol[questionIndex].question}`}</p>
+                    {/* <p>{`${questionIndex + 1}. ${questionsStructuralCol[questionIndex].question}`}</p> */}
                         <p>{questionsStructuralCol[questionIndex].question}</p>
                             {questionsStructuralCol[questionIndex].options.map((option, index) => ( 
                                 <label className="radio-container" key={index} >

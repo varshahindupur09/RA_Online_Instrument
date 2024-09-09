@@ -37,12 +37,15 @@ const AttentionCheck = () => {
         graph_question_durations: [],
         per_graph_durations: [],
         time_spent: 0,
-        started_at: currentTime, // Time when the survey began
-        ended_at: currentTime, // Time when the survey ended
+        // started_at: currentTime, // Time when the survey began
+        // ended_at: currentTime, // Time when the survey ended
         time_user_entered_current_page: currentTime, // Time when the user entered the current page
         last_visited_test_name: previousTestUrl, 
         current_visit_test_name: currentTestUrl,
         next_visit_test_name: currentTestUrl, 
+        incentive_calculation: '0',
+        // each_page_pay_calculation: '0',
+        total_pay_till_now: '0',
     });
 
      // Scroll to the top of the page
