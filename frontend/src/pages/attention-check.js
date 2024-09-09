@@ -86,6 +86,9 @@ const AttentionCheck = () => {
             return;
         }
 
+        setError(null);  // Clear previous errors
+        setLoading(true); // Start loading when the user clicks the button
+
         let updatedResponses = { ...responses };
         let finalResponses = { ...updatedResponses };
 
@@ -132,6 +135,9 @@ const AttentionCheck = () => {
                     console.error('Error:', error);
                     window.alert(`Error: ${error.message || 'An unexpected error occurred.'}`);
                     setError(error);
+                }
+                finally {
+                    setLoading(false); // Stop loading after the API call completes
                 }
                 return;
         }
@@ -191,6 +197,9 @@ const AttentionCheck = () => {
                 window.alert(`Error: ${error.message || 'An unexpected error occurred.'}`);
                 setError(error);
             }
+            finally {
+                setLoading(false); // Stop loading
+            }
         }
         else if (attempts === 1 && selectedAnswer !== correctAnswer)
         {
@@ -232,6 +241,9 @@ const AttentionCheck = () => {
                 console.error('Error:', error);
                 window.alert(`Error: ${error.message || 'An unexpected error occurred.'}`);
                 setError(error);
+            }
+            finally {
+                setLoading(false); // Stop loading
             }
 
         }
@@ -287,6 +299,7 @@ const AttentionCheck = () => {
                     <br />
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if no answer is selected */}
+                {loading && <p>Loading...</p>}
                 <br></br>
                 <br></br>
                 <br></br>

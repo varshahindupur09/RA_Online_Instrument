@@ -12,7 +12,7 @@ const Demographics = () => {
     const currentTestUrl = "";
     const previousTestUrl = "/feedback-questions"; 
     const test_name_given = 'Demographics-Questions';
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const startTimeRef = useRef(Date.now());
     const { consent, chart_number, prolificId} = useConsent(); 

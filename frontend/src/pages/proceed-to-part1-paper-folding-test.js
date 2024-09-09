@@ -34,11 +34,11 @@ const ProceedToPart1PaperFoldingTest = () => {
         };
     }, []);
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const handleNext = async (event) => {
+        event.preventDefault();
 
-    const handleNext = () => {
-        navigate("paper-folding-test-sample-question")
+        let next_page_url ="paper-folding-test-sample-question"; 
+        navigate(next_page_url)
     };
 
     return (
@@ -52,8 +52,6 @@ const ProceedToPart1PaperFoldingTest = () => {
             <br></br>
             <br></br>
             <br></br>
-            {loading && <p>Loading...</p>}
-            {error && <p>Error: {error.message}</p>}
             <div name="instructions">
                 <p>
                     Next, you will answer some questions that will help me understand your spatial ability. Prior research shows that different people have different levels of spatial ability. Some people will find these questions easier while others will find them more difficult.
@@ -73,7 +71,6 @@ const ProceedToPart1PaperFoldingTest = () => {
                 onClick={handleNext}> 
                 Next 
             </button>
-            {error && <p className="error-message">{error.message}</p>}
         </div>
     );
 };

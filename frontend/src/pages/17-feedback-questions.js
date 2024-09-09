@@ -47,7 +47,7 @@ const FeedbackQuestions = () => {
     }, []);
 
     const [responses, setResponses] = useState({
-        prolific_id: '',
+        prolific_id: prolificId,
         test_name: test_name_given,
         consent: consent === "yes" ? true : false,
         page_number: 17,
@@ -104,7 +104,6 @@ const FeedbackQuestions = () => {
 
         const updatedresponses = {
             ...responses, 
-            prolific_id: prolificId,
             responses: feedback,
             timeSpent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL

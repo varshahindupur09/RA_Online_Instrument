@@ -18,21 +18,19 @@ const FirstInstrConsent = () => {
     //url catch
     const location = useLocation();
     // console.log("URL LOCATION ***** ", location)
-    const query = new URLSearchParams(location.search);
-    // console.log("URL QUERY ***** ", query)
 
     useEffect(() => {
-        if (!manualProlificIdSet) {
-            const id = query.get('PROLIFIC_PID');
-            // const id = "66ce204a5c724a497b287acc"
+        const query = new URLSearchParams(location.search);
+        // console.log("URL QUERY ***** ", query)
+        const id = query.get('PROLIFIC_PID');
+        // const id = "66ce204a5c724a497b287acc"
 
-            if (id && id.length === 24)  {
-                setProlificId(id);
-                console.log("Enabling consent buttons in useeffect for prolific id");  
-                setIsConsentDisabled(false); // Enable consent buttons
-            }
+        if (id && id.length === 24 && !manualProlificIdSet)  {
+            setProlificId(id);
+            console.log("Enabling consent buttons in useeffect for prolific id");  
+            setIsConsentDisabled(false); // Enable consent buttons
         }
-    }, [query, setProlificId, manualProlificIdSet]);
+    }, [location.search, setProlificId, manualProlificIdSet]); // location.search as dependency
 
     
     // Scroll to the top of the page
@@ -108,8 +106,8 @@ const FirstInstrConsent = () => {
     const handleInputChange = (e) => {
         const trimmedId = e.target.value.trim();
         setProlificId(trimmedId); // Update the Prolific ID in the ConsentContext
-        console.log("Prolific ID entered handleInputChange: ", trimmedId);  // Debugging statement
-        console.log("Prolific ID length handleInputChange: ", trimmedId.length);  // Debugging statement
+        // console.log("Prolific ID entered handleInputChange: ", trimmedId);  // Debugging statement
+        // console.log("Prolific ID length handleInputChange: ", trimmedId.length);  // Debugging statement
         setManualProlificIdSet(true);
 
         // Enable consent if Prolific ID is exactly 24 characters
@@ -143,8 +141,8 @@ const FirstInstrConsent = () => {
 
         const prolificIdFromUrl = urlParams.get('PROLIFIC_PID');
 
-        console.log("URL Prolific ID coming from URL: ", prolificIdFromUrl);
-        console.log("URL Prolific ID coming from state: ", prolificId);
+        // console.log("URL Prolific ID coming from URL: ", prolificIdFromUrl);
+        // console.log("URL Prolific ID coming from state: ", prolificId);
 
         if (prolificIdFromUrl) {
             setProlificId(prolificIdFromUrl);

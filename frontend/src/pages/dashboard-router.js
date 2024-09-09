@@ -85,6 +85,7 @@ const DashboardRouter = () => {
                     if (!responseSurvey.ok) throw new Error('Failed to post responseSurvey');
 
                     setChartNumber(nextChartNumber); // Set the chart number in context for existing chart number found condition
+                    setResponses(updatedResponses);
 
                     console.log("Chart number updated to:", chartNumber);
                 } else {
@@ -117,6 +118,7 @@ const DashboardRouter = () => {
 
                     data = await response.json();
                     setChartNumber(assignFirstChart); // Set the chart number in context for No chart number found condition
+                    setResponses(updatedResponses);
 
                     console.log("New chart number posted: ", chartNumber);
                 }

@@ -97,7 +97,6 @@ const ConsentPage = () => {
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
-        let nextTestUrl = ""; // Use let instead of const as const is unmutable
         let shouldNavigate = true; // Default to navigating unless an error occurs
 
         // Ensure the updated responses use the actual state of consent directly
