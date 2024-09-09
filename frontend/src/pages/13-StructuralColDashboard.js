@@ -24,12 +24,24 @@ const StructuralColDashboard = () => {
     const navigate = useNavigate();
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const { consent, prolificId, chart_number } = useConsent(); // Access consent and Prolific ID from context
-    // const { consent, chart_number } = useConsent(); 
+    const [loading, setLoading] = useState(false);  
+    const [error, setError] = useState(null); 
 
     const currentTime = Date.now();
     const currentTestUrl = "/structure-col-dashboard";
     const previousTestUrl = "/dashboard-router";
     const test_name_given = 'Structural-Col-Dashboard';
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState('');
+    const [questionIndex, setQuestionIndex] = useState(0);
+    const [selectedOption, setSelectedOption] = useState('');
+    const [questionStartTime, setQuestionStartTime] = useState(new Date());
+    const [graphStartTime, setGraphStartTime] = useState(null);
+    const [questionDurations, setQuestionDurations] = useState([]);
+    const [graphDurations, setGraphDurations] = useState([]);
+    const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
+    const [timerExpired, setTimerExpired] = useState(false); // New state to track if timer expired
 
     // Scroll to the top of the page
     useEffect(() => {
@@ -58,17 +70,6 @@ const StructuralColDashboard = () => {
             window.removeEventListener('keydown', preventBackNavigation);
         };
     }, []);
-
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState('');
-    const [questionIndex, setQuestionIndex] = useState(0);
-    const [selectedOption, setSelectedOption] = useState('');
-    const [questionStartTime, setQuestionStartTime] = useState(new Date());
-    const [graphStartTime, setGraphStartTime] = useState(null);
-    const [questionDurations, setQuestionDurations] = useState([]);
-    const [graphDurations, setGraphDurations] = useState([]);
-    const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
-    const [timerExpired, setTimerExpired] = useState(false); // New state to track if timer expired
 
     const [responses, setResponses] = useState({
         prolific_id: prolificId,
@@ -101,6 +102,7 @@ const StructuralColDashboard = () => {
             SCD_question22:'',
             SCD_question23:'',
             SCD_question24:'',
+            // num_questions_correctly_ans: '',
             attention_check: '',
         }, 
         graph_question_durations: [],
@@ -301,26 +303,10 @@ const StructuralColDashboard = () => {
         setModalIsOpen(false);
     };
 
-    // Watch for changes in selectedOption or questionIndex and update the responses
-    useEffect(() => {
-        if (selectedOption) {
-            const questionKey = `SCD_question${questionIndex + 1}`;
-            const isCorrect = selectedOption === questionsStructuralCol[questionIndex].correctAnswer;
-            const newIncentive = isCorrect ? 0.05 : 0;
+    const handleNext = async (event) => {
+        event.preventDefault();
+        setLoading(true);
 
-            // Update the responses as the user selects an option
-            setResponses(prevResponses => ({
-                ...prevResponses,
-                responses: {
-                    ...prevResponses.responses,
-                    [questionKey]: selectedOption,
-                },
-                incentive_calculation: (parseFloat(prevResponses.incentive_calculation) + newIncentive).toFixed(2),
-            }));
-        }
-    }, [selectedOption, questionIndex]);
-
-    const handleNext = async () => {
         const endTime = new Date();
         const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
         setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
@@ -333,7 +319,6 @@ const StructuralColDashboard = () => {
         const questionKey = `SCD_question${questionIndex + 1}`;
         const isCorrect = selectedOption === questionsStructuralCol[questionIndex].correctAnswer; // Check if answer is correct
         const newIncentive = isCorrect ? 0.05 : 0; // 0.05 for each correct answer
-
 
         let updatedResponses = {
             ...responses,
@@ -403,6 +388,9 @@ const StructuralColDashboard = () => {
                 console.error('Error:', error);
                 shouldNavigate = false;
             }
+            finally {
+                setLoading(false);
+            }
 
             // Only navigate if there were no errors
             if (shouldNavigate) {
@@ -420,6 +408,7 @@ const StructuralColDashboard = () => {
             setCurrentGraphDurations([]); // Clear current graph durations
 
             // console.log(" numb: ", questionIndex + 1)
+            setLoading(false);
         }
     };
 
@@ -427,15 +416,10 @@ const StructuralColDashboard = () => {
         setSelectedOption(event.target.value);
     };
 
-    // useEffect(() => {
-    //     if (questionIndex >= questionsStructuralCol.length) {
-    //         // console.log("Durations for each question:", questionDurations);
-    //         // console.log("Durations for each graph in each question:", graphDurations);
-    //         console.logs("No logs!")
-    //     }
-    // }, [questionIndex, questionDurations, graphDurations]);
+    const handleTimerCompletion = async (event) => {
+        event.preventDefault();
+        setLoading(true);
 
-    const handleTimerCompletion = async () => {
         setTimerExpired(true);
 
         const endTime = new Date();
@@ -483,6 +467,16 @@ const StructuralColDashboard = () => {
                 };
             }
         }
+        else if (questionIndex + 1 < 13)
+        {
+            updatedResponses = {
+                ...updatedResponses,
+                responses: {
+                    ...updatedResponses.responses,
+                    attention_check: 'failed',
+                }
+            };
+        }
 
         let nextTestUrl = "";
         let shouldNavigate = true;
@@ -522,6 +516,9 @@ const StructuralColDashboard = () => {
                 console.error('Error:', error);
                 shouldNavigate = false;
             }
+            finally {
+                setLoading(false);
+            }
 
             // Only navigate if there were no errors
             if (shouldNavigate) {
@@ -539,6 +536,7 @@ const StructuralColDashboard = () => {
             setCurrentGraphDurations([]); // Clear current graph durations
 
             // console.log(" numb: ", questionIndex + 1)
+            setLoading(false);
         }
     };
 
@@ -641,6 +639,8 @@ const StructuralColDashboard = () => {
                 <br />
                 <br />
                 <button className="nextbutton" onClick={handleNext}>Next</button>
+                {loading && <p>Loading...</p>} 
+                {error && <p>Error: {error.message}</p>}
             </div>
         </div>
     );

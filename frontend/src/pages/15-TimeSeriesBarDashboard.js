@@ -30,10 +30,12 @@ const TimeSeriesBarDashboard = () => {
     const [questionDurations, setQuestionDurations] = useState([]);
     const [graphDurations, setGraphDurations] = useState([]);
     const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
+    const [timerExpired, setTimerExpired] = useState(false); // New state to track if timer expired
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const { consent, prolificId, chart_number} = useConsent(); // Access consent and Prolific ID from context
-    // const { consent, chart_number } = useConsent(); 
+    const [loading, setLoading] = useState(false);  
+    const [error, setError] = useState(null); 
 
     const currentTime = Date.now();
     const currentTestUrl = "/timeseries-bar-dashboard";
@@ -300,12 +302,10 @@ const TimeSeriesBarDashboard = () => {
         setModalIsOpen(false);
     };
 
-    const handleTimerCompletion = () => {
-        let nextTestUrl = "/feedback-questions";
-        navigate(nextTestUrl);
-    };
+    const handleNext = async (event) => {
+        event.preventDefault();
+        setLoading(true);
 
-    const handleNext = async () => {
         const endTime = new Date();
         const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
         setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
@@ -327,6 +327,29 @@ const TimeSeriesBarDashboard = () => {
             },
             incentive_calculation: (parseFloat(responses.incentive_calculation) + newIncentive).toFixed(2), // Update incentive
         };
+
+        // Special attention check logic for Question 13 (index 12)
+        if (questionIndex + 1 === 13) { // Question 13 is at index 12
+            const correctAnswerQ13 = questionsTimeSeriesBar[12].correctAnswer;
+            if (selectedOption === correctAnswerQ13) {
+                updatedResponses = {
+                    ...updatedResponses,
+                    responses: {
+                        ...updatedResponses.responses,
+                        attention_check: 'passed',
+                    }
+                };
+            } 
+            else {
+                updatedResponses = {
+                    ...updatedResponses,
+                    responses: {
+                        ...updatedResponses.responses,
+                        attention_check: 'failed',
+                    }
+                };
+            }
+        }
 
         let nextTestUrl = "";
         let shouldNavigate = true;
@@ -364,6 +387,9 @@ const TimeSeriesBarDashboard = () => {
                 console.error('Error:', error);
                 shouldNavigate = false;
             }
+            finally {
+                setLoading(false);
+            }
 
             // Only navigate if there were no errors
             if (shouldNavigate) {
@@ -381,6 +407,7 @@ const TimeSeriesBarDashboard = () => {
             setCurrentGraphDurations([]); // Clear current graph durations
 
             // console.log(" numb: ", questionIndex + 1)
+            setLoading(false);
         }
     };
 
@@ -388,13 +415,129 @@ const TimeSeriesBarDashboard = () => {
         setSelectedOption(event.target.value);
     };
 
-    useEffect(() => {
-        if (questionIndex >= questionsTimeSeriesBar.length) {
-            // console.log("Durations for each question:", questionDurations);
-            // console.log("Durations for each graph in each question:", graphDurations);
-            console.log("No logs")
+    const handleTimerCompletion = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+        setTimerExpired(true);
+
+        const endTime = new Date();
+        const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
+        setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
+        setGraphDurations(prevDurations => [...prevDurations, [...currentGraphDurations]]); // Ensure deep copy
+    
+        // console.log(`Time spent on question ${questionIndex + 1}: ${questionDuration} seconds`);
+        // console.log(`Time spent on each graph for question ${questionIndex + 1}:`, currentGraphDurations);
+
+        // Update the specific question's response in the responses state
+        const questionKey = `TBD_question${questionIndex + 1}`;
+        const isCorrect = selectedOption === questionsTimeSeriesBar[questionIndex].correctAnswer; // Check if answer is correct
+        const newIncentive = isCorrect ? 0.05 : 0; // 0.05 for each correct answer
+
+
+        let updatedResponses = {
+            ...responses,
+            responses: {
+                ...responses.responses,
+                [questionKey]: selectedOption, // Store the selected option
+            },
+            incentive_calculation: (parseFloat(responses.incentive_calculation) + newIncentive).toFixed(2), // Update incentive
+        };
+
+        // Special attention check logic for Question 13 (index 12)
+        if (questionIndex + 1 === 13) { // Question 13 is at index 12
+            const correctAnswerQ13 = questionsTimeSeriesBar[12].correctAnswer;
+            if (selectedOption === correctAnswerQ13) {
+                updatedResponses = {
+                    ...updatedResponses,
+                    responses: {
+                        ...updatedResponses.responses,
+                        attention_check: 'passed',
+                    }
+                };
+            } 
+            else {
+                updatedResponses = {
+                    ...updatedResponses,
+                    responses: {
+                        ...updatedResponses.responses,
+                        attention_check: 'failed',
+                    }
+                };
+            }
         }
-    }, [questionIndex, questionDurations, graphDurations]);
+        else if (questionIndex + 1 < 13)
+        {
+            updatedResponses = {
+                ...updatedResponses,
+                responses: {
+                    ...updatedResponses.responses,
+                    attention_check: 'failed',
+                }
+            };
+        }
+
+        let nextTestUrl = "";
+        let shouldNavigate = true;
+
+    
+        if (timerExpired === true) {
+       
+            nextTestUrl = "/feedback-questions";
+
+            // Create final responses object including durations and unanswered questions
+            let finalResponses = {
+                ...updatedResponses,
+                question_durations: questionDurations,
+                graph_durations: graphDurations,
+                next_visit_test_name: "/feedback-questions", // Redirect after submission
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(finalResponses), // Send responses to the backend
+                });
+
+                if (!response.ok) {
+                    // window.alert('An unexpected error occurred.');
+                    const errorText = await response.text();
+    
+                    shouldNavigate = false; // Prevent navigation if there's an error
+                    console.log("error ", errorText)
+                    throw new Error('Network response was not ok');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                shouldNavigate = false;
+            }
+            finally {
+                setLoading(false);
+            }
+
+            // Only navigate if there were no errors
+            if (shouldNavigate) {
+                navigate(finalResponses.next_visit_test_name);
+            }
+        }
+        else {
+            // If it's not the last question, just update the state and move to the next question
+            setResponses(updatedResponses);
+    
+            // Proceed to the next question
+            setQuestionIndex(questionIndex + 1);
+            setSelectedOption('');
+            setQuestionStartTime(new Date()); // Reset the start time for the next question
+            setCurrentGraphDurations([]); // Clear current graph durations
+
+            // console.log(" numb: ", questionIndex + 1)
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="container">
@@ -491,6 +634,8 @@ const TimeSeriesBarDashboard = () => {
                 <br />
                 <br />
                 <button className="nextbutton" onClick={handleNext}>Next</button>
+                {loading && <p>Loading...</p>} 
+            {   error && <p>Error: {error.message}</p>}
             </div>
         </div>
     );
