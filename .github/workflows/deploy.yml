@@ -26,13 +26,14 @@ jobs:
         run: |
           cd backend
           zip -r ../nodejs.zip . -x "node_modules/*" -x ".git/*"
-      - name: Deploy to Elastic Beanstalk
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-        run: |
-          eb init -p node.js survey-web-app --region $AWS_REGION
-          eb use Survey-web-app-env  # Replace with your Elastic Beanstalk environment name
-          eb deploy
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: 'survey-web-app'
+          environment_name: 'survey-web-app-env'
+          version_label: ${{ github.sha }}
+          region: us-east-1
+          deployment_package: nodejs.zip
 
