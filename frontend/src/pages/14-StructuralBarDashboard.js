@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css';  
@@ -41,7 +41,6 @@ const StructuralBarDashboard = () => {
     const [questionDurations, setQuestionDurations] = useState([]);
     const [graphDurations, setGraphDurations] = useState([]);
     const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
-    const [timerExpired, setTimerExpired] = useState(false); // New state to track if timer expired
 
     // Scroll to the top of the page
     useEffect(() => {
@@ -75,7 +74,7 @@ const StructuralBarDashboard = () => {
     const [timerVisible] = useState(true);
 
     const [responses, setResponses] = useState({
-        prolific_id: '', 
+        prolific_id: prolificId, 
         test_name: test_name_given,
         consent: consent === "yes"? true : false, 
         page_number: 14, // Page number of where we are navigating, helps with debugging
@@ -106,7 +105,7 @@ const StructuralBarDashboard = () => {
             SBD_question23:'',
             SBD_question24:'',
             // num_questions_correctly_ans: '',
-            attention_check: '',
+            attention_check: 'failed',
         }, 
         graph_question_durations: [],
         per_graph_durations: [],
@@ -129,7 +128,7 @@ const StructuralBarDashboard = () => {
         }
     }, [navigate, responses.current_visit_test_name]);
 
-    const questionsStructuralBar = [
+    const questionsStructuralBar = useMemo(() => [
         // 1
         {
             question: "In which country were total unit sales of transistors lowest?",
@@ -274,7 +273,7 @@ const StructuralBarDashboard = () => {
             options: ["Japan", "Canada", "Mexico", "US", "UK", "Brazil"],
             correctAnswer: "Japan"
         }
-    ];
+    ], []);
 
     const StructuralBarImages = [
         StructuralBarImage1,
@@ -303,35 +302,38 @@ const StructuralBarDashboard = () => {
         setModalIsOpen(false);
     };
 
-    const handleNext = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-        
-        const endTime = new Date();
-        const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
-        setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
-        setGraphDurations(prevDurations => [...prevDurations, [...currentGraphDurations]]); // Ensure deep copy
-    
-        // console.log(`Time spent on question ${questionIndex + 1}: ${questionDuration} seconds`);
-        // console.log(`Time spent on each graph for question ${questionIndex + 1}:`, currentGraphDurations);
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
 
-        // Update the specific question's response in the responses state
+    useEffect(() => {
+        if (!selectedOption) return;  // Avoid unnecessary updates if no option is selected
+
         const questionKey = `SBD_question${questionIndex + 1}`;
-        const isCorrect = selectedOption === questionsStructuralBar[questionIndex].correctAnswer; // Check if answer is correct
-        const newIncentive = isCorrect ? 0.05 : 0; // 0.05 for each correct answer
 
-        let updatedResponses = {
-            ...responses,
-            responses: {
-                ...responses.responses,
-                [questionKey]: selectedOption, // Store the selected option
-            },
-            incentive_calculation: (parseFloat(responses.incentive_calculation) + newIncentive).toFixed(2), // Update incentive
-        };
-
+        let updatedResponses = { ...responses };
+    
+        if (selectedOption) {
+            // If an option is selected, check if it's correct
+            const isCorrect = selectedOption === questionsStructuralBar[questionIndex].correctAnswer;
+            const newIncentive = isCorrect ? 0.05 : 0; // 0.05 for each correct answer
+    
+            // Update the responses with the selected option and incentive
+            updatedResponses = {
+                ...updatedResponses,
+                responses: {
+                    ...updatedResponses.responses,
+                    [questionKey]: selectedOption, // Store the selected option
+                },
+                incentive_calculation: (parseFloat(responses.incentive_calculation) + newIncentive).toFixed(2), // Update incentive
+            };
+        }
+    
         // Special attention check logic for Question 13 (index 12)
-        if (questionIndex + 1 === 13) { // Question 13 is at index 12
+        if (questionIndex + 1 === 13) 
+        { // Question 13 is at index 12
             const correctAnswerQ13 = questionsStructuralBar[12].correctAnswer;
+    
             if (selectedOption === correctAnswerQ13) {
                 updatedResponses = {
                     ...updatedResponses,
@@ -340,32 +342,39 @@ const StructuralBarDashboard = () => {
                         attention_check: 'passed',
                     }
                 };
-            } 
-            else {
-                updatedResponses = {
-                    ...updatedResponses,
-                    responses: {
-                        ...updatedResponses.responses,
-                        attention_check: 'failed',
-                    }
-                };
-            }
+            };
+
         }
+    
+        setResponses(updatedResponses); // Save the updated responses
+    }, [selectedOption, questionIndex]);
+
+    const handleNext = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
+        const endTime = new Date();
+        const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
+        setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
+        setGraphDurations(prevDurations => [...prevDurations, [...currentGraphDurations]]); // Ensure deep copy
 
         let nextTestUrl = "";
         let shouldNavigate = true;
-    
-        if (questionIndex === questionsStructuralBar.length - 1) {
        
-            nextTestUrl = "/feedback-questions";
-            
+        nextTestUrl = "/feedback-questions";
+        
+        if (questionIndex + 1 === 24) 
+        {
+            // This is the last question, handle final submission
             let finalResponses = {
-                ...updatedResponses,
+                ...responses,
                 question_durations: questionDurations,
                 graph_durations: graphDurations,
                 next_visit_test_name: nextTestUrl, // The next page URL
             };
 
+            setError(null)
+
             try {
                 const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                     method: 'POST',
@@ -378,7 +387,7 @@ const StructuralBarDashboard = () => {
                 if (!response.ok) {
                     // window.alert('An unexpected error occurred.');
                     const errorText = await response.text();
-    
+
                     shouldNavigate = false; // Prevent navigation if there's an error
                     console.log("error ", errorText)
                     throw new Error('Network response was not ok');
@@ -397,147 +406,53 @@ const StructuralBarDashboard = () => {
                 navigate(finalResponses.next_visit_test_name);
             }
         }
-        else {
-            // If it's not the last question, just update the state and move to the next question
-            setResponses(updatedResponses);
-    
-            // Proceed to the next question
+        else 
+        {
+            // Move to the next question (not the last one)
             setQuestionIndex(questionIndex + 1);
-            setSelectedOption('');
+            setSelectedOption(''); // Clear selected option
             setQuestionStartTime(new Date()); // Reset the start time for the next question
-            setCurrentGraphDurations([]); // Clear current graph durations
-
-            // console.log(" numb: ", questionIndex + 1)
+            setCurrentGraphDurations([]); // Clear graph durations
             setLoading(false);
         }
     };
 
-    const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
-    };
 
     const handleTimerCompletion = async (event) => {
-        event.preventDefault();
-        setLoading(true);
 
-        setTimerExpired(true);
-
-        const endTime = new Date();
-        const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
-        setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
-        setGraphDurations(prevDurations => [...prevDurations, [...currentGraphDurations]]); // Ensure deep copy
-    
-        // console.log(`Time spent on question ${questionIndex + 1}: ${questionDuration} seconds`);
-        // console.log(`Time spent on each graph for question ${questionIndex + 1}:`, currentGraphDurations);
-
-        // Update the specific question's response in the responses state
-        const questionKey = `SBD_question${questionIndex + 1}`;
-        const isCorrect = selectedOption === questionsStructuralBar[questionIndex].correctAnswer; // Check if answer is correct
-        const newIncentive = isCorrect ? 0.05 : 0; // 0.05 for each correct answer
-
-
-        let updatedResponses = {
-            ...responses,
-            responses: {
-                ...responses.responses,
-                [questionKey]: selectedOption, // Store the selected option
-            },
-            incentive_calculation: (parseFloat(responses.incentive_calculation) + newIncentive).toFixed(2), // Update incentive
-        };
-
-        // Special attention check logic for Question 13 (index 12)
-        if (questionIndex + 1 === 13) { // Question 13 is at index 12
-            const correctAnswerQ13 = questionsStructuralBar[12].correctAnswer;
-            if (selectedOption === correctAnswerQ13) {
-                updatedResponses = {
-                    ...updatedResponses,
-                    responses: {
-                        ...updatedResponses.responses,
-                        attention_check: 'passed',
-                    }
-                };
-            } 
-            else {
-                updatedResponses = {
-                    ...updatedResponses,
-                    responses: {
-                        ...updatedResponses.responses,
-                        attention_check: 'failed',
-                    }
-                };
-            }
-        }
-        else if (questionIndex + 1 < 13)
-        {
-            updatedResponses = {
-                ...updatedResponses,
-                responses: {
-                    ...updatedResponses.responses,
-                    attention_check: 'failed',
-                }
-            };
-        }
-
-        let nextTestUrl = "";
-        let shouldNavigate = true;
-
-    
-        if (timerExpired === true) {
-       
-            nextTestUrl = "/feedback-questions";
-
-            // Create final responses object including durations and unanswered questions
-            let finalResponses = {
-                ...updatedResponses,
+            const finalResponses = {
+                ...responses,
                 question_durations: questionDurations,
                 graph_durations: graphDurations,
-                next_visit_test_name: "/feedback-questions", // Redirect after submission
+                next_visit_test_name: "/feedback-questions",
             };
-            
+
             try {
                 const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(finalResponses), // Send responses to the backend
+                    body: JSON.stringify(finalResponses),
                 });
 
                 if (!response.ok) {
-                    // window.alert('An unexpected error occurred.');
                     const errorText = await response.text();
-    
-                    shouldNavigate = false; // Prevent navigation if there's an error
-                    console.log("error ", errorText)
+                    console.log("Error: ", errorText);
                     throw new Error('Network response was not ok');
                 }
 
+                navigate(finalResponses.next_visit_test_name);
+
             } catch (error) {
                 console.error('Error:', error);
-                shouldNavigate = false;
-            }
-            finally {
+                
+            } finally {
                 setLoading(false);
             }
 
-            // Only navigate if there were no errors
-            if (shouldNavigate) {
-                navigate(finalResponses.next_visit_test_name);
-            }
-        }
-        else {
-            // If it's not the last question, just update the state and move to the next question
-            setResponses(updatedResponses);
-    
-            // Proceed to the next question
-            setQuestionIndex(questionIndex + 1);
-            setSelectedOption('');
-            setQuestionStartTime(new Date()); // Reset the start time for the next question
-            setCurrentGraphDurations([]); // Clear current graph durations
+            // console.log("i enter here if (questionIndex + 1 === 24 || timerExpired) ", questionIndex, timerExpired);
 
-            // console.log(" numb: ", questionIndex + 1)
-            setLoading(false);
-        }
     };
 
     return (

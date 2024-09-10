@@ -318,15 +318,8 @@ const RotationTestPart2 = () => {
     };
 
     const handleTimerCompletion = async (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setLoading(true);
-
-        // Validate that all questions have been answered
-        if (!validateResponses()) {
-            window.alert("Please answer all the questions before proceeding.")
-            setLoading(false);
-            return; // Prevent form submission if validation fails
-        }
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
@@ -338,8 +331,6 @@ const RotationTestPart2 = () => {
             time_spent: timeSpent,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
-
-        let shouldNavigate = true;
 
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
@@ -353,16 +344,12 @@ const RotationTestPart2 = () => {
             if (!response.ok) {
                 // window.alert('An unexpected error occurred.');
                 const errorText = await response.text();
-
-                shouldNavigate = false; // Prevent navigation if there's an error
                 console.log("error ", errorText)
                 throw new Error('Network response was not ok');
             }
 
             // Only navigate if there were no errors
-            if (shouldNavigate) {
-                navigate(updatedResponses.next_visit_test_name);
-            }
+            navigate(updatedResponses.next_visit_test_name);
 
         } catch (error) {
             console.error('Error:', error);

@@ -57,7 +57,6 @@ const swaggerOptions = {
       description: 'A simple API for managing tests',
     },
     servers: [{
-      // url: 'http://localhost:8080',
       url: process.env.BACKEND_API_URL,
       description: 'Elastic Beanstalk Server'
     }]

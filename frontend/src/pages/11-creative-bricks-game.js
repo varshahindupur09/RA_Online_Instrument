@@ -105,6 +105,47 @@ const CreativeBricksGame = () => {
 
     const handleTimerCompletion = async () => {
         setIsTimerCompleted(true);  // Set timer completion to true
+        setLoading(true);
+
+        const endTime = Date.now();
+        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        const nextTestUrl = "/proceed-to-dashboard"; 
+
+        // Update responses with the calculated time spent
+        const updatedResponses = {
+            ...responses,
+            time_spent: timeSpent,
+            next_visit_test_name: nextTestUrl, // The next page URL
+        };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedResponses),
+            });
+
+            // Simulate API call to save survey responses
+            // console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
+
+            const responseText = await response.text();
+            if (!response.ok) {
+                throw new Error(responseText || 'Network response was not ok');
+            }
+            // console.log('Response text:', responseText);
+
+            navigate(nextTestUrl)
+
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleNext = async (event) => {
@@ -164,6 +205,7 @@ const CreativeBricksGame = () => {
                 <br />
                 <br />
                 {timerVisible && <Timer initialTime={120} onCompletion={handleTimerCompletion} />}
+                {/* 120 */}
                 <br />
                 <br />
                 <p>Below, you will see a picture of a common household brick.</p>
@@ -188,7 +230,7 @@ const CreativeBricksGame = () => {
             <br />
             <br />
 
-            {/* Conditionally render Next button */}
+            {/* Conditionally render Next button  */}
             {isTimerCompleted ? (
                 <button className="button" onClick={handleNext}> Next </button> 
             ) : (

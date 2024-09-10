@@ -299,7 +299,7 @@ const AttentionCheck = () => {
                     <br />
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if no answer is selected */}
-                {loading && <p>Loading...</p>}
+                {loading}
                 <br></br>
                 <br></br>
                 <br></br>

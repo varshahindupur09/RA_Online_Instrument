@@ -106,17 +106,17 @@ const FirstInstrConsent = () => {
     const handleInputChange = (e) => {
         const trimmedId = e.target.value.trim();
         setProlificId(trimmedId); // Update the Prolific ID in the ConsentContext
-        // console.log("Prolific ID entered handleInputChange: ", trimmedId);  // Debugging statement
+        console.log("Prolific ID entered handleInputChange: ", trimmedId);  // Debugging statement
         // console.log("Prolific ID length handleInputChange: ", trimmedId.length);  // Debugging statement
-        setManualProlificIdSet(true);
-
         // Enable consent if Prolific ID is exactly 24 characters
         if (trimmedId.length === 24) {
             console.log("Enabling consent buttons if Prolific ID is exactly 24 characters ");  // Debugging statement
             setIsConsentDisabled(false); 
+            setManualProlificIdSet(true);
         } else {
             console.log("Enabling consent buttons if Prolific ID is NOT exactly 24 characters");  // Debugging statement
             setIsConsentDisabled(true);  // Disable consent if Prolific ID is invalid
+            setManualProlificIdSet(false);
         }
     };
 
@@ -219,7 +219,7 @@ const FirstInstrConsent = () => {
                     {error && <p>Error: {error.message}</p>}
                     <div name="instructions">
                         {/* Input field for Prolific ID, only visible if it hasn't been set via URL and not manually entered */}
-                        {!prolificId && !manualProlificIdSet && (
+                        {!manualProlificIdSet && (
                         <label>
                             Enter your Prolific ID: &nbsp;
                             <input
@@ -236,10 +236,8 @@ const FirstInstrConsent = () => {
                         <div>
                             {prolificId && <p>Your Prolific ID: {prolificId}</p>}
                         </div>
-
                         <br></br>
                         <br></br>
-
 
                         <div name="instructionsh3">
                             <h3><u>Title of Study:</u> Data Visualization in Managerial Judgments</h3>	    

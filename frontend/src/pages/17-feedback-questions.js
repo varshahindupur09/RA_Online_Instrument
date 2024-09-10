@@ -109,6 +109,8 @@ const FeedbackQuestions = () => {
             next_visit_test_name: nextTestUrl, // The next page URL
         };
 
+        setResponses(updatedresponses);
+
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',

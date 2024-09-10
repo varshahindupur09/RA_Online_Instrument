@@ -283,19 +283,12 @@ const PaperFoldingPart2Questions = () => {
     };
         
     const handleTimerCompletion = async (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setLoading(true);
         
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/sample-rotation-test"; 
-
-        // Validate that all questions have been answered
-        if (!validateResponses()) {
-            setLoading(false);
-            window.alert("Please answer all the questions before proceeding.")
-            return; // Prevent form submission if validation fails
-        }
 
         // Get the calculated incentive
         const totalIncentive = calculateIncentive();
@@ -307,8 +300,6 @@ const PaperFoldingPart2Questions = () => {
             next_visit_test_name: nextTestUrl, // The next page URL
             incentive_calculation: totalIncentive, // Update with calculated incentive
         };
-
-        let shouldNavigate = true;
 
         try {
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
@@ -335,21 +326,16 @@ const PaperFoldingPart2Questions = () => {
             if (!response.ok) {
                 // window.alert('An unexpected error occurred.');
                 const errorText = await response.text();
-
-                shouldNavigate = false; // Prevent navigation if there's an error
                 console.log("error ", errorText)
                 throw new Error('Network response was not ok');
             }
 
             // Only navigate if there were no errors
-            if (shouldNavigate) {
-                navigate(updatedResponses.next_visit_test_name);
-            }
+            navigate(updatedResponses.next_visit_test_name);
 
         } catch (error) {
             console.error('Error:', error);
             setError(error);
-            shouldNavigate = false;
         } finally {
             setLoading(false);
         }
@@ -368,7 +354,8 @@ const PaperFoldingPart2Questions = () => {
             <h2>Paper Folding Test: Part 2: 3 minutes</h2>
             <br></br>
             <br/>
-            {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
+            {timerVisible && <Timer initialTime={10} onCompletion={handleTimerCompletion} />}
+            {/* 180 */}
             <br></br>
             <br></br>
             <br></br>

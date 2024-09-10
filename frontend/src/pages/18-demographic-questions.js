@@ -49,7 +49,7 @@ const Demographics = () => {
 
 
     const [demographicData, setDemographicData] = useState({
-        prolific_id: '',
+        prolific_id: prolificId,
         test_name: test_name_given,
         consent: consent === "yes" ? true : false, 
         page_number: 18,
@@ -167,7 +167,7 @@ const Demographics = () => {
 
             // Reset the demographic data after submission
             setDemographicData({
-                prolific_id: '',
+                prolific_id: prolificId,
                 test_name: test_name_given,
                 consent: consent === "yes" ? true : false, 
                 page_number: 18,
