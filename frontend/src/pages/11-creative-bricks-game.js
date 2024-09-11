@@ -234,7 +234,7 @@ const CreativeBricksGame = () => {
             {isTimerCompleted ? (
                 <button className="button" onClick={handleNext}> Next </button> 
             ) : (
-                <p>Please wait for the timer to finish before proceeding.</p>
+                <p>Please enter your response before the timer runs out.</p>
             )}
             {loading && <p>Loading...</p>} 
             {error && <p>Error: {error.message}</p>}

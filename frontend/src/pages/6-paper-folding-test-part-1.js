@@ -83,6 +83,7 @@ const PaperFoldingPart1Questions = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [timerCompleted, setTimerCompleted] = useState(false); // Track if the timer has already completed
 
     const correctAnswersPart1 = ['A', 'D', 'B', 'D', 'B', 'E', 'A', 'C', 'E', 'E']; // Answers for Part 1
     
@@ -130,7 +131,8 @@ const PaperFoldingPart1Questions = () => {
     
     //api integration
     const [responses, setResponses] = useState({
-        prolific_id: prolificId, 
+        // prolific_id: prolificId, 
+        prolificId: 'errortype1' || '',
         test_name: test_name_given, 
         consent: consent === "yes" ? true : false, 
         page_number: 6, 
@@ -276,9 +278,13 @@ const PaperFoldingPart1Questions = () => {
     };
     
     const handleTimerCompletion = async (event) => {
+        if (timerCompleted) {
+            return; // Prevent multiple executions after the timer has completed
+        }
         // event.preventDefault();
         setLoading(true);
-
+        setTimerCompleted(true); // Mark the timer as completed
+        
          // Get the calculated incentive
         const totalIncentive = calculateIncentive();
         const endTime = Date.now();
@@ -303,14 +309,15 @@ const PaperFoldingPart1Questions = () => {
             });
 
             // Simulate API call to save survey responses
-            // console.log('Saving responses:', updatedResponses);
+            console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
+
 
             if (!response.ok) {
                 // window.alert('An unexpected error occurred.');
                 const errorText = await response.text();
-                console.log("error ", errorText)
+                console.log("error from network res is not ok", errorText)
                 throw new Error('Network response was not ok');
             }
 
@@ -318,7 +325,7 @@ const PaperFoldingPart1Questions = () => {
             navigate(updatedResponses.next_visit_test_name);
 
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error from catch:', error);
             setError(error);
         } finally {
             setLoading(false);

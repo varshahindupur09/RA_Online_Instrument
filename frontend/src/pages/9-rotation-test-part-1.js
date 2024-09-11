@@ -313,7 +313,7 @@ const RotationTestPart1 = () => {
     };
 
     const validateResponses = () => {
-        console.log("validateResponses: ", responses.responses); 
+        // console.log("validateResponses: ", responses.responses); 
         const isQuestion1Answered = responses.responses.RT1_question1.split(',').every(answer => answer !== '');
         const isQuestion2Answered = responses.responses.RT1_question2.split(',').every(answer => answer !== '');
         const isQuestion3Answered = responses.responses.RT1_question3.split(',').every(answer => answer !== '');
@@ -338,6 +338,7 @@ const RotationTestPart1 = () => {
     };
 
     const handleTimerCompletion = async (event) => {
+        console.log("I am at handleTimerCompletion 9 RT1")
         // event.preventDefault();
         setLoading(true);
 
@@ -387,6 +388,7 @@ const RotationTestPart1 = () => {
 
 
     const handleNext = async (event) => {
+        console.log("I am at HandleNext 9 RT1")
         event.preventDefault();
         setLoading(true);
 
@@ -505,6 +507,7 @@ const RotationTestPart1 = () => {
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error.message}</p>}
             {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
+            {/* 180 */}
             <br />
             <br />
             <div name="instructions">

@@ -19,8 +19,7 @@ const DashboardRouter = () => {
 
     // State to store responses
     const [responses, setResponses] = useState({
-        // prolific_id: prolificId,
-        prolific_id: '',
+        prolific_id: prolificId,
         test_name: test_name_given,
         consent: consent === "yes"? true : false, 
         page_number: 19,

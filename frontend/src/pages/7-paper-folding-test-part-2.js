@@ -84,6 +84,7 @@ const PaperFoldingPart2Questions = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const startTimeRef = useRef(null);
+    const [timerCompleted, setTimerCompleted] = useState(false); // Track if the timer has already completed
 
     const correctAnswersPart2 = ['C', 'B', 'A', 'E', 'B', 'A', 'A', 'D', 'D', 'C']; // Answers for Part 2
 
@@ -283,8 +284,12 @@ const PaperFoldingPart2Questions = () => {
     };
         
     const handleTimerCompletion = async (event) => {
+        if (timerCompleted) {
+            return; // Prevent multiple executions after the timer has completed
+        }
         // event.preventDefault();
         setLoading(true);
+        setTimerCompleted(true); // Mark the timer as completed
         
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
@@ -354,7 +359,7 @@ const PaperFoldingPart2Questions = () => {
             <h2>Paper Folding Test: Part 2: 3 minutes</h2>
             <br></br>
             <br/>
-            {timerVisible && <Timer initialTime={10} onCompletion={handleTimerCompletion} />}
+            {timerVisible && <Timer initialTime={180} onCompletion={handleTimerCompletion} />}
             {/* 180 */}
             <br></br>
             <br></br>

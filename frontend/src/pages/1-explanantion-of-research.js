@@ -106,15 +106,15 @@ const FirstInstrConsent = () => {
     const handleInputChange = (e) => {
         const trimmedId = e.target.value.trim();
         setProlificId(trimmedId); // Update the Prolific ID in the ConsentContext
-        console.log("Prolific ID entered handleInputChange: ", trimmedId);  // Debugging statement
+        // console.log("Prolific ID entered handleInputChange: ", trimmedId);  // Debugging statement
         // console.log("Prolific ID length handleInputChange: ", trimmedId.length);  // Debugging statement
         // Enable consent if Prolific ID is exactly 24 characters
         if (trimmedId.length === 24) {
-            console.log("Enabling consent buttons if Prolific ID is exactly 24 characters ");  // Debugging statement
+            // console.log("Enabling consent buttons if Prolific ID is exactly 24 characters ");  // Debugging statement
             setIsConsentDisabled(false); 
             setManualProlificIdSet(true);
         } else {
-            console.log("Enabling consent buttons if Prolific ID is NOT exactly 24 characters");  // Debugging statement
+            // console.log("Enabling consent buttons if Prolific ID is NOT exactly 24 characters");  // Debugging statement
             setIsConsentDisabled(true);  // Disable consent if Prolific ID is invalid
             setManualProlificIdSet(false);
         }

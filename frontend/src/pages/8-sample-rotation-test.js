@@ -150,7 +150,7 @@ const RotationTestQuestion = () => {
     };
 
     const validateResponses = () => {
-        console.log("validateResponses: ", responses.responses); // Debugging: check the actual structure of responses
+        // console.log("validateResponses: ", responses.responses); // Debugging: check the actual structure of responses
         const isQuestion1Answered = responses.responses.SRT_question1.split(',').every(answer => answer !== '');
         const isQuestion2Answered = responses.responses.SRT_question2.split(',').every(answer => answer !== '');
     
