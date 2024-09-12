@@ -158,29 +158,6 @@ const RotationTestPart1 = () => {
     const previousTestUrl = "/attention-check";
     const test_name_given = 'Rotation-Test-1';
 
-    // State to store responses
-    // const [responses, setResponses] = useState({
-    //     // prolific_id: prolificId,
-    //     prolific_id: '',
-    //     test_name: test_name_given,
-    //     consent: consent === "yes" ? true : false,
-    //     page_number: 9,
-    //     chart_number: 0,
-    //     responses: {
-    //         question1: Array(8).fill(''),
-    //         question2: Array(8).fill(''), // Creates an array of 8 empty strings
-    //         question3: Array(8).fill(''),
-    //         question4: Array(8).fill(''),
-    //         question5: Array(8).fill(''),
-    //         question6: Array(8).fill(''),
-    //         question7: Array(8).fill(''),
-    //         question8: Array(8).fill(''),
-    //         question9: Array(8).fill(''),
-    //         question10: Array(8).fill(''),
-    //         question11: Array(8).fill(''),
-    //     },
-    //     time_spent: 0
-    // });
 
     // State to store responses
     const [responses, setResponses] = useState({
@@ -191,15 +168,15 @@ const RotationTestPart1 = () => {
         chart_number: 0,
         responses: {
             RT1_question1: '',
-            RT1_question2: '', 
-            RT1_question3: '',
-            RT1_question4: '', 
-            RT1_question5: '',
-            RT1_question6: '', 
-            RT1_question7: '',
-            RT1_question8: '', 
-            RT1_question9: '',
-            RT1_question10: '',
+            // RT1_question2: '', 
+            // RT1_question3: '',
+            // RT1_question4: '', 
+            // RT1_question5: '',
+            // RT1_question6: '', 
+            // RT1_question7: '',
+            // RT1_question8: '', 
+            // RT1_question9: '',
+            // RT1_question10: '',
         },
         graph_question_durations: [],
         per_graph_durations: [],
@@ -286,6 +263,18 @@ const RotationTestPart1 = () => {
         Part1Question10Answer1Option5, Part1Question10Answer1Option6, Part1Question10Answer1Option7, Part1Question10Answer1Option8
     ];
 
+    const correctAnswers = {
+        RT1_question1: 'different,same,same,different,same,different,same,different',
+        RT1_question2: 'same,same,same,same,same,same,different,same',
+        RT1_question3: 'different,same,different,same,different,same,same,different',
+        RT1_question4: 'same,different,same,different,same,same,different,same',
+        RT1_question5: 'different,same,different,same,same,different,same,different',
+        RT1_question6: 'same,same,different,same,same,different,different,same',
+        RT1_question7: 'same,different,same,different,same,different,different,same',
+        RT1_question8: 'same,same,same,different,same,different,different,same',
+        RT1_question9: 'same,same,same,same,different,different,same,same',
+        RT1_question10: 'different,same,same,different,same,same,same,different'
+    };    
 
     const handleAnswerChange = (questionNumber, index, value) => {
         setResponses(prevResponses => {
@@ -326,6 +315,7 @@ const RotationTestPart1 = () => {
         const isQuestion10Answered = responses.responses.RT1_question10.split(',').every(answer => answer !== '');
     
         return isQuestion1Answered
+        // ;
         && isQuestion2Answered
         && isQuestion3Answered
         && isQuestion4Answered
@@ -338,18 +328,32 @@ const RotationTestPart1 = () => {
     };
 
     const handleTimerCompletion = async (event) => {
-        console.log("I am at handleTimerCompletion 9 RT1")
+
+        // console.log("I am at handleTimerCompletion 9 RT1")
         // event.preventDefault();
         setLoading(true);
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
-        const nextTestUrl = "/rotation-test-part-2"; 
+        const nextTestUrl = "/rotation-test-part-2";
+        
+         // Calculate incentive based on correct responses
+         let correctCount = 0;
+
+         Object.keys(correctAnswers).forEach((questionKey) => {
+             if (responses.responses[questionKey] === correctAnswers[questionKey]) {
+                 correctCount++;
+             }
+         });
+         
+         // Set incentive based on correct answers
+         const incentive = correctCount * 0.05;
 
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
             time_spent: timeSpent,
+            incentive_calculation: incentive,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
 
@@ -399,6 +403,18 @@ const RotationTestPart1 = () => {
             return; // Prevent form submission if validation fails
         }
 
+         // Calculate incentive based on correct responses
+        let correctCount = 0;
+
+        Object.keys(correctAnswers).forEach((questionKey) => {
+            if (responses.responses[questionKey] === correctAnswers[questionKey]) {
+                correctCount++;
+            }
+        });
+
+        // Set incentive based on correct answers
+        const incentive = correctCount * 0.05;
+
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/rotation-test-part-2"; 
@@ -407,6 +423,7 @@ const RotationTestPart1 = () => {
         const updatedResponses = {
             ...responses,
             time_spent: timeSpent,
+            incentive_calculation: incentive,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
 

@@ -3,7 +3,7 @@ import '../components/styles_css/PageStyle.css';
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import '../components/styles_css/DemographicRadioButton.css'; 
 import { useConsent } from './ConsentContext';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const Demographics = () => {
     const navigate = useNavigate();
@@ -75,9 +75,9 @@ const Demographics = () => {
     // Restrict navigation to ensure users can't jump to different pages
     useEffect(() => {
         if (window.location.pathname !== demographicData.next_visit_test_name) {
-            navigate(demographicData.next_visit_test_name); // Redirect to the current test URL
+            navigate(demographicData.current_visit_test_name); // Redirect to the current test URL
         }
-    }, [navigate, demographicData.next_visit_test_name]);
+    }, [navigate, demographicData.current_visit_test_name]);
 
 
     // Update demographic data
@@ -134,7 +134,7 @@ const Demographics = () => {
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; 
 
-        let nextTestUrl = "/demographic-questions";
+        let nextTestUrl = "https://app.prolific.com/submissions/complete?cc=C18WFMT1";
         let shouldNavigate = true;
 
         const updatedData = {
@@ -188,7 +188,7 @@ const Demographics = () => {
                 time_user_entered_current_page: currentTime, // Time when the user entered the current page
                 last_visited_test_name: previousTestUrl, 
                 current_visit_test_name: currentTestUrl,
-                next_visit_test_name: currentTestUrl, 
+                next_visit_test_name: nextTestUrl, 
                 incentive_calculation: '0',
                 // each_page_pay_calculation: '0',
                 total_pay_till_now: '0',
@@ -203,7 +203,8 @@ const Demographics = () => {
 
         // Only navigate if there were no errors
         if (shouldNavigate) {
-            navigate(updatedData.next_visit_test_name);
+            // Redirect to Prolific submission URL (use window.location.href for external links)
+            window.location.href = "https://app.prolific.com/submissions/complete?cc=C18WFMT1";
         }
     };
 
@@ -332,7 +333,10 @@ const Demographics = () => {
                     <br></br>
                     <br></br>
                     
-                    <p>Your completion code is ******** .</p>
+                    <p>Your completion code is C18WFMT1.</p>
+                    <p>Please copy and paste this, in order to confirm that you have completed this survey. Thank you!</p>
+                    <br></br>
+                    
 
                     <button 
                         className={`button ${submitted ? 'button-grey' : 'button-green'}`} 

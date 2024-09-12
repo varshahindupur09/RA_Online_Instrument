@@ -112,6 +112,7 @@ const ConsentPage = () => {
             // console.log('Saving responses:', updatedResponses);
 
             setResponses(updatedResponses);
+            setError(null);
 
             const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
                 method: 'POST',

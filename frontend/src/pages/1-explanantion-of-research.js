@@ -27,7 +27,7 @@ const FirstInstrConsent = () => {
 
         if (id && id.length === 24 && !manualProlificIdSet)  {
             setProlificId(id);
-            console.log("Enabling consent buttons in useeffect for prolific id");  
+            // console.log("Enabling consent buttons in useeffect for prolific id");  
             setIsConsentDisabled(false); // Enable consent buttons
         }
     }, [location.search, setProlificId, manualProlificIdSet]); // location.search as dependency

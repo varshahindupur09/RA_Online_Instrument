@@ -192,6 +192,17 @@ const RotationTestPart2 = () => {
         total_pay_till_now: '0',
     });
 
+    const correctAnswers = {
+        RT2_question1: 'same,same,different,different,same,same,different,different',
+        RT2_question2: 'same,same,different,different,same,same,different,same',
+        RT2_question3: 'different,different,same,different,different,different,same,different',
+        RT2_question4: 'same,same,different,same,same,same,different,same',
+        RT2_question5: 'same,different,different,different,same,different,same,different',
+        RT2_question6: 'same,same,different,different,same,same,different,same',
+        RT2_question7: 'different,different,same,different,different,same,different,different',
+        RT2_question8: 'same,same,different,different,same,same,same,same'
+    };    
+
     useEffect(() => {
         startTimeRef.current = Date.now();
     }, []);
@@ -325,10 +336,23 @@ const RotationTestPart2 = () => {
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/creative-bricks-game"; 
 
+        // Calculate incentive based on correct responses
+        let correctCount = 0;
+
+        Object.keys(correctAnswers).forEach((questionKey) => {
+            if (responses.responses[questionKey] === correctAnswers[questionKey]) {
+                correctCount++;
+            }
+        });
+        
+        // Set incentive based on correct answers
+        const incentive = correctCount * 0.05;
+
         // Update responses with the calculated time spent
         const updatedResponses = {
             ...responses,
             time_spent: timeSpent,
+            incentive_calculation: incentive,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
 
@@ -370,6 +394,18 @@ const RotationTestPart2 = () => {
             return; // Prevent form submission if validation fails
         }
 
+        // Calculate incentive based on correct responses
+        let correctCount = 0;
+
+        Object.keys(correctAnswers).forEach((questionKey) => {
+            if (responses.responses[questionKey] === correctAnswers[questionKey]) {
+                correctCount++;
+            }
+        });
+
+        // Set incentive based on correct answers
+        const incentive = correctCount * 0.05;
+
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/creative-bricks-game"; 
@@ -378,6 +414,7 @@ const RotationTestPart2 = () => {
         const updatedResponses = {
             ...responses,
             time_spent: timeSpent,
+            incentive_calculation: incentive,
             next_visit_test_name: nextTestUrl, // The next page URL
         };
 

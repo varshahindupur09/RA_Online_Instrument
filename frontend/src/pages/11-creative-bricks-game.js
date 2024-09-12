@@ -16,6 +16,7 @@ const CreativeBricksGame = () => {
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
     const [isTimerCompleted, setIsTimerCompleted] = useState(false); // New state for timer completion
+    const [showCharWarning, setShowCharWarning] = useState(false);
 
     // Scroll to the top of the page
     useEffect(() => {
@@ -48,6 +49,7 @@ const CreativeBricksGame = () => {
 
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
+
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const currentTime = Date.now();
     const currentTestUrl = "/creative-bricks-game";
@@ -101,6 +103,13 @@ const CreativeBricksGame = () => {
                 CBG_question: value  // Store the text area input as question_1
             }
         }));
+
+        // Show warning if character count is less than 50
+        if (value.length < 50) {
+            setShowCharWarning(true);
+        } else {
+            setShowCharWarning(false);
+        }
     };
 
     const handleTimerCompletion = async () => {
@@ -154,7 +163,14 @@ const CreativeBricksGame = () => {
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
-        const nextTestUrl = "/proceed-to-dashboard"; 
+        const nextTestUrl = "/proceed-to-dashboard";
+        
+        // Check if the response is less than 50 characters
+        if (responses.responses.CBG_question.length < 50) {
+            setError(new Error('Please enter at least 50 characters in your response.'));
+            setLoading(false); // Stop loading
+            return; // Prevent proceeding to the next page
+        }
 
         // Update responses with the calculated time spent
         const updatedResponses = {
@@ -204,7 +220,7 @@ const CreativeBricksGame = () => {
                 </div>
                 <br />
                 <br />
-                {timerVisible && <Timer initialTime={120} onCompletion={handleTimerCompletion} />}
+                {timerVisible && <Timer initialTime={10} onCompletion={handleTimerCompletion} />}
                 {/* 120 */}
                 <br />
                 <br />
@@ -231,11 +247,8 @@ const CreativeBricksGame = () => {
             <br />
 
             {/* Conditionally render Next button  */}
-            {isTimerCompleted ? (
-                <button className="button" onClick={handleNext}> Next </button> 
-            ) : (
-                <p>Please enter your response before the timer runs out.</p>
-            )}
+            <button className="button" onClick={handleNext}> Next </button> 
+            <p>Please enter your response before the timer runs out.</p>
             {loading && <p>Loading...</p>} 
             {error && <p>Error: {error.message}</p>}
         </div>
