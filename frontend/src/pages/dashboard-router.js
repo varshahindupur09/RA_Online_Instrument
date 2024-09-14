@@ -41,97 +41,108 @@ const DashboardRouter = () => {
 
 
     useEffect(() => {
-        const manageChartNumber = async () => {
-            try {
-                // Step 1: Check if a chart number already exists
-                let response = await fetch(`${API_BASE_URL}/api/chart-number`, {
-                    method: 'GET',
-                    headers: {'Content-Type': 'application/json'},
-                });
+        let isMounted = true;
 
-                let data = await response.json();
-                console.log("response first get manageChartNumber data ", data)
-                const nextTestUrl = "";
-
-                if (data.last_assigned_chart !== undefined) 
+        const manageChartNumber = async () => 
+        {
+            if (isMounted) 
+            {
+                try 
                 {
-                    // Chart number exists, proceed to update
-                    console.log("Existing chart number found:", data.last_assigned_chart);
-                    const nextChartNumber = (data.last_assigned_chart % 4) + 1;
-                    
-                    // Update responses with the calculated time spent
-                    const updatedResponses = {
-                        ...responses, 
-                        prolific_id: prolificId,
-                        chart_number: nextChartNumber,
-                        next_visit_test_name: nextTestUrl, // The next page URL
-                    };
-
-                    response = await fetch(`${API_BASE_URL}/api/chart-number`, {
-                        method: 'PUT',
+                    // Step 1: Check if a chart number already exists
+                    let response = await fetch(`${API_BASE_URL}/api/chart-number`, {
+                        method: 'GET',
                         headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ last_assigned_chart: nextChartNumber }),
                     });
 
-                    if (!response.ok) throw new Error('Failed to post chart number');
+                    let data = await response.json();
+                    console.log("response first get manageChartNumber data ", data)
+                    const nextTestUrl = "";
 
-                    let responseSurvey = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(updatedResponses),
-                    });
+                    if (data.last_assigned_chart !== undefined) 
+                    {
+                        // Chart number exists, proceed to update
+                        console.log("Existing chart number found:", data.last_assigned_chart);
+                        const nextChartNumber = (data.last_assigned_chart % 4) + 1;
+                        
+                        // Update responses with the calculated time spent
+                        const updatedResponses = {
+                            ...responses, 
+                            chart_number: nextChartNumber,
+                            next_visit_test_name: nextTestUrl, // The next page URL
+                        };
 
-                    if (!responseSurvey.ok) throw new Error('Failed to post responseSurvey');
+                        response = await fetch(`${API_BASE_URL}/api/chart-number`, {
+                            method: 'PUT',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({ last_assigned_chart: nextChartNumber }),
+                        });
 
-                    setChartNumber(nextChartNumber); // Set the chart number in context for existing chart number found condition
-                    setResponses(updatedResponses);
+                        if (!response.ok) throw new Error('Failed to post chart number');
 
-                    console.log("Chart number updated to:", chartNumber);
-                } else {
-                    // No chart number found, proceed to post new one
-                    console.log("No chart number found, posting new one...");
-                    const assignFirstChart = 1;
+                        let responseSurvey = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(updatedResponses),
+                        });
 
-                    // Update responses with the calculated time spent
-                    const updatedResponses = {
-                        ...responses, 
-                        chart_number: assignFirstChart,
-                        next_visit_test_name: nextTestUrl, // The next page URL
-                    };
+                        if (!responseSurvey.ok) throw new Error('Failed to post responseSurvey');
 
-                    response = await fetch(`${API_BASE_URL}/api/chart-number`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ last_assigned_chart: assignFirstChart }),
-                    });
+                        setChartNumber(nextChartNumber); // Set the chart number in context for existing chart number found condition
+                        setResponses(updatedResponses);
 
-                    if (!response.ok) throw new Error('Failed to post chart number');
+                        console.log("Chart number updated to:", chartNumber);
+                    } else {
+                        // No chart number found, proceed to post new one
+                        console.log("No chart number found, posting new one...");
+                        const assignFirstChart = 1;
 
-                    let responseSurvey = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(updatedResponses),
-                    });
+                        // Update responses with the calculated time spent
+                        const updatedResponses = {
+                            ...responses, 
+                            chart_number: assignFirstChart,
+                            next_visit_test_name: nextTestUrl, // The next page URL
+                        };
 
-                    if (!responseSurvey.ok) throw new Error('Failed to post responseSurvey');
+                        response = await fetch(`${API_BASE_URL}/api/chart-number`, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({ last_assigned_chart: assignFirstChart }),
+                        });
 
-                    data = await response.json();
-                    setChartNumber(assignFirstChart); // Set the chart number in context for No chart number found condition
-                    setResponses(updatedResponses);
+                        if (!response.ok) throw new Error('Failed to post chart number');
 
-                    console.log("New chart number posted: ", chartNumber);
+                        let responseSurvey = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(updatedResponses),
+                        });
+
+                        if (!responseSurvey.ok) throw new Error('Failed to post responseSurvey');
+
+                        data = await response.json();
+                        setChartNumber(assignFirstChart); // Set the chart number in context for No chart number found condition
+                        setResponses(updatedResponses);
+
+                        console.log("New chart number posted: ", chartNumber);
+                    }
+
+                    // Set the flag to true after managing the chart number
+                    setIsChartNumberFetched(true);
+
+                } catch (error) {
+                    console.error("Error managing chart number:", error);
                 }
-
-                // Set the flag to true after managing the chart number
-                setIsChartNumberFetched(true);
-
-            } catch (error) {
-                console.error("Error managing chart number:", error);
             }
         };
 
         manageChartNumber();
-    }, [setChartNumber]);
+
+        return () => {
+            isMounted = false;
+        };
+        
+    }, []);
 
 
     useEffect(() => {

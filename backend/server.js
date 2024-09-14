@@ -6,6 +6,7 @@ const routes = require('./routes/routes');
 const chartNumberRoutes = require('./routes/chartNumberRoutes');
 const cors = require('cors');
 require('dotenv').config(); 
+const basicAuth = require('express-basic-auth');
 
 // const redisRoutes = require('./routes/redisRoute');
 
@@ -64,7 +65,16 @@ const swaggerOptions = {
   apis: ['./routes/*.js'],
 };
 
+
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
+
+// Basic authentication for Swagger UI
+app.use('/api-docs', basicAuth({
+  users: { [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD },
+  challenge: true, // triggers the browser to display the authentication dialog
+  unauthorizedResponse: 'Unauthorized'
+}), swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Use the routes defined in routes.js

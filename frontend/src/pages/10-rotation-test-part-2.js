@@ -125,6 +125,10 @@ const RotationTestPart2 = () => {
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+    const currentTime = Date.now();
+    const currentTestUrl = "/rotation-test-part-2";
+    const previousTestUrl = "/rotation-test-part-1";
+    const test_name_given = 'Rotation-Test-2';
 
     // Scroll to the top of the page
     useEffect(() => {
@@ -154,10 +158,6 @@ const RotationTestPart2 = () => {
         };
     }, []);
 
-    const currentTime = Date.now();
-    const currentTestUrl = "/rotation-test-part-2";
-    const previousTestUrl = "/rotation-test-part-1";
-    const test_name_given = 'Rotation-Test-2';
 
     // State to store responses
     const [responses, setResponses] = useState({
@@ -200,7 +200,9 @@ const RotationTestPart2 = () => {
         RT2_question5: 'same,different,different,different,same,different,same,different',
         RT2_question6: 'same,same,different,different,same,same,different,same',
         RT2_question7: 'different,different,same,different,different,same,different,different',
-        RT2_question8: 'same,same,different,different,same,same,same,same'
+        RT2_question8: 'same,same,different,different,same,same,same,same',
+        RT2_question9: 'same,different,different,same,different,different,same,same',
+        RT2_question10: 'different,different,same,same,same,different,same,different'
     };    
 
     useEffect(() => {
@@ -279,12 +281,8 @@ const RotationTestPart2 = () => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
             const questionKey = `RT2_question${questionNumber}`;
-            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,,";  
-    
-            // // Create a copy of the existing array and update the specific index
-            // const updatedAnswers = [...existingAnswers];
-            // updatedAnswers[index] = value;
-            // Split the current response string into an array
+            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,";  
+
             let responseArray = currentResponses.split(',');
 
             // Update the specific index with the new value
@@ -305,6 +303,7 @@ const RotationTestPart2 = () => {
     };
 
     const validateResponses = () => {
+        console.log("validateResponses starrt: ", responses.responses); 
         const isQuestion1Answered = responses.responses.RT2_question1.split(',').every(answer => answer !== '');
         const isQuestion2Answered = responses.responses.RT2_question2.split(',').every(answer => answer !== '');
         const isQuestion3Answered = responses.responses.RT2_question3.split(',').every(answer => answer !== '');
@@ -315,6 +314,8 @@ const RotationTestPart2 = () => {
         const isQuestion8Answered = responses.responses.RT2_question8.split(',').every(answer => answer !== '');
         const isQuestion9Answered = responses.responses.RT2_question9.split(',').every(answer => answer !== '');
         const isQuestion10Answered = responses.responses.RT2_question10.split(',').every(answer => answer !== '');
+
+        console.log("validateResponses end: ", responses.responses); 
     
         return isQuestion1Answered &&
                 isQuestion2Answered &&
@@ -389,6 +390,7 @@ const RotationTestPart2 = () => {
 
         // Validate that all questions have been answered
         if (!validateResponses()) {
+            console.log("response before proceed: ", responses)
             window.alert("Please answer all the questions before proceeding.")
             setLoading(false);
             return; // Prevent form submission if validation fails
@@ -428,6 +430,11 @@ const RotationTestPart2 = () => {
                 },
                 body: JSON.stringify(updatedResponses),
             });
+
+            // Simulate API call to save survey responses
+            // console.log('Saving responses:', updatedResponses);
+
+            setResponses(updatedResponses);
 
             if (!response.ok) {
                 // window.alert('An unexpected error occurred.');

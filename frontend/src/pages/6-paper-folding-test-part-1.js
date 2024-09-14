@@ -275,6 +275,8 @@ const PaperFoldingPart1Questions = () => {
         } finally {
             setLoading(false);
         }
+
+        console.log("i am a post coming from here handleNext ");
     };
     
     const handleTimerCompletion = async (event) => {
@@ -330,6 +332,8 @@ const PaperFoldingPart1Questions = () => {
         } finally {
             setLoading(false);
         }
+
+        console.log("i am a post coming from here handleTimerCompletion ");
     };
 
     return (

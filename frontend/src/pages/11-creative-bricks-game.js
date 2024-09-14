@@ -220,7 +220,7 @@ const CreativeBricksGame = () => {
                 </div>
                 <br />
                 <br />
-                {timerVisible && <Timer initialTime={10} onCompletion={handleTimerCompletion} />}
+                {timerVisible && <Timer initialTime={120} onCompletion={handleTimerCompletion} />}
                 {/* 120 */}
                 <br />
                 <br />

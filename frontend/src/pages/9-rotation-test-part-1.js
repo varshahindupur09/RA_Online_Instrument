@@ -168,15 +168,15 @@ const RotationTestPart1 = () => {
         chart_number: 0,
         responses: {
             RT1_question1: '',
-            // RT1_question2: '', 
-            // RT1_question3: '',
-            // RT1_question4: '', 
-            // RT1_question5: '',
-            // RT1_question6: '', 
-            // RT1_question7: '',
-            // RT1_question8: '', 
-            // RT1_question9: '',
-            // RT1_question10: '',
+            RT1_question2: '', 
+            RT1_question3: '',
+            RT1_question4: '', 
+            RT1_question5: '',
+            RT1_question6: '', 
+            RT1_question7: '',
+            RT1_question8: '', 
+            RT1_question9: '',
+            RT1_question10: '',
         },
         graph_question_durations: [],
         per_graph_durations: [],
@@ -280,7 +280,7 @@ const RotationTestPart1 = () => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
             const questionKey = `RT1_question${questionNumber}`;
-            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,";  
+            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,,,";  
 
             let responseArray = currentResponses.split(',');
 

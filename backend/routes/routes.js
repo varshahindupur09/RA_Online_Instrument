@@ -280,7 +280,7 @@ router.get('/surveyResponses/:prolificId', surveyController.getSurveyResponsesBy
 router.get('/surveyResponse/:id', surveyController.getSurveyResponseById);
 router.get('/exportSurveyResponsesToExcel', surveyController.exportSurveyResponsesToExcel);
 router.put('/surveyResponse/:id', surveyController.updateSurveyResponse);
-router.delete('/surveyResponse/:id', surveyController.deleteSurveyResponse);
+router.delete('/surveyResponse/:id',surveyController.deleteSurveyResponse);
 router.delete('/surveyResponses/:prolificId', surveyController.deleteSurveyResponsesByProlificId);
 router.delete('/surveyResponses', surveyController.deleteAllSurveyResponses);
 router.get('/dbHealthCheck', surveyController.dbHealthCheckResponse);

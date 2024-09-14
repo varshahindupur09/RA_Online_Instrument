@@ -23,7 +23,7 @@ const SurveyResponseSchema = new mongoose.Schema({
 });
 
 // Create a unique compound index
-SurveyResponseSchema.index({ prolific_id: 1, page_number: 1 }, { unique: true });
+// SurveyResponseSchema.index({ prolific_id: 1, page_number: 1 }, { unique: true });
 
 const SurveyResponse = mongoose.model('SurveyResponse', SurveyResponseSchema, 'surveyresponses');
 

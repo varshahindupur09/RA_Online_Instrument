@@ -2,6 +2,13 @@
 const SurveyResponse = require('../models/SurveyResponseModel.js');
 const dbStatus = require('../config/db.js');
 
+// Define users for basic authentication
+const USERS = {
+    'varshahindupur': 'I@snoSou#021', 
+    'kellywellman': 'let$me*ju56Be',
+    'theresalibby': 'hop%e7w0)week!1'
+};
+
 console.log('Database connection flag: ', dbStatus.flag);
 
 exports.createSurveyResponse = async (req, res) => {
