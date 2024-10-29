@@ -164,7 +164,7 @@ const FeedbackQuestions = () => {
                     <div className="question">
                         <label htmlFor="mentalDemand">How mentally demanding was the task?</label>
                         <br></br>
-                        <input type="range" name="mentalDemand" min="0" max="100" value={feedback.mentalDemand} onChange={handleChange} />
+                        <input type="range" name="mentalDemand" min="0" max="100" step="20" value={feedback.mentalDemand} onChange={handleChange} />
                         <div className="slider-container">
                             <span className="style-feedback-left">Very Low</span>
                             <span className="style-feedback-right">Very High</span>
@@ -173,7 +173,7 @@ const FeedbackQuestions = () => {
                     <br></br>
                     <div className="question">
                         <label htmlFor="physicalDemand">How physically demanding was the task?</label>
-                        <input type="range" name="physicalDemand" min="0" max="100" value={feedback.physicalDemand} onChange={handleChange} />
+                        <input type="range" name="physicalDemand" min="0" max="100" step="20" value={feedback.physicalDemand} onChange={handleChange} />
                         <div className="slider-container">
                             <span className="style-feedback-left">Very Low</span>
                             <span className="style-feedback-right">Very High</span>
@@ -182,7 +182,7 @@ const FeedbackQuestions = () => {
 
                     <div className="question">
                         <label htmlFor="temporalDemand">How hurried or rushed was the pace of the task?</label>
-                        <input type="range" name="temporalDemand" min="0" max="100" value={feedback.temporalDemand} onChange={handleChange} />
+                        <input type="range" name="temporalDemand" min="0" max="100" step="20" value={feedback.temporalDemand} onChange={handleChange} />
                         <div className="slider-container">
                             <span className="style-feedback-left">Very Low</span>
                             <span className="style-feedback-right">Very High</span>
@@ -191,7 +191,7 @@ const FeedbackQuestions = () => {
 
                     <div className="question">
                         <label htmlFor="performance">How successful were you in accomplishing what you were asked to do?</label>
-                        <input type="range" name="performance" min="0" max="100" value={feedback.performance} onChange={handleChange} />
+                        <input type="range" name="performance" min="0" max="100" step="20" value={feedback.performance} onChange={handleChange} />
                         <div className="slider-container">
                             <span className="style-feedback-left">Perfect</span>
                             <span className="style-feedback-right">Failure</span>
@@ -200,7 +200,7 @@ const FeedbackQuestions = () => {
 
                     <div className="question">
                         <label htmlFor="effort">How hard did you have to work to accomplish your level of performance?</label>
-                        <input type="range" name="effort" min="0" max="100" value={feedback.effort} onChange={handleChange} />
+                        <input type="range" name="effort" min="0" max="100" step="20" value={feedback.effort} onChange={handleChange} />
                         <div className="slider-container">
                             <span className="style-feedback-left">Very Low</span>
                             <span className="style-feedback-right">Very High</span>
@@ -209,7 +209,7 @@ const FeedbackQuestions = () => {
 
                     <div className="question">
                         <label htmlFor="frustration">How insecure, discouraged, irritated, stressed, and annoyed were you?</label>
-                        <input type="range" name="frustration" min="0" max="100" value={feedback.frustration} onChange={handleChange} />
+                        <input type="range" name="frustration" min="0" max="100" step="20" value={feedback.frustration} onChange={handleChange} />
                         <div className="slider-container">
                             <span className="style-feedback-left">Very Low</span>
                             <span className="style-feedback-right">Very High</span>

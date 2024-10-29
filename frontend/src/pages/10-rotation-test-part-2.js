@@ -281,7 +281,7 @@ const RotationTestPart2 = () => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
             const questionKey = `RT2_question${questionNumber}`;
-            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,,,";  
+            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,";  
 
             let responseArray = currentResponses.split(',');
 

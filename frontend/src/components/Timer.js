@@ -1,3 +1,4 @@
+//frontend/src/components/Timer.js
 import React, { useState, useEffect } from 'react';
 
 const Timer = ({ initialTime = 180, onCompletion }) => {

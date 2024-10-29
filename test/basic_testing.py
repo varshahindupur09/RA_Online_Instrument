@@ -14,8 +14,18 @@ options.add_argument("start-maximized")
 
 # Setup driver with WebDriver Manager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-url = "https://adg429.com"  # Update with the actual URL if different
+# url = "https://adg429.com"  # Update with the actual URL if different
+url = "http://localhost:3000/"
 dummy_prolific_id = "23erfgddgr45tret4er56thg"  # Ensure this is 24 characters for testing
+
+# Define dashboard URLs and a dictionary to match URL with dashboard type
+dashboard_urls = {
+    url + "structural-bar-dashboard": "Structural Bar Dashboard",
+    url + "/structural-col-dashboard": "Structural Col Dashboard",
+    url + "timeseries-bar-dashboard": "Timeseries Bar Dashboard",
+    url + "timeseries-col-dashboard": "Timeseries Col Dashboard"
+}
+
 
 # Open the URL
 driver.get(url)
@@ -303,7 +313,7 @@ def test_adg429_positive_flow_page_rotation_test_part_2():
 def test_adg429_positive_flow_page_creative_brick_game():
     try:
         brick_input = WebDriverWait(driver, 10).until(
-                EC.visibility_of_element_located((By.XPATH, "//*[@name='writeafewlinesaboutbricks'"))
+                EC.visibility_of_element_located((By.XPATH, "//*[@name='writeafewlinesaboutbricks']"))
             )
         s = "actions.move_to_element(submit_button).click().perform()  # Move to the element and click"
         brick_input.send_keys(s)
@@ -325,6 +335,82 @@ def test_adg429_positive_flow_page_creative_brick_game():
         time.sleep(2)
         # driver.quit()
 
+def test_adg429_positive_flow_page_proceed_to_dashboard():
+    try:
+        # Wait for the submit button and click it
+        next_button = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
+        )
+        # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
+        driver.execute_script("arguments[0].click();", next_button)
+        print("Clicked next button on page 2")
+
+    except Exception as e:
+        print(f"An error occurred:")
+        print(e)
+
+    finally:
+        print("Test completed. Closing the browser.")
+        time.sleep(2)
+        # driver.quit()
+        driver.send_keys(Keys.ENTER)
+
+
+def test_adg429_positive_flow_page_dashboard():
+    try:
+        # Answer all 14 questions
+        for i in range(24):
+            # identify and print dashboard
+            dashboard_type = driver.current_url
+            print(dashboard_type)
+
+            # Select the first option
+            answer_option = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.XPATH, "//*[@id='option-0']/parent::*/span"))
+            )
+            answer_option.click()
+            print(f"Answered question {i+1} on {dashboard_type}")
+        
+            # Wait for the submit button and click it
+            next_button = WebDriverWait(driver, 10).until(
+                EC.visibility_of_element_located((By.XPATH, "//*[@class='nextbutton']"))
+            )
+            # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
+            driver.execute_script("arguments[0].click();", next_button)
+            print("Clicked next button on page 2")
+            time.sleep(2)  # Short wait for the next question to load
+
+    except Exception as e:
+        print(f"An error occurred:")
+        print(e)
+
+    finally:
+        print("Test completed. Closing the browser.")
+        time.sleep(2)
+        # driver.quit()
+
+def test_adg429_positive_flow_page_feedback_questions():
+    try:
+        
+        
+        # Wait for the submit button and click it
+        next_button = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
+        )
+        # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
+        driver.execute_script("arguments[0].click();", next_button)
+        print("Clicked next button on page 2")
+        time.sleep(2)  # Short wait for the next question to load
+
+    except Exception as e:
+        print(f"An error occurred:")
+        print(e)
+
+    finally:
+        print("Test completed. Closing the browser.")
+        time.sleep(40)
+        # driver.quit()
+
 
 # Run the test
 if __name__ == "__main__":
@@ -338,3 +424,6 @@ if __name__ == "__main__":
     test_adg429_positive_flow_page_rotation_test_part_1()
     test_adg429_positive_flow_page_rotation_test_part_2()
     test_adg429_positive_flow_page_creative_brick_game()
+    test_adg429_positive_flow_page_proceed_to_dashboard()
+    test_adg429_positive_flow_page_dashboard()
+    test_adg429_positive_flow_page_dashboard()

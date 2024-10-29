@@ -280,7 +280,7 @@ const RotationTestPart1 = () => {
         setResponses(prevResponses => {
             // Ensure the array exists, or create a new one with empty strings
             const questionKey = `RT1_question${questionNumber}`;
-            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,,,";  
+            const currentResponses = prevResponses.responses[questionKey] || ",,,,,,,";  
 
             let responseArray = currentResponses.split(',');
 
@@ -289,6 +289,8 @@ const RotationTestPart1 = () => {
 
             // Join the array back into a comma-separated string
             const updatedResponse = responseArray.join(',');
+
+            console.log(`Updated ${questionKey} at index ${index} with value ${value}:`, updatedResponse); // Debugging
     
             return {
                 ...prevResponses,
@@ -302,7 +304,6 @@ const RotationTestPart1 = () => {
     };
 
     const validateResponses = () => {
-        // console.log("validateResponses: ", responses.responses); 
         const isQuestion1Answered = responses.responses.RT1_question1.split(',').every(answer => answer !== '');
         const isQuestion2Answered = responses.responses.RT1_question2.split(',').every(answer => answer !== '');
         const isQuestion3Answered = responses.responses.RT1_question3.split(',').every(answer => answer !== '');
@@ -313,9 +314,12 @@ const RotationTestPart1 = () => {
         const isQuestion8Answered = responses.responses.RT1_question8.split(',').every(answer => answer !== '');
         const isQuestion9Answered = responses.responses.RT1_question9.split(',').every(answer => answer !== '');
         const isQuestion10Answered = responses.responses.RT1_question10.split(',').every(answer => answer !== '');
+
+        console.log("const RT1 all responses: ", responses)
+
+        console.log("Answers to RT1: ", isQuestion1Answered, isQuestion2Answered, isQuestion3Answered,isQuestion4Answered, isQuestion5Answered, isQuestion6Answered, isQuestion7Answered, isQuestion8Answered, isQuestion9Answered, isQuestion10Answered)
     
         return isQuestion1Answered
-        // ;
         && isQuestion2Answered
         && isQuestion3Answered
         && isQuestion4Answered
@@ -392,7 +396,7 @@ const RotationTestPart1 = () => {
 
 
     const handleNext = async (event) => {
-        console.log("I am at HandleNext 9 RT1")
+        // console.log("I am at HandleNext 9 RT1")
         event.preventDefault();
         setLoading(true);
 
