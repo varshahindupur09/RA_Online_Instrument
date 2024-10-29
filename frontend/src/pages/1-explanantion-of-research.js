@@ -223,6 +223,7 @@ const FirstInstrConsent = () => {
                         <label>
                             Enter your Prolific ID: &nbsp;
                             <input
+                                id="EnterProlificID"
                                 type="text"
                                 value={prolificId || ''}
                                 onChange={handleInputChange}
@@ -318,6 +319,7 @@ const FirstInstrConsent = () => {
                         <br />
                         <br />
                         <button 
+                            id="submit-button-page1"
                             className="button" 
                             onClick={handleNext} 
                             // disabled={loading || consent === null} // Disable button until consent is selected
