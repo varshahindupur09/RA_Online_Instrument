@@ -14,8 +14,8 @@ options.add_argument("start-maximized")
 
 # Setup driver with WebDriver Manager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-# url = "https://adg429.com"  # Update with the actual URL if different
-url = "http://localhost:3000/"
+url = "https://adg429.com"  # Update with the actual URL if different
+# url = "http://localhost:3000/"
 dummy_prolific_id = "23erfgddgr45tret4er56thg"  # Ensure this is 24 characters for testing
 
 # Define dashboard URLs and a dictionary to match URL with dashboard type
@@ -353,7 +353,7 @@ def test_adg429_positive_flow_page_proceed_to_dashboard():
         print("Test completed. Closing the browser.")
         time.sleep(2)
         # driver.quit()
-        driver.send_keys(Keys.ENTER)
+        # driver.send_keys(Keys.ENTER)
 
 
 def test_adg429_positive_flow_page_dashboard():

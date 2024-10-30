@@ -467,7 +467,7 @@ const StructuralColDashboard = () => {
                 </div>
                 <br />
                 <br />
-                {timerVisible && <Timer initialTime={20} onCompletion={handleTimerCompletion} />} 
+                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />} 
                 {/* 420 */}
                 <br />
                 <br />

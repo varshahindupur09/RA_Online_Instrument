@@ -465,7 +465,7 @@ const TimeSeriesBarDashboard = () => {
                 </div>
                 <br />
                 <br />
-                {timerVisible && <Timer initialTime={10} onCompletion={handleTimerCompletion} />}
+                {timerVisible && <Timer initialTime={420} onCompletion={handleTimerCompletion} />}
                 {/* 420 */}
                 <br />
                 <br />
