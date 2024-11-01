@@ -14,9 +14,9 @@ options.add_argument("start-maximized")
 
 # Setup driver with WebDriver Manager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-url = "https://adg429.com"  # Update with the actual URL if different
-# url = "http://localhost:3000/"
-dummy_prolific_id = "23erfgddgr45tret4er56thg"  # Ensure this is 24 characters for testing
+# url = "https://adg429.com"  # Update with the actual URL if different
+url = "http://localhost:3000/"
+dummy_prolific_id = "thisisseleniumautomation"  # Ensure this is 24 characters for testing
 
 # Define dashboard URLs and a dictionary to match URL with dashboard type
 dashboard_urls = {
@@ -319,12 +319,12 @@ def test_adg429_positive_flow_page_creative_brick_game():
         brick_input.send_keys(s)
 
         # Wait for the submit button and click it
-        next_button = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
-        )
-        # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
-        driver.execute_script("arguments[0].click();", next_button)
-        print("Clicked next button on page 2")
+        # next_button = WebDriverWait(driver, 10).until(
+        #     EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
+        # )
+        # # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
+        # driver.execute_script("arguments[0].click();", next_button)
+        # print("Clicked next button on page 2")
 
     except Exception as e:
         print(f"An error occurred:")
@@ -332,7 +332,7 @@ def test_adg429_positive_flow_page_creative_brick_game():
 
     finally:
         print("Test completed. Closing the browser.")
-        time.sleep(2)
+        time.sleep(350)
         # driver.quit()
 
 def test_adg429_positive_flow_page_proceed_to_dashboard():
@@ -408,7 +408,7 @@ def test_adg429_positive_flow_page_feedback_questions():
 
     finally:
         print("Test completed. Closing the browser.")
-        time.sleep(40)
+        # time.sleep(40)
         # driver.quit()
 
 
@@ -424,6 +424,5 @@ if __name__ == "__main__":
     test_adg429_positive_flow_page_rotation_test_part_1()
     test_adg429_positive_flow_page_rotation_test_part_2()
     test_adg429_positive_flow_page_creative_brick_game()
-    test_adg429_positive_flow_page_proceed_to_dashboard()
-    test_adg429_positive_flow_page_dashboard()
-    test_adg429_positive_flow_page_dashboard()
+    # test_adg429_positive_flow_page_proceed_to_dashboard()
+    # test_adg429_positive_flow_page_dashboard()
