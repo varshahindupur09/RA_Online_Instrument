@@ -17,6 +17,7 @@ const CreativeBricksGame = () => {
     const [error, setError] = useState(null); 
     const [isTimerCompleted, setIsTimerCompleted] = useState(false); // New state for timer completion
     const [showCharWarning, setShowCharWarning] = useState(false);
+    const [isMinCharMet, setIsMinCharMet] = useState(false); 
 
     // Scroll to the top of the page
     useEffect(() => {
@@ -96,6 +97,7 @@ const CreativeBricksGame = () => {
     const handleTextAreaChange = (e) => {
         const value = e.target.value;
         setCount(value.length);
+        setIsMinCharMet(value.length >= 50);
         setResponses(prevResponses => ({
             ...prevResponses,
             responses: {
@@ -247,8 +249,13 @@ const CreativeBricksGame = () => {
             <br />
 
             {/* Conditionally render Next button  */}
-            <button className="button" onClick={handleNext}> Next </button> 
-            <p>Please enter your response before the timer runs out.</p>
+            <button 
+                className="button"
+                disabled={!isTimerCompleted || !isMinCharMet} // Disable until timer is done
+                onClick={handleNext}> 
+                Next 
+            </button> 
+            {!isTimerCompleted && <p>Please wait until the timer runs out to proceed.</p>}
             {loading && <p>Loading...</p>} 
             {error && <p>Error: {error.message}</p>}
         </div>
