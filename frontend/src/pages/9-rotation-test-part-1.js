@@ -529,7 +529,7 @@ const RotationTestPart1 = () => {
                 <p>
                     <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                     <h2><strong><u>ROTATION TEST - PART 1</u></strong></h2>
-                    <GlobalTimer />
+                    {/* <GlobalTimer /> */}
                 </p>
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>

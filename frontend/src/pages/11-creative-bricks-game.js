@@ -232,7 +232,7 @@ const CreativeBricksGame = () => {
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
                     </p>
-                    <GlobalTimer />
+                    {/* <GlobalTimer /> */}
                     <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>   
                 </div>
                 <br />

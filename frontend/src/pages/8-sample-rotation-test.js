@@ -279,7 +279,7 @@ const RotationTestQuestion = () => {
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                         <h2><strong><u>SAMPLE ROTATION TEST</u></strong></h2>
-                        <GlobalTimer />
+                        {/* <GlobalTimer /> */}
                     </p>
                     <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>

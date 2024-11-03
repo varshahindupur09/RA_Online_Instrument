@@ -47,7 +47,7 @@ const ProceedToPart1PaperFoldingTest = () => {
             <div className="LogoStyleImage">
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                 <br></br>
-                <GlobalTimer />
+                {/* <GlobalTimer /> */}
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br></br>

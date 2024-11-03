@@ -226,7 +226,7 @@ const Demographics = () => {
             <div className="LogoStyleImage">
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
                 <h2><strong><u>DEMOGRAPHICS</u></strong></h2>
-                <GlobalTimer />
+                {/* <GlobalTimer /> */}
                 <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <p>Almost finished! Please respond to the demographic questions below in order to complete the survey.</p>

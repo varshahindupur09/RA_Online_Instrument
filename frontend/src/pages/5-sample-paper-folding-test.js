@@ -142,8 +142,8 @@ const PaperFoldingSampleQuestion = () => {
                         <p>
                         <img src={logoImage} alt="ucflogo" className="ucflogo" /> 
                         <h2><strong><u>PAPER FOLDING TEST</u></strong></h2>
-                        <GlobalTimer />
                     </p>
+                    {/* <GlobalTimer /> */}
                     <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
                 <h2>Paper Folding Test: Sample Question</h2>

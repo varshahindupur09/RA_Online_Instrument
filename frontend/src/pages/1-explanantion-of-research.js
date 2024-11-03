@@ -6,7 +6,7 @@ import '../components/styles_css/RadioButton.css';
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useLocation } from 'react-router-dom';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const FirstInstrConsent = () => {
     const navigate = useNavigate();
@@ -212,7 +212,7 @@ const FirstInstrConsent = () => {
                             <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
                             <h2><strong><u>EXPLANATION OF RESEARCH</u></strong></h2>
                         </p>
-                        <GlobalTimer /> {/* Display the global timer at the top */}
+                        {/* <GlobalTimer /> */}
                         <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                     </div>
                     <br />
