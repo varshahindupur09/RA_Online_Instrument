@@ -8,6 +8,7 @@ import '../components/styles_css/PageStyle.css';
 import logoImage from '../images/UCF_Logo.png';
 // import Navbar from "../components/NavbarPage";
 import { useConsent } from './ConsentContext';
+import GlobalTimer from "../components/GlobalTimer";
 
 const PaperFoldingSampleQuestion = () => {
     const navigate = useNavigate();
@@ -140,7 +141,8 @@ const PaperFoldingSampleQuestion = () => {
                 <div className="LogoStyleImage">
                         <p>
                         <img src={logoImage} alt="ucflogo" className="ucflogo" /> 
-                        <h2><strong><u>PAPER FOLDING TEST</u></strong></h2> 
+                        <h2><strong><u>PAPER FOLDING TEST</u></strong></h2>
+                        <GlobalTimer />
                     </p>
                     <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
@@ -156,7 +158,7 @@ const PaperFoldingSampleQuestion = () => {
                     </p> 
                     <div className="instructionsred">
                         <strong>
-                            In addition to the fixed payment of $4, you will receive a bonus of $5 cents for each correct answer that you provide.
+                            In addition to the fixed payment of $4, you will receive a bonus of $0.05 for each correct answer that you provide.
                         </strong>
                     </div>
                     <br></br>

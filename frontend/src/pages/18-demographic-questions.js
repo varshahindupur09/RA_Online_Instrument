@@ -4,6 +4,7 @@ import logoImageDoc from '../images/UCF_logo_doc.png';
 import '../components/styles_css/DemographicRadioButton.css'; 
 import { useConsent } from './ConsentContext';
 import { useNavigate } from 'react-router-dom';
+import GlobalTimer from "../components/GlobalTimer";
 
 const Demographics = () => {
     const navigate = useNavigate();
@@ -125,11 +126,23 @@ const Demographics = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        // Check for empty fields in demographicData.responses
+        const incompleteFields = Object.entries(demographicData.responses).some(
+            ([key, value]) => !value // Check if any field is empty or not selected
+        );
+
+        if (incompleteFields) {
+            setError(new Error("Please answer all questions before submitting."));
+            return; // Stop form submission if not all questions are answered
+        }
+
         const age = parseInt(demographicData.responses["age"], 10);
         if (isNaN(age) || age < 18 || age > 90) {
             setError(new Error("Age must be between 18 and 90."));
             return; // Stop form submission if age is invalid
         }
+
+        setError(null); // Clear any previous errors
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; 
@@ -158,53 +171,53 @@ const Demographics = () => {
             if (!postResponse.ok) {
                 // window.alert('An unexpected error occurred.');
                 const errorText = await postResponse.text();
-
                 shouldNavigate = false; // Prevent navigation if there's an error
                 console.log("error ", errorText)
                 throw new Error('Network response was not ok');
             }
             // no navigation as this is the end
 
-            // Reset the demographic data after submission
-            setDemographicData({
-                prolific_id: prolificId,
-                test_name: test_name_given,
-                consent: consent === "yes" ? true : false, 
-                page_number: 18,
-                chart_number: chart_number,
-                responses: {
-                    "age": '',
-                    "education-level": '',
-                    "work-experience": '',
-                    "management-experience": '',
-                    "employment-sector": '',
-                    "prolific-id-input": '',
-                },
-                graph_question_durations: [],
-                per_graph_durations: [],
-                time_spent: 0, 
-                // started_at: currentTime, // Time when the survey began
-                // ended_at: currentTime, // Time when the survey ended
-                time_user_entered_current_page: currentTime, // Time when the user entered the current page
-                last_visited_test_name: previousTestUrl, 
-                current_visit_test_name: currentTestUrl,
-                next_visit_test_name: nextTestUrl, 
-                incentive_calculation: '0',
-                // each_page_pay_calculation: '0',
-                total_pay_till_now: '0',
-            });
+            // // Reset the demographic data after submission
+            // setDemographicData({
+            //     prolific_id: prolificId,
+            //     test_name: test_name_given,
+            //     consent: consent === "yes" ? true : false, 
+            //     page_number: 18,
+            //     chart_number: chart_number,
+            //     responses: {
+            //         "age": '',
+            //         "education-level": '',
+            //         "work-experience": '',
+            //         "management-experience": '',
+            //         "employment-sector": '',
+            //         "prolific-id-input": '',
+            //     },
+            //     graph_question_durations: [],
+            //     per_graph_durations: [],
+            //     time_spent: 0, 
+            //     // started_at: currentTime, // Time when the survey began
+            //     // ended_at: currentTime, // Time when the survey ended
+            //     time_user_entered_current_page: currentTime, // Time when the user entered the current page
+            //     last_visited_test_name: previousTestUrl, 
+            //     current_visit_test_name: currentTestUrl,
+            //     next_visit_test_name: nextTestUrl, 
+            //     incentive_calculation: '0',
+            //     // each_page_pay_calculation: '0',
+            //     total_pay_till_now: '0',
+            // });
 
-            setSubmitted(true); // Disable the submit button after submission
+            // Set as submitted only if no errors
+            setSubmitted(true);
 
         } catch (error) {
             console.error('Error:', error);
             setError(error);
         }
-
+        
         // Only navigate if there were no errors
         if (shouldNavigate) {
             // Redirect to Prolific submission URL (use window.location.href for external links)
-            window.location.href = "https://app.prolific.com/submissions/complete?cc=C18WFMT1";
+            window.location.href = nextTestUrl;
         }
     };
 
@@ -213,6 +226,7 @@ const Demographics = () => {
             <div className="LogoStyleImage">
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
                 <h2><strong><u>DEMOGRAPHICS</u></strong></h2>
+                <GlobalTimer />
                 <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <p>Almost finished! Please respond to the demographic questions below in order to complete the survey.</p>

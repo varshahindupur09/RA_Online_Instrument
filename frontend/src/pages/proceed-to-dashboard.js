@@ -4,6 +4,7 @@ import '../components/styles_css/PageStyle.css';
 import '../components/styles_css/otherpagestyles.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
+import GlobalTimer from "../components/GlobalTimer";
 
 const ProceedToDashboard = () => {
     const navigate = useNavigate(); 
@@ -129,6 +130,7 @@ const ProceedToDashboard = () => {
             <div className="LogoStyleImage">
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                 <br></br>
+                <GlobalTimer />
                 <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br></br>

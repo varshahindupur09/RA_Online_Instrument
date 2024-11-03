@@ -19,6 +19,7 @@ import StructuralBarEnlargedImage4 from "../images/dashboard/structural-bar/enla
 
 import { useConsent } from './ConsentContext';
 import Timer from "../components/Timer";
+import GlobalTimer from "../components/GlobalTimer";
 
 const StructuralBarDashboard = () => {
     const navigate = useNavigate();
@@ -462,6 +463,7 @@ const StructuralBarDashboard = () => {
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img> 
                         <h2><strong><u>PART B</u></strong></h2> 
+                        <GlobalTimer />
                     </p>
                     <p>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>    
                 </div>

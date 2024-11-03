@@ -31,6 +31,7 @@ import question2answer8 from '../images/rotation-test/sample/question-2/answer-2
 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
+import GlobalTimer from "../components/GlobalTimer";
 
 const RotationTestQuestion = () => {
     const navigate = useNavigate();
@@ -278,6 +279,7 @@ const RotationTestQuestion = () => {
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                         <h2><strong><u>SAMPLE ROTATION TEST</u></strong></h2>
+                        <GlobalTimer />
                     </p>
                     <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>

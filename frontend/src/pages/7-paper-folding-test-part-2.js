@@ -78,6 +78,7 @@ import '../components/styles_css/RadioButtonImage.css';
 import Timer from "../components/Timer"; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
+import GlobalTimer from "../components/GlobalTimer";
 
 const PaperFoldingPart2Questions = () => {
     const navigate = useNavigate();
@@ -203,13 +204,14 @@ const PaperFoldingPart2Questions = () => {
             }
         });
 
-        // Calculate the total incentive (5 cents per correct answer)
+        // Calculate the total incentive ($0.05 per correct answer)
         const totalIncentive = correctCount * 0.05;
 
         return totalIncentive.toFixed(2);
     };
 
     const handleNext = async (event) => {
+        if (timerCompleted) return; // Prevent multiple executions
         event.preventDefault();
         setLoading(true);
 
@@ -285,11 +287,12 @@ const PaperFoldingPart2Questions = () => {
         
     const handleTimerCompletion = async (event) => {
         if (timerCompleted) {
+            // alert("Please wait until the timer completes.");
             return; // Prevent multiple executions after the timer has completed
         }
         // event.preventDefault();
-        setLoading(true);
         setTimerCompleted(true); // Mark the timer as completed
+        setLoading(false); //earlier was true
         
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
@@ -352,6 +355,7 @@ const PaperFoldingPart2Questions = () => {
                 <p>
                     <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                     <h2><strong><u>PAPER FOLDING TEST - PART 2</u></strong></h2>
+                    <GlobalTimer />
                 </p>
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
@@ -723,7 +727,11 @@ const PaperFoldingPart2Questions = () => {
                 <br></br>
                 <br/>
                 {/* Next button */}
-                <button className="button" onClick={handleNext}> Next </button>
+                <button className="button"
+                        onClick={handleNext}
+                        disabled={!timerCompleted}
+                > Next 
+                </button>
                 {error && <p>Error: {error.message}</p>}
                 <br/>
                 <br/>

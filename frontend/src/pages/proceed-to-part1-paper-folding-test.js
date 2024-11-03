@@ -2,6 +2,7 @@ import React , {useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
+import GlobalTimer from "../components/GlobalTimer";
 
 const ProceedToPart1PaperFoldingTest = () => {
     const navigate = useNavigate(); 
@@ -46,6 +47,7 @@ const ProceedToPart1PaperFoldingTest = () => {
             <div className="LogoStyleImage">
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                 <br></br>
+                <GlobalTimer />
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br></br>

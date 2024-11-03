@@ -6,6 +6,7 @@ import '../components/styles_css/RadioButton.css';
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useLocation } from 'react-router-dom';
+import GlobalTimer from "../components/GlobalTimer";
 
 const FirstInstrConsent = () => {
     const navigate = useNavigate();
@@ -30,6 +31,7 @@ const FirstInstrConsent = () => {
             // console.log("Enabling consent buttons in useeffect for prolific id");  
             setIsConsentDisabled(false); // Enable consent buttons
         }
+
     }, [location.search, setProlificId, manualProlificIdSet]); // location.search as dependency
 
     
@@ -208,9 +210,11 @@ const FirstInstrConsent = () => {
                         <p>
                             {/* <img src={logoImage} alt="ucflogo" className="ucflogo" />  */}
                             <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
-                            <h2><strong><u>EXPLANATION OF RESEARCH</u></strong></h2> 
+                            <h2><strong><u>EXPLANATION OF RESEARCH</u></strong></h2>
+                            <GlobalTimer />
                         </p>
-                        <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                        <GlobalTimer /> {/* Display the global timer at the top */}
+                        <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                     </div>
                     <br />
                     <br />

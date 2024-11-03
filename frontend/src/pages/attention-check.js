@@ -4,6 +4,7 @@ import '../components/styles_css/PageStyle.css';
 import '../components/styles_css/RadioButton.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
+import GlobalTimer from "../components/GlobalTimer";
 
 const AttentionCheck = () => {
     const navigate = useNavigate(); 
@@ -263,6 +264,7 @@ const AttentionCheck = () => {
             <div className="LogoStyleImage">
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                 <br></br>
+                <GlobalTimer />
                 <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br></br>

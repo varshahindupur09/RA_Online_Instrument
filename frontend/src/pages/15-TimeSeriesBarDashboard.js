@@ -18,6 +18,7 @@ import TimeSeriesBarEnlargedImage4 from "../images/dashboard/timeseries-bar/enla
 
 import Timer from "../components/Timer";
 import { useConsent } from './ConsentContext';
+import GlobalTimer from "../components/GlobalTimer";
 
 const TimeSeriesBarDashboard = () => {
     const navigate = useNavigate();
@@ -460,6 +461,7 @@ const TimeSeriesBarDashboard = () => {
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img> 
                         <h2><strong><u>PART B</u></strong></h2> 
+                        <GlobalTimer />
                     </p>
                     <p>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>    
                 </div>

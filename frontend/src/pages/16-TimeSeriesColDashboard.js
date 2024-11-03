@@ -20,6 +20,7 @@ import TimeSeriesColEnlargedImage3 from "../images/dashboard/timeseries-col/enla
 import TimeSeriesColEnlargedImage4 from "../images/dashboard/timeseries-col/enlarged/2-right.png";
 
 import Timer from "../components/Timer";
+import GlobalTimer from "../components/GlobalTimer";
 
 const TimeSeriesColDashboard = () => {
     const navigate = useNavigate();
@@ -465,6 +466,7 @@ const TimeSeriesColDashboard = () => {
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img> 
                         <h2><strong><u>PART B</u></strong></h2> 
+                        <GlobalTimer />
                     </p>
                     <p>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>    
                 </div>

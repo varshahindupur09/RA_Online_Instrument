@@ -33,6 +33,7 @@ import FeedbackQuestions from "./pages/17-feedback-questions";
 import Demographics from "./pages/18-demographic-questions";
 // Import ConsentProvider
 import { ConsentProvider } from './pages/ConsentContext';
+import TimerProvider from "./components/TimerContext";
 
 //not ordered
 // import ProceedToPart1RotationTest from "./not-required/proceed-to-part1-rotation-test";
@@ -42,6 +43,7 @@ import { ConsentProvider } from './pages/ConsentContext';
 
 function App() {
     return (
+        <TimerProvider>
         <ConsentProvider>
             <Router>
                 <div>
@@ -82,6 +84,7 @@ function App() {
                 </div>
             </Router>
         </ConsentProvider>
+        </TimerProvider>
     );
 }
 

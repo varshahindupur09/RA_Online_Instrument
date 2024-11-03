@@ -19,6 +19,7 @@ import StructuralColEnlargedImage4 from "../images/dashboard/structural-col/enla
 
 import { useConsent } from './ConsentContext';
 import Timer from "../components/Timer";
+import GlobalTimer from "../components/GlobalTimer";
 
 const StructuralColDashboard = () => {
     const navigate = useNavigate();
@@ -462,6 +463,7 @@ const StructuralColDashboard = () => {
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img> 
                         <h2><strong><u>PART B</u></strong></h2> 
+                        <GlobalTimer />
                     </p>
                     <p>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>    
                 </div>

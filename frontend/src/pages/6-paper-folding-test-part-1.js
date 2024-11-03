@@ -78,6 +78,7 @@ import '../components/styles_css/RadioButtonImage.css';
 import Timer from "../components/Timer";
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
+import GlobalTimer from "../components/GlobalTimer";
 
 const PaperFoldingPart1Questions = () => {
     const navigate = useNavigate();
@@ -213,6 +214,7 @@ const PaperFoldingPart1Questions = () => {
     };
 
     const handleNext = async (event) => {
+        if (timerCompleted) return; // Prevent multiple executions
         event.preventDefault();
         setLoading(true);
 
@@ -281,11 +283,12 @@ const PaperFoldingPart1Questions = () => {
     
     const handleTimerCompletion = async (event) => {
         if (timerCompleted) {
+            // alert("Please wait until the timer completes.");
             return; // Prevent multiple executions after the timer has completed
         }
-        // event.preventDefault();
-        setLoading(true);
         setTimerCompleted(true); // Mark the timer as completed
+        // event.preventDefault();
+        setLoading(false); //earlier was true
         
          // Get the calculated incentive
         const totalIncentive = calculateIncentive();
@@ -342,6 +345,7 @@ const PaperFoldingPart1Questions = () => {
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo" /> 
                         <h2><strong><u>PAPER FOLDING TEST - PART 1</u></strong></h2>
+                        <GlobalTimer />
                     </p>
                     <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
@@ -726,7 +730,11 @@ const PaperFoldingPart1Questions = () => {
                 <br></br>
                 
                 {/* Next button */}
-                <button className="button" onClick={handleNext}> Next </button>
+                <button className="button"
+                        onClick={handleNext}
+                        disabled={!timerCompleted}
+                > Next 
+                </button>
                 {error && <p>Error: {error.message}</p>}
             </form>
         </div>

@@ -7,7 +7,7 @@ import '../components/styles_css/RadioButton.css';
 // import Navbar from "../components/NavbarPage";
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
-
+import GlobalTimer from "../components/GlobalTimer";
 
 const ConsentPage = () => {
     const navigate = useNavigate();
@@ -160,6 +160,7 @@ const ConsentPage = () => {
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
                         <h2><strong><u>CONSENT</u></strong></h2>
                     </p>
+                    <GlobalTimer />
                     <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
                 <br></br>

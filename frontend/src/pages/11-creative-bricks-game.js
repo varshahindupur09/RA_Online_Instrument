@@ -5,6 +5,7 @@ import BricksImage from '../images/bricks_image.png';
 import Timer from "../components/Timer"; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
+import GlobalTimer from "../components/GlobalTimer";
 
 const CreativeBricksGame = () => {
     const navigate = useNavigate();
@@ -116,63 +117,70 @@ const CreativeBricksGame = () => {
 
     const handleTimerCompletion = async () => {
         setIsTimerCompleted(true);  // Set timer completion to true
-        setLoading(true);
+        // setLoading(true);
 
-        const endTime = Date.now();
-        const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
-        const nextTestUrl = "/proceed-to-dashboard"; 
+        // const endTime = Date.now();
+        // const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
+        // const nextTestUrl = "/proceed-to-dashboard"; 
 
-        // Update responses with the calculated time spent
-        const updatedResponses = {
-            ...responses,
-            time_spent: timeSpent,
-            next_visit_test_name: nextTestUrl, // The next page URL
-        };
+        // // Update responses with the calculated time spent
+        // const updatedResponses = {
+        //     ...responses,
+        //     time_spent: timeSpent,
+        //     next_visit_test_name: nextTestUrl, // The next page URL
+        // };
 
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedResponses),
-            });
+        // try {
+        //     const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(updatedResponses),
+        //     });
 
-            // Simulate API call to save survey responses
-            // console.log('Saving responses:', updatedResponses);
+        //     // Simulate API call to save survey responses
+        //     // console.log('Saving responses:', updatedResponses);
 
-            setResponses(updatedResponses);
+        //     setResponses(updatedResponses);
 
-            const responseText = await response.text();
-            if (!response.ok) {
-                throw new Error(responseText || 'Network response was not ok');
-            }
-            // console.log('Response text:', responseText);
+        //     const responseText = await response.text();
+        //     if (!response.ok) {
+        //         throw new Error(responseText || 'Network response was not ok');
+        //     }
+        //     // console.log('Response text:', responseText);
 
-            navigate(nextTestUrl)
+        //     navigate(nextTestUrl)
 
-        } catch (error) {
-            console.error('Error:', error);
-            setError(error);
-        } finally {
-            setLoading(false);
-        }
+        // } catch (error) {
+        //     console.error('Error:', error);
+        //     setError(error);
+        // } finally {
+        //     setLoading(false);
+        // }
     };
 
     const handleNext = async (event) => {
         event.preventDefault();
+
+        if (! (isMinCharMet && isTimerCompleted)) {
+            setError(new Error('Please enter at least 50 characters in your response and please wait until the timer completes.'));
+            // setLoading(false); // Stop loading
+            return;
+        }
+
         setLoading(true);
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
         const nextTestUrl = "/proceed-to-dashboard";
         
-        // Check if the response is less than 50 characters
-        if (responses.responses.CBG_question.length < 50) {
-            setError(new Error('Please enter at least 50 characters in your response.'));
-            setLoading(false); // Stop loading
-            return; // Prevent proceeding to the next page
-        }
+        // // Check if the response is less than 50 characters
+        // if (responses.responses.CBG_question.length < 50) {
+        //     setError(new Error('Please enter at least 50 characters in your response.'));
+        //     setLoading(false); // Stop loading
+        //     return; // Prevent proceeding to the next page
+        // }
 
         // Update responses with the calculated time spent
         const updatedResponses = {
@@ -210,6 +218,12 @@ const CreativeBricksGame = () => {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        console.log("isMinCharMet:", isMinCharMet);
+        console.log("isTimerCompleted:", isTimerCompleted);
+        console.log("loading:", loading);
+    }, [isMinCharMet, isTimerCompleted, loading]);
 
     return (
         <div className="container">
@@ -218,6 +232,7 @@ const CreativeBricksGame = () => {
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
                     </p>
+                    <GlobalTimer />
                     <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>   
                 </div>
                 <br />
@@ -251,7 +266,7 @@ const CreativeBricksGame = () => {
             {/* Conditionally render Next button  */}
             <button 
                 className="button"
-                disabled={!isTimerCompleted || !isMinCharMet} // Disable until timer is done
+                disabled={!isTimerCompleted || !isMinCharMet || loading} // Disable until timer is done
                 onClick={handleNext}> 
                 Next 
             </button> 

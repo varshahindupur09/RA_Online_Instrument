@@ -109,6 +109,7 @@ import '../components/styles_css/PageStyle.css';
 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
+import GlobalTimer from '../components/GlobalTimer';
 
 const RotationTestPart2 = () => {
     const navigate = useNavigate();
@@ -121,6 +122,7 @@ const RotationTestPart2 = () => {
     const startTimeRef = useRef(null);
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
+    const [timerCompleted, setTimerCompleted] = useState(false); // Track if the timer has already completed
 
     // const API_BASE_URL = 'https://backend.adg429.com';
     // const API_BASE_URL = 'http://localhost:8080';
@@ -330,8 +332,13 @@ const RotationTestPart2 = () => {
     };
 
     const handleTimerCompletion = async (event) => {
+        if (timerCompleted) {
+            // alert("Please wait until the timer completes.");
+            return; // Prevent multiple executions after the timer has completed
+        }
+        setTimerCompleted(true); // Mark the timer as completed
         // event.preventDefault();
-        setLoading(true);
+        setLoading(false); //earlier was true
 
         const endTime = Date.now();
         const timeSpent = (endTime - startTimeRef.current) / 1000; // Calculate time spent in seconds
@@ -385,6 +392,7 @@ const RotationTestPart2 = () => {
     };
 
     const handleNext = async (event) => {
+        if (timerCompleted) return; // Prevent multiple executions
         event.preventDefault();
         setLoading(true);
 
@@ -511,6 +519,7 @@ const RotationTestPart2 = () => {
                 <p>
                     <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
                     <h2><strong><u>ROTATION TEST - PART 2</u></strong></h2>
+                    <GlobalTimer />
                 </p>
                 <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
@@ -567,7 +576,11 @@ const RotationTestPart2 = () => {
             <br />
             <br />
             {/* Next button */}
-            <button className="button" onClick={handleNext}> Next </button>
+            <button className="button"
+                        onClick={handleNext}
+                        disabled={!timerCompleted}
+            > Next 
+            </button>
             {/* disabled={!allAnswered} */}
             {error && <p>Error: {error.message}</p>}
         </div>

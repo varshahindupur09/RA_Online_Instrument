@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
+import GlobalTimer from "../components/GlobalTimer";
 
 const FinancialLiteracy = () => {
     const navigate = useNavigate();
@@ -160,6 +161,7 @@ const FinancialLiteracy = () => {
                         <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo" /> 
                         <h2><strong><u>PART A</u></strong></h2> 
+                        <GlobalTimer />
                     </p>
                     <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
