@@ -14,8 +14,8 @@ options.add_argument("start-maximized")
 
 # Setup driver with WebDriver Manager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-# url = "https://adg429.com"  # Update with the actual URL if different
-url = "http://localhost:3000/"
+url = "https://adg429.com"  # Update with the actual URL if different
+# url = "http://localhost:3000/"
 dummy_prolific_id = "thisisseleniumautomation"  # Ensure this is 24 characters for testing
 
 # Define dashboard URLs and a dictionary to match URL with dashboard type
@@ -38,6 +38,7 @@ def test_adg429_positive_flow_page_consent():
         search_prolific_id = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//input[@type='text']"))
         )
+        
         search_prolific_id.click()
         search_prolific_id.send_keys(dummy_prolific_id)
         print("Entered Prolific ID successfully.")
@@ -92,18 +93,30 @@ def test_adg429_positive_flow_page_financial_literacy():
         answer_fl_1_1 = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@for='answer-fl-1-1']"))
         )
+        # Scroll to the element
+        driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answer_fl_1_1)
+        time.sleep(0.5)
+        # click
         driver.execute_script("arguments[0].click();", answer_fl_1_1)
 
         print("answer options - 2")
         answer_fl_2_2 = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@for='answer-fl-2-2']"))
         )
+        # Scroll to the element
+        driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answer_fl_2_2)
+        time.sleep(0.5)
+        # click
         driver.execute_script("arguments[0].click();", answer_fl_2_2)
 
         print("answer options - 3")
         answer_fl_3_2 = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@for='answer-fl-3-2']"))
         )
+        # Scroll to the element
+        driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answer_fl_3_2)
+        time.sleep(0.5)
+        # click
         driver.execute_script("arguments[0].click();", answer_fl_3_2)
 
         # Wait for the submit button and click it
@@ -129,6 +142,10 @@ def test_adg429_positive_flow_page_paper_folding_test_sample_question():
         next_button = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
         )
+        # Scroll to the element
+        driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", next_button)
+        time.sleep(0.5)
+        # click
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
         driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
@@ -148,14 +165,22 @@ def test_adg429_positive_flow_page_paper_folding_test_part_1():
             answers_ppt1 = WebDriverWait(driver, 10).until(
                 EC.visibility_of_element_located((By.XPATH, f"//*[@for='Part1Question{question_num}Answer{question_num}Option1']"))
             )
+            # Scroll to the element
+            driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answers_ppt1)
+            time.sleep(0.5)
+            # click
             driver.execute_script("arguments[0].click();", answers_ppt1)
 
         # Wait for the submit button and click it
-        next_button = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
-        )
+        # next_button = WebDriverWait(driver, 10).until(
+        #     EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
+        # )
+        # # Scroll to the element
+        # driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", next_button)
+        # time.sleep(0.5)
+        # click
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
-        driver.execute_script("arguments[0].click();", next_button)
+        # driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
 
     except Exception as e:
@@ -173,14 +198,22 @@ def test_adg429_positive_flow_page_paper_folding_test_part_2():
             answers_ppt2 = WebDriverWait(driver, 10).until(
                 EC.visibility_of_element_located((By.XPATH, f"//*[@for='Part2Question{question_num}Answer{question_num}Option1']"))
             )
+            # Scroll to the element
+            driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answers_ppt2)
+            time.sleep(0.5)
+            # click
             driver.execute_script("arguments[0].click();", answers_ppt2)
 
         # Wait for the submit button and click it
-        next_button = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
-        )
+        # next_button = WebDriverWait(driver, 10).until(
+        #     EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
+        # )
+        # Scroll to the element
+        # driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", next_button)
+        # time.sleep(0.5)
+        # click
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
-        driver.execute_script("arguments[0].click();", next_button)
+        # driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
 
     except Exception as e:
@@ -202,6 +235,10 @@ def test_adg429_positive_flow_page_sample_rotation_test():
                 answer = WebDriverWait(driver, 10).until(
                     EC.visibility_of_element_located((By.XPATH, f"//*[@name='SRT_question{q_num}answer{a_num}'][@value='different']"))
                 )
+                # Scroll to the element
+                # driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answer)
+                # time.sleep(0.5)
+                # click
                 driver.execute_script("arguments[0].click();", answer)
 
             print("Completed SRT Page")
@@ -210,6 +247,9 @@ def test_adg429_positive_flow_page_sample_rotation_test():
         next_button = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
         )
+        driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", next_button)
+        time.sleep(0.5)
+        # click
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
         driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
@@ -228,12 +268,17 @@ def test_adg429_positive_flow_page_attention_check():
         attention_check = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@for='AttentionCheckAnswer1Option2']"))
         )
+        driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", attention_check)
+        time.sleep(0.5)
         driver.execute_script("arguments[0].click();", attention_check)
 
         # Wait for the submit button and click it
         next_button = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
         )
+        driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", next_button)
+        time.sleep(0.5)
+        # click
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
         driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
@@ -255,14 +300,18 @@ def test_adg429_positive_flow_page_rotation_test_part_1():
                 answer = WebDriverWait(driver, 10).until(
                     EC.visibility_of_element_located((By.XPATH, f"//*[@name='RT1_question{q_num}answer{a_num}'][@value='same']"))
                 )
+                driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answer)
+                time.sleep(0.5)
                 driver.execute_script("arguments[0].click();", answer)
 
         # Wait for the submit button and click it
-        next_button = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
-        )
+        # next_button = WebDriverWait(driver, 10).until(
+        #     EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
+        # )
+        # driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", next_button)
+        # time.sleep(0.5)
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
-        driver.execute_script("arguments[0].click();", next_button)
+        # driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
 
 
@@ -287,16 +336,20 @@ def test_adg429_positive_flow_page_rotation_test_part_2():
                 answer = WebDriverWait(driver, 10).until(
                     EC.visibility_of_element_located((By.XPATH, f"//*[@name='RT2_question{q_num}answer{a_num}'][@value='different']"))
                 )
+                driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answer)
+                time.sleep(0.5)
                 driver.execute_script("arguments[0].click();", answer)
 
             print("Completed RT2 Page Rotation Test Part 2")
 
         # Wait for the submit button and click it
-        next_button = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
-        )
+        # next_button = WebDriverWait(driver, 10).until(
+        #     EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))
+        # )
+        # driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", next_button)
+        # time.sleep(0.5)
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
-        driver.execute_script("arguments[0].click();", next_button)
+        # driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
 
 
