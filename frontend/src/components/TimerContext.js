@@ -4,7 +4,7 @@ import React, {createContext, useState, useEffect} from 'react';
 export const TimerContext = createContext();
 
 const TimerProvider = ({ children }) => {
-    const TIMER__WEB_DECIDED = 1;
+    const TIMER__WEB_DECIDED = 40;
     const TOTAL_TIME = TIMER__WEB_DECIDED * 60; // 40 mins in secs
     const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
 

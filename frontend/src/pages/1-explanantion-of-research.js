@@ -211,7 +211,6 @@ const FirstInstrConsent = () => {
                             {/* <img src={logoImage} alt="ucflogo" className="ucflogo" />  */}
                             <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
                             <h2><strong><u>EXPLANATION OF RESEARCH</u></strong></h2>
-                            <GlobalTimer />
                         </p>
                         <GlobalTimer /> {/* Display the global timer at the top */}
                         <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
