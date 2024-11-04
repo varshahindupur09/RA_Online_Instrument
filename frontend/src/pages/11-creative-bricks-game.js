@@ -5,7 +5,7 @@ import BricksImage from '../images/bricks_image.png';
 import Timer from "../components/Timer"; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const CreativeBricksGame = () => {
     const navigate = useNavigate();

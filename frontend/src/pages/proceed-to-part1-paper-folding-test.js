@@ -2,7 +2,7 @@ import React , {useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const ProceedToPart1PaperFoldingTest = () => {
     const navigate = useNavigate(); 

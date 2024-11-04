@@ -43,7 +43,7 @@ import TimerProvider from "./components/TimerContext";
 
 function App() {
     return (
-        <TimerProvider>
+        // <TimerProvider>
         <ConsentProvider>
             <Router>
                 <div>
@@ -84,7 +84,7 @@ function App() {
                 </div>
             </Router>
         </ConsentProvider>
-        </TimerProvider>
+        // </TimerProvider>
     );
 }
 

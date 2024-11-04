@@ -20,7 +20,7 @@ import TimeSeriesColEnlargedImage3 from "../images/dashboard/timeseries-col/enla
 import TimeSeriesColEnlargedImage4 from "../images/dashboard/timeseries-col/enlarged/2-right.png";
 
 import Timer from "../components/Timer";
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const TimeSeriesColDashboard = () => {
     const navigate = useNavigate();

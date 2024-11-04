@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const FinancialLiteracy = () => {
     const navigate = useNavigate();

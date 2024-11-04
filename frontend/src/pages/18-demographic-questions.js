@@ -4,7 +4,7 @@ import logoImageDoc from '../images/UCF_logo_doc.png';
 import '../components/styles_css/DemographicRadioButton.css'; 
 import { useConsent } from './ConsentContext';
 import { useNavigate } from 'react-router-dom';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const Demographics = () => {
     const navigate = useNavigate();

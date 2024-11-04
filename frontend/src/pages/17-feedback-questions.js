@@ -5,7 +5,7 @@ import '../components/styles_css/feedbackQuestions.css';
 import logoImageDoc from '../images/UCF_logo_doc.png';
 
 import { useConsent } from './ConsentContext';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const FeedbackQuestions = () => {
     const navigate = useNavigate();

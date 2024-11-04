@@ -4,7 +4,7 @@ import '../components/styles_css/PageStyle.css';
 import '../components/styles_css/otherpagestyles.css'; 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const ProceedToDashboard = () => {
     const navigate = useNavigate(); 

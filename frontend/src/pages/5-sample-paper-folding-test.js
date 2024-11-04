@@ -8,7 +8,7 @@ import '../components/styles_css/PageStyle.css';
 import logoImage from '../images/UCF_Logo.png';
 // import Navbar from "../components/NavbarPage";
 import { useConsent } from './ConsentContext';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const PaperFoldingSampleQuestion = () => {
     const navigate = useNavigate();

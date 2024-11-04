@@ -7,7 +7,7 @@ import '../components/styles_css/RadioButton.css';
 // import Navbar from "../components/NavbarPage";
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const ConsentPage = () => {
     const navigate = useNavigate();

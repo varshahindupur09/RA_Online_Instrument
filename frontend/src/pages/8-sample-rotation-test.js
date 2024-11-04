@@ -294,7 +294,7 @@ const RotationTestQuestion = () => {
                     <p><strong>Please read the instructions carefully.</strong></p>
                     <div className="instructionsred">
                         <strong>
-                            <li>In addition to the fixed payment of $4, you will receive a bonus of 5 cents for each correct answer. Below two sample problems are for practice only. </li>                        </strong>
+                            <li>In addition to the fixed payment of $4, you will receive a bonus of $0.05 cents for each correct answer. Below two sample problems are for practice only. </li>                        </strong>
                     </div>
                     <p>This is a test of your ability to see differences in figures. Look at the 5 triangle-shaped cards drawn below.</p>
                     <div className='other_images'>

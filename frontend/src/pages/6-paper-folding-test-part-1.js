@@ -78,7 +78,7 @@ import '../components/styles_css/RadioButtonImage.css';
 import Timer from "../components/Timer";
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const PaperFoldingPart1Questions = () => {
     const navigate = useNavigate();

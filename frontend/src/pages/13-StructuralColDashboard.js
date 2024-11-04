@@ -19,7 +19,7 @@ import StructuralColEnlargedImage4 from "../images/dashboard/structural-col/enla
 
 import { useConsent } from './ConsentContext';
 import Timer from "../components/Timer";
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const StructuralColDashboard = () => {
     const navigate = useNavigate();

@@ -19,7 +19,7 @@ import StructuralBarEnlargedImage4 from "../images/dashboard/structural-bar/enla
 
 import { useConsent } from './ConsentContext';
 import Timer from "../components/Timer";
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const StructuralBarDashboard = () => {
     const navigate = useNavigate();

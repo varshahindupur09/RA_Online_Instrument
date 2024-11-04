@@ -18,7 +18,7 @@ import TimeSeriesBarEnlargedImage4 from "../images/dashboard/timeseries-bar/enla
 
 import Timer from "../components/Timer";
 import { useConsent } from './ConsentContext';
-import GlobalTimer from "../components/GlobalTimer";
+// import GlobalTimer from "../components/GlobalTimer";
 
 const TimeSeriesBarDashboard = () => {
     const navigate = useNavigate();
