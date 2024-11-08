@@ -26,7 +26,7 @@ const FirstInstrConsent = () => {
         const id = query.get('PROLIFIC_PID');
         // const id = "66ce204a5c724a497b287acc"
 
-        if (id && id.length === 24 && !manualProlificIdSet)  {
+        if (id && id.length === 24){ //&& !manualProlificIdSet)  {
             setProlificId(id);
             // console.log("Enabling consent buttons in useeffect for prolific id");  
             setIsConsentDisabled(false); // Enable consent buttons
@@ -222,7 +222,7 @@ const FirstInstrConsent = () => {
                     {error && <p>Error: {error.message}</p>}
                     <div name="instructions">
                         {/* Input field for Prolific ID, only visible if it hasn't been set via URL and not manually entered */}
-                        {!manualProlificIdSet && (
+                        {/* {!manualProlificIdSet && (
                         <label>
                             Enter your Prolific ID: &nbsp;
                             <input
@@ -236,9 +236,9 @@ const FirstInstrConsent = () => {
                                 title="Prolific ID must be exactly 24 characters long"
                             />
                         </label>
-                        )}
+                        )} */}
                         <div>
-                            {prolificId && <p>Your Prolific ID: {prolificId}</p>}
+                            {<p>Your Prolific ID: {prolificId}</p>}
                         </div>
                         <br></br>
                         <br></br>
