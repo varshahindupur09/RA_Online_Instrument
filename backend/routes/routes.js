@@ -274,6 +274,46 @@ const surveyController = require('../controllers/SurveyResponse');
  *         description: Error deleting documents
  */
 
+/**
+ * @swagger
+ * /api/surveyResponses/emptyProlificId:
+ *   delete:
+ *     summary: Delete all survey responses with an empty Prolific ID
+ *     tags: [SurveyResponse]
+ *     responses:
+ *       200:
+ *         description: Successfully deleted survey response(s) with an empty Prolific ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Deleted X survey response(s) with an empty Prolific ID"
+ *       404:
+ *         description: No survey responses found with an empty Prolific ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No survey responses found with an empty Prolific ID."
+ *       500:
+ *         description: Error deleting survey responses
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Error deleting survey responses"
+ */
+
+
 router.post('/surveyResponse', surveyController.createSurveyResponse);
 router.get('/surveyResponse', surveyController.getAllSurveyResponses);
 router.get('/surveyResponses/:prolificId', surveyController.getSurveyResponsesByProlificId);
@@ -284,5 +324,6 @@ router.delete('/surveyResponse/:id',surveyController.deleteSurveyResponse);
 router.delete('/surveyResponses/:prolificId', surveyController.deleteSurveyResponsesByProlificId);
 router.delete('/surveyResponses', surveyController.deleteAllSurveyResponses);
 router.get('/dbHealthCheck', surveyController.dbHealthCheckResponse);
+router.delete('/surveyResponses/emptyProlificId', surveyController.deleteSurveyResponseWithEmptyProlificId);
 
 module.exports = router;

@@ -129,7 +129,7 @@ cd backend
 zip -r ../nodejs.zip . -x "node_modules/*" -x ".git/*"
 
 # Run what needs to be changed
-.env in bbackend
+.env in backend
 BACKEND_API_URL=https://backend.adg429.com
 BACKEND_API_URL=http://localhost:8080
 

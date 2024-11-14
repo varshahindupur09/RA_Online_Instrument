@@ -132,8 +132,8 @@ const PaperFoldingPart1Questions = () => {
     
     //api integration
     const [responses, setResponses] = useState({
-        // prolific_id: prolificId, 
-        prolificId: 'errortype1' || '',
+        prolific_id: prolificId, 
+        // prolificId: 'errortype1' || '',
         test_name: test_name_given, 
         consent: consent === "yes" ? true : false, 
         page_number: 6, 

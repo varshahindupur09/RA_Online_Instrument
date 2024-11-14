@@ -14,8 +14,8 @@ options.add_argument("start-maximized")
 
 # Setup driver with WebDriver Manager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-url = "https://adg429.com"  # Update with the actual URL if different
-# url = "http://localhost:3000/"
+# url = "https://adg429.com"  # Update with the actual URL if different
+url = "http://localhost:3000/"
 dummy_prolific_id = "thisisseleniumautomation"  # Ensure this is 24 characters for testing
 
 # Define dashboard URLs and a dictionary to match URL with dashboard type
@@ -167,7 +167,6 @@ def test_adg429_positive_flow_page_paper_folding_test_part_1():
             )
             # Scroll to the element
             driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answers_ppt1)
-            time.sleep(0.5)
             # click
             driver.execute_script("arguments[0].click();", answers_ppt1)
 
@@ -182,6 +181,7 @@ def test_adg429_positive_flow_page_paper_folding_test_part_1():
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
         # driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
+        time.sleep(180)
 
     except Exception as e:
         print(f"An error occurred:")
@@ -200,7 +200,6 @@ def test_adg429_positive_flow_page_paper_folding_test_part_2():
             )
             # Scroll to the element
             driver.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", answers_ppt2)
-            time.sleep(0.5)
             # click
             driver.execute_script("arguments[0].click();", answers_ppt2)
 
@@ -215,6 +214,7 @@ def test_adg429_positive_flow_page_paper_folding_test_part_2():
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
         # driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
+        time.sleep(180)
 
     except Exception as e:
         print(f"An error occurred:")
@@ -313,7 +313,7 @@ def test_adg429_positive_flow_page_rotation_test_part_1():
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
         # driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
-
+        time.sleep(180)
 
     except Exception as e:
         print(f"An error occurred:")
@@ -351,7 +351,7 @@ def test_adg429_positive_flow_page_rotation_test_part_2():
         # actions.move_to_element(submit_button).click().perform()  # Move to the element and click
         # driver.execute_script("arguments[0].click();", next_button)
         print("Clicked next button on page 2")
-
+        time.sleep(180)
 
     except Exception as e:
         print(f"An error occurred:")
@@ -385,7 +385,7 @@ def test_adg429_positive_flow_page_creative_brick_game():
 
     finally:
         print("Test completed. Closing the browser.")
-        time.sleep(350)
+        time.sleep(400)
         # driver.quit()
 
 def test_adg429_positive_flow_page_proceed_to_dashboard():
@@ -444,8 +444,7 @@ def test_adg429_positive_flow_page_dashboard():
 
 def test_adg429_positive_flow_page_feedback_questions():
     try:
-        
-        
+                
         # Wait for the submit button and click it
         next_button = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@class='button']"))

@@ -26,11 +26,6 @@ const TimeSeriesBarDashboard = () => {
     const [selectedImage, setSelectedImage] = useState('');
     const [questionIndex, setQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState('');
-    const [questionStartTime, setQuestionStartTime] = useState(new Date());
-    const [graphStartTime, setGraphStartTime] = useState(null);
-    const [questionDurations, setQuestionDurations] = useState([]);
-    const [graphDurations, setGraphDurations] = useState([]);
-    const [currentGraphDurations, setCurrentGraphDurations] = useState([]);
 
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
     const { consent, prolificId, chart_number} = useConsent(); // Access consent and Prolific ID from context
@@ -41,6 +36,16 @@ const TimeSeriesBarDashboard = () => {
     const currentTestUrl = "/timeseries-bar-dashboard";
     const previousTestUrl = "/dashboard-router";
     const test_name_given = 'TimeSeries-Bar-Dashboard';
+
+    const [questionStartTime, setQuestionStartTime] = useState(new Date());
+    const [graphStartTime, setGraphStartTime] = useState(null);
+    const [questionDurations, setQuestionDurations] = useState([]);
+    const [graphDurations, setGraphDurations] = useState([]);
+    const currentGraphDurationsRef = useRef([]); // Replace state with useRef
+    const cumulativeGraphDurationsRef = useRef([0, 0, 0, 0]); 
+    const [currentGraphIndex, setCurrentGraphIndex] = useState(null); // Track which graph is open
+    const hasTimerCompleted = useRef(false); 
+    const hasFinalSubmissionCompleted = useRef(false); 
 
     // Scroll to the top of the page
     useEffect(() => {
@@ -289,23 +294,6 @@ const TimeSeriesBarDashboard = () => {
         TimeSeriesBarEnlargedImage4
     ];
 
-    const openModal = (imgIndex) => {
-        setSelectedImage(TimeSeriesBarEnlargedImages[imgIndex]);
-        setModalIsOpen(true);
-        setGraphStartTime(new Date());
-    };
-
-    const closeModal = () => {
-        const endTime = new Date();
-        const duration = (endTime - graphStartTime) / 1000; // Duration in seconds
-        setCurrentGraphDurations(prevDurations => [...prevDurations, duration]);
-        setModalIsOpen(false);
-    };
-
-    const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
-    };
-
     useEffect(() => {
         if (!selectedOption) return;  // Avoid unnecessary updates if no option is selected
 
@@ -349,14 +337,48 @@ const TimeSeriesBarDashboard = () => {
         setResponses(updatedResponses); // Save the updated responses
     }, [selectedOption, questionIndex]);
 
+    const openModal = (imgIndex) => {
+        setSelectedImage(StructuralColEnlargedImages[imgIndex]);
+        setModalIsOpen(true);
+        setGraphStartTime(new Date());
+        setCurrentGraphIndex(imgIndex); // Set the current graph index for tracking
+    };
+
+    const closeModal = (graphIndex) => {
+        const endTime = new Date();
+        let duration = (endTime - graphStartTime) / 1000; // Duration in seconds
+        duration = Math.round(duration * 100) / 100; // Round to two decimal places
+        currentGraphDurationsRef.current.push(duration); // Directly update ref
+        if (currentGraphIndex !== null) { // Ensure there is a valid graph index set
+            // Add the duration to the correct index in cumulativeGraphDurationsRef
+            cumulativeGraphDurationsRef.current[currentGraphIndex] += duration;
+            cumulativeGraphDurationsRef.current[currentGraphIndex] = Math.round(cumulativeGraphDurationsRef.current[currentGraphIndex] * 100) / 100; // Keep cumulative value to 2 decimals
+            // console.log(`Graph ${currentGraphIndex} cumulative time:`, cumulativeGraphDurationsRef.current[currentGraphIndex]);
+        }
+        // console.log(`Graph ${graphIndex} cumulative time:`, cumulativeGraphDurationsRef.current[graphIndex]);
+        setModalIsOpen(false);
+        setCurrentGraphIndex(null); // Reset current graph index
+    };
+
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
+
     const handleNext = async (event) => {
         event.preventDefault();
         setLoading(true);
 
+        // Capture question duration and graph durations before proceeding
         const endTime = new Date();
-        const questionDuration = (endTime - questionStartTime) / 1000; // Duration in seconds
-        setQuestionDurations(prevDurations => [...prevDurations, questionDuration]);
-        setGraphDurations(prevDurations => [...prevDurations, [...currentGraphDurations]]); // Ensure deep copy
+        let questionDuration = (endTime - questionStartTime) / 1000;
+        questionDuration = Math.round(questionDuration * 100) / 100; // Round to two decimal places
+
+        // Update question duration at the current questionIndex
+        const updatedDurations = [...questionDurations];
+        updatedDurations[questionIndex] = questionDuration;
+        setQuestionDurations(updatedDurations); // Update state
+
+        // console.log("handleNext: checking how many times this is called");
 
         let nextTestUrl = "";
         let shouldNavigate = true;
@@ -365,15 +387,25 @@ const TimeSeriesBarDashboard = () => {
         
         if (questionIndex + 1 === 24) 
         {
-            // This is the last question, handle final submission
+            // Prevent multiple submissions
+            if (hasFinalSubmissionCompleted.current)
+                {
+                    setLoading(false);
+                    return; //exit if function has already run
+                }
+                
+            hasFinalSubmissionCompleted.current = true;
+
+            // handle final submission
             let finalResponses = {
                 ...responses,
-                question_durations: questionDurations,
-                graph_durations: graphDurations,
+                graph_question_durations: updatedDurations,
+                per_graph_durations: cumulativeGraphDurationsRef.current.map(dur => Math.round(dur * 100) / 100), // Ensure all are rounded
                 next_visit_test_name: nextTestUrl, // The next page URL
             };
 
             setError(null)
+            // console.log("Final Responses AFTER Submission:", questionIndex + 1, " ===> ", finalResponses);
 
             try {
                 const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
@@ -412,46 +444,65 @@ const TimeSeriesBarDashboard = () => {
             setQuestionIndex(questionIndex + 1);
             setSelectedOption(''); // Clear selected option
             setQuestionStartTime(new Date()); // Reset the start time for the next question
-            setCurrentGraphDurations([]); // Clear graph durations
             setLoading(false);
+            // console.log("Final Responses BEFORE Submission:", questionIndex + 1, " ===> ", responses);
         }
     };
 
 
-    const handleTimerCompletion = async (event) => {
+    const handleTimerCompletion = async (event) => 
+    {
+        if (hasTimerCompleted.current)
+        {
+            return; //exit if function has already run
+        }
+        
+        hasTimerCompleted.current = true;
+        // console.log("handleTimerCompletion: checking how many times this is called");
 
-            const finalResponses = {
-                ...responses,
-                question_durations: questionDurations,
-                graph_durations: graphDurations,
-                next_visit_test_name: "/feedback-questions",
-            };
+        // Calculate the final question duration and round it to two decimal places
+        const endTime = new Date();
+        let questionDuration = (endTime - questionStartTime) / 1000;
+        questionDuration = Math.round(questionDuration * 100) / 100; // Round to two decimal places
+    
+       // Update the duration for the last question directly in the durations array
+        const updatedDurations = [...questionDurations];
+        updatedDurations[questionIndex] = questionDuration;
+        setQuestionDurations(updatedDurations);
 
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(finalResponses),
-                });
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.log("Error: ", errorText);
-                    throw new Error('Network response was not ok');
-                }
-
-                navigate(finalResponses.next_visit_test_name);
-
-            } catch (error) {
-                console.error('Error:', error);
-                
-            } finally {
-                setLoading(false);
+        // Prepare final response with rounded durations
+        const finalResponses = {
+            ...responses,
+            graph_question_durations: updatedDurations, // Ensure all are rounded to 2 decimals
+            per_graph_durations: cumulativeGraphDurationsRef.current.map(dur => Math.round(dur * 100) / 100), // Ensure cumulative graph durations are rounded
+            next_visit_test_name: "/feedback-questions",
+        };
+    
+        // console.log("handleTimerCompletion:");
+        // console.log(finalResponses);
+    
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/surveyResponse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(finalResponses),
+            });
+    
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.log("Error: ", errorText);
+                throw new Error('Network response was not ok');
             }
-
-            // console.log("i enter here if (questionIndex + 1 === 24 || timerExpired) ", questionIndex, timerExpired);
+    
+            navigate(finalResponses.next_visit_test_name);
+    
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

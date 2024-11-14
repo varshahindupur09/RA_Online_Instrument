@@ -205,3 +205,20 @@ exports.exportSurveyResponsesToExcel = async (req, res) => {
     }
 };
 
+exports.deleteSurveyResponseWithEmptyProlificId = async (req, res) => {
+    try {
+        const result = await SurveyResponse.deleteMany({ prolific_id: "" });
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: 'No survey responses found with an empty Prolific ID.' });
+        }
+
+        res.status(200).json({
+            message: `Deleted ${result.deletedCount} survey response(s) with an empty Prolific ID`,
+        });
+    } catch (err) {
+        console.error('Error deleting survey responses:', err);
+        res.status(500).json({ message: 'Error deleting survey responses' });
+    }
+};
+
