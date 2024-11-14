@@ -142,62 +142,63 @@ function flattenObject(ob) {
 
 exports.exportSurveyResponsesToExcel = async (req, res) => {
     try {
-        // console.log("Starting exportSurveyResponsesToExcel...");
+        // Fetch filename from query parameters, defaulting to 'SurveyResponses' if not provided
+        const filename = req.query.filename || 'SurveyResponsesNodeJSAPI';
 
         // Fetch all survey responses from the database
-        const responses = await SurveyResponse.find({}).lean(); // Use lean() to get plain JavaScript objects
-        // console.log("Fetched survey responses from database:", responses.length);
+        const responses = await SurveyResponse.find({}).lean();
 
         // Check if any data was fetched
         if (responses.length === 0) {
             return res.status(404).json({ message: 'No data found in the collection.' });
         }
-        
-        // console.log("cleaned *********")
-        // Convert the MongoDB ObjectId and other special types into strings
-        const cleanedResponses = responses.map((doc, index) => {
-            doc._id = doc._id.toString(); // Convert _id from ObjectId to string
-            
-            // // Log the conversion of the first response for debugging
-            // if (index === 5) {
-            //     console.log("Original Document:", doc);
-            //     console.log("Cleaned Response:", doc);
-            // }
-            
-            return doc;
+
+        // Define the desired column order
+        const desiredOrder = [
+            "_id", "prolific_id", "test_name", "page_number",
+            "responses.FL_question_1", "responses.FL_question_2", "responses.FL_question_3", "responses.PFT1_question_1" ,"responses.PFT1_question_2" ,
+            "responses.PFT1_question_3" ,"responses.PFT1_question_4" ,"responses.PFT1_question_5" ,"responses.PFT1_question_6" ,"responses.PFT1_question_7" ,
+            "responses.PFT1_question_8" , "responses.PFT1_question_9" ,"responses.PFT1_question_10" ,"responses.PFT2_question_1" ,"responses.PFT2_question_2" ,"responses.PFT2_question_3", "responses.PFT2_question_4", 
+            "responses.PFT2_question_5", "responses.PFT2_question_6", "responses.PFT2_question_7", "responses.PFT2_question_8", "responses.PFT2_question_9", "responses.PFT2_question_10", "responses.SRT_question1", "responses.SRT_question2", "responses.ACT_question_attempt_1", 
+            "responses.ACT_question_attempt_2", "responses.ACT_attention_check", "responses.RT1_question1", "responses.RT1_question2", "responses.RT1_question3", "responses.RT1_question4", "responses.RT1_question5", "responses.RT1_question6", "responses.RT1_question7", 
+            "responses.RT1_question8", "responses.RT1_question9", "responses.RT1_question10", "responses.RT2_question1", "responses.RT2_question2", "responses.RT2_question3",
+            "responses.RT2_question4", "responses.RT2_question5", "responses.RT2_question6", "responses.RT2_question7", "responses.RT2_question8", "responses.RT2_question9", 
+            "responses.RT2_question10", "responses.CBG_question", "responses.SCD_question1", "responses.SCD_question2", "responses.SCD_question3", "responses.SCD_question4", 
+            "responses.SCD_question5", "responses.SCD_question6", "responses.SCD_question7", "responses.SCD_question8", "responses.SCD_question9", "responses.SCD_question10", 
+            "responses.SCD_question11", "responses.SCD_question12", "responses.SCD_question13", "responses.SCD_question14", "responses.SCD_question15", "responses.SCD_question16", "responses.SCD_question17",
+            "responses.SCD_question18", "responses.SCD_question19", "responses.SCD_question20", "responses.SCD_question21", "responses.SCD_question22", "responses.SCD_question23", 
+            "responses.SCD_question24", "graph_question_durations", "per_graph_durations", "responses.attention_check", "responses.mentalDemand", "responses.physicalDemand", "responses.temporalDemand", "responses.performance", "responses.effort", 
+            "responses.frustration", "responses.age", "responses.education-level", "responses.work-experience", "responses.management-experience", "responses.employment-sector", 
+            "incentive_calculation", "total_pay_till_now", "current_visit_test_name", "next_visit_test_name", "last_visited_test_name" ,"chart_number", "consent","__v"
+        ];
+
+        // Flatten each document and filter for the desired columns
+        const cleanedAndFilteredResponses = responses.map((doc) => {
+            // Flatten the document
+            const flatDoc = flattenObject(doc);
+
+            // Reorder and filter columns according to desiredOrder
+            const reorderedDoc = {};
+            desiredOrder.forEach(col => {
+                if (flatDoc.hasOwnProperty(col)) reorderedDoc[col] = flatDoc[col];
+            });
+            return reorderedDoc;
         });
-        // console.log("cleaned done *********")
 
-        // Flatten the nested objects in each document
-        const flattenedResponses = cleanedResponses.map((doc, index) => {
-            const flattenedDoc = flattenObject(doc);
-
-            // // Log the first flattened response for debugging
-            // if (index === 5) {
-            //     console.log("Flattened Response:", flattenedDoc);
-            // }
-
-            return flattenedDoc;
-        });
-        // console.log("Flattened responses:", flattenedResponses.length);
-
-        // Create a new Excel workbook and worksheet
-        const worksheet = XLSX.utils.json_to_sheet(flattenedResponses);
+        // Create Excel workbook and worksheet from reordered data
+        const worksheet = XLSX.utils.json_to_sheet(cleanedAndFilteredResponses);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'SurveyResponses');
-        // console.log("Created Excel workbook.");
 
         // Write the Excel file to a buffer
         const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
-        // console.log("Excel file written to buffer.");
 
-        // Set response headers for file download
-        res.setHeader('Content-Disposition', 'attachment; filename=SurveyResponsesNodeJSAPI.xlsx');
+        // Set response headers to trigger file download
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}.xlsx"`);
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
         // Send the buffer as a file download
         res.send(excelBuffer);
-        // console.log("Excel file sent successfully.");
 
     } catch (err) {
         console.error("Error exporting data to Excel:", err);
