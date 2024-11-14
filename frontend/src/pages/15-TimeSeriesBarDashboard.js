@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css';  
@@ -39,8 +39,7 @@ const TimeSeriesBarDashboard = () => {
 
     const [questionStartTime, setQuestionStartTime] = useState(new Date());
     const [graphStartTime, setGraphStartTime] = useState(null);
-    const [questionDurations, setQuestionDurations] = useState([]);
-    const [graphDurations, setGraphDurations] = useState([]);
+    const [questionDurations, setQuestionDurations] = useState(Array(24).fill(0.00));
     const currentGraphDurationsRef = useRef([]); // Replace state with useRef
     const cumulativeGraphDurationsRef = useRef([0, 0, 0, 0]); 
     const [currentGraphIndex, setCurrentGraphIndex] = useState(null); // Track which graph is open
@@ -338,7 +337,7 @@ const TimeSeriesBarDashboard = () => {
     }, [selectedOption, questionIndex]);
 
     const openModal = (imgIndex) => {
-        setSelectedImage(StructuralColEnlargedImages[imgIndex]);
+        setSelectedImage(TimeSeriesBarEnlargedImages[imgIndex]);
         setModalIsOpen(true);
         setGraphStartTime(new Date());
         setCurrentGraphIndex(imgIndex); // Set the current graph index for tracking

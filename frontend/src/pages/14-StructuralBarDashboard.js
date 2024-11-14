@@ -41,7 +41,7 @@ const StructuralBarDashboard = () => {
     // calculation of timings on each graphs and questions
     const [questionStartTime, setQuestionStartTime] = useState(new Date());
     const [graphStartTime, setGraphStartTime] = useState(null);
-    const [questionDurations, setQuestionDurations] = useState([]);
+    const [questionDurations, setQuestionDurations] = useState(Array(24).fill(0.00));
     const currentGraphDurationsRef = useRef([]); // Replace state with useRef
     const cumulativeGraphDurationsRef = useRef([0, 0, 0, 0]); 
     const [currentGraphIndex, setCurrentGraphIndex] = useState(null); // Track which graph is open
@@ -339,7 +339,7 @@ const StructuralBarDashboard = () => {
     }, [selectedOption, questionIndex]);
 
     const openModal = (imgIndex) => {
-        setSelectedImage(StructuralColEnlargedImages[imgIndex]);
+        setSelectedImage(StructuralBarEnlargedImages[imgIndex]);
         setModalIsOpen(true);
         setGraphStartTime(new Date());
         setCurrentGraphIndex(imgIndex); // Set the current graph index for tracking
