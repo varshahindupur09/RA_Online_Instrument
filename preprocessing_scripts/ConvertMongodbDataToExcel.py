@@ -5,7 +5,7 @@ import json
 from io import StringIO
 
 # MongoDB connection string
-mongo_uri = "mongodb+srv://hindupurv:pokemongo123@online-instrument-origi.qg8wzeg.mongodb.net/?retryWrites=true&w=majority&appName=online-instrument-original"
+mongo_uri = "mongodb+srv://hindupurv:monopoly2024@online-instrument-origi.qg8wzeg.mongodb.net/?retryWrites=true&w=majority&appName=online-instrument-original"
 
 try:
     # Establish a connection to MongoDB

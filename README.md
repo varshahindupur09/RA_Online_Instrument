@@ -105,7 +105,7 @@ npm install cors
 frontend:
 REACT_APP_API_BASE_URL=http://experiment-study.us-east-1.elasticbeanstalk.com/  this isnt that now
 backend:
-MONGO_URI=mongodb+srv://hindupurv:pokemongo123@@online-instrument-origi.qg8wzeg.mongodb.net/?retryWrites=true&w=majority&appName=online-instrument-original
+MONGO_URI=mongodb+srv://hindupurv:monopoly2024@@online-instrument-origi.qg8wzeg.mongodb.net/?retryWrites=true&w=majority&appName=online-instrument-original
 
 
 # 3 beanstalk app
