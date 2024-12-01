@@ -168,7 +168,7 @@ exports.exportSurveyResponsesToExcel = async (req, res) => {
             "responses.SCD_question11", "responses.SCD_question12", "responses.SCD_question13", "responses.SCD_question14", "responses.SCD_question15", "responses.SCD_question16", "responses.SCD_question17",
             "responses.SCD_question18", "responses.SCD_question19", "responses.SCD_question20", "responses.SCD_question21", "responses.SCD_question22", "responses.SCD_question23", 
             "responses.SCD_question24", "graph_question_durations", "per_graph_durations", "responses.attention_check", "responses.mentalDemand", "responses.physicalDemand", "responses.temporalDemand", "responses.performance", "responses.effort", 
-            "responses.frustration", "responses.age", "responses.education-level", "responses.work-experience", "responses.management-experience", "responses.employment-sector", 
+            "responses.frustration", "responses.age", "responses.education-level", "responses.work-experience", "responses.management-experience", "responses.employment-sector", "responses.text-feedback", 
             "incentive_calculation", "total_pay_till_now", "current_visit_test_name", "next_visit_test_name", "last_visited_test_name" ,"chart_number", "consent","__v"
         ];
 

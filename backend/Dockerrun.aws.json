@@ -15,7 +15,7 @@
         "environment": [
           {
             "name": "MONGO_URI",
-            "value": "mongodb+srv://hindupurv:pokemongo123@online-instrument-origi.qg8wzeg.mongodb.net/?retryWrites=true&w=majority&appName=online-instrument-original"
+            "value": "mongodb+srv://hindupurv:monopoly2024@online-instrument-origi.qg8wzeg.mongodb.net/?retryWrites=true&w=majority&appName=online-instrument-original"
           }
         ],
         "command": ["node", "server.js"]

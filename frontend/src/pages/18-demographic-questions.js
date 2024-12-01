@@ -60,7 +60,8 @@ const Demographics = () => {
             "education-level": '',
             "work-experience": '',
             "management-experience": '',
-            "employment-sector": ''
+            "employment-sector": '',
+            "text-feedback":''
         },
         graph_question_durations: [],
         per_graph_durations: [],
@@ -128,7 +129,7 @@ const Demographics = () => {
 
         // Check for empty fields in demographicData.responses
         const incompleteFields = Object.entries(demographicData.responses).some(
-            ([key, value]) => !value // Check if any field is empty or not selected
+            ([key, value]) => key !== 'text-feedback' && !value // Check if any field is empty or not selected
         );
 
         if (incompleteFields) {
@@ -231,9 +232,13 @@ const Demographics = () => {
             </div>
             <p>Almost finished! Please respond to the demographic questions below in order to complete the survey.</p>
             <br></br>
-            <form onSubmit={handleSubmit}>
+            
+<form onSubmit={handleSubmit}>
                 <div name="instructions">
-                    <label>What's your age?</label>
+                    <label>
+                        What's your age?
+                        <span className="required-star">*</span>
+                    </label>
                     <br></br>
                     <br></br>
                     <input 
@@ -250,8 +255,14 @@ const Demographics = () => {
                     {error && <p className="error-message">{error.message}</p>}
                     <br></br>
                     <br></br>
-
-                    <p>Please indicate the highest level of education you have completed.</p>
+                    <br></br>
+                    <br></br>
+                    <label>
+                        Please indicate the highest level of education you have completed.
+                        <span className="required-star">*</span>
+                    </label>
+                    <br></br>
+                    <br></br>
                     <div className="radio-option">
                         {["Some high school", "High school diploma", "Some college", "College diploma", "Undergraduate degree", "Graduate degree"].map(level => (
                             <div key={level}>
@@ -271,9 +282,13 @@ const Demographics = () => {
                     <br></br>
                     <br></br>
 
-
+                    <label>
+                        How many years of work experience do you have?
+                        <span className="required-star">*</span>
+                    </label>
+                    <br></br>
+                    <br></br>
                     <div className="radio-option">
-                        <p>How many years of work experience do you have?</p>
                         {["Less than one", "1-3", "3-5", "5-10", "More than 10"].map(years => (
                             <div key={years}>
                                 <input 
@@ -293,7 +308,10 @@ const Demographics = () => {
                     <br></br>
                     <br></br>
 
-                    <p>How many years of management experience do you have?</p>
+                    <p>
+                        How many years of management experience do you have?
+                        <span className="required-star">*</span>
+                    </p>
                     <div className="radio-option">
                         {["Less than one", "1-3", "3-5", "5-10", "More than 10"].map(years => (
                             <div key={years}>
@@ -313,7 +331,10 @@ const Demographics = () => {
                     <br></br>
                     <br></br>
 
-                    <p>Which best describes your employment sector?</p>
+                    <p>
+                        Which best describes your employment sector?
+                        <span className="required-star">*</span>
+                    </p>
                     <select 
                         value={demographicData.responses["employment-sector"]} 
                         onChange={e => handleChange("employment-sector", e.target.value)} 
@@ -326,10 +347,29 @@ const Demographics = () => {
                     <br></br>
                     <br></br>
 
+                    <label>Did you encounter any technical difficulties or confusion while taking this survey? If so, please provide details in the box below. </label>
+                    <br></br>
+                    <br></br>
+                        <textarea 
+                            type="text" 
+                            id="text-feedback"
+                            value={demographicData.responses["text-feedback"]}
+                            onChange={e => handleChange("text-feedback", e.target.value)} 
+                            title="Any feedback 500 characters maximum." // Tooltip for guidance
+                            className="text-input-much-larger"
+                            maxLength={500}  // Restrict the input length to 500 characters
+                            disabled={submitted} // Disable input after submission
+                        />
+                    <br></br>
+                    <br></br>
+
                     <p>Thank you for your participation.</p>
                     <br></br>
 
-                    <label>Please enter your Prolific ID here: </label>
+                    <label>
+                        Please enter your Prolific ID here:
+                        <span className="required-star">*</span> 
+                    </label>
                     <br></br>
                     <br></br>
                         <input 

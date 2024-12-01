@@ -123,6 +123,12 @@ div[name="instructions"] li {
     font-size: 16px;
 }
 
+.text-input-much-larger {
+    width: 1305px;
+    height: 80px;
+    font-size: 16px;
+}
+
 .button-green {
     background-color: green;
     color: white;
@@ -140,4 +146,11 @@ div[name="instructions"] li {
 .error-message {
     color: red;
     font-size: 0.9em;
+}
+
+.required-star {
+    color: red;
+    margin-left: 4px; 
+    font-size: 1.5em;
+    vertical-align: middle;
 }
