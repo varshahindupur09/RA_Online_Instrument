@@ -34,6 +34,9 @@ Use following commands:
 
 # Professor Kelly's Github Token: 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
 
+# Varsha's Github Token: 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
+git clone https://hindupur.v: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@github.com/varshahindupur09/Medicine-delivery-app-kubernetes-deployment.git
+
 # Currently, Backend = Mangoose + MongoDB 
 cd backend
 npm install mongoose=8.3.0

@@ -12,6 +12,32 @@
     caret-color: transparent;
 }
 
+/* Adjustments for different screen sizes */
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+.ucflogo {
+    max-width: 100%;
+    height: auto;
+}
+
+
+@media (min-width: 768px) {
+    button {
+        max-width: 200px;
+        font-size: 1.25rem;
+    }
+}
+
 .button {
     font-size: 18px;
     width: 150px;

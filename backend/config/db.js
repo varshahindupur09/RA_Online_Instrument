@@ -9,7 +9,11 @@ const dbStatus = {
     flag: false
 };
 
-mongoose.connect(process.env.MONGO_URI, {}).then(() => {
+mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 30000, //30 seconds
+    socketTimeoutMS: 45000,
+    maxPoolSize: 10,
+}).then(() => {
     dbStatus.flag = true;
     console.log('Connected to MongoDB database:', dbStatus.flag);
     // Log the database name

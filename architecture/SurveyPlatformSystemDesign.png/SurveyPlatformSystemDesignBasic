@@ -1,0 +1,15 @@
+digraph SurveyPlatformSystemDesign {
+	Frontend [label="Frontend (Flutter & Web)"]
+	API [label="Backend API (Node.js + Express)"]
+	DB [label="Database (MongoDB Atlas)"]
+	LoadBalancer [label="Load Balancer (AWS ELB)"]
+	Storage [label="Static Assets (AWS S3)"]
+	Auth [label="Authentication (JWT)"]
+	Monitoring [label="Monitoring & Alerts (CloudWatch)"]
+	Frontend -> LoadBalancer
+	LoadBalancer -> API
+	API -> Auth
+	API -> DB
+	API -> Storage
+	API -> Monitoring
+}
