@@ -89,11 +89,39 @@ correct_answers_rt2 = {
     "responses.RT2_question10": ["different", "different", "same", "same", "same", "different", "same", "different"]
 }
 
+# Correct answers for Dashboard - Structural-Col-Dashboard
+correct_answers_scd = {
+    "responses.SCD_question1": "UK",
+    "responses.SCD_question2": "Mexico and UK",
+    "responses.SCD_question3": "Mexico",
+    "responses.SCD_question4": "Japan",
+    "responses.SCD_question5": "US",
+    "responses.SCD_question6": "UK",
+    "responses.SCD_question7": "Mexico",
+    "responses.SCD_question8": "Brazil",
+    "responses.SCD_question9": "Brazil",
+    "responses.SCD_question10": "Japan",
+    "responses.SCD_question11": "US",
+    "responses.SCD_question12": "Japan",
+    "responses.SCD_question13": "Mexico",
+    "responses.SCD_question14": "US",
+    "responses.SCD_question15": "Japan",
+    "responses.SCD_question16": "Canada",
+    "responses.SCD_question17": "Japan",
+    "responses.SCD_question18": "Japan",
+    "responses.SCD_question19": "Mexico",
+    "responses.SCD_question20": "TRN01",
+    "responses.SCD_question21": "Mexico",
+    "responses.SCD_question22": "US",
+    "responses.SCD_question23": "TRN02",
+    "responses.SCD_question24": "Japan"
+}
+
 # Correct answers for Financial-Literacy
 correct_answers_fl = {
-    "responses.FL_question1": ["More than $102"],
-    "responses.FL_question2": ["Less than today"],
-    "responses.FL_question3": ["False"],
+    "responses.FL_question_1": "more-than-$102",
+    "responses.FL_question_2": "less-than-today",
+    "responses.FL_question_3": "false",
 }
 
 
@@ -110,7 +138,45 @@ rotation_columns_rt2 = [
 ]
 
 financial_literacy_columns = [
-    "responses.FL_question1", "responses.FL_question2", "responses.FL_question3" ]
+    "responses.FL_question_1", "responses.FL_question_2", "responses.FL_question_3" ]
+
+# Columns for SCD questions
+scd_columns = [
+    "responses.SCD_question1", "responses.SCD_question2", "responses.SCD_question3", "responses.SCD_question4",
+    "responses.SCD_question5", "responses.SCD_question6", "responses.SCD_question7", "responses.SCD_question8",
+    "responses.SCD_question9", "responses.SCD_question10", "responses.SCD_question11", "responses.SCD_question12",
+    "responses.SCD_question13", "responses.SCD_question14", "responses.SCD_question15", "responses.SCD_question16",
+    "responses.SCD_question17", "responses.SCD_question18", "responses.SCD_question19", "responses.SCD_question20",
+    "responses.SCD_question21", "responses.SCD_question22", "responses.SCD_question23", "responses.SCD_question24"
+]
+
+# Filter SCD test data where `test_name` is "Structural-Col-Dashboard"
+scd_data_filter = df[df["test_name"].str.contains("Structural-Col-Dashboard", na=False, case=False)]
+
+# Calculate correctness scores for SCD Test
+if not scd_data_filter.empty:
+    def calculate_scd_scores(row):
+        scores = []
+        for col in scd_columns:
+            if col in row and pd.notna(row[col]):
+                participant_response = row[col].strip()
+                correct_answer = correct_answers_scd[col]
+                # Check if the participant's response matches the correct answer
+                if participant_response.lower() == correct_answer.lower():
+                    scores.append(1)  # Correct answer
+                else:
+                    scores.append(0)  # Incorrect answer
+        return scores
+
+    # Apply the calculation
+    scd_data_filter = scd_data_filter.copy()
+    scd_data_filter["SCD_Each_Question_Score"] = scd_data_filter.apply(calculate_scd_scores, axis=1)
+
+    # Calculate total score
+    scd_data_filter["SCD_Total_Score"] = scd_data_filter["SCD_Each_Question_Score"].apply(sum)
+
+    # Deduplicate `prolific_id` for valid mapping
+    scd_data_filter = scd_data_filter.drop_duplicates(subset="prolific_id")
 
 # Calculate correctness scores for Rotation-Test-1
 if not rotation_test_1_data_filter.empty:
@@ -124,7 +190,11 @@ if not rotation_test_1_data_filter.empty:
                 scores.append(correct_count)
         return scores
 
-    rotation_test_1_data_filter.loc[:, "Rotation_Test_1_Each_Question_Score"] = rotation_test_1_data_filter.apply(
+    # rotation_test_1_data_filter.loc[:, "Rotation_Test_1_Each_Question_Score"] = rotation_test_1_data_filter.apply(
+    #     calculate_correctness, axis=1
+    # )
+    rotation_test_1_data_filter = rotation_test_1_data_filter.copy()
+    rotation_test_1_data_filter["Rotation_Test_1_Each_Question_Score"] = rotation_test_1_data_filter.apply(
         calculate_correctness, axis=1
     )
 
@@ -132,7 +202,7 @@ if not rotation_test_1_data_filter.empty:
     rotation_test_1_data_filter = rotation_test_1_data_filter.drop_duplicates(subset="prolific_id")
 
 
-# Calculate correctness scores for Rotation-Test-1
+# Calculate correctness scores for Rotation-Test-2
 if not rotation_test_2_data_filter.empty:
     def calculate_correctness(row):
         scores = []
@@ -144,7 +214,11 @@ if not rotation_test_2_data_filter.empty:
                 scores.append(correct_count)
         return scores
 
-    rotation_test_2_data_filter.loc[:, "Rotation_Test_2_Each_Question_Score"] = rotation_test_2_data_filter.apply(
+    # rotation_test_2_data_filter.loc[:, "Rotation_Test_2_Each_Question_Score"] = rotation_test_2_data_filter.apply(
+    #     calculate_correctness, axis=1
+    # )
+    rotation_test_2_data_filter = rotation_test_2_data_filter.copy()
+    rotation_test_2_data_filter["Rotation_Test_2_Each_Question_Score"] = rotation_test_2_data_filter.apply(
         calculate_correctness, axis=1
     )
 
@@ -154,22 +228,234 @@ if not rotation_test_2_data_filter.empty:
 
 # Calculate correctness scores for financial_literacy_data_filter
 if not financial_literacy_data_filter.empty:
-    def calculate_correctness(row):
-        scores = []
+    def calculate_financial_literacy_score(row):
+        score = 0
+        responses = []
         for col in financial_literacy_columns:
             if col in row and pd.notna(row[col]):
-                participant_responses = str(row[col]).split(",")
-                correct_answers = correct_answers_fl[col]
-                correct_count = sum(1 for p, c in zip(participant_responses, correct_answers) if p.strip() == c)
-                scores.append(correct_count)
-        return scores
+                participant_response = row[col].strip()
+                responses.append(participant_response)
+                correct_answer = correct_answers_fl[col]  # Get the first correct answer
+                if participant_response.lower() == correct_answer.lower():
+                    score += 1  # Increment the score for each correct answer
+        # print(f"Participant Responses: {responses}, Score: {score}") 
+        # row["Participant_Responses"] = ", ".join(responses)
+        return score, ", ".join(responses)
 
-    financial_literacy_data_filter.loc[:, "Financial_Literacy_Score"] = financial_literacy_data_filter.apply(
-        calculate_correctness, axis=1
+    # financial_literacy_data_filter.loc[:, "Financial_Literacy_Score"] = financial_literacy_data_filter.apply(
+    #     calculate_financial_literacy_score, axis=1
+    # )
+
+    financial_literacy_data_filter = financial_literacy_data_filter.copy()
+    financial_literacy_data_filter["Participant_Responses"] = None
+    financial_literacy_data_filter["Financial_Literacy_Score"], financial_literacy_data_filter["Participant_Responses"] = zip(
+        *financial_literacy_data_filter.apply(lambda row: calculate_financial_literacy_score(row), axis=1)
     )
 
     # Deduplicate `prolific_id` for valid mapping
     financial_literacy_data_filter = financial_literacy_data_filter.drop_duplicates(subset="prolific_id")
+
+# Correct answers for Structural-Bar-Dashboard
+correct_answers_sbd = {
+    "responses.SBD_question1": "UK",
+    "responses.SBD_question2": "Mexico and UK",
+    "responses.SBD_question3": "Mexico",
+    "responses.SBD_question4": "Japan",
+    "responses.SBD_question5": "US",
+    "responses.SBD_question6": "UK",
+    "responses.SBD_question7": "Mexico",
+    "responses.SBD_question8": "Brazil",
+    "responses.SBD_question9": "Brazil",
+    "responses.SBD_question10": "Japan",
+    "responses.SBD_question11": "US",
+    "responses.SBD_question12": "Japan",
+    "responses.SBD_question13": "Mexico",
+    "responses.SBD_question14": "US",
+    "responses.SBD_question15": "Japan",
+    "responses.SBD_question16": "Canada",
+    "responses.SBD_question17": "Japan",
+    "responses.SBD_question18": "Japan",
+    "responses.SBD_question19": "Mexico",
+    "responses.SBD_question20": "TRN01",
+    "responses.SBD_question21": "Mexico",
+    "responses.SBD_question22": "US",
+    "responses.SBD_question23": "TRN02",
+    "responses.SBD_question24": "Japan"
+}
+
+# Columns for Structural-Bar-Dashboard questions
+sbd_columns = [
+    "responses.SBD_question1", "responses.SBD_question2", "responses.SBD_question3", "responses.SBD_question4",
+    "responses.SBD_question5", "responses.SBD_question6", "responses.SBD_question7", "responses.SBD_question8",
+    "responses.SBD_question9", "responses.SBD_question10", "responses.SBD_question11", "responses.SBD_question12",
+    "responses.SBD_question13", "responses.SBD_question14", "responses.SBD_question15", "responses.SBD_question16",
+    "responses.SBD_question17", "responses.SBD_question18", "responses.SBD_question19", "responses.SBD_question20",
+    "responses.SBD_question21", "responses.SBD_question22", "responses.SBD_question23", "responses.SBD_question24"
+]
+
+# Filter SBD test data where `test_name` is "Structural-Bar-Dashboard"
+sbd_data_filter = df[df["test_name"].str.contains("Structural-Bar-Dashboard", na=False, case=False)]
+
+# Calculate correctness scores for SBD Test
+if not sbd_data_filter.empty:
+    def calculate_sbd_scores(row):
+        scores = []
+        for col in sbd_columns:
+            if col in row and pd.notna(row[col]):
+                participant_response = row[col].strip()
+                correct_answer = correct_answers_sbd[col]
+                # Check if the participant's response matches the correct answer
+                if participant_response.lower() == correct_answer.lower():
+                    scores.append(1)  # Correct answer
+                else:
+                    scores.append(0)  # Incorrect answer
+        return scores
+
+    # Apply the calculation
+    sbd_data_filter = sbd_data_filter.copy()
+    sbd_data_filter["SBD_Each_Question_Score"] = sbd_data_filter.apply(calculate_sbd_scores, axis=1)
+
+    # Calculate total score
+    sbd_data_filter["SBD_Total_Score"] = sbd_data_filter["SBD_Each_Question_Score"].apply(sum)
+
+    # Deduplicate `prolific_id` for valid mapping
+    sbd_data_filter = sbd_data_filter.drop_duplicates(subset="prolific_id")
+
+
+# Correct answers for TimeSeries-Bar-Dashboard
+correct_answers_tbd = {
+    "responses.TBD_question1": "Upward",
+    "responses.TBD_question2": "CRT04",
+    "responses.TBD_question3": "2017-2018",
+    "responses.TBD_question4": "Downward",
+    "responses.TBD_question5": "2019",
+    "responses.TBD_question6": "CRT02",
+    "responses.TBD_question7": "TRN03",
+    "responses.TBD_question8": "CHP04",
+    "responses.TBD_question9": "TRN02",
+    "responses.TBD_question10": "Downward",
+    "responses.TBD_question11": "Downward",
+    "responses.TBD_question12": "Upward",
+    "responses.TBD_question13": "2015",
+    "responses.TBD_question14": "Downward",
+    "responses.TBD_question15": "No clear trend",
+    "responses.TBD_question16": "CHP02",
+    "responses.TBD_question17": "No clear trend",
+    "responses.TBD_question18": "TRN01",
+    "responses.TBD_question19": "No clear trend",
+    "responses.TBD_question20": "TRN04",
+    "responses.TBD_question21": "CRT02",
+    "responses.TBD_question22": "CRT04",
+    "responses.TBD_question23": "Upward",
+    "responses.TBD_question24": "CHP04"
+}
+
+# Columns for Structural-Bar-Dashboard questions
+tbd_columns = [
+    "responses.TBD_question1", "responses.TBD_question2", "responses.TBD_question3", "responses.TBD_question4",
+    "responses.TBD_question5", "responses.TBD_question6", "responses.TBD_question7", "responses.TBD_question8",
+    "responses.TBD_question9", "responses.TBD_question10", "responses.TBD_question11", "responses.TBD_question12",
+    "responses.TBD_question13", "responses.TBD_question14", "responses.TBD_question15", "responses.TBD_question16",
+    "responses.TBD_question17", "responses.TBD_question18", "responses.TBD_question19", "responses.TBD_question20",
+    "responses.TBD_question21", "responses.TBD_question22", "responses.TBD_question23", "responses.TBD_question24"
+]
+
+# Filter SBD test data where `test_name` is "Structural-Bar-Dashboard"
+tbd_data_filter = df[df["test_name"].str.contains("TimeSeries-Bar-Dashboard", na=False, case=False)]
+
+# Calculate correctness scores for SBD Test
+if not tbd_data_filter.empty:
+    def calculate_tbd_scores(row):
+        scores = []
+        for col in tbd_columns:
+            if col in row and pd.notna(row[col]):
+                participant_response = row[col].strip()
+                correct_answer = correct_answers_tbd[col]
+                # Check if the participant's response matches the correct answer
+                if participant_response.lower() == correct_answer.lower():
+                    scores.append(1)  # Correct answer
+                else:
+                    scores.append(0)  # Incorrect answer
+        return scores
+
+    # Apply the calculation
+    tbd_data_filter = tbd_data_filter.copy()
+    tbd_data_filter["TBD_Each_Question_Score"] = tbd_data_filter.apply(calculate_tbd_scores, axis=1)
+
+    # Calculate total score
+    tbd_data_filter["TBD_Total_Score"] = tbd_data_filter["TBD_Each_Question_Score"].apply(sum)
+
+    # Deduplicate `prolific_id` for valid mapping
+    tbd_data_filter = tbd_data_filter.drop_duplicates(subset="prolific_id")
+
+
+
+# Correct answers for TimeSeries-Col-Dashboard
+correct_answers_tcd = {
+    "responses.TCD_question1": "Upward",
+    "responses.TCD_question2": "CRT04",
+    "responses.TCD_question3": "2017-2018",
+    "responses.TCD_question4": "Downward",
+    "responses.TCD_question5": "2019",
+    "responses.TCD_question6": "CRT02",
+    "responses.TCD_question7": "TRN03",
+    "responses.TCD_question8": "CHP04",
+    "responses.TCD_question9": "TRN02",
+    "responses.TCD_question10": "Downward",
+    "responses.TCD_question11": "Downward",
+    "responses.TCD_question12": "Upward",
+    "responses.TCD_question13": "2015",
+    "responses.TCD_question14": "Downward",
+    "responses.TCD_question15": "No clear trend",
+    "responses.TCD_question16": "CHP02",
+    "responses.TCD_question17": "No clear trend",
+    "responses.TCD_question18": "TRN01",
+    "responses.TCD_question19": "No clear trend",
+    "responses.TCD_question20": "TRN04",
+    "responses.TCD_question21": "CRT02",
+    "responses.TCD_question22": "CRT04",
+    "responses.TCD_question23": "Upward",
+    "responses.TCD_question24": "CHP04"
+}
+
+# Columns for Structural-Bar-Dashboard questions
+tcd_columns = [
+    "responses.TCD_question1", "responses.TCD_question2", "responses.TCD_question3", "responses.TCD_question4",
+    "responses.TCD_question5", "responses.TCD_question6", "responses.TCD_question7", "responses.TCD_question8",
+    "responses.TCD_question9", "responses.TCD_question10", "responses.TCD_question11", "responses.TCD_question12",
+    "responses.TCD_question13", "responses.TCD_question14", "responses.TCD_question15", "responses.TCD_question16",
+    "responses.TCD_question17", "responses.TCD_question18", "responses.TCD_question19", "responses.TCD_question20",
+    "responses.TCD_question21", "responses.TCD_question22", "responses.TCD_question23", "responses.TCD_question24"
+]
+
+# Filter SBD test data where `test_name` is "Structural-Bar-Dashboard"
+tcd_data_filter = df[df["test_name"].str.contains("TimeSeries-Col-Dashboard", na=False, case=False)]
+
+# Calculate correctness scores for SBD Test
+if not tcd_data_filter.empty:
+    def calculate_tcd_scores(row):
+        scores = []
+        for col in tcd_columns:
+            if col in row and pd.notna(row[col]):
+                participant_response = row[col].strip()
+                correct_answer = correct_answers_tcd[col]
+                # Check if the participant's response matches the correct answer
+                if participant_response.lower() == correct_answer.lower():
+                    scores.append(1)  # Correct answer
+                else:
+                    scores.append(0)  # Incorrect answer
+        return scores
+
+    # Apply the calculation
+    tcd_data_filter = tcd_data_filter.copy()
+    tcd_data_filter["TCD_Each_Question_Score"] = tcd_data_filter.apply(calculate_tcd_scores, axis=1)
+
+    # Calculate total score
+    tcd_data_filter["TCD_Total_Score"] = tcd_data_filter["TCD_Each_Question_Score"].apply(sum)
+
+    # Deduplicate `prolific_id` for valid mapping
+    tcd_data_filter = tcd_data_filter.drop_duplicates(subset="prolific_id")
+
 
 # Group by `prolific_id` and calculate aggregated columns
 aggregated = df.groupby("prolific_id").agg(
@@ -206,10 +492,70 @@ if not financial_literacy_data_filter.empty:
     aggregated.loc[aggregated["prolific_id"].isin(scores.index), "Financial_Literacy_Score"] = \
         aggregated["prolific_id"].map(scores)
 
+if not financial_literacy_data_filter.empty:
+    responses = financial_literacy_data_filter.set_index("prolific_id")["Participant_Responses"]
+    aggregated["FL_Participant_Responses"] = None  # Add column for participant responses
+    aggregated.loc[aggregated["prolific_id"].isin(responses.index), "FL_Participant_Responses"] = \
+        aggregated["prolific_id"].map(responses)
+    
+# Map scores for SCD Test to `aggregated`
+if not scd_data_filter.empty:
+    scores = scd_data_filter.set_index("prolific_id")["SCD_Total_Score"]
+    aggregated["SCD_Total_Score"] = None  # Add column for total score
+    aggregated.loc[aggregated["prolific_id"].isin(scores.index), "SCD_Total_Score"] = \
+        aggregated["prolific_id"].map(scores)
+
+    question_scores = scd_data_filter.set_index("prolific_id")["SCD_Each_Question_Score"]
+    aggregated["SCD_Each_Question_Score"] = None  # Add column for individual question scores
+    aggregated.loc[aggregated["prolific_id"].isin(question_scores.index), "SCD_Each_Question_Score"] = \
+        aggregated["prolific_id"].map(question_scores)
+    
+# Map scores for SBD Test to `aggregated`
+if not sbd_data_filter.empty:
+    scores = sbd_data_filter.set_index("prolific_id")["SBD_Total_Score"]
+    aggregated["SBD_Total_Score"] = None  # Add column for total score
+    aggregated.loc[aggregated["prolific_id"].isin(scores.index), "SBD_Total_Score"] = \
+        aggregated["prolific_id"].map(scores)
+
+    question_scores = sbd_data_filter.set_index("prolific_id")["SBD_Each_Question_Score"]
+    aggregated["SBD_Each_Question_Score"] = None  # Add column for individual question scores
+    aggregated.loc[aggregated["prolific_id"].isin(question_scores.index), "SBD_Each_Question_Score"] = \
+        aggregated["prolific_id"].map(question_scores)
+    
+# Map scores for TBD Test to `aggregated`
+if not tbd_data_filter.empty:
+    scores = tbd_data_filter.set_index("prolific_id")["TBD_Total_Score"]
+    aggregated["TBD_Total_Score"] = None  # Add column for total score
+    aggregated.loc[aggregated["prolific_id"].isin(scores.index), "TBD_Total_Score"] = \
+        aggregated["prolific_id"].map(scores)
+
+    question_scores = tbd_data_filter.set_index("prolific_id")["TBD_Each_Question_Score"]
+    aggregated["TBD_Each_Question_Score"] = None  # Add column for individual question scores
+    aggregated.loc[aggregated["prolific_id"].isin(question_scores.index), "TBD_Each_Question_Score"] = \
+        aggregated["prolific_id"].map(question_scores)
+    
+# Map scores for TCD Test to `aggregated`
+if not tcd_data_filter.empty:
+    scores = tcd_data_filter.set_index("prolific_id")["TCD_Total_Score"]
+    aggregated["TCD_Total_Score"] = None  # Add column for total score
+    aggregated.loc[aggregated["prolific_id"].isin(scores.index), "TCD_Total_Score"] = \
+        aggregated["prolific_id"].map(scores)
+
+    question_scores = tcd_data_filter.set_index("prolific_id")["TCD_Each_Question_Score"]
+    aggregated["TCD_Each_Question_Score"] = None  # Add column for individual question scores
+    aggregated.loc[aggregated["prolific_id"].isin(question_scores.index), "TCD_Each_Question_Score"] = \
+        aggregated["prolific_id"].map(question_scores)
+
 # Reorder columns to match the desired output format
 desired_columns_order = [
     "prolific_id", "Attention_Check_1", "Attention_Check_2", "Paper_Folding_Test_Score", "Paper_Folding_Test_Bonus",
-    "Rotation_Test_Score", "Rotation_Test_Bonus", "Rotation_Test_1_Each_Question_Score", "Rotation_Test_2_Each_Question_Score", "Financial_Literacy_Score"
+    "Rotation_Test_Score", "Rotation_Test_Bonus", "Rotation_Test_1_Each_Question_Score", "Rotation_Test_2_Each_Question_Score", 
+    "Financial_Literacy_Score",
+    "FL_Participant_Responses",
+    "SCD_Total_Score", "SCD_Each_Question_Score",
+    "SBD_Total_Score", "SBD_Each_Question_Score",
+    "TBD_Total_Score", "TBD_Each_Question_Score",
+    "TCD_Total_Score", "TCD_Each_Question_Score"
 ]
 
 aggregated = aggregated[desired_columns_order]
