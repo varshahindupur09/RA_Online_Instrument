@@ -39,8 +39,8 @@ json_data_io = StringIO(json_data)
 df = pd.json_normalize(json.load(json_data_io))
 
 # Rename columns for readability
-df.rename(columns={"responses.ACT_attention_check": "Attention_Check_1"}, inplace=True)
-df.rename(columns={"responses.attention_check": "Attention_Check_2"}, inplace=True)
+df.rename(columns={"responses.ACT_attention_check": "Attention_Check_Tests"}, inplace=True)
+df.rename(columns={"responses.attention_check": "Attention_Check_Dashboard"}, inplace=True)
 
 # Sort and group by participant (prolific_id)
 df.sort_values(by=["prolific_id", "page_number"], inplace=True)
@@ -89,40 +89,6 @@ correct_answers_rt2 = {
     "responses.RT2_question10": ["different", "different", "same", "same", "same", "different", "same", "different"]
 }
 
-# Correct answers for Dashboard - Structural-Col-Dashboard
-correct_answers_scd = {
-    "responses.SCD_question1": "UK",
-    "responses.SCD_question2": "Mexico and UK",
-    "responses.SCD_question3": "Mexico",
-    "responses.SCD_question4": "Japan",
-    "responses.SCD_question5": "US",
-    "responses.SCD_question6": "UK",
-    "responses.SCD_question7": "Mexico",
-    "responses.SCD_question8": "Brazil",
-    "responses.SCD_question9": "Brazil",
-    "responses.SCD_question10": "Japan",
-    "responses.SCD_question11": "US",
-    "responses.SCD_question12": "Japan",
-    "responses.SCD_question13": "Mexico",
-    "responses.SCD_question14": "US",
-    "responses.SCD_question15": "Japan",
-    "responses.SCD_question16": "Canada",
-    "responses.SCD_question17": "Japan",
-    "responses.SCD_question18": "Japan",
-    "responses.SCD_question19": "Mexico",
-    "responses.SCD_question20": "TRN01",
-    "responses.SCD_question21": "Mexico",
-    "responses.SCD_question22": "US",
-    "responses.SCD_question23": "TRN02",
-    "responses.SCD_question24": "Japan"
-}
-
-# Correct answers for Financial-Literacy
-correct_answers_fl = {
-    "responses.FL_question_1": "more-than-$102",
-    "responses.FL_question_2": "less-than-today",
-    "responses.FL_question_3": "false",
-}
 
 
 rotation_columns_rt1 = [
@@ -137,46 +103,6 @@ rotation_columns_rt2 = [
     "responses.RT2_question9", "responses.RT2_question10"
 ]
 
-financial_literacy_columns = [
-    "responses.FL_question_1", "responses.FL_question_2", "responses.FL_question_3" ]
-
-# Columns for SCD questions
-scd_columns = [
-    "responses.SCD_question1", "responses.SCD_question2", "responses.SCD_question3", "responses.SCD_question4",
-    "responses.SCD_question5", "responses.SCD_question6", "responses.SCD_question7", "responses.SCD_question8",
-    "responses.SCD_question9", "responses.SCD_question10", "responses.SCD_question11", "responses.SCD_question12",
-    "responses.SCD_question13", "responses.SCD_question14", "responses.SCD_question15", "responses.SCD_question16",
-    "responses.SCD_question17", "responses.SCD_question18", "responses.SCD_question19", "responses.SCD_question20",
-    "responses.SCD_question21", "responses.SCD_question22", "responses.SCD_question23", "responses.SCD_question24"
-]
-
-# Filter SCD test data where `test_name` is "Structural-Col-Dashboard"
-scd_data_filter = df[df["test_name"].str.contains("Structural-Col-Dashboard", na=False, case=False)]
-
-# Calculate correctness scores for SCD Test
-if not scd_data_filter.empty:
-    def calculate_scd_scores(row):
-        scores = []
-        for col in scd_columns:
-            if col in row and pd.notna(row[col]):
-                participant_response = row[col].strip()
-                correct_answer = correct_answers_scd[col]
-                # Check if the participant's response matches the correct answer
-                if participant_response.lower() == correct_answer.lower():
-                    scores.append(1)  # Correct answer
-                else:
-                    scores.append(0)  # Incorrect answer
-        return scores
-
-    # Apply the calculation
-    scd_data_filter = scd_data_filter.copy()
-    scd_data_filter["SCD_Each_Question_Score"] = scd_data_filter.apply(calculate_scd_scores, axis=1)
-
-    # Calculate total score
-    scd_data_filter["SCD_Total_Score"] = scd_data_filter["SCD_Each_Question_Score"].apply(sum)
-
-    # Deduplicate `prolific_id` for valid mapping
-    scd_data_filter = scd_data_filter.drop_duplicates(subset="prolific_id")
 
 # Calculate correctness scores for Rotation-Test-1
 if not rotation_test_1_data_filter.empty:
@@ -224,6 +150,84 @@ if not rotation_test_2_data_filter.empty:
 
     # Deduplicate `prolific_id` for valid mapping
     rotation_test_2_data_filter = rotation_test_2_data_filter.drop_duplicates(subset="prolific_id")
+
+# Correct answers for Dashboard - Structural-Col-Dashboard
+correct_answers_scd = {
+    "responses.SCD_question1": "UK",
+    "responses.SCD_question2": "Mexico and UK",
+    "responses.SCD_question3": "Mexico",
+    "responses.SCD_question4": "Japan",
+    "responses.SCD_question5": "US",
+    "responses.SCD_question6": "UK",
+    "responses.SCD_question7": "Mexico",
+    "responses.SCD_question8": "Brazil",
+    "responses.SCD_question9": "Brazil",
+    "responses.SCD_question10": "Japan",
+    "responses.SCD_question11": "US",
+    "responses.SCD_question12": "Japan",
+    "responses.SCD_question13": "Mexico",
+    "responses.SCD_question14": "US",
+    "responses.SCD_question15": "Japan",
+    "responses.SCD_question16": "Canada",
+    "responses.SCD_question17": "Japan",
+    "responses.SCD_question18": "Japan",
+    "responses.SCD_question19": "Mexico",
+    "responses.SCD_question20": "TRN01",
+    "responses.SCD_question21": "Mexico",
+    "responses.SCD_question22": "US",
+    "responses.SCD_question23": "TRN02",
+    "responses.SCD_question24": "Japan"
+}
+
+# Columns for SCD questions
+scd_columns = [
+    "responses.SCD_question1", "responses.SCD_question2", "responses.SCD_question3", "responses.SCD_question4",
+    "responses.SCD_question5", "responses.SCD_question6", "responses.SCD_question7", "responses.SCD_question8",
+    "responses.SCD_question9", "responses.SCD_question10", "responses.SCD_question11", "responses.SCD_question12",
+    "responses.SCD_question13", "responses.SCD_question14", "responses.SCD_question15", "responses.SCD_question16",
+    "responses.SCD_question17", "responses.SCD_question18", "responses.SCD_question19", "responses.SCD_question20",
+    "responses.SCD_question21", "responses.SCD_question22", "responses.SCD_question23", "responses.SCD_question24"
+]
+
+# Filter SCD test data where `test_name` is "Structural-Col-Dashboard"
+scd_data_filter = df[df["test_name"].str.contains("Structural-Col-Dashboard", na=False, case=False)]
+
+# Calculate correctness scores for SCD Test
+if not scd_data_filter.empty:
+    def calculate_scd_scores(row):
+        scores = []
+        for col in scd_columns:
+            if col in row and pd.notna(row[col]):
+                participant_response = row[col].strip()
+                correct_answer = correct_answers_scd[col]
+                # Check if the participant's response matches the correct answer
+                if participant_response.lower() == correct_answer.lower():
+                    scores.append(1)  # Correct answer
+                else:
+                    scores.append(0)  # Incorrect answer
+        return scores
+
+    # Apply the calculation
+    scd_data_filter = scd_data_filter.copy()
+    scd_data_filter["SCD_Each_Question_Score"] = scd_data_filter.apply(calculate_scd_scores, axis=1)
+
+    # Calculate total score
+    scd_data_filter["SCD_Total_Score"] = scd_data_filter["SCD_Each_Question_Score"].apply(sum)
+
+    # Deduplicate `prolific_id` for valid mapping
+    scd_data_filter = scd_data_filter.drop_duplicates(subset="prolific_id")
+
+
+# Correct answers for Financial-Literacy
+correct_answers_fl = {
+    "responses.FL_question_1": "more-than-$102",
+    "responses.FL_question_2": "less-than-today",
+    "responses.FL_question_3": "false",
+}
+
+
+financial_literacy_columns = [
+    "responses.FL_question_1", "responses.FL_question_2", "responses.FL_question_3" ]
 
 
 # Calculate correctness scores for financial_literacy_data_filter
@@ -459,8 +463,8 @@ if not tcd_data_filter.empty:
 
 # Group by `prolific_id` and calculate aggregated columns
 aggregated = df.groupby("prolific_id").agg(
-    Attention_Check_1=("Attention_Check_1", "first"),
-    Attention_Check_2=("Attention_Check_2", "first"),
+    Attention_Check_Tests=("Attention_Check_Tests", "first"),
+    Attention_Check_Dashboard=("Attention_Check_Dashboard", "first"),
     Paper_Folding_Test_Bonus=("Paper_Folding_Test_Bonus", "sum"),
     Rotation_Test_Bonus=("Rotation_Test_Bonus", "sum")
 ).reset_index()
@@ -469,20 +473,28 @@ aggregated = df.groupby("prolific_id").agg(
 aggregated["Paper_Folding_Test_Score"] = aggregated["Paper_Folding_Test_Bonus"] / 0.05
 aggregated["Rotation_Test_Score"] = aggregated["Rotation_Test_Bonus"] / 0.05
 aggregated["Rotation_Test_1_Each_Question_Score"] = None
+aggregated["Rotation_Test_1_Total_Correct_Count"] = None
 
 # Map scores for Rotation-Test-1 to `aggregated`
 if not rotation_test_1_data_filter.empty:
     scores = rotation_test_1_data_filter.set_index("prolific_id")["Rotation_Test_1_Each_Question_Score"]
-    aggregated.loc[aggregated["prolific_id"].isin(scores.index), "Rotation_Test_1_Each_Question_Score"] = \
-        aggregated["prolific_id"].map(scores)
+    aggregated.loc[aggregated["prolific_id"].isin(scores.index), "Rotation_Test_1_Each_Question_Score"] = aggregated["prolific_id"].map(scores)
+    
+    rotation_test_1_data_filter["Rotation_Test_1_Total_Correct_Count"] = rotation_test_1_data_filter["Rotation_Test_1_Each_Question_Score"].apply(lambda x: sum(x) if isinstance(x, list) else 0)
+    total_correct_scores = rotation_test_1_data_filter.set_index("prolific_id")["Rotation_Test_1_Total_Correct_Count"]
+    aggregated.loc[aggregated["prolific_id"].isin(total_correct_scores.index), "Rotation_Test_1_Total_Correct_Count"] =  aggregated["prolific_id"].map(total_correct_scores)
     
 aggregated["Rotation_Test_2_Each_Question_Score"] = None
+aggregated["Rotation_Test_2_Total_Correct_Count"] = None
 
 # Map scores for Rotation-Test-1 to `aggregated`
 if not rotation_test_2_data_filter.empty:
     scores = rotation_test_2_data_filter.set_index("prolific_id")["Rotation_Test_2_Each_Question_Score"]
-    aggregated.loc[aggregated["prolific_id"].isin(scores.index), "Rotation_Test_2_Each_Question_Score"] = \
-        aggregated["prolific_id"].map(scores)
+    aggregated.loc[aggregated["prolific_id"].isin(scores.index), "Rotation_Test_2_Each_Question_Score"] = aggregated["prolific_id"].map(scores)
+
+    rotation_test_2_data_filter["Rotation_Test_2_Total_Correct_Count"] = rotation_test_2_data_filter["Rotation_Test_2_Each_Question_Score"].apply(lambda x: sum(x) if isinstance(x, list) else 0)
+    total_correct_scores = rotation_test_2_data_filter.set_index("prolific_id")["Rotation_Test_2_Total_Correct_Count"]
+    aggregated.loc[aggregated["prolific_id"].isin(total_correct_scores.index), "Rotation_Test_2_Total_Correct_Count"] =  aggregated["prolific_id"].map(total_correct_scores)
     
 aggregated["Financial_Literacy_Score"] = None
 
@@ -545,17 +557,78 @@ if not tcd_data_filter.empty:
     aggregated["TCD_Each_Question_Score"] = None  # Add column for individual question scores
     aggregated.loc[aggregated["prolific_id"].isin(question_scores.index), "TCD_Each_Question_Score"] = \
         aggregated["prolific_id"].map(question_scores)
+    
+# Filter data for Feedback-Questions
+feedback_data_filter = df[df["test_name"].str.contains("Feedback-Questions", na=False, case=False)]
 
+if not feedback_data_filter.empty:
+    # Extract feedback responses into separate columns
+    feedback_data_filter = feedback_data_filter.copy()
+    feedback_data_filter["Feedback_MentalDemand"] = pd.to_numeric(feedback_data_filter["responses.mentalDemand"], errors="coerce")
+    feedback_data_filter["Feedback_PhysicalDemand"] = pd.to_numeric(feedback_data_filter["responses.physicalDemand"], errors="coerce")
+    feedback_data_filter["Feedback_TemporalDemand"] = pd.to_numeric(feedback_data_filter["responses.temporalDemand"], errors="coerce")
+    feedback_data_filter["Feedback_Performance"] = pd.to_numeric(feedback_data_filter["responses.performance"], errors="coerce")
+    feedback_data_filter["Feedback_Effort"] = pd.to_numeric(feedback_data_filter["responses.effort"], errors="coerce")
+    feedback_data_filter["Feedback_Frustration"] = pd.to_numeric(feedback_data_filter["responses.frustration"], errors="coerce")
+
+    # Deduplicate on `prolific_id` to avoid duplicate entries
+    feedback_data_filter = feedback_data_filter.drop_duplicates(subset="prolific_id")
+
+    # Add feedback responses to the aggregated DataFrame
+    aggregated["Feedback_MentalDemand"] = None
+    aggregated["Feedback_PhysicalDemand"] = None
+    aggregated["Feedback_TemporalDemand"] = None
+    aggregated["Feedback_Performance"] = None
+    aggregated["Feedback_Effort"] = None
+    aggregated["Feedback_Frustration"] = None
+
+    for col in ["Feedback_MentalDemand", "Feedback_PhysicalDemand", "Feedback_TemporalDemand", "Feedback_Performance", "Feedback_Effort", "Feedback_Frustration"]:
+        values = feedback_data_filter.set_index("prolific_id")[col]
+        aggregated.loc[aggregated["prolific_id"].isin(values.index), col] = aggregated["prolific_id"].map(values)
+
+# Filter data for Demographics-Questions
+demographic_data_filter = df[df["test_name"].str.contains("Demographics-Questions", na=False, case=False)]
+
+if not demographic_data_filter.empty:
+    # Extract demographic responses into separate columns
+    demographic_data_filter = demographic_data_filter.copy()
+    demographic_data_filter["Demographics_Age"] = pd.to_numeric(demographic_data_filter["responses.age"], errors="coerce")
+    demographic_data_filter["Demographics_Education_Level"] = demographic_data_filter["responses.education-level"]
+    demographic_data_filter["Demographics_Work_Experience"] = demographic_data_filter["responses.work-experience"]
+    demographic_data_filter["Demographics_Management_Experience"] = demographic_data_filter["responses.management-experience"]
+    demographic_data_filter["Demographics_Employment_Sector"] = demographic_data_filter["responses.employment-sector"]
+    
+    # Deduplicate on `prolific_id` to avoid duplicate entries
+    demographic_data_filter = demographic_data_filter.drop_duplicates(subset="prolific_id")
+
+    # Add demographic responses to the aggregated DataFrame
+    aggregated["Demographics_Age"] = None
+    aggregated["Demographics_Education_Level"] = None
+    aggregated["Demographics_Work_Experience"] = None
+    aggregated["Demographics_Management_Experience"] = None
+    aggregated["Demographics_Employment_Sector"] = None
+
+    # Map each demographic column from demographic_data_filter to aggregated
+    for col in ["Demographics_Age", "Demographics_Education_Level", "Demographics_Work_Experience", 
+                "Demographics_Management_Experience", "Demographics_Employment_Sector"]:
+        values = demographic_data_filter.set_index("prolific_id")[col]
+        aggregated.loc[aggregated["prolific_id"].isin(values.index), col] = aggregated["prolific_id"].map(values)
+
+    
 # Reorder columns to match the desired output format
 desired_columns_order = [
-    "prolific_id", "Attention_Check_1", "Attention_Check_2", "Paper_Folding_Test_Score", "Paper_Folding_Test_Bonus",
-    "Rotation_Test_Score", "Rotation_Test_Bonus", "Rotation_Test_1_Each_Question_Score", "Rotation_Test_2_Each_Question_Score", 
+    "prolific_id", "Attention_Check_Tests", "Attention_Check_Dashboard", 
+    "Paper_Folding_Test_Score", "Paper_Folding_Test_Bonus",
+    "Rotation_Test_Score", "Rotation_Test_Bonus", "Rotation_Test_1_Each_Question_Score", "Rotation_Test_1_Total_Correct_Count", 
+    "Rotation_Test_2_Each_Question_Score", "Rotation_Test_2_Total_Correct_Count",
     "Financial_Literacy_Score",
     "FL_Participant_Responses",
     "SCD_Total_Score", "SCD_Each_Question_Score",
     "SBD_Total_Score", "SBD_Each_Question_Score",
     "TBD_Total_Score", "TBD_Each_Question_Score",
-    "TCD_Total_Score", "TCD_Each_Question_Score"
+    "TCD_Total_Score", "TCD_Each_Question_Score",
+    "Feedback_MentalDemand", "Feedback_PhysicalDemand", "Feedback_TemporalDemand", "Feedback_Performance", "Feedback_Effort", "Feedback_Frustration",
+    "Demographics_Age", "Demographics_Education_Level", "Demographics_Work_Experience", "Demographics_Management_Experience", "Demographics_Employment_Sector"
 ]
 
 aggregated = aggregated[desired_columns_order]
