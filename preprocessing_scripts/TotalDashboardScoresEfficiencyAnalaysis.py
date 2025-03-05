@@ -38,6 +38,8 @@ json_data = json_util.dumps(data)
 json_data_io = StringIO(json_data)
 df = pd.json_normalize(json.load(json_data_io))
 
+# print("df.columns: ", list(df.columns))
+
 # Rename columns for readability
 df.rename(columns={"responses.ACT_attention_check": "Attention_Check_Tests"}, inplace=True)
 df.rename(columns={"responses.attention_check": "Attention_Check_Dashboard"}, inplace=True)
@@ -61,28 +63,34 @@ rotation_test_2_data_filter = df[df["test_name"].str.contains("Rotation-Test-2",
 # financial literacy filter
 financial_literacy_data_filter = df[df["test_name"].str.contains("Financial-Literacy", na=False, case=False)]
 
+# Convert timestamps to datetime and remove timezone info
+df["time_user_entered_current_page"] = pd.to_datetime(df["time_user_entered_current_page.$date"], errors="coerce").dt.tz_localize(None)
 
-
-# Convert timestamps to datetime if not already done
-df["time_user_entered_current_page"] = pd.to_datetime(df["time_user_entered_current_page.$date"], errors="coerce")
-
-# Extract the timestamps for Feedback and Structured-Col-Dashboard pages
-dashboard_times = df[df["test_name"].str.contains("Dashboard", na=False, case=False)][["prolific_id", "time_user_entered_current_page"]]
+# Extract timestamps for Dashboard and Feedback
 feedback_times = df[df["test_name"].str.contains("Feedback-Questions", na=False, case=False)][["prolific_id", "time_user_entered_current_page"]]
+feedback_times.rename(columns={"time_user_entered_current_page": "feedback_time"}, inplace=True)
 
-# Rename columns for clarity before merging
-dashboard_times = dashboard_times.rename(columns={"time_user_entered_current_page": "dashboard_time"})
-feedback_times = feedback_times.rename(columns={"time_user_entered_current_page": "feedback_time"})
+# dashboard_times = df[df["test_name"].str.contains("Dashboard", na=False, case=False)][["prolific_id", "time_user_entered_current_page"]]
+# Extract only the latest Dashboard time from the allowed dashboards
+dashboard_tests = ["Structural-Col-Dashboard", "Structural-Bar-Dashboard", "TimeSeries-Col-Dashboard", "TimeSeries-Bar-Dashboard"]
+dashboard_times = df[df["test_name"].isin(dashboard_tests)][["prolific_id", "time_user_entered_current_page"]]
+dashboard_times.rename(columns={"time_user_entered_current_page": "dashboard_time"}, inplace=True)
 
-# Merge to align feedback time with its respective prolific_id
+dashboard_times = dashboard_times.sort_values(by=["prolific_id", "dashboard_time"], ascending=[True, False]).drop_duplicates(subset="prolific_id", keep="first")
+
 time_diff = feedback_times.merge(dashboard_times, on="prolific_id", how="left")
-
-# Compute the difference (Feedback time - Dashboard time)
 time_diff["Time_Difference_Dashboard"] = (time_diff["feedback_time"] - time_diff["dashboard_time"]).dt.total_seconds()
+time_diff["Time_Difference_Dashboard_Mins"] = time_diff["Time_Difference_Dashboard"] / 60  # Convert seconds to minutes
 
-# Keep only necessary columns
-time_diff = time_diff[["prolific_id", "Time_Difference_Dashboard"]]
+time_diff = time_diff[["prolific_id", "Time_Difference_Dashboard", "Time_Difference_Dashboard_Mins", "feedback_time", "dashboard_time"]]
 
+# Deduplicate time_diff to ensure unique prolific_id entries
+time_diff = time_diff.drop_duplicates(subset="prolific_id")
+
+# # Extract graph_question_durations and per_graph_durations
+# # Ensure Graph_Question_Durations and Per_Graph_Durations are correctly formatted
+# df["Graph_Question_Durations"] = df["graph_question_durations"].apply(lambda x: x if isinstance(x, list) else [])
+# df["Per_Graph_Durations"] = df["per_graph_durations"].apply(lambda x: x if isinstance(x, list) else [])
 
 
 # Correct answers for Rotation-Test-1
@@ -520,6 +528,8 @@ aggregated = df.groupby("prolific_id").agg(
     Paper_Folding_Test_Bonus=("Paper_Folding_Test_Bonus", "sum"),
     Rotation_Test_Bonus=("Rotation_Test_Bonus", "sum"),
     Financial_Literacy_Score=("responses.FL_question_1", "count"),
+    # Graph_Question_Durations=("graph_question_durations", "first"),  
+    # Per_Graph_Durations=("per_graph_durations", "first") 
 ).reset_index()
 
 # Add additional calculated columns
@@ -704,7 +714,8 @@ desired_columns_order = [
     "SBD_Total_Score", "SBD_Each_Question_Score", "SBD_Total_Answered_Count",
     "TBD_Total_Score", "TBD_Each_Question_Score", "TBD_Total_Answered_Count",
     "TCD_Total_Score", "TCD_Each_Question_Score", "TCD_Total_Answered_Count",
-    "Time_Difference_Dashboard",
+    "dashboard_time", "feedback_time", "Time_Difference_Dashboard", "Time_Difference_Dashboard_Mins", 
+    # "Graph_Question_Durations", "Per_Graph_Durations", 
     "Feedback_MentalDemand", "Feedback_PhysicalDemand", "Feedback_TemporalDemand", "Feedback_Performance", "Feedback_Effort", "Feedback_Frustration",
     "Demographics_Age", "Demographics_Education_Level", "Demographics_Work_Experience", "Demographics_Management_Experience", "Demographics_Employment_Sector"
 ]
