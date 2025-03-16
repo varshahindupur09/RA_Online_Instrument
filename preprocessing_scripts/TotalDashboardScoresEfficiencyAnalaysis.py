@@ -43,6 +43,8 @@ df = pd.json_normalize(json.load(json_data_io))
 # Rename columns for readability
 df.rename(columns={"responses.ACT_attention_check": "Attention_Check_Tests"}, inplace=True)
 df.rename(columns={"responses.attention_check": "Attention_Check_Dashboard"}, inplace=True)
+df.rename(columns={"responses.CBG_question": "Creative_Brick_Game_Responses"}, inplace=True)
+df.rename(columns={"responses.text-feedback": "Issues_Faced_By_Particpants_FeedBack"}, inplace=True)
 
 # Sort and group by participant (prolific_id)
 df.sort_values(by=["prolific_id", "page_number"], inplace=True)
@@ -529,7 +531,9 @@ aggregated = df.groupby("prolific_id").agg(
     Rotation_Test_Bonus=("Rotation_Test_Bonus", "sum"),
     Financial_Literacy_Score=("responses.FL_question_1", "count"),
     # Graph_Question_Durations=("graph_question_durations", "first"),  
-    # Per_Graph_Durations=("per_graph_durations", "first") 
+    # Per_Graph_Durations=("per_graph_durations", "first")
+    Creative_Brick_Game_Responses=("Creative_Brick_Game_Responses", "first"),
+    Issues_Faced_By_Particpants_FeedBack =("Issues_Faced_By_Particpants_FeedBack", "first")
 ).reset_index()
 
 # Add additional calculated columns
@@ -717,7 +721,8 @@ desired_columns_order = [
     "dashboard_time", "feedback_time", "Time_Difference_Dashboard", "Time_Difference_Dashboard_Mins", 
     # "Graph_Question_Durations", "Per_Graph_Durations", 
     "Feedback_MentalDemand", "Feedback_PhysicalDemand", "Feedback_TemporalDemand", "Feedback_Performance", "Feedback_Effort", "Feedback_Frustration",
-    "Demographics_Age", "Demographics_Education_Level", "Demographics_Work_Experience", "Demographics_Management_Experience", "Demographics_Employment_Sector"
+    "Demographics_Age", "Demographics_Education_Level", "Demographics_Work_Experience", "Demographics_Management_Experience", "Demographics_Employment_Sector",
+    "Creative_Brick_Game_Responses", "Issues_Faced_By_Particpants_FeedBack"
 ]
 
 aggregated = aggregated[desired_columns_order]
