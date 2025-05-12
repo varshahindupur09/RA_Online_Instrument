@@ -20,6 +20,20 @@ const FirstInstrConsent = () => {
     const location = useLocation();
     // console.log("URL LOCATION ***** ", location)
 
+    // handling admin login
+    const handleAdminLogin = () => {
+        const password = window.prompt("Enter admin password:");
+        if (password === "profkellyvarsha") { // change this to your secure password
+            const adminId = "adminadminadminadmin1234";
+            setProlificId(adminId);
+            setIsConsentDisabled(false);
+            setManualProlificIdSet(true);
+            alert("Admin access granted.");
+        } else {
+            alert("Incorrect password.");
+        }
+    };
+
     useEffect(() => {
         const query = new URLSearchParams(location.search);
         // console.log("URL QUERY ***** ", query)
@@ -238,6 +252,11 @@ const FirstInstrConsent = () => {
                             />
                         </label>
                         )} */}
+                        <div style={{ marginTop: "20px" }}>
+                            <button onClick={handleAdminLogin} className="button">
+                                Admin Login
+                            </button>
+                        </div>
                         <div>
                             {<p>Your Prolific ID: {prolificId}</p>}
                         </div>
