@@ -5,9 +5,13 @@ import '../components/styles_css/RadioButtonImage.css';
 import '../components/styles_css/ImageStyles.css';
 import '../components/styles_css/PageStyle.css';
 
-import Image1 from '../images/rotation-test/sample/rotation_test_1.png';
 import Image2 from '../images/rotation-test/sample/rotation_test_2.png';
 import sample_rotation_test from '../images/rotation-test/sample/sample_rotation_test.png';
+
+import SampleTriangle1 from '../images/rotation-test/sample/Sample_Triangles/sample_triangle_1.png';
+import SampleTriangle2 from '../images/rotation-test/sample/Sample_Triangles/sample_triangle_2.png';
+import SampleTriangle3 from '../images/rotation-test/sample/Sample_Triangles/sample_triangle_3.png';
+import SampleTriangle4 from '../images/rotation-test/sample/Sample_Triangles/sample_triangle_4.png';
 
 import rotation_question_1 from '../images/rotation-test/sample/question-1/rotation_question_1.png';
 import question1answer1 from '../images/rotation-test/sample/question-1/answer-1/question-1-answer-1.png';
@@ -31,7 +35,6 @@ import question2answer8 from '../images/rotation-test/sample/question-2/answer-2
 
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
-import GlobalTimer from "../components/GlobalTimer";
 
 const RotationTestQuestion = () => {
     const navigate = useNavigate();
@@ -273,7 +276,7 @@ const RotationTestQuestion = () => {
     );
 
     return (
-        <div className="container">
+        <div className="container scroll-wrapper">
             <div className="instructionsFL">
                 <div className="LogoStyleImage">
                     <p>
@@ -281,7 +284,6 @@ const RotationTestQuestion = () => {
                         <h2><strong><u>SAMPLE ROTATION TEST</u></strong></h2>
                         {/* <GlobalTimer /> */}
                     </p>
-                    <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
             <br />
             {loading && <p>Loading...</p>}
@@ -297,8 +299,13 @@ const RotationTestQuestion = () => {
                             <li>In addition to the fixed payment of $4, you will receive a bonus of $0.05 cents for each correct answer. Below two sample problems are for practice only. </li>                        </strong>
                     </div>
                     <p>This is a test of your ability to see differences in figures. Look at the 5 triangle-shaped cards drawn below.</p>
-                    <div className='other_images'>
-                        <img src={Image1} alt="rotation_test_related_images_1"></img>
+                    <div className='sample_triangles'>
+                        {/* <img src={Image1} alt="rotation_test_related_images_1"></img> */}
+                        <img src={SampleTriangle1} alt="rotation_test_related_images_1" />
+                        <img src={SampleTriangle2} alt="rotation_test_related_images_1" />
+                        <img src={SampleTriangle3} alt="rotation_test_related_images_1" />
+                        <img src={SampleTriangle4} alt="rotation_test_related_images_1" />
+
                     </div>
                 </div>
                 

@@ -157,12 +157,12 @@ const DashboardRouter = () => {
                 case 2:
                     navigate('/structure-bar-dashboard');
                     break;
-                case 3:
-                    navigate('/timeseries-bar-dashboard'); 
-                    break;
-                case 4:
-                    navigate('/timeseries-col-dashboard');
-                    break;
+                // case 3:
+                //     navigate('/timeseries-bar-dashboard'); 
+                //     break;
+                // case 4:
+                //     navigate('/timeseries-col-dashboard');
+                //     break;
                 default:
                     navigate('/structure-col-dashboard');
                     console.log('Chart 1 assigned as default case');

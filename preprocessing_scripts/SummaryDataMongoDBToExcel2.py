@@ -89,8 +89,6 @@ correct_answers_rt2 = {
     "responses.RT2_question10": ["different", "different", "same", "same", "same", "different", "same", "different"]
 }
 
-
-
 rotation_columns_rt1 = [
     "responses.RT1_question1", "responses.RT1_question2", "responses.RT1_question3", "responses.RT1_question4",
     "responses.RT1_question5", "responses.RT1_question6", "responses.RT1_question7", "responses.RT1_question8",
@@ -102,7 +100,6 @@ rotation_columns_rt2 = [
     "responses.RT2_question5", "responses.RT2_question6", "responses.RT2_question7", "responses.RT2_question8",
     "responses.RT2_question9", "responses.RT2_question10"
 ]
-
 
 # Calculate correctness scores for Rotation-Test-1
 if not rotation_test_1_data_filter.empty:
@@ -126,7 +123,6 @@ if not rotation_test_1_data_filter.empty:
 
     # Deduplicate `prolific_id` for valid mapping
     rotation_test_1_data_filter = rotation_test_1_data_filter.drop_duplicates(subset="prolific_id")
-
 
 # Calculate correctness scores for Rotation-Test-2
 if not rotation_test_2_data_filter.empty:
@@ -217,14 +213,12 @@ if not scd_data_filter.empty:
     # Deduplicate `prolific_id` for valid mapping
     scd_data_filter = scd_data_filter.drop_duplicates(subset="prolific_id")
 
-
 # Correct answers for Financial-Literacy
 correct_answers_fl = {
     "responses.FL_question_1": "more-than-$102",
     "responses.FL_question_2": "less-than-today",
     "responses.FL_question_3": "false",
 }
-
 
 financial_literacy_columns = [
     "responses.FL_question_1", "responses.FL_question_2", "responses.FL_question_3" ]
@@ -614,6 +608,32 @@ if not demographic_data_filter.empty:
         values = demographic_data_filter.set_index("prolific_id")[col]
         aggregated.loc[aggregated["prolific_id"].isin(values.index), col] = aggregated["prolific_id"].map(values)
 
+
+mask_sbd = df["test_name"].str.contains("Structural-Bar-Dashboard", na=False, case=False)
+mask_scd = df["test_name"].str.contains("Structural-Col-Dashboard", na=False, case=False)
+mask_tbd = df["test_name"].str.contains("TimeSeries-Bar-Dashboard", na=False, case=False)
+mask_tcd = df["test_name"].str.contains("TimeSeries-Col-Dashboard", na=False, case=False)
+
+# column for Attention Check Dashboard
+df["AttentionCheckSBD"] = ""
+df["AttentionCheckSCD"] = ""
+df["AttentionCheckTBD"] = ""
+df["AttentionCheckTCD"] = ""
+
+df.loc[mask_sbd, "AttentionCheckSBD"] = df.loc[mask_sbd, "responses.SBD_question7"].apply(
+    lambda x: f"Passed: {x}" if str(x).strip() == "Mexico" else f"Failed: {x}")
+# # Debug output
+# print("AttentionCheckSBD debug:", df["AttentionCheckSBD"].head(45).tolist())
+
+# print("mask_sbd count:", mask_sbd.sum())
+# print(df.loc[mask_sbd, "responses.SBD_question7"].head(10))
+
+df.loc[mask_scd, "AttentionCheckSCD"] = df.loc[mask_scd, "responses.SCD_question7"].apply(lambda x: f"Passed: {x}" if str(x).strip() == "Mexico" else ("" if pd.isna(x) or str(x).strip() == "" else f"Failed: {x}"))
+df.loc[mask_tbd, "AttentionCheckTBD"] = df.loc[mask_tbd, "responses.TBD_question13"].apply(lambda x: f"Passed: {x}" if str(x).strip() == "2015" else ("" if pd.isna(x) or str(x).strip() == "" else f"Failed: {x}"))
+df.loc[mask_tcd, "AttentionCheckTCD"] = df.loc[mask_tcd, "responses.TCD_question13"].apply(lambda x: f"Passed: {x}" if str(x).strip() == "2015" else ("" if pd.isna(x) or str(x).strip() == "" else f"Failed: {x}"))
+
+attention_columns = ["prolific_id", "AttentionCheckSBD", "AttentionCheckSCD", "AttentionCheckTBD", "AttentionCheckTCD"]
+aggregated = aggregated.merge(df[attention_columns], on="prolific_id", how="left")
     
 # Reorder columns to match the desired output format
 desired_columns_order = [
@@ -623,6 +643,7 @@ desired_columns_order = [
     "Rotation_Test_2_Each_Question_Score", "Rotation_Test_2_Total_Correct_Count",
     "Financial_Literacy_Score",
     "FL_Participant_Responses",
+    "AttentionCheckSCD", "AttentionCheckSBD", "AttentionCheckTCD", "AttentionCheckTBD",
     "SCD_Total_Score", "SCD_Each_Question_Score",
     "SBD_Total_Score", "SBD_Each_Question_Score",
     "TBD_Total_Score", "TBD_Each_Question_Score",

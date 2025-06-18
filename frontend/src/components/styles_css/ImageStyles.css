@@ -1,11 +1,23 @@
 /* ImageStyles.css */
 
 .image-container {
-  max-width: 80%;
-  margin-left: 80px;
+  width: 100%;
+  /* margin-left: 80px; */
+  margin: 0 auto; /* Center the image container */
+  max-width: 800px;
+  padding: 10px 0;
 }
 
 .image-container img {
+  width: 100%;
   width: 600px;
   height: 400px;
+  display: block;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .image-container {
+    padding: 5px;
+  }
 }

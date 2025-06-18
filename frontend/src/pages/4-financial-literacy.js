@@ -4,6 +4,7 @@ import '../components/styles_css/PageStyle.css';
 import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
 // import GlobalTimer from "../components/GlobalTimer";
+import '../components/styles_css/RadioButton.css'; 
 
 const FinancialLiteracy = () => {
     const navigate = useNavigate();
@@ -60,7 +61,9 @@ const FinancialLiteracy = () => {
         responses: {
             FL_question_1: "",
             FL_question_2: "",
-            FL_question_3: ""
+            FL_question_3: "",
+            FL_question_4: "",
+            FL_question_5: ""
         }, // Dynamic responses based on user input
         graph_question_durations: [],
         per_graph_durations: [],
@@ -163,7 +166,6 @@ const FinancialLiteracy = () => {
                         <h2><strong><u>PART A</u></strong></h2> 
                     </p>
                     {/* <GlobalTimer /> */}
-                    <p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
                 </div>
                 {loading && <p>Loading...</p>}
                 {error && <p>Error: {error.message}</p>}
@@ -179,55 +181,97 @@ const FinancialLiteracy = () => {
                             Suppose you had $100 in a savings account and the interest rate was 2% per year. After 5 years, how much do you think you would have in the account if you left the money to grow?
                         </h4>
                     </div>
-                    <div className="radio-container">
-                        <input type="radio" id="answer-fl-1-1" name="answer-fl-1" value="more-than-$102" onChange={() => handleChange(1, "more-than-$102")} />
-                        <label htmlFor="answer-fl-1-1">More than $102</label>
-                        <br />
-                        <input type="radio" id="answer-fl-1-2" name="answer-fl-1" value="exactly-$102" onChange={() => handleChange(1, "exactly-$102")} />
-                        <label htmlFor="answer-fl-1-2">Exactly $102</label>
-                        <br />
-                        <input type="radio" id="answer-fl-1-3" name="answer-fl-1" value="less-than-$102" onChange={() => handleChange(1, "less-than-$102")} />
-                        <label htmlFor="answer-fl-1-3">Less than $102</label>
-                        <br />
-                        <input type="radio" id="answer-fl-1-4" name="answer-fl-1" value="do-not-know" onChange={() => handleChange(1, "do-not-know")} />
-                        <label htmlFor="answer-fl-1-4">Do not know</label>
+                    <div className="radio-grid">
+                        <label htmlFor="answer-fl-1-1">
+                            <input type="radio" id="answer-fl-1-1" name="answer-fl-1" value="more-than-$102" onChange={() => handleChange(1, "more-than-$102")} />
+                            More than $102
+                        </label>
+                        <label htmlFor="answer-fl-1-2">
+                            <input type="radio" id="answer-fl-1-2" name="answer-fl-1" value="exactly-$102" onChange={() => handleChange(1, "exactly-$102")} />
+                            Exactly $102
+                        </label>
+                        <label htmlFor="answer-fl-1-3">
+                            <input type="radio" id="answer-fl-1-3" name="answer-fl-1" value="less-than-$102" onChange={() => handleChange(1, "less-than-$102")} />
+                            Less than $102
+                        </label>
+                        <label htmlFor="answer-fl-1-4">
+                            <input type="radio" id="answer-fl-1-4" name="answer-fl-1" value="do-not-know" onChange={() => handleChange(1, "do-not-know")} />
+                            Do not know
+                        </label>
                     </div>
-                    <br />
                     
                     <div className="instructionsFL">
                         <h4>
                             Imagine that the interest rate on your savings account was 1% per year and inflation was 2% per year. After 1 year, how much would you be able to buy with the money in this account?
                         </h4>
                     </div>
-                    <div className="radio-container">
-                        <input type="radio" id="answer-fl-2-1" name="answer-fl-2" value="more-than-today" onChange={() => handleChange(2, "more-than-today")} />
-                        <label htmlFor="answer-fl-2-1">More than today</label>
-                        <br />
-                        <input type="radio" id="answer-fl-2-2" name="answer-fl-2" value="exactly-today" onChange={() => handleChange(2, "exactly-today")} />
-                        <label htmlFor="answer-fl-2-2">Exactly today</label>
-                        <br />
-                        <input type="radio" id="answer-fl-2-3" name="answer-fl-2" value="less-than-today" onChange={() => handleChange(2, "less-than-today")} />
-                        <label htmlFor="answer-fl-2-3">Less than today</label>
-                        <br />
-                        <input type="radio" id="answer-fl-2-4" name="answer-fl-2" value="do-not-know" onChange={() => handleChange(2, "do-not-know")} />
-                        <label htmlFor="answer-fl-2-4">Do not know</label>
+                    <div className="radio-grid">
+                        <label htmlFor="answer-fl-2-1">
+                            <input type="radio" id="answer-fl-2-1" name="answer-fl-2" value="more-than-today" onChange={() => handleChange(2, "more-than-today")} />
+                            More than today
+                        </label>
+                        <label htmlFor="answer-fl-2-2">
+                            <input type="radio" id="answer-fl-2-2" name="answer-fl-2" value="exactly-today" onChange={() => handleChange(2, "exactly-today")} />
+                            Exactly today
+                        </label>
+                        <label htmlFor="answer-fl-2-3">
+                            <input type="radio" id="answer-fl-2-3" name="answer-fl-2" value="less-than-today" onChange={() => handleChange(2, "less-than-today")} />
+                            Less than today
+                        </label>
+                        <label htmlFor="answer-fl-2-4">
+                            <input type="radio" id="answer-fl-2-4" name="answer-fl-2" value="do-not-know" onChange={() => handleChange(2, "do-not-know")} />
+                            Do not know
+                        </label>
                     </div>
-                    <br />
+
 
                     <div className="instructionsFL">
                         <h4>
                         Please tell me whether this statement is true or false. “Buying a single company’s stock usually provides a safer return than a stock mutual fund.”
                         </h4>
                     </div>
-                    <div className="radio-container">
-                        <input type="radio" id="answer-fl-3-1" name="answer-fl-3" value="true" onChange={() => handleChange(3, "true")} />
-                        <label htmlFor="answer-fl-3-1">True</label>
+                    <div className="radio-grid">
+                        <label htmlFor="answer-fl-3-1">
+                            <input type="radio" id="answer-fl-3-1" name="answer-fl-3" value="true" onChange={() => handleChange(3, "true")} /> True</label>
+                        <label htmlFor="answer-fl-3-2">
+                            <input type="radio" id="answer-fl-3-2" name="answer-fl-3" value="false" onChange={() => handleChange(3, "false")} /> False</label>
+                        <label htmlFor="answer-fl-3-3">
+                            <input type="radio" id="answer-fl-3-3" name="answer-fl-3" value="do-not-know" onChange={() => handleChange(3, "do-not-know")} /> Do not know</label>
+                    </div>
+
+
+                    {/* Question 4 */}
+                    <div className="instructionsFL">
+                        <h4>
+                            A 15-year mortgage typically requires higher monthly payaments than a 30-year mortgage, but the total interest paid over the life of the loan will be less.
+                        </h4>
+                    </div>
+                    <div className="radio-grid">
+                         <label htmlFor="answer-fl-4-1">
+                        <input type="radio" id="answer-fl-4-1" name="answer-fl-4" value="True" onChange={() => handleChange(1, "True")} />
+                        True</label>
+                        <label htmlFor="answer-fl-4-2">
+                        <input type="radio" id="answer-fl-4-2" name="answer-fl-4" value="False" onChange={() => handleChange(1, "False")} />
+                        False</label>
+                        <label htmlFor="answer-fl-4-3"> 
+                        <input type="radio" id="answer-fl-4-3" name="answer-fl-4" value="Don't know" onChange={() => handleChange(1, "Don't know")} />
+                        Don't know</label>
                         <br />
-                        <input type="radio" id="answer-fl-3-2" name="answer-fl-3" value="false" onChange={() => handleChange(3, "false")} />
-                        <label htmlFor="answer-fl-3-2">False</label>
-                        <br />
-                        <input type="radio" id="answer-fl-3-3" name="answer-fl-3" value="do-not-know"onChange={() => handleChange(3, "do-not-know")} />
-                        <label htmlFor="answer-fl-3-3">Do not know</label>
+                    </div>
+
+                    {/* Question 5 */}
+                    <div className="instructionsFL">
+                        <h4>
+                            Buying a single company’s stock usually provides a safer return than a stock mutual fund.
+                        </h4>
+                    </div>
+                   <div className="radio-grid">
+                        <label htmlFor="answer-fl-5-1">
+                            <input type="radio" id="answer-fl-5-1" name="answer-fl-5" value="True" onChange={() => handleChange(5, "True")} /> True</label>
+                        <label htmlFor="answer-fl-5-2">
+                            <input type="radio" id="answer-fl-5-2" name="answer-fl-5" value="False" onChange={() => handleChange(5, "False")} /> False</label>
+                        <label htmlFor="answer-fl-5-3">
+                            <input type="radio" id="answer-fl-5-3" name="answer-fl-5" value="Don't know" onChange={() => handleChange(5, "Don't know")} /> Don't know</label>
                     </div>
                 </div>
                 <br />

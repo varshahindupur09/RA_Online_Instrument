@@ -128,10 +128,11 @@ const ProceedToDashboard = () => {
     return (
         <div className="container">
             <div className="LogoStyleImage">
+                <p>
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                 <br></br>
+                </p>
                 {/* <GlobalTimer /> */}
-                <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br></br>
             {loading && <p>Loading...</p>}
@@ -142,7 +143,7 @@ const ProceedToDashboard = () => {
                     <br />
                     <p>When you click “continue” at the bottom of the page, you will be shown a digital dashboard that includes four charts detailing sales information for the last five years. You can enlarge each chart by clicking on it. You will be presented with a series of questions, and you should use the information in the charts to respond.</p>
                     <br />
-                    <p><strong>You will have 7 minutes to complete this portion of the study. You will receive a $0.05 bonus for each question you answer correctly.</strong></p>
+                    <p><strong>You will have 20 minutes to complete this portion of the study. You will receive a $0.05 bonus for each question you answer correctly.</strong></p>
                 </div>
             </div>
             <button 

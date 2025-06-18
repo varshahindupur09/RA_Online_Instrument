@@ -132,6 +132,15 @@ const Demographics = () => {
             ([key, value]) => key !== 'text-feedback' && !value // Check if any field is empty or not selected
         );
 
+        console.log("Incomplete fields present?", incompleteFields);
+        console.log("Field values:", Object.entries(demographicData.responses));
+        console.log("Age:", demographicData.responses["age"]);
+        console.log("Education Level:", demographicData.responses["education-level"]);
+        console.log("Work Experience:", demographicData.responses["work-experience"]);
+        console.log("Management Experience:", demographicData.responses["management-experience"]);
+        console.log("Employment Sector:", demographicData.responses["employment-sector"]);
+        console.log("text-feedback:", demographicData.responses["text-feedback"]);
+
         if (incompleteFields) {
             setError(new Error("Please answer all questions before submitting."));
             return; // Stop form submission if not all questions are answered
@@ -177,36 +186,6 @@ const Demographics = () => {
                 throw new Error('Network response was not ok');
             }
             // no navigation as this is the end
-
-            // // Reset the demographic data after submission
-            // setDemographicData({
-            //     prolific_id: prolificId,
-            //     test_name: test_name_given,
-            //     consent: consent === "yes" ? true : false, 
-            //     page_number: 18,
-            //     chart_number: chart_number,
-            //     responses: {
-            //         "age": '',
-            //         "education-level": '',
-            //         "work-experience": '',
-            //         "management-experience": '',
-            //         "employment-sector": '',
-            //         "prolific-id-input": '',
-            //     },
-            //     graph_question_durations: [],
-            //     per_graph_durations: [],
-            //     time_spent: 0, 
-            //     // started_at: currentTime, // Time when the survey began
-            //     // ended_at: currentTime, // Time when the survey ended
-            //     time_user_entered_current_page: currentTime, // Time when the user entered the current page
-            //     last_visited_test_name: previousTestUrl, 
-            //     current_visit_test_name: currentTestUrl,
-            //     next_visit_test_name: nextTestUrl, 
-            //     incentive_calculation: '0',
-            //     // each_page_pay_calculation: '0',
-            //     total_pay_till_now: '0',
-            // });
-
             // Set as submitted only if no errors
             setSubmitted(true);
 
@@ -225,15 +204,16 @@ const Demographics = () => {
     return (
         <div className="container">
             <div className="LogoStyleImage">
+                <p>
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
                 <h2><strong><u>DEMOGRAPHICS</u></strong></h2>
+                </p>
                 {/* <GlobalTimer /> */}
-                <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <p>Almost finished! Please respond to the demographic questions below in order to complete the survey.</p>
             <br></br>
             
-<form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div name="instructions">
                     <label>
                         What's your age?
@@ -338,12 +318,42 @@ const Demographics = () => {
                     <select 
                         value={demographicData.responses["employment-sector"]} 
                         onChange={e => handleChange("employment-sector", e.target.value)} 
-                        className="dropdown"
-                    >
-                        {["Agriculture, Food and Natural Resources", "Architecture and Construction", "Arts", "Business Management and Administration", "Education and Training", "Finance", "Government and Public Administration", "Medicine", "Hospitality and Tourism", "Information Technology", "Legal", "Policing", "Military", "Manufacturing", "Marketing and Sales", "Science, Technology, Engineering and Mathematics", "Social Sciences", "Transportation, Distribution and Logistics", "Other"].map(sector => (
+                        required
+                        style={{
+                            fontSize: '16px',
+                            padding: '8px',
+                            borderRadius: '4px',
+                            border: demographicData.responses["employment-sector"] === '' ? '2px solid #f44336' : '1px solid #ccc',
+                            width: '100%',
+                            outline: 'none'
+                        }}
+                        >
+                        <option value="" disabled hidden>Select your employment sector</option>
+                        {[
+                            "Agriculture, Food and Natural Resources",
+                            "Architecture and Construction",
+                            "Arts",
+                            "Business Management and Administration",
+                            "Education and Training",
+                            "Finance",
+                            "Government and Public Administration",
+                            "Medicine",
+                            "Hospitality and Tourism",
+                            "Information Technology",
+                            "Legal",
+                            "Policing",
+                            "Military",
+                            "Manufacturing",
+                            "Marketing and Sales",
+                            "Science, Technology, Engineering and Mathematics",
+                            "Social Sciences",
+                            "Transportation, Distribution and Logistics",
+                            "Other"
+                        ].map(sector => (
                             <option key={sector} value={sector}>{sector}</option>
                         ))}
-                    </select>
+                        </select>
+
                     <br></br>
                     <br></br>
 

@@ -514,14 +514,13 @@ const RotationTestPart2 = () => {
 );
 
     return (
-        <div className="container">
+        <div className="container scroll-wrapper">
             <div className="LogoStyleImage">
                 <p>
                     <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
                     <h2><strong><u>ROTATION TEST - PART 2</u></strong></h2>
                     {/* <GlobalTimer /> */}
                 </p>
-                <p>------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br />
             {loading && <p>Loading...</p>}

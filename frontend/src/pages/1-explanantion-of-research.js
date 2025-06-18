@@ -227,8 +227,7 @@ const FirstInstrConsent = () => {
                             <img src={logoImageDoc} alt="ucflogo" className="ucflogo" />
                             <h2><strong><u>EXPLANATION OF RESEARCH</u></strong></h2>
                         </p>
-                        {/* <GlobalTimer /> */}
-                        <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                        {/* <GlobalTimer /> */} 
                     </div>
                     <br />
                     <br />
@@ -313,7 +312,8 @@ const FirstInstrConsent = () => {
                             <p><i><strong>Consent</strong></i></p>
                             <p>Do you consent to participating in this study?</p>
                         </div>
-                        <div className="radio-container"> 
+                        <div className="radio-grid"> 
+                            <label htmlFor="consent-no">
                             <input 
                                 type="radio" 
                                 id="consent-no" 
@@ -322,9 +322,9 @@ const FirstInstrConsent = () => {
                                 // disabled={isContentDisabled}
                                 disabled={isConsentDisabled} // Disable based on state
                             /> 
-                            <label htmlFor="consent-no"> 
                                 No
                             </label>
+                            <label htmlFor="consent-yes">
                             <input 
                                 type="radio" 
                                 id="consent-yes" 
@@ -332,8 +332,7 @@ const FirstInstrConsent = () => {
                                 onChange={() => handleConsent("yes")}
                                 // disabled={isContentDisabled}
                                 disabled={isConsentDisabled} // Disable based on state
-                            />
-                            <label htmlFor="consent-yes"> 
+                            /> 
                                 Yes
                             </label>
                         </div>

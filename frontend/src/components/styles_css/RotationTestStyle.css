@@ -47,6 +47,28 @@
     margin-right: 20px; 
 }
 
+.answers-table td:first-child {
+  white-space: nowrap;
+  writing-mode: horizontal-tb; /* Ensure horizontal text direction */
+  text-align: left;
+  vertical-align: middle;
+  padding: 8px;
+}
+
+
+.sample_triangles {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap; 
+}
+
+.sample_triangles img{
+    max-width: 100%;
+    height: auto;
+    /* margin: 0 auto; Center the image */
+    object-fit: contain;
+}
+
 .other_images img{
     display: block;
     width: 1000px;

@@ -209,7 +209,7 @@ const TimeSeriesColDashboard = () => {
             options: ["Upward", "Downward", "No clear trend"],
             correctAnswer: "Upward"
         },
-        // 13
+        // 13 - Attention Check
         {
             question: "In what year were sales of all circuit boards most consistent? Regardless of the answer select 2015.",
             options: ["2015", "2016", "2017", "2018", "2019", "2020"],

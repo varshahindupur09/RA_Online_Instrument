@@ -226,14 +226,13 @@ const CreativeBricksGame = () => {
     }, [isMinCharMet, isTimerCompleted, loading]);
 
     return (
-        <div className="container">
+        <div className="container scroll-wrapper">
             <div className="instructionsFL">
                 <div className="LogoStyleImage">
                     <p>
                         <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img> <h2> Title of research study: Data Visualization and Financial Decision Making </h2>
                     </p>
                     {/* <GlobalTimer /> */}
-                    <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>   
                 </div>
                 <br />
                 <br />

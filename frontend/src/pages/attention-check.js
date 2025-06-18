@@ -262,10 +262,11 @@ const AttentionCheck = () => {
     return (
         <div className="container">
             <div className="LogoStyleImage">
+                <p>
                 <img src={logoImageDoc} alt="ucflogo" className="ucflogo"></img>
                 <br></br>
+                </p>
                 {/* <GlobalTimer /> */}
-                <p>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
             </div>
             <br></br>
             <div name="instructions">
@@ -273,31 +274,34 @@ const AttentionCheck = () => {
                 <p><strong>Please answer the question below before proceeding to next part of the test.</strong></p>
                 <br></br>
                 <label>For each correct answer, how much extra will you be paid?</label>
-                <div className="radio-container">
+                <div className="radio-grid">
+                    <label htmlFor="AttentionCheckAnswer1Option1">
                     <input type="radio" 
                             id="AttentionCheckAnswer1Option1"
                             name="AttentionCheckQuestion1"
                             onChange={() => handleChange(1, "10 cents")} />
-                    <label htmlFor="AttentionCheckAnswer1Option1">10 cents</label>
-                    <br />
+                    10 cents</label>
+                    {/* <br /> */}
+                    <label htmlFor="AttentionCheckAnswer1Option2">
                     <input type="radio" 
                            id="AttentionCheckAnswer1Option2"
                            name="AttentionCheckQuestion1"
                            onChange={() => handleChange(1, "5 cents")} />
-                    <label htmlFor="AttentionCheckAnswer1Option2">5 cents</label>
-                    <br />
+                    5 cents</label>
+                    {/* <br /> */}
+                    <label htmlFor="AttentionCheckAnswer1Option3">
                     <input type="radio" 
                            id="AttentionCheckAnswer1Option3"
                            name="AttentionCheckQuestion1"
                            onChange={() => handleChange(1, "0 cents")} />
-                    <label htmlFor="AttentionCheckAnswer1Option3">0 cents</label>
-                    <br />
-
+                    0 cents</label>
+                    {/* <br /> */}
+                    <label htmlFor="AttentionCheckAnswer1Option4">
                     <input type="radio" 
                            id="AttentionCheckAnswer1Option4"
                            name="AttentionCheckQuestion1"
                            onChange={() => handleChange(1, "25 cents")} />
-                    <label htmlFor="AttentionCheckAnswer1Option4">25 cents</label>
+                    25 cents</label>
                     <br />
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error if no answer is selected */}

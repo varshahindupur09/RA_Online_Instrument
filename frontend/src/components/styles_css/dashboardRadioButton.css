@@ -1,59 +1,33 @@
 .radio-container {
-    /* display: block; */
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 16px; /* Adjust to fit your dashboard design */
-    user-select: none;
-    color: #000; /* Color of the text in the dashboard */
-    align-items: center; 
-    gap: 5px;
-    caret-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+  color: #000;
 }
 
 .radio-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    width: 0;
-    height: 0;
+  display: none;
 }
 
-.radio-container .custom-radio {
-    position: relative;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    color: #000;
-    border: 2px solid #ddd; 
-    border-radius: 50%;
-    transition: background-color 0.2s, border-color 0.2s;
+.custom-radio {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  position: relative;
+  box-sizing: border-box;
+  font-size: 16px;
+  padding: 5px;
 }
 
-.radio-container:hover .custom-radio {
-    background-color: #ccc; 
-}
-
-.radio-container input:checked ~ .custom-radio {
-    background-color: #2196F3; 
-    border-color: #2196F3;
-}
-
-.radio-container .custom-radio:after {
-    content: "";
-    position: absolute;
-    display: none;
-    top: 7.5px; 
-    left: 7.5px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.radio-container input:checked ~ .custom-radio:after {
-    display: block;
+.radio-container input:checked + .custom-radio {
+  background-color: #2196F3;
+  border-color: #2196F3;
 }
 
 .nextbutton {

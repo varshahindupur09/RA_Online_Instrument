@@ -137,14 +137,13 @@ const PaperFoldingSampleQuestion = () => {
     return (
         <div>
             {/* <Navbar /> */}
-            <div className="container">
+            <div className="container scroll-wrapper">
                 <div className="LogoStyleImage">
                         <p>
                         <img src={logoImage} alt="ucflogo" className="ucflogo" /> 
                         <h2><strong><u>PAPER FOLDING TEST</u></strong></h2>
                     </p>
-                    {/* <GlobalTimer /> */}
-                    <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>  
+                    {/* <GlobalTimer /> */}  
                 </div>
                 <h2>Paper Folding Test: Sample Question</h2>
                 {loading && <p>Loading...</p>}
