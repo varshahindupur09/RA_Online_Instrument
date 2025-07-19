@@ -9,7 +9,7 @@
     background-color: #000; 
     width: 1150px;
     height: 750px;
-    margin-left: 100px;
+    transform: translateX(-100px);
 }
 
 .image-item {

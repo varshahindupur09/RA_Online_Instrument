@@ -327,7 +327,11 @@ const RotationTestQuestion = () => {
                 <br />
                 <br />
                 <div className="sample_test">
-                    <img src={sample_rotation_test} alt="sample_rotation_test"></img>
+                    <img 
+                        src={sample_rotation_test} 
+                        alt="sample_rotation_test"
+                        style={{ width: '1100px', height: '400px' }} >
+                    </img>
                 </div>
                 <br />
                 <br />

@@ -452,9 +452,9 @@ const PaperFoldingPart1Questions = () => {
                     {/* <img src={Part1Question3} alt="Part1 Question3" /> */}
                     <p><strong>[Q3]</strong></p>
                     <img src={Part1Question3} alt="Part1 Question3" />
-                    <div className="radio-container">
+                    <div className="radio-grid">
                         <label htmlFor="Part1Question3Answer3Option1">
-                        <input type="radio" id="Part1Question3Answer3Option1" name="Part1Question3Answer3" onChange={() => handleChange(3, "A")} />
+                            <input type="radio" id="Part1Question3Answer3Option1" name="Part1Question3Answer3" onChange={() => handleChange(3, "A")} />
                             <img src={Part1Question3Answer3Option1} alt="Part1Question3Answer3Option1" />
                         </label>
                 
@@ -487,7 +487,7 @@ const PaperFoldingPart1Questions = () => {
                     {/* <img src={Part1Question4} alt="Part1 Question4" /> */}
                     <p><strong>[Q4]</strong></p>
                     <img src={Part1Question4} alt="Part1 Question4" />
-                    <div className="radio-container">
+                    <div className="radio-grid">
                         <label htmlFor="Part1Question4Answer4Option1">
                         <input type="radio" id="Part1Question4Answer4Option1" name="Part1Question4Answer4" onChange={() => handleChange(4, "A")} />
                             <img src={Part1Question4Answer4Option1} alt="Part1Question4Answer4Option1" />
@@ -522,7 +522,7 @@ const PaperFoldingPart1Questions = () => {
                     {/* <img src={Part1Question5} alt="Part1 Question5" /> */}
                     <p><strong>[Q5]</strong></p>
                     <img src={Part1Question5} alt="Part1 Question5" />
-                    <div className="radio-container">
+                    <div className="radio-grid">
                         <label htmlFor="Part1Question5Answer5Option1">
                         <input type="radio" id="Part1Question5Answer5Option1" name="Part1Question5Answer5" onChange={() => handleChange(5, "A")} />
                             <img src={Part1Question5Answer5Option1} alt="Part1Question5Answer5Option1" />
@@ -557,7 +557,7 @@ const PaperFoldingPart1Questions = () => {
                     {/* <img src={Part1Question6} alt="Part1 Question6" /> */}
                     <p><strong>[Q6]</strong></p>
                     <img src={Part1Question6} alt="Part1 Question6" />
-                    <div className="radio-container">
+                    <div className="radio-grid">
                         <label htmlFor="Part1Question6Answer6Option1">
                         <input type="radio" id="Part1Question6Answer6Option1" name="Part1Question6Answer6" onChange={() => handleChange(6, "A")} />
                             <img src={Part1Question6Answer6Option1} alt="Part1Question6Answer6Option1" />
@@ -592,7 +592,7 @@ const PaperFoldingPart1Questions = () => {
                     {/* <img src={Part1Question7} alt="Part1 Question7" /> */}
                     <p><strong>[Q7]</strong></p>
                     <img src={Part1Question7} alt="Part1 Question7" />
-                    <div className="radio-container">
+                    <div className="radio-grid">
                         <label htmlFor="Part1Question7Answer7Option1">
                         <input type="radio" id="Part1Question7Answer7Option1" name="Part1Question7Answer7" onChange={() => handleChange(7, "A")} />
                             <img src={Part1Question7Answer7Option1} alt="Part1Question7Answer7Option1" />
@@ -627,7 +627,7 @@ const PaperFoldingPart1Questions = () => {
                     {/* <img src={Part1Question8} alt="Part1 Question8" /> */}
                     <p><strong>[Q8]</strong></p>
                     <img src={Part1Question8} alt="Part1 Question8" />
-                    <div className="radio-container">
+                    <div className="radio-grid">
                         <label htmlFor="Part1Question8Answer8Option1">
                         <input type="radio" id="Part1Question8Answer8Option1" name="Part1Question8Answer8" onChange={() => handleChange(8, "A")} />
                             <img src={Part1Question8Answer8Option1} alt="Part1Question8Answer8Option1" />
@@ -662,7 +662,7 @@ const PaperFoldingPart1Questions = () => {
                     {/* <img src={Part1Question9} alt="Part1 Question9" /> */}
                     <p><strong>[Q9]</strong></p>
                     <img src={Part1Question9} alt="Part1 Question9" />
-                    <div className="radio-container">
+                    <div className="radio-grid">
                         <label htmlFor="Part1Question9Answer9Option1">
                         <input type="radio" id="Part1Question9Answer9Option1" name="Part1Question9Answer9" onChange={() => handleChange(9, "A")} />
                             <img src={Part1Question9Answer9Option1} alt="Part1Question9Answer9Option1" />
