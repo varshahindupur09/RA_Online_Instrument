@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
-import '../components/styles_css/PageStyle.css';  
-import '../components/styles_css/dashboardStyles.css'; 
-import '../components/styles_css/dashboardRadioButton.css'; 
-import logoImageDoc from '../images/UCF_logo_doc.png';
+import '../../components/styles_css/PageStyle.css'; 
+import '../../components/styles_css/dashboardStyles.css'; 
+import '../../components/styles_css/dashboardRadioButton.css'; 
+import logoImageDoc from '../../images/UCF_logo_doc.png';
 
-import TimeSeriesBarImage1 from "../images/dashboard/timeseries-bar/small/1-left.png";
-import TimeSeriesBarImage2 from "../images/dashboard/timeseries-bar/small/1-right.png";
-import TimeSeriesBarImage3 from "../images/dashboard/timeseries-bar/small/2-left.png";
-import TimeSeriesBarImage4 from "../images/dashboard/timeseries-bar/small/2-right.png";
+import TimeSeriesBarImage1 from "../../images/dashboard/timeseries-bar/small/1-left.png";
+import TimeSeriesBarImage2 from "../../images/dashboard/timeseries-bar/small/1-right.png";
+import TimeSeriesBarImage3 from "../../images/dashboard/timeseries-bar/small/2-left.png";
+import TimeSeriesBarImage4 from "../../images/dashboard/timeseries-bar/small/2-right.png";
 
-import TimeSeriesBarEnlargedImage1 from "../images/dashboard/timeseries-bar/enlarged/1-left.png";
-import TimeSeriesBarEnlargedImage2 from "../images/dashboard/timeseries-bar/enlarged/1-right.png";
-import TimeSeriesBarEnlargedImage3 from "../images/dashboard/timeseries-bar/enlarged/2-left.png";
-import TimeSeriesBarEnlargedImage4 from "../images/dashboard/timeseries-bar/enlarged/2-right.png";
+import TimeSeriesBarEnlargedImage1 from "../../images/dashboard/timeseries-bar/enlarged/1-left.png";
+import TimeSeriesBarEnlargedImage2 from "../../images/dashboard/timeseries-bar/enlarged/1-right.png";
+import TimeSeriesBarEnlargedImage3 from "../../images/dashboard/timeseries-bar/enlarged/2-left.png";
+import TimeSeriesBarEnlargedImage4 from "../../images/dashboard/timeseries-bar/enlarged/2-right.png";
 
-import Timer from "../components/Timer";
-import { useConsent } from './ConsentContext';
+import Timer from "../../components/Timer";
+import { useConsent } from '../ConsentContext';
 // import GlobalTimer from "../components/GlobalTimer";
 
 const TimeSeriesBarDashboard = () => {
@@ -48,8 +48,8 @@ const TimeSeriesBarDashboard = () => {
 
     // Scroll to the top of the page
     useEffect(() => {
-        window.scrollTo(0, 0); 
-    }, []);
+        setTimeout(() => window.scrollTo(0, 0), 0);
+        }, []);
 
     // Prevent back button navigation
     useEffect(() => {

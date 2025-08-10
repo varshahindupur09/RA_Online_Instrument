@@ -1,3 +1,4 @@
+// pages/4-financial-literacy.js
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css'; 
@@ -5,6 +6,7 @@ import logoImageDoc from '../images/UCF_logo_doc.png';
 import { useConsent } from './ConsentContext';
 // import GlobalTimer from "../components/GlobalTimer";
 import '../components/styles_css/RadioButton.css'; 
+import { useLayoutEffect } from "react";
 
 const FinancialLiteracy = () => {
     const navigate = useNavigate();
@@ -15,11 +17,14 @@ const FinancialLiteracy = () => {
     const startTimeRef = useRef(Date.now());
 
     // Scroll to the top of the page
-    useEffect(() => {
-        window.scrollTo(0, 0); 
+    useLayoutEffect(() => {
+    // final guarantee on first mount
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.scrollTo(0, 0);
     }, []);
 
-    // Prevent back button navigation
+    // Prevent back navigation
     useEffect(() => {
         const preventBackNavigation = () => {
             window.history.pushState(null, null, window.location.href);
@@ -62,7 +67,7 @@ const FinancialLiteracy = () => {
             FL_question_1: "",
             FL_question_2: "",
             FL_question_3: "",
-            FL_question_4: "",
+            FL_question_4: "",      
             FL_question_5: ""
         }, // Dynamic responses based on user input
         graph_question_durations: [],
@@ -155,7 +160,12 @@ const FinancialLiteracy = () => {
     };
 
     // Check if all questions are answered
-    const isNextDisabled = !responses.responses.FL_question_1 || !responses.responses.FL_question_2 || !responses.responses.FL_question_3;
+    const isNextDisabled = 
+        !responses.responses.FL_question_1 ||
+        !responses.responses.FL_question_2 ||
+        !responses.responses.FL_question_3 ||
+        !responses.responses.FL_question_4 ||
+        !responses.responses.FL_question_5;
 
     return (
         <div>
@@ -200,6 +210,7 @@ const FinancialLiteracy = () => {
                         </label>
                     </div>
                     
+                    {/* Question 2 */} 
                     <div className="instructionsFL">
                         <h4>
                             Imagine that the interest rate on your savings account was 1% per year and inflation was 2% per year. After 1 year, how much would you be able to buy with the money in this account?
@@ -224,19 +235,19 @@ const FinancialLiteracy = () => {
                         </label>
                     </div>
 
-
+                    {/* Question 3 */}
                     <div className="instructionsFL">
                         <h4>
-                        Please tell me whether this statement is true or false. “Buying a single company’s stock usually provides a safer return than a stock mutual fund.”
+                            If interest rates rise, what will typically happen to bond prices?
                         </h4>
                     </div>
                     <div className="radio-grid">
                         <label htmlFor="answer-fl-3-1">
-                            <input type="radio" id="answer-fl-3-1" name="answer-fl-3" value="true" onChange={() => handleChange(3, "true")} /> True</label>
+                            <input type="radio" id="answer-fl-3-1" name="answer-fl-3" value="rise" onChange={() => handleChange(3, "rise")} /> They will rise</label>
                         <label htmlFor="answer-fl-3-2">
-                            <input type="radio" id="answer-fl-3-2" name="answer-fl-3" value="false" onChange={() => handleChange(3, "false")} /> False</label>
+                            <input type="radio" id="answer-fl-3-2" name="answer-fl-3" value="fall" onChange={() => handleChange(3, "fall")} /> They will fall</label>
                         <label htmlFor="answer-fl-3-3">
-                            <input type="radio" id="answer-fl-3-3" name="answer-fl-3" value="do-not-know" onChange={() => handleChange(3, "do-not-know")} /> Do not know</label>
+                            <input type="radio" id="answer-fl-3-3" name="answer-fl-3" value="stay-same" onChange={() => handleChange(3, "stay-same")} /> They will stay the same</label>
                     </div>
 
 
@@ -248,13 +259,13 @@ const FinancialLiteracy = () => {
                     </div>
                     <div className="radio-grid">
                          <label htmlFor="answer-fl-4-1">
-                        <input type="radio" id="answer-fl-4-1" name="answer-fl-4" value="True" onChange={() => handleChange(1, "True")} />
+                        <input type="radio" id="answer-fl-4-1" name="answer-fl-4" value="True" onChange={() => handleChange(4, "True")} />
                         True</label>
                         <label htmlFor="answer-fl-4-2">
-                        <input type="radio" id="answer-fl-4-2" name="answer-fl-4" value="False" onChange={() => handleChange(1, "False")} />
+                        <input type="radio" id="answer-fl-4-2" name="answer-fl-4" value="False" onChange={() => handleChange(4, "False")} />
                         False</label>
                         <label htmlFor="answer-fl-4-3"> 
-                        <input type="radio" id="answer-fl-4-3" name="answer-fl-4" value="Don't know" onChange={() => handleChange(1, "Don't know")} />
+                        <input type="radio" id="answer-fl-4-3" name="answer-fl-4" value="Don't know" onChange={() => handleChange(4, "Don't know")} />
                         Don't know</label>
                         <br />
                     </div>

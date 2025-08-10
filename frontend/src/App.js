@@ -25,8 +25,8 @@ import ProceedToDashboard from "./pages/proceed-to-dashboard";
 import DashboardRouter from "./pages/dashboard-router";
 import StructuralColDashboard from "./pages/13-StructuralColDashboard";
 import StructuralBarDashboard from "./pages/14-StructuralBarDashboard";
-import TimeSeriesBarDashboard from "./pages/15-TimeSeriesBarDashboard";
-import TimeSeriesColDashboard from "./pages/16-TimeSeriesColDashboard";
+import TimeSeriesBarDashboard from "./pages/unused/15-TimeSeriesBarDashboard";
+import TimeSeriesColDashboard from "./pages/unused/16-TimeSeriesColDashboard";
 //feedback
 import FeedbackQuestions from "./pages/17-feedback-questions";
 //demographic
@@ -41,11 +41,15 @@ import TimerProvider from "./components/TimerContext";
 // import ProceedToDemographicQuestions from "./pages/proceed-to-demographic-questions";
 // import ProceedToPart2PaperFoldingTest from "./pages/proceed-to-part2-paper-folding-test";
 
+import ScrollToTop from "./components/ScrollToTop";
+
+
 function App() {
     return (
         // <TimerProvider>
         <ConsentProvider>
             <Router>
+                <ScrollToTop />
                 <div>
                     <Routes>
                         {/* <Route path="/" element={<Home />} default /> */} 

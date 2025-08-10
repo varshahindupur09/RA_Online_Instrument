@@ -72,9 +72,9 @@
 
 /* radio grid CSS */
 .radio-grid {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px 32px;
+  gap: 20px;
   max-width: 600px;
   margin: 0 auto;
   padding-top: 10px;

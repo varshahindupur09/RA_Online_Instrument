@@ -1,25 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
-import '../components/styles_css/PageStyle.css';  
-import '../components/styles_css/dashboardStyles.css'; 
-import '../components/styles_css/dashboardRadioButton.css'; 
-import logoImageDoc from '../images/UCF_logo_doc.png';
+import '../../components/styles_css/PageStyle.css';  
+import '../../components/styles_css/dashboardStyles.css'; 
+import '../../components/styles_css/dashboardRadioButton.css'; 
+import logoImageDoc from '../../images/UCF_logo_doc.png';
 
-import { useConsent } from './ConsentContext';
+import { useConsent } from '../ConsentContext';
 
 // Timeseries - Col Graph
-import TimeSeriesColImage1 from "../images/dashboard/timeseries-col/small/1-left.png";
-import TimeSeriesColImage2 from "../images/dashboard/timeseries-col/small/1-right.png";
-import TimeSeriesColImage3 from "../images/dashboard/timeseries-col/small/2-left.png";
-import TimeSeriesColImage4 from "../images/dashboard/timeseries-col/small/2-right.png";
+import TimeSeriesColImage1 from "../../images/dashboard/timeseries-col/small/1-left.png";
+import TimeSeriesColImage2 from "../../images/dashboard/timeseries-col/small/1-right.png";
+import TimeSeriesColImage3 from "../../images/dashboard/timeseries-col/small/2-left.png";
+import TimeSeriesColImage4 from "../../images/dashboard/timeseries-col/small/2-right.png";
 
-import TimeSeriesColEnlargedImage1 from "../images/dashboard/timeseries-col/enlarged/1-left.png";
-import TimeSeriesColEnlargedImage2 from "../images/dashboard/timeseries-col/enlarged/1-right.png";
-import TimeSeriesColEnlargedImage3 from "../images/dashboard/timeseries-col/enlarged/2-left.png";
-import TimeSeriesColEnlargedImage4 from "../images/dashboard/timeseries-col/enlarged/2-right.png";
+import TimeSeriesColEnlargedImage1 from "../../images/dashboard/timeseries-col/enlarged/1-left.png";
+import TimeSeriesColEnlargedImage2 from "../../images/dashboard/timeseries-col/enlarged/1-right.png";
+import TimeSeriesColEnlargedImage3 from "../../images/dashboard/timeseries-col/enlarged/2-left.png";
+import TimeSeriesColEnlargedImage4 from "../../images/dashboard/timeseries-col/enlarged/2-right.png";
 
-import Timer from "../components/Timer";
+import Timer from "../../components/Timer";
 // import GlobalTimer from "../components/GlobalTimer";
 
 const TimeSeriesColDashboard = () => {
@@ -51,8 +51,8 @@ const TimeSeriesColDashboard = () => {
 
     // Scroll to the top of the page
     useEffect(() => {
-        window.scrollTo(0, 0); 
-    }, []);
+        setTimeout(() => window.scrollTo(0, 0), 0);
+        }, []);
 
     // Prevent back button navigation
     useEffect(() => {

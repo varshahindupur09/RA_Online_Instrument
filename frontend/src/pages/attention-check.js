@@ -21,7 +21,7 @@ const AttentionCheck = () => {
     const previousTestUrl = "/sample-rotation-test";
     const test_name_given = 'Attention-Check-Test';
 
-    const correctAnswer = "5 cents"; // Defined the correct answer here
+    const correctAnswer = "10 cents"; // Defined the correct answer here
 
     // State to store responses
     const [responses, setResponses] = useState({
@@ -51,8 +51,8 @@ const AttentionCheck = () => {
 
      // Scroll to the top of the page
      useEffect(() => {
-        window.scrollTo(0, 0); 
-    }, []);
+         setTimeout(() => window.scrollTo(0, 0), 0);
+         }, []);
 
     // Prevent back button navigation
     useEffect(() => {

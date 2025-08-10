@@ -9,9 +9,9 @@ const ProceedToPart1PaperFoldingTest = () => {
 
     // Scroll to the top of the page
     useEffect(() => {
-        window.scrollTo(0, 0); 
-    }, []);
-
+        setTimeout(() => window.scrollTo(0, 0), 0);
+        }, []);
+        
     // Prevent back button navigation
     useEffect(() => {
         const preventBackNavigation = () => {
@@ -59,7 +59,7 @@ const ProceedToPart1PaperFoldingTest = () => {
                 </p>
                 <p className="instructionsred">
                     <strong>
-                        Please read the instructions carefully. In addition to the fixed payment of $4, you will receive a bonus of $0.05 for each correct answer that you provide. 
+                        Please read the instructions carefully. In addition to the fixed payment of $8.00, you will receive a bonus of $0.10 for each correct answer you provide. However, you will lose $0.10 for each incorrect answer so it is not in your interest to guess. The deductions will only affect your bonus not your fixed pay.
                     </strong>
                 </p>  
             </div>

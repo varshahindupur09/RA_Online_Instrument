@@ -15,7 +15,7 @@ const ExitSurveyPage = () => {
 
     // Scroll to the top of the page
     useEffect(() => {
-        window.scrollTo(0, 0); 
+    setTimeout(() => window.scrollTo(0, 0), 0);
     }, []);
 
     // Prevent back button navigation

@@ -21,8 +21,8 @@ const FeedbackQuestions = () => {
 
     // Scroll to the top of the page
     useEffect(() => {
-        window.scrollTo(0, 0); 
-    }, []);
+        setTimeout(() => window.scrollTo(0, 0), 0);
+        }, []);
 
      // Prevent back button navigation
      useEffect(() => {
@@ -71,12 +71,16 @@ const FeedbackQuestions = () => {
 
     const [feedback, setFeedback] = useState({
         mentalDemand: 0,
-        physicalDemand: 0,
+        // physicalDemand: 0,
         temporalDemand: 0,
         performance: 0,
         effort: 0,
         frustration: 0,
     });
+
+
+    // Initialize all sliders to more than 0
+    const allSlidersMoved = Object.values(feedback).every(v => Number(v) > 0);
 
     // Restrict navigation to ensure users can't jump to different pages
     useEffect(() => {
@@ -96,6 +100,11 @@ const FeedbackQuestions = () => {
 
     const handleNext = async (event) => {
         event.preventDefault();
+        // Check if all sliders are moved above 0
+        if (!allSlidersMoved) {
+            setError(new Error("Please move all sliders above 0 before continuing."));
+            return; // stop here so they can't submit
+        }
         setLoading(true);
 
         const endTime = Date.now();
@@ -174,7 +183,7 @@ const FeedbackQuestions = () => {
                         </div>
                     </div>
                 
-                    <br />
+                    {/* <br />
                     <div className="question">
                         <label htmlFor="physicalDemand">How physically demanding was the task?</label>
                         <p>{feedback.physicalDemand}</p>
@@ -183,7 +192,7 @@ const FeedbackQuestions = () => {
                             <span className="style-feedback-left">Very Low</span>
                             <span className="style-feedback-right">Very High</span>
                         </div>
-                    </div>
+                    </div> */}
 
                     <br />
                     <div className="question">

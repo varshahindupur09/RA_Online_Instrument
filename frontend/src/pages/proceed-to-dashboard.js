@@ -16,8 +16,8 @@ const ProceedToDashboard = () => {
 
     // Scroll to the top of the page
     useEffect(() => {
-        window.scrollTo(0, 0); 
-    }, []);
+        setTimeout(() => window.scrollTo(0, 0), 0);
+        }, []);
 
      // Prevent back button navigation
      useEffect(() => {
@@ -143,7 +143,7 @@ const ProceedToDashboard = () => {
                     <br />
                     <p>When you click “continue” at the bottom of the page, you will be shown a digital dashboard that includes four charts detailing sales information for the last five years. You can enlarge each chart by clicking on it. You will be presented with a series of questions, and you should use the information in the charts to respond.</p>
                     <br />
-                    <p><strong>You will have 20 minutes to complete this portion of the study. You will receive a $0.05 bonus for each question you answer correctly.</strong></p>
+                    <p><strong>You will have 20 minutes to complete this portion of the study. In addition to the fixed payment of $8.00, you will receive a bonus of $0.10 for each correct answer you provide. However, you will lose $0.10 for each incorrect answer so it is not in your interest to guess. The deductions will only affect your bonus not your fixed pay.</strong></p>
                 </div>
             </div>
             <button 

@@ -9,6 +9,7 @@ import logoImage from '../images/UCF_Logo.png';
 // import Navbar from "../components/NavbarPage";
 import { useConsent } from './ConsentContext';
 // import GlobalTimer from "../components/GlobalTimer";
+import { useLayoutEffect } from "react";
 
 const PaperFoldingSampleQuestion = () => {
     const navigate = useNavigate();
@@ -19,8 +20,11 @@ const PaperFoldingSampleQuestion = () => {
     const startTimeRef = useRef(Date.now());
 
     // Scroll to the top of the page
-    useEffect(() => {
-        window.scrollTo(0, 0); 
+    useLayoutEffect(() => {
+    // final guarantee on first mount
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.scrollTo(0, 0);
     }, []);
 
     // const [showSolution, setShowSolution] = useState(false);
@@ -157,7 +161,7 @@ const PaperFoldingSampleQuestion = () => {
                     </p> 
                     <div className="instructionsred">
                         <strong>
-                            In addition to the fixed payment of $4, you will receive a bonus of $0.05 for each correct answer that you provide.
+                            In addition to the fixed payment of $8.00, you will receive a bonus of $0.10 for each correct answer you provide. However, you will lose $0.10 for each incorrect answer so it is not in your interest to guess. The deductions will only affect your bonus not your fixed pay.
                         </strong>
                     </div>
                     <br></br>

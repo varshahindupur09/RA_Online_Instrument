@@ -46,8 +46,8 @@ const RotationTestQuestion = () => {
 
     // Scroll to the top of the page
     useEffect(() => {
-        window.scrollTo(0, 0); 
-    }, []);
+        setTimeout(() => window.scrollTo(0, 0), 0);
+        }, []);
 
     // Prevent back button navigation
     useEffect(() => {
@@ -296,7 +296,8 @@ const RotationTestQuestion = () => {
                     <p><strong>Please read the instructions carefully.</strong></p>
                     <div className="instructionsred">
                         <strong>
-                            <li>In addition to the fixed payment of $4, you will receive a bonus of $0.05 cents for each correct answer. Below two sample problems are for practice only. </li>                        </strong>
+                            <li>In addition to the fixed payment of $8.00, you will receive a bonus of $0.10 for each correct answer you provide. However, you will lose $0.10 for each incorrect answer so it is not in your interest to guess. The deductions will only affect your bonus not your fixed pay. </li>
+                        </strong>
                     </div>
                     <p>This is a test of your ability to see differences in figures. Look at the 5 triangle-shaped cards drawn below.</p>
                     <div className='sample_triangles'>
