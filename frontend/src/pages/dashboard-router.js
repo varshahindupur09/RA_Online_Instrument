@@ -63,7 +63,7 @@ const DashboardRouter = () => {
                     {
                         // Chart number exists, proceed to update
                         console.log("Existing chart number found:", data.last_assigned_chart);
-                        const nextChartNumber = (data.last_assigned_chart % 4) + 1;
+                        const nextChartNumber = (data.last_assigned_chart % 2) + 1; //changed from 4 to 2
                         
                         // Update responses with the calculated time spent
                         const updatedResponses = {

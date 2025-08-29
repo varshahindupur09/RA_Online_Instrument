@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css';  
@@ -27,6 +27,14 @@ const StructuralBarDashboard = () => {
     const { consent, prolificId, chart_number } = useConsent(); // Access consent and Prolific ID from context
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
+
+    // Scroll to the top of the page
+    useLayoutEffect(() => {
+    // final guarantee on first mount
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.scrollTo(0, 0);
+    }, []);
 
     const currentTime = Date.now();
     const currentTestUrl = "/structure-bar-dashboard";

@@ -223,7 +223,7 @@ const FinancialLiteracy = () => {
                         </label>
                         <label htmlFor="answer-fl-2-2">
                             <input type="radio" id="answer-fl-2-2" name="answer-fl-2" value="exactly-today" onChange={() => handleChange(2, "exactly-today")} />
-                            Exactly today
+                            Exactly the same
                         </label>
                         <label htmlFor="answer-fl-2-3">
                             <input type="radio" id="answer-fl-2-3" name="answer-fl-2" value="less-than-today" onChange={() => handleChange(2, "less-than-today")} />

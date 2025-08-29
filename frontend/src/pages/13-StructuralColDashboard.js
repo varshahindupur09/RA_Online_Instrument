@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from "react-router-dom";
 import '../components/styles_css/PageStyle.css';  
@@ -25,6 +25,38 @@ const StructuralColDashboard = () => {
     const { consent, prolificId, chart_number } = useConsent(); // Access consent and Prolific ID from context
     const [loading, setLoading] = useState(false);  
     const [error, setError] = useState(null); 
+    
+    // >>> ADD: a ref that marks the top of the question area
+    const topRef = useRef(null); // <<< ADD
+
+    // >>> ADD: ref to the scrollable container (the outer wrapper)
+    const containerRef = useRef(null); // <<< ADD
+
+    // >>> ADD: helper that ALWAYS scrolls to real top, after the DOM updates
+    const scrollToTopNow = () => { // <<< ADD
+        // ensure it runs after React paints the next question
+        requestAnimationFrame(() => { // <<< ADD
+            // scroll the container if it’s scrollable
+            if (containerRef.current && typeof containerRef.current.scrollTo === 'function') {
+                containerRef.current.scrollTo({ top: 0, behavior: 'auto' });
+            }
+            // also scroll the window as a fallback
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            // and scroll the anchor into view (extra guarantee)
+            if (topRef.current && typeof topRef.current.scrollIntoView === 'function') {
+                topRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
+            }
+        });
+    }; // <<< ADD
+
+    // Scroll to the top of the page
+    useLayoutEffect(() => {
+    // final guarantee on first mount
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        window.scrollTo(0, 0);
+    }, []);
+    
 
     const currentTime = Date.now();
     const currentTestUrl = "/structure-col-dashboard";
@@ -35,6 +67,22 @@ const StructuralColDashboard = () => {
     const [selectedImage, setSelectedImage] = useState('');
     const [questionIndex, setQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState('');
+
+    // >>> ADD: scroll to the anchor EVERY time the question changes
+    // Change behavior: 'auto' (instant) or 'smooth' (animated)
+
+    useEffect(() => {
+        if (topRef.current) {
+        topRef.current.scrollIntoView({ behavior: 'auto', block: 'start' }); // <<< CHANGE behavior if you want smooth
+        } else {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        }
+    }, [questionIndex]); // <<< ADD
+
+    // >>> ADD: also force scroll at the container-level after question changes
+    useLayoutEffect(() => { // <<< ADD
+        scrollToTopNow(); // <<< ADD
+    }, [questionIndex]); // <<< ADD
 
     // calculation of timings on each graphs and questions
     const [questionStartTime, setQuestionStartTime] = useState(new Date());
@@ -444,6 +492,10 @@ const StructuralColDashboard = () => {
             setQuestionIndex(questionIndex + 1);
             setSelectedOption(''); // Clear selected option
             setQuestionStartTime(new Date()); // Reset the start time for the next question
+
+            // >>> ADD: force scroll NOW on click, without waiting
+            scrollToTopNow(); // <<< ADD
+
             setLoading(false);
             // console.log("Final Responses BEFORE Submission:", questionIndex + 1, " ===> ", responses);
         }
@@ -506,7 +558,7 @@ const StructuralColDashboard = () => {
     };
 
     return (
-        <div className="container scroll-wrapper">
+        <div className="container scroll-wrapper" ref={containerRef}> {/* <<< ADD ref to container */}
             <div className="containerDashboard">
                 <div className="LogoStyleImage">
                     <p>
@@ -599,26 +651,28 @@ const StructuralColDashboard = () => {
                     </div>
                 </div> */}
 
-                <div name="instructions">
-                    <div className="question">
-                        <p>{questionsStructuralCol[questionIndex].question}</p>
-                        {questionsStructuralCol[questionIndex].options.map((option, index) => (
-                        <label
-                            key={index}
-                            style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '10px 0', fontSize: '16px', cursor: 'pointer' }}
-                        >
-                            <input
-                            type="radio"
-                            name="questionOptions"
-                            value={option}
-                            checked={selectedOption === option}
-                            onChange={handleOptionChange}
-                            style={{ width: '16px', height: '16px', accentColor: '#2196F3', margin: 0 }}
-                            />
-                            {option}
-                        </label>
-                        ))}
-                    </div>
+                <div ref={topRef} /> {/* <<< ADD: this is what we scroll to each question */}
+
+                    <div name="instructions">
+                        <div className="question">
+                            <p>{questionsStructuralCol[questionIndex].question}</p>
+                            {questionsStructuralCol[questionIndex].options.map((option, index) => (
+                            <label
+                                key={index}
+                                style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '10px 0', fontSize: '16px', cursor: 'pointer' }}
+                            >
+                                <input
+                                type="radio"
+                                name="questionOptions"
+                                value={option}
+                                checked={selectedOption === option}
+                                onChange={handleOptionChange}
+                                style={{ width: '16px', height: '16px', accentColor: '#2196F3', margin: 0 }}
+                                />
+                                {option}
+                            </label>
+                            ))}
+                        </div>
                     </div>
 
                 <br />
